@@ -170,12 +170,12 @@ El **97.5%** restante va directo a la plataforma ejecutora del impacto.
 
 ## Roadmap
 
-| Fase | Vertical | Estado |
+| Fase | Hito del Protocolo | Estado |
 |---|---|---|
-| **Fase 1 (Actual)** | Salud — MIRA AI | ✅ Desplegado en Testnet |
-| **Fase 2** | Ambiental — EcoForest (reforestación + verificación satelital) | 🔲 En diseño |
-| **Fase 3** | Educación — EducaReFi (micro-becas programables) | 🔲 En diseño |
-| **Fase 4** | Social — Vivienda, agua, seguridad alimentaria | 🔲 Futuro |
+| **Fase 1 (Actual)** | **Integración de Piloto (MIRA AI)**: Contrato en Testnet, firma criptográfica de oráculo y validación clínica. | ✅ Desplegado en Testnet |
+| **Fase 2** | **Lumina SDK & Onboarding Abierto**: APIs y plantillas de smart contracts para que cualquier app externa (clima, social, educación) se conecte de forma autónoma. | 🔲 En diseño |
+| **Fase 3** | **Registro Descentralizado y Gobernanza**: Votación on-chain para que sponsors y comunidad autoricen e incorporen nuevos oráculos verificadores. | 🔲 Futuro |
+| **Fase 4** | **Escrows DeFi con Rendimiento Optimizado**: Integración con pools de liquidez de Soroban para generar rendimientos en USDC mientras se verifican los hitos. | 🔲 Futuro |
 
 ---
 
