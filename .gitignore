@@ -1,0 +1,23 @@
+# Rust / Cargo
+target/
+.soroban/
+
+# Next.js / Node
+lumina-web/node_modules/
+lumina-web/.next/
+lumina-web/out/
+lumina-web/build/
+
+# Environment local secrets
+.env*.local
+*.pem
+
+# External projects (not part of Lumina)
+MIRA/
+
+# Agent metadata
+.atl/
+
+# OS/System files
+.DS_Store
+Thumbs.db
