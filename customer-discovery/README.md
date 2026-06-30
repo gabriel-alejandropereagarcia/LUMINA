@@ -1,6 +1,6 @@
 # Customer Discovery — Lumina Impact Protocol
 
-Validación de producto mediante 4 entrevistas grabadas, conforme a los requisitos del **Stellar PULSO Hackathon 2026**.
+Validación de producto mediante 5 entrevistas grabadas, conforme a los requisitos del **Stellar PULSO Hackathon 2026**.
 
 ## Entrevistas
 
@@ -10,6 +10,7 @@ Validación de producto mediante 4 entrevistas grabadas, conforme a los requisit
 | 2 | Director de RSE | Responsable Sustentabilidad Corporativa | ✅ Completada | [Ver summary.md](./interview-2-rse-director/summary.md) | [Link a Drive](./interview-2-rse-director/recording-link.txt) |
 | 3 | Resp. de Calidad | Hospital Materno Infantil | ✅ Completada | [Ver summary.md](./interview-3-pediatra/summary.md) | [Link a Drive](./interview-3-pediatra/recording-link.txt) |
 | 4 | Resp. de RSE y Finanzas | Sector Minero (Litio/NOA) | ✅ Completada | [Ver summary.md](./interview-4-minera/summary.md) | [Link a Drive](./interview-4-minera/recording-link.txt) |
+| 5 | Prof. Educación Especial | Sector Educación / Inclusión | ✅ Completada | [Ver summary.md](./interview-5-educacion/summary.md) | [Link a Drive](./interview-5-educacion/recording-link.txt) |
 
 ## Methodología
 
