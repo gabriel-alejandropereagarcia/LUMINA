@@ -1,14 +1,15 @@
 # Customer Discovery — Lumina Impact Protocol
 
-Validación de producto mediante 3 entrevistas grabadas, conforme a los requisitos del **Stellar PULSO Hackathon 2026**.
+Validación de producto mediante 4 entrevistas grabadas, conforme a los requisitos del **Stellar PULSO Hackathon 2026**.
 
 ## Entrevistas
 
-| # | Perfil | Rol | Estado | Grabación |
-|---|---|---|---|---|
-| 1 | Creador de MIRA | CEO & Founder, MIRA AI | ✅ Completada | [Link a Drive](./interview-1-mira-ceo/recording-link.txt) |
-| 2 | Director de RSE | Responsable Sustentabilidad Corporativa | ✅ Completada | [Link a Drive](./interview-2-rse-director/recording-link.txt) |
-| 3 | Pediatra / Clínico | Profesional de salud infantil | ✅ Completada | [Link a Drive](./interview-3-pediatra/recording-link.txt) |
+| # | Perfil | Rol | Estado | Transcripción | Grabación |
+|---|---|---|---|---|---|
+| 1 | Creador de MIRA | CEO & Founder, MIRA AI | ✅ Completada | [Ver summary.md](./interview-1-mira-ceo/summary.md) | [Link a Drive](./interview-1-mira-ceo/recording-link.txt) |
+| 2 | Director de RSE | Responsable Sustentabilidad Corporativa | ✅ Completada | [Ver summary.md](./interview-2-rse-director/summary.md) | [Link a Drive](./interview-2-rse-director/recording-link.txt) |
+| 3 | Resp. de Calidad | Hospital Materno Infantil | ✅ Completada | [Ver summary.md](./interview-3-pediatra/summary.md) | [Link a Drive](./interview-3-pediatra/recording-link.txt) |
+| 4 | Resp. de RSE y Finanzas | Sector Minero (Litio/NOA) | ✅ Completada | [Ver summary.md](./interview-4-minera/summary.md) | [Link a Drive](./interview-4-minera/recording-link.txt) |
 
 ## Methodología
 
