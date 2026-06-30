@@ -376,10 +376,10 @@ export default function PitchPresentation() {
       content: (
         <div className="space-y-4 max-w-3xl">
           {[
-            { phase: "Fase 1 · Actual", title: "Salud — MIRA AI en Testnet", desc: "Contrato operativo · oráculo firmado · deduplicación · time-lock de precios", status: "live" },
-            { phase: "Fase 2", title: "Ambiental — EcoForest + verificación satelital", desc: "Oráculo de imágenes satelitales que certifica reforestación nativa ·same escrow", status: "design" },
-            { phase: "Fase 3", title: "Educación — EducaReFi + micro-becas programables", desc: "Hito = acceso educativo completado en comunidades rurales argentinas", status: "future" },
-            { phase: "Fase 4", title: "Social — Vivienda, agua y seguridad alimentaria", desc: "Cualquier ONG o gobierno puede registrar oráculo y financiar hitos auditable", status: "future" },
+            { phase: "Fase 1 · Actual", title: "Validación de Piloto e Integración (MIRA AI)", desc: "Contrato de custodia en Testnet · firma criptográfica del primer oráculo (MIRA) · deduplicación de reportes", status: "live" },
+            { phase: "Fase 2", title: "Lanzamiento de Lumina SDK (Onboarding Abierto)", desc: "Estandarización de APIs y smart contracts para que cualquier app (clima, social, deporte) se conecte autónomamente", status: "design" },
+            { phase: "Fase 3", title: "Registro Descentralizado y Gobernanza", desc: "Mecanismo para que patrocinadores y la comunidad voten e incorporen nuevos oráculos verificadores autorizados", status: "future" },
+            { phase: "Fase 4", title: "Escrows DeFi con Rendimiento Optimizado", desc: "Integración con pools de liquidez en Soroban para generar rendimiento en USDC mientras se verifican los hitos", status: "future" },
           ].map((r, i) => (
             <div key={i} className={`glass-card p-4 rounded-xl flex items-center gap-4 ${r.status === "live" ? "border-l-4 border-[var(--teal)]" : ""}`}>
               <div className={`flex-shrink-0 text-center w-20`}>
