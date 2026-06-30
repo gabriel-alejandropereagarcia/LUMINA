@@ -172,10 +172,10 @@ El **97.5%** restante va directo a la plataforma ejecutora del impacto.
 
 | Fase | Hito del Protocolo | Estado |
 |---|---|---|
-| **Fase 1 (Actual)** | **Integración de Piloto (MIRA AI)**: Contrato en Testnet, firma criptográfica de oráculo y validación clínica. | ✅ Desplegado en Testnet |
-| **Fase 2** | **Lumina SDK & Onboarding Abierto**: APIs y plantillas de smart contracts para que cualquier app externa (clima, social, educación) se conecte de forma autónoma. | 🔲 En diseño |
-| **Fase 3** | **Registro Descentralizado y Gobernanza**: Votación on-chain para que sponsors y comunidad autoricen e incorporen nuevos oráculos verificadores. | 🔲 Futuro |
-| **Fase 4** | **Escrows DeFi con Rendimiento Optimizado**: Integración con pools de liquidez de Soroban para generar rendimientos en USDC mientras se verifican los hitos. | 🔲 Futuro |
+| **Fase 1 (Actual)** | **Validación de Piloto (MIRA AI)**: Contrato en Testnet, circuito de firmas criptográficas de oráculos y deduplicación. | ✅ Desplegado en Testnet |
+| **Fase 2** | **Capa de Auditoría y Reputación**: Módulos de validación de procedencia de oráculos para mitigar riesgos de aplicaciones maliciosas. | 🔲 En diseño |
+| **Fase 3** | **SDK con Plantillas Seguras**: Librerías y plantillas pre-aprobadas y auditadas para la conexión segura de nuevas aplicaciones de impacto. | 🔲 Futuro |
+| **Fase 4** | **Escrows Multi-Sig y Time-locks**: Soporte para firmas múltiples (Sponsor + Oráculo + Auditor) y bloqueos temporales avanzados de fondos. | 🔲 Futuro |
 
 ---
 
