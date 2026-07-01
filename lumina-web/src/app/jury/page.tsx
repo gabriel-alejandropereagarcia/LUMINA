@@ -5,7 +5,7 @@ import Link from "next/link";
 import { 
   ShieldCheck, Cpu, Terminal, Compass, ExternalLink, 
   AlertTriangle, Play, HelpCircle, ArrowLeft, ArrowRight, 
-  BookOpen, Heart, Activity, Target, Landmark, FileText 
+  BookOpen, Heart, Activity, Target, Landmark, FileText, CheckCircle2, Clock
 } from "lucide-react";
 
 
@@ -150,53 +150,68 @@ export default function JuryPage() {
               Customer Discovery (Entrevistas de Validación)
             </h2>
             <p className="text-xs text-[var(--muted)]">
-              Para garantizar que Lumina resuelva una necesidad real, estructuramos 3 entrevistas clave para validar la propuesta con datos de campo.
+              3 entrevistas completadas con stakeholders reales del ecosistema de impacto en Argentina (educación, minería/industria y acompañamiento terapéutico) + 1 entrevista pendiente de audio. Todas las transcripciones y grabaciones están en <code className="font-mono text-teal-500">/customer-discovery/</code> del repositorio.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Entrevista 1 */}
             <div className="p-5 rounded-xl border border-[var(--border)] bg-[var(--muted-bg)] space-y-3 flex flex-col justify-between">
               <div className="space-y-2">
-                <span className="rounded-full bg-[var(--teal-light)] px-2 py-0.5 text-xs font-bold text-teal-500 uppercase">Perfil 1 - Impact App</span>
-                <h4 className="text-xs font-bold text-[var(--foreground)]">CEO & Creador de MIRA</h4>
+                <span className="rounded-full bg-[var(--teal-light)] px-2 py-0.5 text-xs font-bold text-teal-500 uppercase">Perfil 1 · Educación Especial</span>
+                <h4 className="text-xs font-bold text-[var(--foreground)]">Gianella Gomez Pucca — Profa. Educación Especial</h4>
                 <p className="text-xs text-[var(--muted)] leading-relaxed">
-                  Validación sobre la monetización, integración del oráculo y sustentabilidad financiera.
+                  Salta, Argentina. Validó la barrera económica que impide acceso a terapias externas y la importancia del resguardo criptográfico de la identidad del menor.
                 </p>
               </div>
               <div className="flex items-center justify-between text-xs pt-2 border-t border-[var(--border)]">
-                <span className="text-emerald-400 font-bold">Autor: Creador MIRA</span>
-                <span className="text-teal-500 font-bold">Disponible</span>
+                <span className="text-emerald-400 font-bold flex items-center gap-1"><CheckCircle2 className="h-3 w-3" /> Completada</span>
+                <a href="https://github.com/gabriel-alejandropereagarcia/LUMINA/blob/master/customer-discovery/interview-1-educacion-gianella/summary.md" target="_blank" rel="noreferrer" className="text-teal-500 font-bold hover:underline inline-flex items-center gap-1">Ver transcripción <ExternalLink className="h-3 w-3" /></a>
               </div>
             </div>
 
             {/* Entrevista 2 */}
             <div className="p-5 rounded-xl border border-[var(--border)] bg-[var(--muted-bg)] space-y-3 flex flex-col justify-between">
               <div className="space-y-2">
-                <span className="rounded-full bg-[var(--danger-bg)] px-2 py-0.5 text-xs font-bold text-[var(--danger)] uppercase">Perfil 2 - Sponsor B2B</span>
-                <h4 className="text-xs font-bold text-[var(--foreground)]">Director de RSE / ESG</h4>
+                <span className="rounded-full bg-[var(--teal-light)] px-2 py-0.5 text-xs font-bold text-teal-500 uppercase">Perfil 2 · Acompañante Terapéutico</span>
+                <h4 className="text-xs font-bold text-[var(--foreground)]">Gustavo Fernandez — Acompañante Terapéutico / Docente</h4>
                 <p className="text-xs text-[var(--muted)] leading-relaxed">
-                  Validación de canales de pago fiduciarios (ARS), requerimiento de transparencia y uso de reportes ESG.
+                  Validó el impacto del financiamiento directo a "hitos de soporte" (sesiones de terapia, materiales adaptados) en la trayectoria escolar de alumnos con necesidades específicas.
                 </p>
               </div>
               <div className="flex items-center justify-between text-xs pt-2 border-t border-[var(--border)]">
-                <span className="text-[var(--muted)]">Empresa Tradicional</span>
-                <span className="text-[var(--warn)] font-bold">En Progreso</span>
+                <span className="text-emerald-400 font-bold flex items-center gap-1"><CheckCircle2 className="h-3 w-3" /> Completada</span>
+                <a href="https://github.com/gabriel-alejandropereagarcia/LUMINA/blob/master/customer-discovery/interview-2-educacion-gustavo/summary.md" target="_blank" rel="noreferrer" className="text-teal-500 font-bold hover:underline inline-flex items-center gap-1">Ver transcripción <ExternalLink className="h-3 w-3" /></a>
               </div>
             </div>
 
             {/* Entrevista 3 */}
             <div className="p-5 rounded-xl border border-[var(--border)] bg-[var(--muted-bg)] space-y-3 flex flex-col justify-between">
               <div className="space-y-2">
-                <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-xs font-bold text-emerald-400 uppercase">Perfil 3 - Operador</span>
-                <h4 className="text-xs font-bold text-[var(--foreground)]">Resp. Calidad Hospital Materno Infantil</h4>
+                <span className="rounded-full bg-[var(--green-light)] px-2 py-0.5 text-xs font-bold text-emerald-500 uppercase">Perfil 3 · Minería / RSE</span>
+                <h4 className="text-xs font-bold text-[var(--foreground)]">Nadia Estefanía Martin — Resp. Administración, ARLI S.A.</h4>
                 <p className="text-xs text-[var(--muted)] leading-relaxed">
-                  Validación de la auditoría de donaciones, cumplimiento de privacidad de datos (hashing ciego) y velocidad de liquidación atómica de Lumina.
+                  Minera de litio (Salta, casa matriz Canadá). Validó el pain point de compliance FCPA con intermediarios locales, el riesgo de malversación de fondos comunitarios y la barrera del Banco Central para operar cripto directamente.
                 </p>
               </div>
               <div className="flex items-center justify-between text-xs pt-2 border-t border-[var(--border)]">
-                <span className="text-[var(--muted)]">Hospital Público</span>
-                <span className="text-[var(--warn)] font-bold">En Progreso</span>
+                <span className="text-emerald-400 font-bold flex items-center gap-1"><CheckCircle2 className="h-3 w-3" /> Completada</span>
+                <a href="https://github.com/gabriel-alejandropereagarcia/LUMINA/blob/master/customer-discovery/interview-3-minera-nadia/summary.md" target="_blank" rel="noreferrer" className="text-teal-500 font-bold hover:underline inline-flex items-center gap-1">Ver transcripción <ExternalLink className="h-3 w-3" /></a>
+              </div>
+            </div>
+
+            {/* Entrevista 4 */}
+            <div className="p-5 rounded-xl border border-[var(--border)] bg-[var(--muted-bg)] space-y-3 flex flex-col justify-between opacity-80">
+              <div className="space-y-2">
+                <span className="rounded-full bg-[var(--muted)] px-2 py-0.5 text-xs font-bold text-[var(--muted)] uppercase border border-[var(--border)]">Perfil 4 · Calidad Hospitalaria</span>
+                <h4 className="text-xs font-bold text-[var(--foreground)]">Dra. Mónica Flores — Responsable de Calidad</h4>
+                <p className="text-xs text-[var(--muted)] leading-relaxed">
+                  Hospital Materno Infantil (Salta). Comprometida a responder. El audio se encuentra demorado debido a la intensa agenda asistencial de la institución.
+                </p>
+              </div>
+              <div className="flex items-center justify-between text-xs pt-2 border-t border-[var(--border)]">
+                <span className="text-amber-400 font-bold flex items-center gap-1"><Clock className="h-3 w-3 animate-pulse" /> Pendiente (Demorado)</span>
+                <a href="https://github.com/gabriel-alejandropereagarcia/LUMINA/blob/master/customer-discovery/interview-4-hospital-calidad/summary.md" target="_blank" rel="noreferrer" className="text-teal-500 font-bold hover:underline inline-flex items-center gap-1">Ver preguntas <ExternalLink className="h-3 w-3" /></a>
               </div>
             </div>
           </div>
@@ -208,11 +223,13 @@ export default function JuryPage() {
               <p className="text-xs text-[var(--muted)] leading-relaxed">
                 El set completo de preguntas para las entrevistas está registrado en el repositorio. Una vez completadas las sesiones de campo, los datos se compilarán en esta sección del portal de jurado.
               </p>
-              <a 
-                href="file:///C:/Users/gabri/.gemini/antigravity/brain/f5a3683f-4116-4f71-8784-70e80a16d70a/customer_discovery_guide.md"
-                className="text-xs text-teal-500 font-bold hover:underline block pt-1"
+              <a
+                href="https://github.com/gabomd/Lumina/tree/main/customer-discovery"
+                target="_blank"
+                rel="noreferrer"
+                className="text-xs text-teal-500 font-bold hover:underline inline-flex items-center gap-1 block pt-1"
               >
-                Abrir Cuestionario de Preguntas →
+                Abrir carpeta de Customer Discovery <ExternalLink className="h-3 w-3" />
               </a>
             </div>
           </div>

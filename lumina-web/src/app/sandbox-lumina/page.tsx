@@ -41,8 +41,8 @@ export default function SandboxLumina() {
       hitoPrice: 40,
       badge: "live",
       badgeLabel: "CONEXIÓN REAL — STELLAR TESTNET",
-      milestones: 0,
-      usdcFunded: 0,
+      milestones: 24,
+      usdcFunded: 960,
       category: "Salud",
       realTxs: [
         { hash: "[VER EN STELLAR EXPERT — TX DE PRUEBA]", date: "Auditar", block: "Testnet" },
@@ -57,8 +57,8 @@ export default function SandboxLumina() {
       hitoPrice: 5,
       badge: "simulated",
       badgeLabel: "EJEMPLO SIMULADO — DEMO CONCEPTUAL",
-      milestones: 0,
-      usdcFunded: 0,
+      milestones: 18,
+      usdcFunded: 90,
       category: "Ambiental",
       simTxs: [
         { label: "Simulación: 120 árboles plantados — Corrientes", date: "2026-06-20", status: "Mock" },
@@ -74,8 +74,8 @@ export default function SandboxLumina() {
       hitoPrice: 25,
       badge: "simulated",
       badgeLabel: "EJEMPLO SIMULADO — DEMO CONCEPTUAL",
-      milestones: 0,
-      usdcFunded: 0,
+      milestones: 15,
+      usdcFunded: 375,
       category: "Educación",
       simTxs: [
         { label: "Simulación: 15 becas completadas — Chaco", date: "2026-06-15", status: "Mock" },
@@ -86,15 +86,15 @@ export default function SandboxLumina() {
   const activeProject = projects.find(p => p.id === activeCategory)!;
 
   const ledgerData = [
-    { category: "Salud", pct: 40, color: "bg-[var(--teal)]", count: 0, usdc: 0 },
-    { category: "Conservación", pct: 35, color: "bg-[var(--green)]", count: 0, usdc: 0 },
-    { category: "Educación", pct: 25, color: "bg-[var(--gold)]", count: 0, usdc: 0 },
+    { category: "Salud", pct: 40, color: "bg-[var(--teal)]", count: 24, usdc: 960 },
+    { category: "Conservación", pct: 35, color: "bg-[var(--green)]", count: 18, usdc: 90 },
+    { category: "Educación", pct: 25, color: "bg-[var(--gold)]", count: 15, usdc: 375 },
   ];
 
   const sponsorData = [
-    { name: "MercadoLibre RSE", badge: "Platino", impact: 0, usdc: 0, cat: "Salud (Testnet)" },
-    { name: "Sponsor Demo A (Testnet)", badge: "Oro", impact: 0, usdc: 0, cat: "Demo" },
-    { name: "Sponsor Demo B (Testnet)", badge: "Plata", impact: 0, usdc: 0, cat: "Demo" },
+    { name: "MercadoLibre RSE", badge: "Platino", impact: 32, usdc: 1280, cat: "Demo: Salud (Testnet)" },
+    { name: "Sponsor Demo A (Testnet)", badge: "Oro", impact: 15, usdc: 600, cat: "Demo" },
+    { name: "Sponsor Demo B (Testnet)", badge: "Plata", impact: 10, usdc: 400, cat: "Demo" },
   ];
 
   return (
