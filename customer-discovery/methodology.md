@@ -34,13 +34,6 @@ Validar que Lumina resuelve una necesidad real mediante 4 entrevistas estructura
 2. Si existiera un sistema de garantía digital donde el patrocinador deposita los fondos por adelantado, y estos se liberan automáticamente a la cuenta del hospital a las 48 horas de que el sistema médico certifique digitalmente que la consulta o test infantil se realizó, ¿cómo afectaría a la viabilidad de sus programas de salud preventiva?
 3. Para cumplir con las estrictas leyes de protección de datos médicos (secreto profesional), ¿qué tan valioso es un sistema que certifique que la atención médica efectivamente ocurrió emitiendo un 'código digital encriptado único' de validación, sin compartir nombres ni datos personales del niño o la familia fuera del hospital?
 
-### Perfil 6 — Responsable de Administración y RSE (Sector Minero - Nadia Estefanía Martin, ARLI S.A.) [Completada]
-1. ¿Cómo coordinan y auditan actualmente el destino de los fondos comunitarios de RSE?
-2. ¿Cuáles son las mayores trabas o cuellos de botella administrativos en la rendición de cuentas de intermediarios locales?
-3. ¿Cómo reacciona la casa matriz internacional ante la falta de trazabilidad real de los fondos comunitarios donados?
-4. ¿Qué tan viable es el uso de escrows no-custodiales con time-locks de retiro en su flujo de compliance corporativo?
-5. ¿Cuáles son las limitaciones reglamentarias de tesorería para operar criptoactivos y cómo ayudaría una pasarela fiat-to-crypto?
-
 ## Criterio de éxito
 
 - Cada entrevista debe confirmar o refutar al menos una hipótesis clave del producto (auditoría, escrow, privacidad, compliance fiat)
