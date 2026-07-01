@@ -26,19 +26,22 @@ Validar que Lumina resuelve una necesidad real mediante 5 entrevistas estructura
 2. Si existiera este sistema donde una empresa financia de forma directa y auditable esos "hitos de soporte" específicos para un alumno tuyo que lo necesita, ¿qué tanto impactaría en su inclusión y progreso educativo?
 3. Para auditar que la ayuda realmente se entregó sin estigmatizar al alumno, ¿qué tan importante es que la verificación sea 100% anónima en los registros públicos, resguardando los datos personales del menor?
 
-### Perfil 3 — Director de RSE / ESG (Sustentabilidad Corporativa)
+### Perfil 3 — Acompañante Terapéutico y Docente Especial (Gustavo Fernandez) [Completada]
+*Nota: Comparte la misma guía de preguntas del Perfil 2 sobre barreras económicas en el aula, impacto de financiamiento a hitos concretos y anonimato criptográfico para resguardo de la dignidad del menor.*
+
+### Perfil 4 — Director de RSE / ESG (Sustentabilidad Corporativa)
 1. ¿Cómo deciden qué causas financian con el presupuesto de RSE?
 2. ¿Qué exigen sus auditores/junta directiva como evidencia de impacto?
 3. ¿Cuánto del presupuesto se pierde en intermediarios administrativos?
 4. Si cada peso de RSE tuviera un hash criptográfico auditable en tiempo real, ¿les daría ventaja en reporting ESG?
 5. ¿La barrera para usar blockchain es técnica (no saben) o regulatoria (compliance)?
 
-### Perfil 4 — Responsable de Calidad (Hospital Materno Infantil)
+### Perfil 5 — Responsable de Calidad (Hospital Materno Infantil)
 1. Cuando reciben fondos de patrocinadores privados para campañas de salud infantil, ¿cuáles son los mayores obstáculos administrativos que enfrentan para cobrar y justificar que realmente atendieron a los pacientes?
 2. Si existiera un sistema de garantía digital donde el patrocinador deposita los fondos por adelantado, y estos se liberan automáticamente a la cuenta del hospital a las 48 horas de que el sistema médico certifique digitalmente que la consulta o test infantil se realizó, ¿cómo afectaría a la viabilidad de sus programas de salud preventiva?
 3. Para cumplir con las estrictas leyes de protección de datos médicos (secreto profesional), ¿qué tan valioso es un sistema que certifique que la atención médica efectivamente ocurrió emitiendo un 'código digital encriptado único' de validación, sin compartir nombres ni datos personales del niño o la familia fuera del hospital?
 
-### Perfil 5 — Responsable de Administración y RSE (Sector Minero - Nadia Estefanía Martin, ARLI S.A.) [Completada]
+### Perfil 6 — Responsable de Administración y RSE (Sector Minero - Nadia Estefanía Martin, ARLI S.A.) [Completada]
 1. ¿Cómo coordinan y auditan actualmente el destino de los fondos comunitarios de RSE?
 2. ¿Cuáles son las mayores trabas o cuellos de botella administrativos en la rendición de cuentas de intermediarios locales?
 3. ¿Cómo reacciona la casa matriz internacional ante la falta de trazabilidad real de los fondos comunitarios donados?
