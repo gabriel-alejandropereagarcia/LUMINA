@@ -108,7 +108,10 @@ export default function InvestPortal() {
       setStep(2);
     } catch (err: any) {
       console.error(err);
-      const errMsg = err.message || "Error al procesar la aprobación en USDC.";
+      let errMsg = err.message || "Error al procesar la aprobación en USDC.";
+      if (errMsg.includes("Error(Contract, #10)") || errMsg.includes("resulting balance is not within the allowed range")) {
+        errMsg = "Saldo de USDC insuficiente en tu Freighter Wallet. Por favor, reclamá USDC de prueba en faucet.circle.com.";
+      }
       setError(errMsg);
       toast({
         type: "error",
@@ -164,7 +167,10 @@ export default function InvestPortal() {
       await refreshBalances();
     } catch (err: any) {
       console.error(err);
-      const errMsg = err.message || "Error al procesar el depósito en custodia.";
+      let errMsg = err.message || "Error al procesar el depósito en custodia.";
+      if (errMsg.includes("Error(Contract, #10)") || errMsg.includes("resulting balance is not within the allowed range")) {
+        errMsg = "Saldo de USDC insuficiente en tu Freighter Wallet. Por favor, reclamá USDC de prueba en faucet.circle.com.";
+      }
       setError(errMsg);
       toast({
         type: "error",
