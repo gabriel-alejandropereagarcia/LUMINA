@@ -2,44 +2,53 @@
 
 ## Objetivo
 
-Validar que Lumina resuelve una necesidad real mediante 3 entrevistas estructuradas con stakeholders del ecosistema de impacto social, RSE corporativa y salud infantil en Argentina.
+Validar que Lumina resuelve una necesidad real mediante 5 entrevistas estructuradas (2 completadas y 3 en progreso) con stakeholders del ecosistema de impacto social, educación especial, RSE corporativa, salud pública e industria minera en Argentina.
 
 ## Estructura de cada entrevista (15-20 min)
 
 1. **Contexto** (2 min): Presentación del entrevistado, rol, organización, tiempo en el rol
-2. **Problema** (5 min): ¿Cómo manejan hoy la distribución/deección/auditoría de fondos de impacto/RSE?
-3. **Pain points** (5 min): ¿Qué fricciones encuentran? Opacidad, costos administrativos, falta de trazabilidad
-4. **Solución actual** (3 min): ¿Qué herramientas usan? Hojas de cálculo, auditorías manuales, ONG intermediarias
-5. **Reacción a Lumina** (5 min): Demo breve del portal, feedback sobre escrow programable + oráculos on-chain
+2. **Problema** (5 min): ¿Cómo manejan hoy la distribución, auditoría o acceso a fondos de impacto/RSE?
+3. **Pain points** (5 min): ¿Qué fricciones encuentran? Opacidad, costos de auditoría, trabas burocráticas, estigmatización de menores
+4. **Solución actual** (3 min): ¿Qué herramientas usan? Hojas de cálculo, planillas de firmas manuales, auditorías de campo costosas
+5. **Reacción a Lumina** (5 min): Feedback sobre escrow programable, validación atómica del hito, resguardo por hash y pasarelas fiat-to-crypto
 
 ## Preguntas base
 
 ### Perfil 1 — Creador de App de Impacto (MIRA)
-
 1. ¿Cómo monetizan actualmente las evaluaciones clínicas? ¿Quién las financia?
 2. ¿Qué barreras encuentran para escalar el modelo a más hospitales/familias?
 3. ¿Cómo verifican hoy que una evaluación se completó antes de cobrar?
 4. Si el pago fuera programable (escrow on-chain que libera al verificar el hito), ¿eliminaría fricción?
 5. ¿Qué riesgo ven en delegar la firma del oráculo a un backend automatizado?
 
-### Perfil 2 — Director de RSE / ESG
+### Perfil 2 — Profesora de Educación Especial (Gianella Gomez Pucca)
+1. En el aula, ¿cuáles son los mayores obstáculos pedagógicos cuando un nene no puede acceder a las terapias externas de apoyo (psicopedagoga, fonoaudióloga, etc.) por falta de recursos?
+2. Si existiera este sistema donde una empresa financia de forma directa y auditable esos "hitos de soporte" específicos para un alumno tuyo que lo necesita, ¿qué tanto impactaría en su inclusión y progreso educativo?
+3. Para auditar que la ayuda realmente se entregó sin estigmatizar al alumno, ¿qué tan importante es que la verificación sea 100% anónima en los registros públicos, resguardando los datos personales del menor?
 
+### Perfil 3 — Director de RSE / ESG (Sustentabilidad Corporativa)
 1. ¿Cómo deciden qué causas financian con el presupuesto de RSE?
 2. ¿Qué exigen sus auditores/junta directiva como evidencia de impacto?
 3. ¿Cuánto del presupuesto se pierde en intermediarios administrativos?
 4. Si cada peso de RSE tuviera un hash criptográfico auditable en tiempo real, ¿les daría ventaja en reporting ESG?
-5. ¿La barrera para usar blockchain es técnica (no saben) o regulators (compliance)?
+5. ¿La barrera para usar blockchain es técnica (no saben) o regulatoria (compliance)?
 
-### Perfil 3 — Pediatra / Clínico Infantil
+### Perfil 4 — Responsable de Calidad (Hospital Materno Infantil)
+1. ¿Cómo manejan actualmente las auditorías de calidad de la atención pediátrica y el cumplimiento de protocolos clínicos?
+2. ¿Qué tan difícil es auditar el impacto real de programas de salud preventiva financiados por terceros?
+3. ¿Cuáles son los mayores desafíos de privacidad al reportar resultados de salud en campo?
+4. Si un contrato inteligente en Stellar liberara fondos automáticamente al completarse un screening verificado por el oráculo del hospital, ¿cómo agilizaría los tiempos de cobro y de auditoría?
+5. ¿El uso de hashes ciegos (SHA-256) en la blockchain resuelve la fricción de confidencialidad de datos clínicos?
 
-1. ¿Realizan screening de neurodesarrollo (M-CHAT) de rutina? ¿Con qué frecuencia?
-2. ¿Qué pasa después de un resultado positivo? ¿Hay seguimiento? ¿Hay financiamiento para intervención?
-3. ¿Tienen incentivos económicos para realizar cribados masivos? ¿O es carga extra no remunerada?
-4. Si cada screening completado generara un pago automático de 40 USDC a la plataforma, ¿cambiaría la dinámica?
-5. ¿La privacidad de los datos clínicos es una preocupación? ¿Qué passing un hash SHA-256 en vez de los datos?
+### Perfil 5 — Responsable de Administración y RSE (Sector Minero)
+1. ¿Cómo coordinan y auditan actualmente el destino de los fondos comunitarios de RSE?
+2. ¿Cuáles son las mayores trabas o cuellos de botella administrativos en la rendición de cuentas de intermediarios locales?
+3. ¿Cómo reacciona la casa matriz internacional ante la falta de trazabilidad real de los fondos comunitarios donados?
+4. ¿Qué tan viable es el uso de escrows no-custodiales con time-locks de retiro en su flujo de compliance corporativo?
+5. ¿Cuáles son las limitaciones reglamentarias de tesorería para operar criptoactivos y cómo ayudaría una pasarela fiat-to-crypto?
 
 ## Criterio de éxito
 
-- Cada entrevista debe confirmar o refutar al menos una hipótesis clave del producto
-- Las citas textuales deben incluirse en el summary
-- Las grabaciones deben ser accesibles públicamente (Google Drive link compartido o YouTube no listado)
+- Cada entrevista debe confirmar o refutar al menos una hipótesis clave del producto (auditoría, escrow, privacidad, compliance fiat)
+- Las citas textuales deben incluirse en el summary de cada carpeta
+- Las grabaciones deben ser accesibles públicamente en la carpeta de Google Drive configurada en los txt
