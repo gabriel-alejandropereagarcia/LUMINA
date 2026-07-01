@@ -224,7 +224,7 @@ export default function JuryPage() {
                 El set completo de preguntas para las entrevistas está registrado en el repositorio. Una vez completadas las sesiones de campo, los datos se compilarán en esta sección del portal de jurado.
               </p>
               <a
-                href="https://github.com/gabomd/Lumina/tree/main/customer-discovery"
+                href="https://github.com/gabriel-alejandropereagarcia/LUMINA/tree/master/customer-discovery"
                 target="_blank"
                 rel="noreferrer"
                 className="text-xs text-teal-500 font-bold hover:underline inline-flex items-center gap-1 block pt-1"
@@ -332,7 +332,7 @@ export default function JuryPage() {
         {/* Code Repositories */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <a 
-            href="https://github.com/gabomd/Lumina" 
+            href="https://github.com/gabriel-alejandropereagarcia/LUMINA" 
             target="_blank" 
             rel="noopener noreferrer"
             className="glass-card p-6 rounded-2xl border border-[var(--border)] hover:border-[var(--teal-light)] hover:bg-[var(--muted-bg)] transition-all flex items-center justify-between group"
@@ -345,7 +345,7 @@ export default function JuryPage() {
           </a>
 
           <a 
-            href="https://github.com/gabomd/MIRA" 
+            href="https://github.com/gabriel-alejandropereagarcia/MIRA" 
             target="_blank" 
             rel="noopener noreferrer"
             className="glass-card p-6 rounded-2xl border border-[var(--border)] hover:border-green-600/20 hover:bg-[var(--muted-bg)] transition-all flex items-center justify-between group"

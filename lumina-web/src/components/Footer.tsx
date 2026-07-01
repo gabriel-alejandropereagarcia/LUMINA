@@ -55,7 +55,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="https://github.com/luminaprotocol"
+                  href="https://github.com/gabriel-alejandropereagarcia/LUMINA"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] flex items-center gap-1.5 transition-colors"
