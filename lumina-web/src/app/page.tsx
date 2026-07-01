@@ -32,10 +32,10 @@ export default function Home() {
     setIsVisible(true);
   }, []);
 
-  const [custodiaCount, custodiaRef] = useCountUp(100); // Demo Testnet
-  const [impactosCount, impactosRef] = useCountUp(0); // Sin hitos reales aún
-  const [sponsorsCount, sponsorsRef] = useCountUp(1); // 1 sponsor demo
-  const [reputacionCount, reputacionRef] = useCountUp(0);
+  const [custodiaCount, custodiaRef] = useCountUp(300); // 3 sponsors * 100 USDC = 300 USDC total
+  const [impactosCount, impactosRef] = useCountUp(6); // 3 + 2 + 1 = 6 hitos reales/simulados
+  const [sponsorsCount, sponsorsRef] = useCountUp(3); // 3 sponsors demo activos
+  const [reputacionCount, reputacionRef] = useCountUp(6);
 
   const [familiasCount, familiasRef] = useCountUp(0);
   const [mchatCount, mchatRef] = useCountUp(83); // Sensibilidad clínica M-CHAT (validado científicamente)
@@ -47,7 +47,7 @@ export default function Home() {
       name: "Alimentos Australes S.A.",
       logo: "🌾",
       totalUSDC: 100,
-      completedImpact: 0,
+      completedImpact: 3,
       badgeLevel: "Oro Soulbound",
       category: "Salud y Ecología",
       verifiedReports: [
@@ -60,7 +60,7 @@ export default function Home() {
       name: "Pampa Banco Digital",
       logo: "💳",
       totalUSDC: 100,
-      completedImpact: 0,
+      completedImpact: 2,
       badgeLevel: "Platino Soulbound",
       category: "Causas Sociales",
       verifiedReports: [
@@ -72,7 +72,7 @@ export default function Home() {
       name: "Andes Energy",
       logo: "⚡",
       totalUSDC: 100,
-      completedImpact: 0,
+      completedImpact: 1,
       badgeLevel: "Plata Soulbound",
       category: "Salud Infantil",
       verifiedReports: [
@@ -468,7 +468,10 @@ export default function Home() {
                 <div className="flex items-center gap-3">
                   <span className="text-xl">{b.logo}</span>
                   <div>
-                    <h4 className="text-xs font-bold text-[var(--foreground)]">{b.name}</h4>
+                    <div className="flex items-center gap-1.5">
+                      <h4 className="text-xs font-bold text-[var(--foreground)]">{b.name}</h4>
+                      <span className="px-1 py-0.2 bg-zinc-500/10 text-zinc-500 text-[8px] font-bold uppercase rounded border border-zinc-500/15">Simulado</span>
+                    </div>
                     <span className="text-xs block text-[var(--muted)]">{b.category}</span>
                   </div>
                 </div>
@@ -484,7 +487,10 @@ export default function Home() {
                   <div className="flex items-center gap-3">
                     <span className="text-3xl">{brandsData[selectedBrand].logo}</span>
                     <div>
-                      <h3 className="text-sm font-bold text-[var(--foreground)]">{brandsData[selectedBrand].name}</h3>
+                      <div className="flex items-center gap-1.5">
+                        <h3 className="text-sm font-bold text-[var(--foreground)]">{brandsData[selectedBrand].name}</h3>
+                        <span className="px-1.5 py-0.5 bg-zinc-500/10 text-zinc-500 text-[9px] font-bold uppercase rounded border border-zinc-500/15">Simulado</span>
+                      </div>
                       <span className="text-xs text-teal-600">{brandsData[selectedBrand].category}</span>
                     </div>
                   </div>
