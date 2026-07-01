@@ -188,7 +188,6 @@ Ver carpeta [`customer-discovery/`](./customer-discovery/) con las 3 entrevistas
 ## Demo Video
 
 * **Video de Demostración:** [Link a la carpeta de Google Drive](https://drive.google.com/drive/folders/114yh6pTJhCRPge3lxlT6b4cHFCmEcA4T?usp=sharing)
-* Guion técnico segundo a segundo en [`docs/DEMO_VIDEO_SCRIPT.md`](./docs/DEMO_VIDEO_SCRIPT.md).
 
 ---
 
