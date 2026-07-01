@@ -125,7 +125,7 @@ export default function PitchPresentation() {
           <div className="space-y-4">
             {[
               { step: "1", title: "Custodia Programable", text: "El sponsor deposita USDC en un smart contract de Soroban. Los fondos NO son custodiados por Lumina — quedan bloqueados en escrow y pertenecen al sponsor hasta verificar el impacto." },
-              { step: "2", title: "Oráculo de Impacto Ciego", text: "Cualquier app de impacto (MIRA, EcoForest, EducaReFi) registra una cuenta oráculo. Al completar un hito, firma el hash SHA-256 del reporte — no transmite datos sensibles, cumple HIPAA/GDPR." },
+              { step: "2", title: "Oráculo de Impacto Ciego", text: "Cualquier app de impacto (MIRA, EcoForest, FitSteps) registra una cuenta oráculo. Al completar un hito, firma el hash SHA-256 del reporte — no transmite datos sensibles, cumple HIPAA/GDPR." },
               { step: "3", title: "Liberación Atómica", text: "El contrato verifica la firma del oráculo, valida que el monto coincida con la tarifa configurada, previene doble cobro por hash duplicado, y libera USDC al ejecutor — en un solo bloque." },
               { step: "4", title: "Score Reputacional Soulbound", text: "Cada hito liberado incrementa el Impact Score del sponsor. Un token no transferible ($LUMINA) que certifica su compromiso verificable para reporting ESG." },
             ].map((s) => (

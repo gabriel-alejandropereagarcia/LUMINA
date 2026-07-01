@@ -67,18 +67,18 @@ export default function SandboxLumina() {
     },
     {
       id: "educativa",
-      name: "EducaReFi",
-      tagline: "Financiamiento Programable de Acceso Educativo",
-      description: "Micro-becas on-chain para acceso a educación primaria y capacitación técnica en comunidades rurales argentinas. (Demo conceptual — contrato aún no desplegado).",
-      icon: GraduationCap,
-      hitoPrice: 25,
+      name: "FitSteps",
+      tagline: "Hábitos Saludables y Deporte",
+      description: "Financiamiento de hábitos de movimiento saludable. Adultos mayores completan horas de caminata diaria verificadas por dispositivos móviles. (Demo conceptual — contrato aún no desplegado).",
+      icon: Activity,
+      hitoPrice: 10,
       badge: "simulated",
       badgeLabel: "EJEMPLO SIMULADO — DEMO CONCEPTUAL",
       milestones: 15,
-      usdcFunded: 375,
-      category: "Educación",
+      usdcFunded: 150,
+      category: "Deporte",
       simTxs: [
-        { label: "Simulación: 15 becas completadas — Chaco", date: "2026-06-15", status: "Mock" },
+        { label: "Simulación: 20 adultos mayores completaron caminata diaria — Salta", date: "2026-06-15", status: "Mock" },
       ],
     },
   ];
@@ -88,7 +88,7 @@ export default function SandboxLumina() {
   const ledgerData = [
     { category: "Salud", pct: 40, color: "bg-[var(--teal)]", count: 24, usdc: 960 },
     { category: "Conservación", pct: 35, color: "bg-[var(--green)]", count: 18, usdc: 90 },
-    { category: "Educación", pct: 25, color: "bg-[var(--gold)]", count: 15, usdc: 375 },
+    { category: "Deporte", pct: 25, color: "bg-[var(--gold)]", count: 15, usdc: 150 },
   ];
 
   const sponsorData = [
@@ -392,7 +392,7 @@ export default function SandboxLumina() {
             <ul className="space-y-4 text-sm text-[var(--muted)]">
               <li className="flex items-start gap-2">
                 <Cpu className="h-5 w-5 text-[var(--teal)] flex-shrink-0 mt-0.5" />
-                <span><strong className="text-[var(--foreground)]">Oráculos de Impacto Abiertos:</strong> Cualquier aplicación (MIRA, EcoForest, EducaReFi) puede registrarse como oráculo y certificar hitos de forma descentralizada.</span>
+                <span><strong className="text-[var(--foreground)]">Oráculos de Impacto Abiertos:</strong> Cualquier aplicación (MIRA, EcoForest, FitSteps) puede registrarse como oráculo y certificar hitos de forma descentralizada.</span>
               </li>
               <li className="flex items-start gap-2">
                 <ShieldCheck className="h-5 w-5 text-[var(--teal)] flex-shrink-0 mt-0.5" />
@@ -417,12 +417,12 @@ export default function SandboxLumina() {
             Hoja de Ruta de Expansión del Protocolo
           </h2>
           <p className="text-sm text-[var(--muted)] leading-relaxed">
-            Lumina comienza con Salud (MIRA) como caso de uso validado on-chain. Las categorías Ambiental y Educativa están preparadas para activarse cuando sus contratos de oráculo se desplieguen en Soroban.
+            Lumina comienza con Salud (MIRA) como caso de uso validado on-chain. Las categorías Ambiental y Deporte están preparadas para activarse cuando sus contratos de oráculo se desplieguen en Soroban.
           </p>
           <ul className="space-y-2 text-xs text-[var(--muted)] leading-relaxed pl-4 list-disc">
             <li><strong className="text-[var(--foreground)]">Fase 2 — Ambiental:</strong> EcoForest con verificación satelital on-chain para reforestación nativa.</li>
-            <li><strong className="text-[var(--foreground)]">Fase 3 — Educación:</strong> EducaReFi con micro-becas programables para comunidades rurales.</li>
-            <li><strong className="text-[var(--foreground)]">Fase 4 — Social:</strong> Aperturas a verticalidades de vivienda, agua y seguridad alimentaria.</li>
+            <li><strong className="text-[var(--foreground)]">Fase 3 — Deporte:</strong> FitSteps con hábitos de movimiento saludable e integración móvil.</li>
+            <li><strong className="text-[var(--foreground)]">Fase 4 — Social:</strong> Aperturas a verticalidades de educación, vivienda, agua y seguridad alimentaria.</li>
           </ul>
         </div>
 
