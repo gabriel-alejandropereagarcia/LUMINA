@@ -34,11 +34,9 @@ Validar que Lumina resuelve una necesidad real mediante 5 entrevistas estructura
 5. ¿La barrera para usar blockchain es técnica (no saben) o regulatoria (compliance)?
 
 ### Perfil 4 — Responsable de Calidad (Hospital Materno Infantil)
-1. ¿Cómo manejan actualmente las auditorías de calidad de la atención pediátrica y el cumplimiento de protocolos clínicos?
-2. ¿Qué tan difícil es auditar el impacto real de programas de salud preventiva financiados por terceros?
-3. ¿Cuáles son los mayores desafíos de privacidad al reportar resultados de salud en campo?
-4. Si un contrato inteligente en Stellar liberara fondos automáticamente al completarse un screening verificado por el oráculo del hospital, ¿cómo agilizaría los tiempos de cobro y de auditoría?
-5. ¿El uso de hashes ciegos (SHA-256) en la blockchain resuelve la fricción de confidencialidad de datos clínicos?
+1. Cuando reciben fondos de patrocinadores privados para campañas de salud infantil, ¿cuáles son los mayores obstáculos administrativos que enfrentan para cobrar y justificar que realmente atendieron a los pacientes?
+2. Si existiera un sistema de garantía digital donde el patrocinador deposita los fondos por adelantado, y estos se liberan automáticamente a la cuenta del hospital a las 48 horas de que el sistema médico certifique digitalmente que la consulta o test infantil se realizó, ¿cómo afectaría a la viabilidad de sus programas de salud preventiva?
+3. Para cumplir con las estrictas leyes de protección de datos médicos (secreto profesional), ¿qué tan valioso es un sistema que certifique que la atención médica efectivamente ocurrió emitiendo un 'código digital encriptado único' de validación, sin compartir nombres ni datos personales del niño o la familia fuera del hospital?
 
 ### Perfil 5 — Responsable de Administración y RSE (Sector Minero)
 1. ¿Cómo coordinan y auditan actualmente el destino de los fondos comunitarios de RSE?

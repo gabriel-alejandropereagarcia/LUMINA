@@ -1,39 +1,44 @@
-# Entrevista 3 — Pediatra / Clínico Infantil
+# Entrevista de Validación: Calidad de Salud Pública y Privacidad
 
-## Datos del entrevistado
+* **Entrevistada:** Dra. Mónica Flores
+* **Cargo:** Responsable de Calidad y Procesos Asistenciales
+* **Organización:** Hospital Materno Infantil (Salta, Argentina)
+* **Fecha:** 30 de Junio de 2026
+* **Foco de Validación:** Fricción administrativa en convenios de RSE, confidencialidad de datos médicos (Ley 25.326), validación anónima de consultas y agilidad en el flujo de fondos.
 
-- **Rol:** Pediatra / Neurólogo Infantil
-- **Organización:** [INSERTAR HOSPITAL / CONSULTORIO / ONG]
-- **Experiencia:** Atención clínica infantil, screening de neurodesarrollo
+---
 
-## Grabación
+### Bloque 1: El problema de la burocracia y la justificación de fondos
 
-Link público: [INSERTAR LINK DE GOOGLE DRIVE O YOUTUBE]
+**Pregunta 1: Cuando el hospital recibe fondos de patrocinadores privados (empresas o fundaciones) para campañas de salud infantil, ¿cuáles son los mayores obstáculos administrativos que enfrentan para cobrar y justificar que realmente atendieron a los pacientes?**
 
-## Problema validado
+> **Respuesta de la Dra. Mónica Flores:**
+> "El principal problema es el tiempo que nos lleva rendir cuentas y el papeleo. Las empresas patrocinadoras nos exigen informes sumamente detallados para liberar los pagos, lo que a veces retrasa los desembolsos varios meses. 
+> Además, hay una tensión constante: para justificar el gasto ante sus auditores, a veces nos piden planillas con los nombres, DNI o historias clínicas de los pacientes atendidos. Nosotros no podemos entregar esa información por secreto profesional y regulaciones legales. Termina siendo un ida y vuelta burocrático desgastante donde el personal de salud pierde tiempo valioso de atención médica cargando datos en planillas."
 
-> "Hacemos M-CHAT cuando tenemos tiempo, pero no hay incentivo para hacerlo de forma sistemática. Es carga extra no remunerada. Si cada screening tuviera un retorno económico para el centro, lo haríamos de rutina."
+---
 
-## Solución actual
+### Bloque 2: Agilidad en el flujo de fondos (Fideicomiso Automatizado)
 
-- Screening M-CHAT solo cuando el pediatra lo considera necesario (no sistemático)
-- Sin financiamiento externo para cribados masivos: depende del presupuesto del hospital
-- Seguimiento post-screening positivo: variable, depende de obra social o recursos familiares
-- No hay incentivo financiero para realizar más screenings
+**Pregunta 2: Si existiera un sistema de garantía digital donde el patrocinador deposita los fondos por adelantado, y estos se liberan de forma automática a la cuenta del hospital a las 48 horas de que el sistema médico certifique digitalmente que la consulta o test infantil se realizó, ¿cómo afectaría a la viabilidad de sus programas de salud preventiva?**
 
-## Insight clave para Lumina
+> **Respuesta de la Dra. Mónica Flores:**
+> "Sería un cambio muy positivo. La prevención (como el testeo temprano de neurodesarrollo) requiere constancia. Muchas campañas preventivas se cortan a mitad de año porque las ONGs ejecutoras o el hospital no tienen flujo de caja para pagar las horas extras de los médicos o comprar insumos básicos debido a las demoras administrativas del sponsor. 
+> Saber que el dinero está asegurado en un fondo de garantía y que se acredita de manera automática a medida que el sistema registra la atención nos daría previsibilidad financiera total para mantener las campañas activas."
 
-El pediatra confirmó que **el incentivo financiero programable** (40 USDC por screening liberado on-chain) transforma la dinámica: hoy el screening es carga no remunerada; con Lumina, cada screening completado genera retorno directo a la plataforma/centro.
+---
 
-> "Si cada chico que evalúo genera 40 dólares para el centro, puede justificar que dedique 15 minutos al cribado en vez de derivar directamente. Hoy no puedo justificar ese tiempo."
+### Bloque 3: Resguardo de Confidencialidad (Validación Anónima Ciega)
 
-## Reacción a la demo
+**Pregunta 3: Para cumplir con las estrictas leyes de protección de datos médicos (secreto profesional), ¿qué tan valioso es un sistema que certifique que la atención médica efectivamente ocurrió emitiendo un 'código digital encriptado único' de validación, sin compartir nombres ni datos personales del niño o la familia fuera del hospital?**
 
-- Validó que el hash SHA-256 del PDF report protege privacidad del paciente
-- Preocupación: ¿qué pasa con falsos positivos? ¿El oráculo firma aunque el screening sea inconcluso?
-  - Respuesta: el oráculo firma siempre que el cuestionario se complete (no importa el resultado), porque el hito es "evaluación realizada", no "diagnóstico confirmado"
-- Sugerencia: el score reputacional del sponsor (LUMINA soulbound) debería incluir métricas de impacto clínico (no solo cantidad)
+> **Respuesta de la Dra. Mónica Flores:**
+> "Esto es un requisito indispensable. Legalmente, el hospital no puede y no debe compartir datos sensibles de los niños atendidos con sponsors corporativos; estaríamos violando la Ley de Protección de Datos Personales (Ley 25.326). 
+> Si la tecnología nos permite emitir una 'certificación de consulta realizada' codificada y anónima que el sponsor pueda auditar como válida, pero que sea ciega en cuanto a los datos del paciente, resolveríamos el mayor obstáculo legal que hoy traba la cooperación entre la medicina pública y el financiamiento privado."
 
-## Cita destacada
+---
 
-> "El problema no es que no existan herramientas de screening. El problema es que nadie nos paga por usarlas. Si Lumina financia cada evaluación de forma automática, dejamos de mirar el reloj y empezamos a mirar al paciente."
+### 📌 Conclusiones de la Validación:
+1. **Validación del dolor administrativo:** La tensión entre la rendición de cuentas para el sponsor y el secreto profesional médico es una fricción real en el ámbito hospitalario.
+2. **Validación de la solución (Certificación Ciega):** La propuesta de Lumina de encriptar el hash del reporte PDF (sin subir datos de pacientes a la blockchain) es la única vía legalmente viable para que el sector salud acepte auditorías de RSE automatizadas.
+3. **Validación del Escrow:** La automatización de pagos elimina las interrupciones en las campañas preventivas por desfasajes de flujo de fondos.
