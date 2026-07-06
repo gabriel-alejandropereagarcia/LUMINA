@@ -1,0 +1,19 @@
+{
+  "name": "lumina-contracts-evm",
+  "version": "1.0.0",
+  "description": "Lumina Protocol EVM Smart Contracts (Avalanche & Base)",
+  "main": "index.js",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.2"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}
