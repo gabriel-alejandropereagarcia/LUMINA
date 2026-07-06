@@ -226,3 +226,80 @@ fn test_unauthorized_initialize() {
     client.initialize(&admin, &usdc_address, &oracle, &40i128, &platform_wallet);
 }
 
+#[test]
+fn test_deposit_lock_no_reset_and_clear_on_zero() {
+    let env = Env::default();
+    env.mock_all_auths();
+
+    let admin = Address::generate(&env);
+    let sponsor = Address::generate(&env);
+    let oracle = Address::generate(&env);
+    let platform_wallet = Address::generate(&env);
+
+    let usdc_admin = Address::generate(&env);
+    let usdc_address = env.register_stellar_asset_contract_v2(usdc_admin).address();
+    let usdc_sac_client = token::StellarAssetClient::new(&env, &usdc_address);
+
+    usdc_sac_client.mint(&sponsor, &1000i128);
+
+    let contract_id = env.register(LuminaEscrowContract, ());
+    let client = LuminaEscrowContractClient::new(&env, &contract_id);
+
+    client.initialize(&admin, &usdc_address, &oracle, &40i128, &platform_wallet);
+
+    // 1. Primer depósito setea el timestamp a T = 0
+    env.ledger().set_timestamp(0);
+    client.deposit(&sponsor, &100i128);
+
+    // 2. Segundo depósito a T = 100 no debe resetear el timestamp
+    env.ledger().set_timestamp(100);
+    client.deposit(&sponsor, &100i128);
+
+    // 3. Avanzar 360 días desde T = 0 (31,104,000 segundos)
+    env.ledger().set_timestamp(31_104_000);
+    
+    // Debería poder retirar porque el lock empezó en T = 0 y no se reseteó a T = 100.
+    // Retirar parcialmente (deja balance en 100)
+    client.withdraw_escrow(&sponsor, &100i128);
+    assert_eq!(client.get_escrow_balance(&sponsor), 100i128);
+
+    // 4. Retirar el resto, balance llega a 0, se remueve el locktimestamp
+    client.withdraw_escrow(&sponsor, &100i128);
+    assert_eq!(client.get_escrow_balance(&sponsor), 0);
+
+    // 5. Depositar nuevamente a T = 40_000_000, debería empezar un NUEVO lock
+    env.ledger().set_timestamp(40_000_000);
+    client.deposit(&sponsor, &100i128);
+
+    // Intentar retirar inmediatamente debería fallar
+    let withdraw_fail = client.try_withdraw_escrow(&sponsor, &100i128);
+    assert!(withdraw_fail.is_err());
+}
+
+#[test]
+fn test_transfer_admin() {
+    let env = Env::default();
+    env.mock_all_auths();
+
+    let admin = Address::generate(&env);
+    let new_admin = Address::generate(&env);
+    let usdc_address = Address::generate(&env);
+    let oracle = Address::generate(&env);
+    let platform_wallet = Address::generate(&env);
+
+    let contract_id = env.register(LuminaEscrowContract, ());
+    let client = LuminaEscrowContractClient::new(&env, &contract_id);
+
+    client.initialize(&admin, &usdc_address, &oracle, &40i128, &platform_wallet);
+
+    // Transferir gobernanza del admin original al nuevo admin
+    client.transfer_admin(&new_admin);
+
+    // Intentar agregar un oráculo. add_oracle leerá el Admin de storage (que ahora debe ser new_admin).
+    // Con mock_all_auths() activo, esto validará que new_admin autorizó la llamada.
+    let another_oracle = Address::generate(&env);
+    client.add_oracle(&another_oracle, &50i128);
+    
+    assert_eq!(client.is_oracle(&another_oracle), true);
+}
+

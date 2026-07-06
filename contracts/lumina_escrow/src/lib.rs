@@ -66,6 +66,15 @@ pub struct OracleRemovedEvent {
     pub oracle: Address,
 }
 
+#[contractevent]
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct AdminTransferredEvent {
+    #[topic]
+    pub old_admin: Address,
+    #[topic]
+    pub new_admin: Address,
+}
+
 #[contracterror]
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[repr(u32)]
@@ -247,9 +256,11 @@ impl LuminaEscrowContract {
         env.storage().persistent().set(&escrow_key, &new_balance);
         env.storage().persistent().extend_ttl(&escrow_key, 17280, 518400);
 
-        // Registrar timestamp de bloqueo
+        // Registrar timestamp de bloqueo (solo si no existe uno activo, para no resetear el timer)
         let lock_key = DataKey::LockTimestamp(sponsor.clone());
-        env.storage().persistent().set(&lock_key, &env.ledger().timestamp());
+        if !env.storage().persistent().has(&lock_key) {
+            env.storage().persistent().set(&lock_key, &env.ledger().timestamp());
+        }
         env.storage().persistent().extend_ttl(&lock_key, 17280, 518400);
 
         // Publicar evento de depósito usando la macro #[contractevent]
@@ -292,6 +303,10 @@ impl LuminaEscrowContract {
         let new_balance = current_balance - amount;
         env.storage().persistent().set(&escrow_key, &new_balance);
         env.storage().persistent().extend_ttl(&escrow_key, 17280, 518400);
+
+        if new_balance == 0 {
+            env.storage().persistent().remove(&lock_key);
+        }
 
         // Transferir USDC de vuelta al sponsor
         let usdc_addr: Address = env.storage().instance().get(&DataKey::UsdcToken).ok_or(Error::NotInitialized)?;
@@ -360,6 +375,11 @@ impl LuminaEscrowContract {
         env.storage().persistent().set(&escrow_key, &new_balance);
         env.storage().persistent().extend_ttl(&escrow_key, 17280, 518400);
 
+        if new_balance == 0 {
+            let lock_key = DataKey::LockTimestamp(sponsor.clone());
+            env.storage().persistent().remove(&lock_key);
+        }
+
         // Incrementar score de impacto del Sponsor (Reputación Soulbound)
         let score_key = DataKey::ImpactScore(sponsor.clone());
         let current_score: i128 = env.storage().persistent().get(&score_key).unwrap_or(0);
@@ -407,6 +427,24 @@ impl LuminaEscrowContract {
     pub fn get_impact_score(env: Env, sponsor: Address) -> i128 {
         let score_key = DataKey::ImpactScore(sponsor);
         env.storage().persistent().get(&score_key).unwrap_or(0)
+    }
+
+    /// Transfiere la gobernanza del contrato (Admin) a una nueva dirección.
+    /// Requiere la firma del admin actual y la firma del nuevo admin para confirmación.
+    pub fn transfer_admin(env: Env, new_admin: Address) -> Result<(), Error> {
+        let admin: Address = env.storage().instance().get(&DataKey::Admin).ok_or(Error::NotInitialized)?;
+        admin.require_auth();
+        new_admin.require_auth();
+
+        env.storage().instance().set(&DataKey::Admin, &new_admin);
+
+        AdminTransferredEvent {
+            old_admin: admin,
+            new_admin,
+        }
+        .publish(&env);
+
+        Ok(())
     }
 
     /// Verifica si un reporte (hash de PDF) ya fue procesado on-chain.

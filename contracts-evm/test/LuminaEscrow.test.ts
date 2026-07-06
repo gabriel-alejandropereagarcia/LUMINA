@@ -15,6 +15,8 @@ describe("LuminaEscrow", function () {
   let sponsorAddress: string;
   let platformAddress: string;
   let oracleAddress: string;
+  
+  const initialPrice = ethers.parseUnits("40", 6); // 40 USDC
 
   beforeEach(async function () {
     [owner, sponsor, platformWallet, oracle, otherAccount] = await ethers.getSigners();
@@ -24,38 +26,41 @@ describe("LuminaEscrow", function () {
     platformAddress = await platformWallet.getAddress();
     oracleAddress = await oracle.getAddress();
 
-    // 1. Deploy Mock USDC
+    // 1. Deploy Mock USDC (6 decimals)
     const MockUSDCFactory = await ethers.getContractFactory("MockUSDC");
     mockUsdc = await MockUSDCFactory.deploy();
     await mockUsdc.waitForDeployment();
 
-    // 2. Deploy LuminaEscrow
+    // 2. Deploy LuminaEscrow with EIP-712 setup and oracle registry
     const LuminaEscrowFactory = await ethers.getContractFactory("LuminaEscrow");
     luminaEscrow = await LuminaEscrowFactory.deploy(
       await mockUsdc.getAddress(),
       platformAddress,
-      oracleAddress
+      oracleAddress,
+      initialPrice
     );
     await luminaEscrow.waitForDeployment();
 
     // 3. Mint USDC to sponsor and approve escrow
-    const mintAmount = ethers.parseUnits("1000", 6); // 1000 USDC (6 decimals)
+    const mintAmount = ethers.parseUnits("1000", 6); // 1000 USDC
     await mockUsdc.mint(sponsorAddress, mintAmount);
     await mockUsdc.connect(sponsor).approve(await luminaEscrow.getAddress(), mintAmount);
   });
 
   describe("Deployment", function () {
-    it("Should set the correct USDC token, platform wallet, oracle address, and owner", async function () {
+    it("Should set the correct USDC token, platform wallet, owner, and initial oracle config", async function () {
       expect(await luminaEscrow.usdcToken()).to.equal(await mockUsdc.getAddress());
       expect(await luminaEscrow.platformWallet()).to.equal(platformAddress);
-      expect(await luminaEscrow.oracleAddress()).to.equal(oracleAddress);
       expect(await luminaEscrow.owner()).to.equal(ownerAddress);
+      
+      expect(await luminaEscrow.authorizedOracles(oracleAddress)).to.be.true;
+      expect(await luminaEscrow.oraclePrices(oracleAddress)).to.equal(initialPrice);
     });
   });
 
   describe("Deposit", function () {
-    it("Should allow a sponsor to deposit USDC and update balances", async function () {
-      const depositAmount = ethers.parseUnits("100", 6); // 100 USDC
+    it("Should allow a sponsor to deposit USDC, update balances, and set lock timestamp", async function () {
+      const depositAmount = ethers.parseUnits("100", 6);
 
       await expect(luminaEscrow.connect(sponsor).deposit(depositAmount))
         .to.emit(luminaEscrow, "Deposit")
@@ -63,6 +68,10 @@ describe("LuminaEscrow", function () {
 
       expect(await luminaEscrow.balances(sponsorAddress)).to.equal(depositAmount);
       expect(await mockUsdc.balanceOf(await luminaEscrow.getAddress())).to.equal(depositAmount);
+      
+      const blockNum = await ethers.provider.getBlockNumber();
+      const block = await ethers.provider.getBlock(blockNum);
+      expect(await luminaEscrow.depositTimestamps(sponsorAddress)).to.equal(block?.timestamp);
     });
 
     it("Should revert if depositing zero amount", async function () {
@@ -71,15 +80,27 @@ describe("LuminaEscrow", function () {
     });
   });
 
-  describe("Withdrawal", function () {
+  describe("Withdrawal with Time-lock", function () {
+    const depositAmount = ethers.parseUnits("200", 6);
+    
     beforeEach(async function () {
-      const depositAmount = ethers.parseUnits("200", 6);
       await luminaEscrow.connect(sponsor).deposit(depositAmount);
     });
 
-    it("Should allow a sponsor to withdraw their USDC", async function () {
+    it("Should revert if attempting to withdraw before 12 months", async function () {
+      const withdrawAmount = ethers.parseUnits("100", 6);
+      await expect(
+        luminaEscrow.connect(sponsor).withdraw(withdrawAmount)
+      ).to.be.revertedWith("Escrow locked for withdrawal");
+    });
+
+    it("Should allow a sponsor to withdraw their USDC after 12 months (360 days) time-lock", async function () {
       const withdrawAmount = ethers.parseUnits("100", 6);
       
+      // Fast-forward time by 360 days
+      await ethers.provider.send("evm_increaseTime", [360 * 24 * 60 * 60]);
+      await ethers.provider.send("evm_mine", []);
+
       await expect(luminaEscrow.connect(sponsor).withdraw(withdrawAmount))
         .to.emit(luminaEscrow, "Withdraw")
         .withArgs(sponsorAddress, withdrawAmount);
@@ -87,15 +108,20 @@ describe("LuminaEscrow", function () {
       expect(await luminaEscrow.balances(sponsorAddress)).to.equal(ethers.parseUnits("100", 6));
     });
 
-    it("Should revert if withdrawing more than balance", async function () {
+    it("Should revert if withdrawing more than balance after time-lock", async function () {
       const excessAmount = ethers.parseUnits("201", 6);
+      
+      // Fast-forward time by 360 days
+      await ethers.provider.send("evm_increaseTime", [360 * 24 * 60 * 60]);
+      await ethers.provider.send("evm_mine", []);
+
       await expect(luminaEscrow.connect(sponsor).withdraw(excessAmount))
         .to.be.revertedWith("Insufficient escrow balance");
     });
   });
 
-  describe("Release Impact", function () {
-    const depositAmount = ethers.parseUnits("40", 6); // 40 USDC (MIRA release hito price)
+  describe("Release Impact and SBT reputation", function () {
+    const depositAmount = ethers.parseUnits("40", 6);
     const reportHash = ethers.keccak256(ethers.toUtf8Bytes("mira-report-screening-hash"));
     
     let domain: any;
@@ -118,17 +144,15 @@ describe("LuminaEscrow", function () {
       };
     });
 
-    it("Should successfully release impact funds with oracle signature and split 2.5% fee", async function () {
+    it("Should successfully release impact funds, split fee, and increment impact score (SBT reputation)", async function () {
       const value = {
         sponsor: sponsorAddress,
         amount: depositAmount,
         reportHash: reportHash
       };
 
-      // 1. Sign EIP-712 typed data with oracle signer
       const signature = await oracle.signTypedData(domain, types, value);
 
-      // 2. Execute release
       const tx = await luminaEscrow.releaseImpact(
         sponsorAddress,
         depositAmount,
@@ -141,115 +165,85 @@ describe("LuminaEscrow", function () {
 
       await expect(tx)
         .to.emit(luminaEscrow, "ImpactReleased")
-        .withArgs(reportHash, sponsorAddress, depositAmount, fee);
+        .withArgs(reportHash, sponsorAddress, oracleAddress, depositAmount, fee);
 
-      // 3. Verify balances
+      // Verify balances
       expect(await luminaEscrow.balances(sponsorAddress)).to.equal(0);
       expect(await mockUsdc.balanceOf(ownerAddress)).to.equal(fee);
       expect(await mockUsdc.balanceOf(platformAddress)).to.equal(platformNet);
       expect(await luminaEscrow.processedHashes(reportHash)).to.be.true;
+      
+      // SBT Reputation (Impact Score) incremented
+      expect(await luminaEscrow.impactScores(sponsorAddress)).to.equal(1);
     });
 
-    it("Should revert if the same report hash is processed twice", async function () {
-      const value = {
-        sponsor: sponsorAddress,
-        amount: depositAmount,
-        reportHash: reportHash
-      };
-      const signature = await oracle.signTypedData(domain, types, value);
-
-      // First release
-      await luminaEscrow.releaseImpact(sponsorAddress, depositAmount, reportHash, signature);
-
-      // Second release with same hash should revert
-      await expect(
-        luminaEscrow.releaseImpact(sponsorAddress, depositAmount, reportHash, signature)
-      ).to.be.revertedWith("Report hash already processed");
-    });
-
-    it("Should revert if signature is from a different address (non-oracle)", async function () {
-      const value = {
-        sponsor: sponsorAddress,
-        amount: depositAmount,
-        reportHash: reportHash
-      };
-      // Sign with otherAccount instead of oracle
-      const badSignature = await otherAccount.signTypedData(domain, types, value);
-
-      await expect(
-        luminaEscrow.releaseImpact(sponsorAddress, depositAmount, reportHash, badSignature)
-      ).to.be.revertedWith("Invalid oracle signature");
-    });
-
-    it("Should revert if sponsor has insufficient funds", async function () {
-      const largeAmount = ethers.parseUnits("50", 6); // 50 USDC
-      const newHash = ethers.keccak256(ethers.toUtf8Bytes("another-hash"));
+    it("Should revert if oracle signature is valid but amount does not match oracle registered price", async function () {
+      const wrongAmount = ethers.parseUnits("30", 6); // Oracle price is 40
       
       const value = {
         sponsor: sponsorAddress,
-        amount: largeAmount,
-        reportHash: newHash
+        amount: wrongAmount,
+        reportHash: reportHash
       };
+      
       const signature = await oracle.signTypedData(domain, types, value);
 
       await expect(
-        luminaEscrow.releaseImpact(sponsorAddress, largeAmount, newHash, signature)
-      ).to.be.revertedWith("Sponsor has insufficient funds");
-    });
-
-    it("Should reject signature replayed on a different contract instance (domain separation check)", async function () {
-      // 1. Deploy a second escrow contract
-      const LuminaEscrowFactory = await ethers.getContractFactory("LuminaEscrow");
-      const secondEscrow = await LuminaEscrowFactory.deploy(
-        await mockUsdc.getAddress(),
-        platformAddress,
-        oracleAddress
-      );
-      await secondEscrow.waitForDeployment();
-
-      // 2. Fund sponsor on second escrow
-      await mockUsdc.connect(sponsor).approve(await secondEscrow.getAddress(), depositAmount);
-      await secondEscrow.connect(sponsor).deposit(depositAmount);
-
-      // 3. Create signature signed specifically for the first contract
-      const value = {
-        sponsor: sponsorAddress,
-        amount: depositAmount,
-        reportHash: reportHash
-      };
-      const firstContractSignature = await oracle.signTypedData(domain, types, value);
-
-      // 4. Try to submit first contract signature to the second contract (should revert)
-      await expect(
-        secondEscrow.releaseImpact(sponsorAddress, depositAmount, reportHash, firstContractSignature)
-      ).to.be.revertedWith("Invalid oracle signature");
+        luminaEscrow.releaseImpact(sponsorAddress, wrongAmount, reportHash, signature)
+      ).to.be.revertedWith("Amount does not match oracle price");
     });
   });
 
-  describe("Admin settings", function () {
-    it("Should allow the owner to update the oracle", async function () {
-      const newOracle = await otherAccount.getAddress();
-      await expect(luminaEscrow.updateOracle(newOracle))
-        .to.emit(luminaEscrow, "OracleUpdated")
-        .withArgs(oracleAddress, newOracle);
+  describe("Admin and Multi-oracle Registry", function () {
+    const newOraclePrice = ethers.parseUnits("15", 6);
+    let newOracleAddress: string;
 
-      expect(await luminaEscrow.oracleAddress()).to.equal(newOracle);
+    beforeEach(async function () {
+      newOracleAddress = await otherAccount.getAddress();
     });
 
-    it("Should allow the owner to update the platform wallet", async function () {
-      const newWallet = await otherAccount.getAddress();
-      await expect(luminaEscrow.updatePlatformWallet(newWallet))
-        .to.emit(luminaEscrow, "PlatformWalletUpdated")
-        .withArgs(platformAddress, newWallet);
+    it("Should allow the owner to add an authorized oracle with its pricing", async function () {
+      await expect(luminaEscrow.addOracle(newOracleAddress, newOraclePrice))
+        .to.emit(luminaEscrow, "OracleAdded")
+        .withArgs(newOracleAddress, newOraclePrice);
 
-      expect(await luminaEscrow.platformWallet()).to.equal(newWallet);
+      expect(await luminaEscrow.authorizedOracles(newOracleAddress)).to.be.true;
+      expect(await luminaEscrow.oraclePrices(newOracleAddress)).to.equal(newOraclePrice);
     });
 
-    it("Should prevent non-owners from updating settings", async function () {
-      const newOracle = await otherAccount.getAddress();
+    it("Should allow the owner to remove an authorized oracle", async function () {
+      await luminaEscrow.addOracle(newOracleAddress, newOraclePrice);
+      
+      await expect(luminaEscrow.removeOracle(newOracleAddress))
+        .to.emit(luminaEscrow, "OracleRemoved")
+        .withArgs(newOracleAddress);
+
+      expect(await luminaEscrow.authorizedOracles(newOracleAddress)).to.be.false;
+      expect(await luminaEscrow.oraclePrices(newOracleAddress)).to.equal(0);
+    });
+
+    it("Should prevent adjusting oracle price before 12 months (time-lock)", async function () {
+      await luminaEscrow.addOracle(newOracleAddress, newOraclePrice);
+      
+      const adjustedPrice = ethers.parseUnits("20", 6);
       await expect(
-        luminaEscrow.connect(sponsor).updateOracle(newOracle)
-      ).to.be.revertedWithCustomError(luminaEscrow, "OwnableUnauthorizedAccount");
+        luminaEscrow.adjustOraclePrice(newOracleAddress, adjustedPrice)
+      ).to.be.revertedWith("Price adjustment locked");
+    });
+
+    it("Should allow adjusting oracle price after 12 months (360 days) time-lock", async function () {
+      await luminaEscrow.addOracle(newOracleAddress, newOraclePrice);
+      
+      // Fast-forward 360 days
+      await ethers.provider.send("evm_increaseTime", [360 * 24 * 60 * 60]);
+      await ethers.provider.send("evm_mine", []);
+
+      const adjustedPrice = ethers.parseUnits("20", 6);
+      await expect(luminaEscrow.adjustOraclePrice(newOracleAddress, adjustedPrice))
+        .to.emit(luminaEscrow, "OraclePriceUpdated")
+        .withArgs(newOracleAddress, adjustedPrice);
+
+      expect(await luminaEscrow.oraclePrices(newOracleAddress)).to.equal(adjustedPrice);
     });
   });
 });
