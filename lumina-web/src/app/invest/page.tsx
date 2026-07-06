@@ -68,8 +68,8 @@ export default function InvestPortal() {
   const calculatedUSDC = fiatAmount ? (Number(fiatAmount) / exchangeRate).toFixed(2) : "0.00";
 
   const handleApprove = async () => {
-    if (!address) return;
-    const cleanAmount = Math.abs(Number(amount));
+    if (!address || loading) return;
+    const cleanAmount = Number(amount);
     if (isNaN(cleanAmount) || cleanAmount <= 0) {
       setError("Por favor ingresa un monto válido.");
       toast({
@@ -125,8 +125,8 @@ export default function InvestPortal() {
   };
 
   const handleDeposit = async () => {
-    if (!address) return;
-    const cleanAmount = Math.abs(Number(amount));
+    if (!address || loading) return;
+    const cleanAmount = Number(amount);
     if (isNaN(cleanAmount) || cleanAmount <= 0) {
       setError("Por favor ingresa un monto válido.");
       toast({
@@ -183,9 +183,33 @@ export default function InvestPortal() {
     }
   };
 
-  // Simulación del flujo SEP-24 / Transferencias 3.0
   const handleInitiateSep24 = async () => {
-    if (!fiatAmount || !cuit || !alias) return;
+    if (!fiatAmount || !cuit || !alias || fiatLoading) return;
+
+    // Validar CUIT (debe tener exactamente 11 números)
+    const cleanCuit = cuit.replace(/[^\d]/g, "");
+    if (cleanCuit.length !== 11) {
+      setError("CUIT corporativo inválido. Debe contener exactamente 11 dígitos.");
+      toast({
+        type: "error",
+        title: "CUIT Inválido",
+        message: "El CUIT debe tener exactamente 11 dígitos numéricos."
+      });
+      return;
+    }
+
+    // Validar Alias o CBU/CVU (al menos 6 caracteres)
+    if (alias.trim().length < 6) {
+      setError("Alias/CBU de origen inválido. Debe tener al menos 6 caracteres.");
+      toast({
+        type: "error",
+        title: "Alias/CBU Inválido",
+        message: "Por favor ingresa un Alias o CBU válido."
+      });
+      return;
+    }
+
+    setError(null);
     setFiatLoading(true);
     setFiatStatus("Llamando al Endpoint SEP-24 del Anchor...");
     
@@ -199,6 +223,7 @@ export default function InvestPortal() {
   };
 
   const handleConfirmBankTransfer = async () => {
+    if (fiatLoading) return;
     setFiatLoading(true);
     setFiatStatus("Detectando acreditación de Transferencia 3.0 en pesos (ARS)...");
     
