@@ -97,22 +97,38 @@ describe("LuminaEscrow", function () {
   describe("Release Impact", function () {
     const depositAmount = ethers.parseUnits("40", 6); // 40 USDC (MIRA release hito price)
     const reportHash = ethers.keccak256(ethers.toUtf8Bytes("mira-report-screening-hash"));
+    
+    let domain: any;
+    const types = {
+      ReleaseImpact: [
+        { name: "sponsor", type: "address" },
+        { name: "amount", type: "uint256" },
+        { name: "reportHash", type: "bytes32" }
+      ]
+    };
 
     beforeEach(async function () {
       await luminaEscrow.connect(sponsor).deposit(depositAmount);
+      
+      domain = {
+        name: "LuminaEscrow",
+        version: "1",
+        chainId: (await ethers.provider.getNetwork()).chainId,
+        verifyingContract: await luminaEscrow.getAddress()
+      };
     });
 
     it("Should successfully release impact funds with oracle signature and split 2.5% fee", async function () {
-      // 1. Reconstruct message hash as in Solidity (keccak256 of packed sponsor, amount, reportHash)
-      const messageHash = ethers.solidityPackedKeccak256(
-        ["address", "uint256", "bytes32"],
-        [sponsorAddress, depositAmount, reportHash]
-      );
+      const value = {
+        sponsor: sponsorAddress,
+        amount: depositAmount,
+        reportHash: reportHash
+      };
 
-      // 2. Sign message with oracle signer
-      const signature = await oracle.signMessage(ethers.getBytes(messageHash));
+      // 1. Sign EIP-712 typed data with oracle signer
+      const signature = await oracle.signTypedData(domain, types, value);
 
-      // 3. Execute release
+      // 2. Execute release
       const tx = await luminaEscrow.releaseImpact(
         sponsorAddress,
         depositAmount,
@@ -127,7 +143,7 @@ describe("LuminaEscrow", function () {
         .to.emit(luminaEscrow, "ImpactReleased")
         .withArgs(reportHash, sponsorAddress, depositAmount, fee);
 
-      // 4. Verify balances
+      // 3. Verify balances
       expect(await luminaEscrow.balances(sponsorAddress)).to.equal(0);
       expect(await mockUsdc.balanceOf(ownerAddress)).to.equal(fee);
       expect(await mockUsdc.balanceOf(platformAddress)).to.equal(platformNet);
@@ -135,11 +151,12 @@ describe("LuminaEscrow", function () {
     });
 
     it("Should revert if the same report hash is processed twice", async function () {
-      const messageHash = ethers.solidityPackedKeccak256(
-        ["address", "uint256", "bytes32"],
-        [sponsorAddress, depositAmount, reportHash]
-      );
-      const signature = await oracle.signMessage(ethers.getBytes(messageHash));
+      const value = {
+        sponsor: sponsorAddress,
+        amount: depositAmount,
+        reportHash: reportHash
+      };
+      const signature = await oracle.signTypedData(domain, types, value);
 
       // First release
       await luminaEscrow.releaseImpact(sponsorAddress, depositAmount, reportHash, signature);
@@ -151,12 +168,13 @@ describe("LuminaEscrow", function () {
     });
 
     it("Should revert if signature is from a different address (non-oracle)", async function () {
-      const messageHash = ethers.solidityPackedKeccak256(
-        ["address", "uint256", "bytes32"],
-        [sponsorAddress, depositAmount, reportHash]
-      );
+      const value = {
+        sponsor: sponsorAddress,
+        amount: depositAmount,
+        reportHash: reportHash
+      };
       // Sign with otherAccount instead of oracle
-      const badSignature = await otherAccount.signMessage(ethers.getBytes(messageHash));
+      const badSignature = await otherAccount.signTypedData(domain, types, value);
 
       await expect(
         luminaEscrow.releaseImpact(sponsorAddress, depositAmount, reportHash, badSignature)
@@ -164,17 +182,47 @@ describe("LuminaEscrow", function () {
     });
 
     it("Should revert if sponsor has insufficient funds", async function () {
-      const largeAmount = ethers.parseUnits("50", 6); // 50 USDC (sponsor only deposited 40)
+      const largeAmount = ethers.parseUnits("50", 6); // 50 USDC
       const newHash = ethers.keccak256(ethers.toUtf8Bytes("another-hash"));
-      const messageHash = ethers.solidityPackedKeccak256(
-        ["address", "uint256", "bytes32"],
-        [sponsorAddress, largeAmount, newHash]
-      );
-      const signature = await oracle.signMessage(ethers.getBytes(messageHash));
+      
+      const value = {
+        sponsor: sponsorAddress,
+        amount: largeAmount,
+        reportHash: newHash
+      };
+      const signature = await oracle.signTypedData(domain, types, value);
 
       await expect(
         luminaEscrow.releaseImpact(sponsorAddress, largeAmount, newHash, signature)
       ).to.be.revertedWith("Sponsor has insufficient funds");
+    });
+
+    it("Should reject signature replayed on a different contract instance (domain separation check)", async function () {
+      // 1. Deploy a second escrow contract
+      const LuminaEscrowFactory = await ethers.getContractFactory("LuminaEscrow");
+      const secondEscrow = await LuminaEscrowFactory.deploy(
+        await mockUsdc.getAddress(),
+        platformAddress,
+        oracleAddress
+      );
+      await secondEscrow.waitForDeployment();
+
+      // 2. Fund sponsor on second escrow
+      await mockUsdc.connect(sponsor).approve(await secondEscrow.getAddress(), depositAmount);
+      await secondEscrow.connect(sponsor).deposit(depositAmount);
+
+      // 3. Create signature signed specifically for the first contract
+      const value = {
+        sponsor: sponsorAddress,
+        amount: depositAmount,
+        reportHash: reportHash
+      };
+      const firstContractSignature = await oracle.signTypedData(domain, types, value);
+
+      // 4. Try to submit first contract signature to the second contract (should revert)
+      await expect(
+        secondEscrow.releaseImpact(sponsorAddress, depositAmount, reportHash, firstContractSignature)
+      ).to.be.revertedWith("Invalid oracle signature");
     });
   });
 

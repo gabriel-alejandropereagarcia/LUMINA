@@ -4,6 +4,7 @@ pragma solidity ^0.8.20;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol";
+import "@openzeppelin/contracts/utils/cryptography/EIP712.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
@@ -13,7 +14,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
  * Sponsors deposit USDC, which is held in escrow and released to the platform wallet only when
  * the authorized Oracle signs a validation hash of the clinical/ecological/educational milestone.
  */
-contract LuminaEscrow is ReentrancyGuard, Ownable {
+contract LuminaEscrow is ReentrancyGuard, Ownable, EIP712 {
     using ECDSA for bytes32;
 
     IERC20 public immutable usdcToken;
@@ -22,6 +23,11 @@ contract LuminaEscrow is ReentrancyGuard, Ownable {
     
     // 2.5% Fee split (expressed in basis points, where 10000 = 100%)
     uint256 public constant FEE_BPS = 250; 
+
+    // EIP-712 Type Hash for releaseImpact signature verification
+    bytes32 public constant RELEASE_TYPEHASH = keccak256(
+        "ReleaseImpact(address sponsor,uint256 amount,bytes32 reportHash)"
+    );
 
     // Mapping to store USDC balances deposited by each sponsor
     mapping(address => uint256) public balances;
@@ -44,7 +50,7 @@ contract LuminaEscrow is ReentrancyGuard, Ownable {
         address _usdcToken,
         address _platformWallet,
         address _oracleAddress
-    ) Ownable(msg.sender) {
+    ) Ownable(msg.sender) EIP712("LuminaEscrow", "1") {
         require(_usdcToken != address(0), "Invalid token address");
         require(_platformWallet != address(0), "Invalid platform wallet");
         require(_oracleAddress != address(0), "Invalid oracle address");
@@ -93,13 +99,14 @@ contract LuminaEscrow is ReentrancyGuard, Ownable {
         require(!processedHashes[reportHash], "Report hash already processed");
         require(balances[sponsor] >= amount, "Sponsor has insufficient funds");
 
-        // Reconstruct the message signed by the oracle: (sponsor, amount, reportHash)
-        bytes32 messageHash = keccak256(abi.encodePacked(sponsor, amount, reportHash));
-        bytes32 ethSignedMessageHash = MessageHashUtils.toEthSignedMessageHash(messageHash);
+        // Verify oracle signature using EIP-712 to prevent cross-chain replay attacks
+        bytes32 structHash = keccak256(
+            abi.encode(RELEASE_TYPEHASH, sponsor, amount, reportHash)
+        );
+        bytes32 digest = _hashTypedDataV4(structHash);
         
-        // Recover and verify oracle signature
         require(
-            ethSignedMessageHash.recover(signature) == oracleAddress,
+            digest.recover(signature) == oracleAddress,
             "Invalid oracle signature"
         );
 

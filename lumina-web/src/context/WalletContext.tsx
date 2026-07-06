@@ -55,6 +55,15 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  // Sincronizar cookie de sesión para validación server-side en el middleware
+  useEffect(() => {
+    if (address) {
+      document.cookie = `admin_address=${address}; path=/; max-age=3600; SameSite=Strict`;
+    } else {
+      document.cookie = "admin_address=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Strict";
+    }
+  }, [address]);
+
   // Actualizar balances cuando se conecta una dirección
   useEffect(() => {
     if (address) {

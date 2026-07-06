@@ -11,13 +11,37 @@ import { rpc, config, LUMINA_CONTRACT_ID } from "./stellar";
 export async function simulateMiraScreening(
   sponsorAddress: string,
   amount: number,
-  oracleSecret: string
+  oracleSecret?: string
 ): Promise<{ hash: string; reportHashHex: string }> {
+  // Si no se provee la clave secreta en el cliente (comportamiento por defecto en producción),
+  // delegamos la firma y envío a nuestra API segura en el servidor.
   if (!oracleSecret) {
-    throw new Error("Se requiere la clave secreta del Oráculo (MIRA) para firmar la transacción.");
+    const response = await fetch("/api/oracle/release", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ sponsorAddress, amount }),
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(
+        data.error || "Error al procesar la liberación de fondos desde el servidor."
+      );
+    }
+
+    return {
+      hash: data.hash,
+      reportHashHex: data.reportHashHex,
+    };
   }
 
-  // 1. Generar hash de reporte aleatorio de 32 bytes (simulando reporte PDF)
+  // Flujo local/backend: firmar localmente si se pasa la clave
+  const oracleKeypair = StellarSdk.Keypair.fromSecret(oracleSecret);
+  const oracleAddress = oracleKeypair.publicKey();
+
+  // Generar hash de reporte aleatorio de 32 bytes (simulando reporte PDF)
   const reportHashBytes = new Uint8Array(32);
   if (typeof window !== "undefined" && window.crypto) {
     window.crypto.getRandomValues(reportHashBytes);
@@ -27,10 +51,6 @@ export async function simulateMiraScreening(
     cryptoNode.randomFillSync(reportHashBytes);
   }
   const reportHashHex = Buffer.from(reportHashBytes).toString("hex");
-
-  // 2. Cargar Keypair del Oráculo para firma criptográfica
-  const oracleKeypair = StellarSdk.Keypair.fromSecret(oracleSecret);
-  const oracleAddress = oracleKeypair.publicKey();
 
   // Obtener cuenta del Oráculo
   const account = await rpc.getAccount(oracleAddress);
