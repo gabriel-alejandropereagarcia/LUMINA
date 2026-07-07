@@ -208,6 +208,35 @@ export async function buildDepositTx(sponsorAddress: string, amount: number): Pr
 }
 
 /**
+ * Construye la transacción para retirar USDC del contrato de custodia Lumina (Soroban).
+ */
+export async function buildWithdrawTx(sponsorAddress: string, amount: number): Promise<string> {
+  const account = await rpc.getAccount(sponsorAddress);
+  const luminaContract = new StellarSdk.Contract(LUMINA_CONTRACT_ID);
+
+  const amountBigInt = usdcToStroops(amount);
+  
+  const sponsorVal = StellarSdk.Address.fromString(sponsorAddress).toScVal();
+  const amountVal = StellarSdk.nativeToScVal(amountBigInt, { type: "i128" });
+
+  let transaction = new StellarSdk.TransactionBuilder(account, {
+    fee: StellarSdk.BASE_FEE,
+    networkPassphrase: config.networkPassphrase,
+  })
+    .addOperation(luminaContract.call("withdraw_escrow", sponsorVal, amountVal))
+    .setTimeout(180)
+    .build();
+
+  const simulation = await rpc.simulateTransaction(transaction);
+  if (StellarSdk.rpc.Api.isSimulationError(simulation)) {
+    throw new Error(`Simulación de retiro fallida: ${simulation.error}`);
+  }
+
+  transaction = StellarSdk.rpc.assembleTransaction(transaction, simulation).build();
+  return transaction.toXDR();
+}
+
+/**
  * Envía una transacción firmada a la red Soroban RPC y espera la confirmación.
  */
 export async function submitSorobanTransaction(signedXdr: string): Promise<string> {

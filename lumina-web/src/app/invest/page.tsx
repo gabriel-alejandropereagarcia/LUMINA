@@ -2,15 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { useWallet } from "@/context/WalletContext";
+import { useChain } from "@/context/ChainContext";
 import { useToast } from "@/context/ToastContext";
-import { buildApproveTx, buildDepositTx, submitSorobanTransaction, getUsdcAllowance, USDC_CONTRACT_ID, LUMINA_CONTRACT_ID, config } from "@/lib/stellar";
-import { contractUrl } from "@/lib/explorer";
+import { getExplorerUrls } from "@/lib/explorer";
 import { Coins, ShieldCheck, Wallet, ArrowRight, Loader2, Info, Building, Landmark, AlertTriangle, Activity } from "lucide-react";
 
 
 export default function InvestPortal() {
   const { address, isConnected, connect, escrowBalance, impactScore, refreshBalances } = useWallet();
+  const { adapter, selectedNetwork } = useChain();
   const { toast } = useToast();
+  const urls = getExplorerUrls(selectedNetwork);
 
   
   const [activeTab, setActiveTab] = useState<"web3" | "sep24">("web3");
@@ -35,7 +37,7 @@ export default function InvestPortal() {
     }
 
     let isMounted = true;
-    getUsdcAllowance(address)
+    adapter.getAllowance(address)
       .then((allowance) => {
         if (!isMounted) return;
         if (allowance >= cleanAmount) {
@@ -85,25 +87,19 @@ export default function InvestPortal() {
     setError(null);
 
     try {
-      const xdr = await buildApproveTx(address, cleanAmount);
-      setStatus("Firma requerida: Por favor aprueba la transacción en tu Freighter Wallet...");
+      setStatus("Firma requerida: Por favor aprueba la transacción en tu billetera...");
+      const res = await adapter.approve(address, cleanAmount);
       
-      const { signTransaction } = require("@stellar/freighter-api");
-      const { signedTxXdr } = await signTransaction(xdr, {
-        networkPassphrase: config.networkPassphrase,
-      });
-
-      if (!signedTxXdr) throw new Error("Firma de transacción rechazada por el usuario.");
-
-      setStatus("Enviando aprobación al libro de Stellar...");
-      const txHash = await submitSorobanTransaction(signedTxXdr);
+      if (!res.success) {
+        throw new Error(res.error || "Fallo en la aprobación de fondos.");
+      }
 
       setStatus("USDC Aprobado con éxito! Ahora procede con el depósito.");
       toast({
         type: "success",
         title: "Aprobación Exitosa",
         message: `${cleanAmount} USDC aprobados correctamente para el protocolo.`,
-        txHash
+        txHash: res.hash
       });
       setStep(2);
     } catch (err: any) {
@@ -142,25 +138,19 @@ export default function InvestPortal() {
     setError(null);
 
     try {
-      const xdr = await buildDepositTx(address, cleanAmount);
-      setStatus("Firma requerida: Por favor firma el depósito de fondos en tu Freighter Wallet...");
+      setStatus("Firma requerida: Por favor firma el depósito de fondos en tu billetera...");
+      const res = await adapter.deposit(address, cleanAmount);
       
-      const { signTransaction } = require("@stellar/freighter-api");
-      const { signedTxXdr } = await signTransaction(xdr, {
-        networkPassphrase: config.networkPassphrase,
-      });
-
-      if (!signedTxXdr) throw new Error("Firma de transacción rechazada por el usuario.");
-
-      setStatus("Depositando USDC en el fondo de garantía...");
-      const txHash = await submitSorobanTransaction(signedTxXdr);
+      if (!res.success) {
+        throw new Error(res.error || "Fallo en el depósito de fondos.");
+      }
 
       setStatus("Depósito en custodia completado con éxito!");
       toast({
         type: "success",
         title: "Depósito Acreditado",
         message: `Depósito de ${cleanAmount} USDC completado con éxito en el fideicomiso on-chain.`,
-        txHash
+        txHash: res.hash
       });
       setAmount("");
       setStep(1);
@@ -679,23 +669,23 @@ export default function InvestPortal() {
             <div className="space-y-1">
               <span>Contrato Lumina:</span>
               <a
-                href={contractUrl(LUMINA_CONTRACT_ID)}
+                href={urls.contractUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-mono text-teal-600 hover:underline block break-all"
               >
-                {LUMINA_CONTRACT_ID}
+                {urls.contractAddress}
               </a>
             </div>
             <div className="space-y-1 sm:text-right">
-              <span>Contrato USDC (SAC):</span>
+              <span>Contrato USDC:</span>
               <a
-                href={contractUrl(USDC_CONTRACT_ID)}
+                href={urls.usdcUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-mono text-teal-600 hover:underline block break-all"
               >
-                {USDC_CONTRACT_ID}
+                {urls.usdcAddress}
               </a>
             </div>
           </div>

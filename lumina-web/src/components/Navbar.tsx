@@ -7,11 +7,13 @@ import { useState, useEffect } from "react";
 import { Wallet, LogOut, Sparkles, AlertTriangle, RefreshCw } from "lucide-react";
 import { isConnected as isFreighterInstalled } from "@stellar/freighter-api";
 import ThemeToggle from "@/components/ThemeToggle";
+import { useChain, NetworkType } from "@/context/ChainContext";
 
 
 export default function Navbar() {
   const pathname = usePathname();
   const { address, isConnected, connect, disconnect, loading } = useWallet();
+  const { selectedNetwork, setSelectedNetwork } = useChain();
   const [hasFreighter, setHasFreighter] = useState<boolean>(true);
 
   useEffect(() => {
@@ -69,8 +71,18 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-3">
+          <select
+            value={selectedNetwork}
+            onChange={(e) => setSelectedNetwork(e.target.value as NetworkType)}
+            className="bg-[var(--card-bg)] border border-[var(--border)] rounded-lg px-2 py-1.5 text-xs font-semibold text-[var(--foreground)] focus:outline-none focus:ring-1 focus:ring-teal-500 cursor-pointer hidden sm:block"
+          >
+            <option value="stellar-testnet">⚡ Stellar</option>
+            <option value="avalanche-fuji">🔺 Avalanche</option>
+            <option value="base-sepolia">🔵 Base</option>
+          </select>
+
           <ThemeToggle />
-          {!hasFreighter && !isConnected && (
+          {!hasFreighter && !isConnected && selectedNetwork === "stellar-testnet" && (
             <a
               href="https://www.freighter.app/"
               target="_blank"

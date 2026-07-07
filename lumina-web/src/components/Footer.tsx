@@ -1,12 +1,14 @@
 "use client";
 
 import React from "react";
-import { contractUrl } from "@/lib/explorer";
-import { LUMINA_CONTRACT_ID, USDC_CONTRACT_ID } from "@/lib/stellar";
+import { getExplorerUrls } from "@/lib/explorer";
+import { useChain } from "@/context/ChainContext";
 import { ExternalLink } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { selectedNetwork } = useChain();
+  const urls = getExplorerUrls(selectedNetwork);
 
   return (
     <footer className="border-t border-[var(--border)] bg-[var(--card-bg)] backdrop-blur-md mt-24">
@@ -26,23 +28,23 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <a
-                  href={contractUrl(LUMINA_CONTRACT_ID)}
+                  href={urls.contractUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs text-[var(--teal)] hover:text-[var(--green)] hover:underline flex items-center gap-1 font-mono break-all"
                 >
-                  Lumina Escrow ({LUMINA_CONTRACT_ID.substring(0, 8)}...{LUMINA_CONTRACT_ID.substring(LUMINA_CONTRACT_ID.length - 4)})
+                  {urls.contractLabel}
                   <ExternalLink className="h-3 w-3 shrink-0" />
                 </a>
               </li>
               <li>
                 <a
-                  href={contractUrl(USDC_CONTRACT_ID)}
+                  href={urls.usdcUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs text-[var(--teal)] hover:text-[var(--green)] hover:underline flex items-center gap-1 font-mono break-all"
                 >
-                  USDC Token ({USDC_CONTRACT_ID.substring(0, 8)}...{USDC_CONTRACT_ID.substring(USDC_CONTRACT_ID.length - 4)})
+                  {urls.usdcLabel}
                   <ExternalLink className="h-3 w-3 shrink-0" />
                 </a>
               </li>
@@ -70,7 +72,7 @@ export default function Footer() {
 
               <li>
                 <span className="text-xs text-[var(--muted)]">
-                  Red: Testnet (Soroban)
+                  Red Activa: {urls.name}
                 </span>
               </li>
             </ul>

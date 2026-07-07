@@ -1,11 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
-import { StellarWalletsKit } from "@creit.tech/stellar-wallets-kit";
-import { Networks } from "@creit.tech/stellar-wallets-kit/types";
-import { defaultModules } from "@creit.tech/stellar-wallets-kit/modules/utils";
-import { FREIGHTER_ID } from "@creit.tech/stellar-wallets-kit/modules/freighter";
-import { getEscrowBalance, getImpactScore } from "@/lib/stellar";
+import { useChain } from "./ChainContext";
 
 interface WalletContextType {
   address: string | null;
@@ -20,16 +16,8 @@ interface WalletContextType {
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
-// Inicializar el kit de billeteras Stellar de forma estática (versión 2)
-if (typeof window !== "undefined") {
-  StellarWalletsKit.init({
-    network: Networks.TESTNET,
-    selectedWalletId: FREIGHTER_ID,
-    modules: defaultModules(),
-  });
-}
-
 export function WalletProvider({ children }: { children: React.ReactNode }) {
+  const { adapter, selectedNetwork } = useChain();
   const [address, setAddress] = useState<string | null>(null);
   const [escrowBalance, setEscrowBalance] = useState<number>(0);
   const [impactScore, setImpactScore] = useState<number>(0);
@@ -38,14 +26,14 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
   const refreshBalances = useCallback(async () => {
     if (!address) return;
     try {
-      const balance = await getEscrowBalance(address);
-      const score = await getImpactScore(address);
+      const balance = await adapter.getEscrowBalance(address);
+      const score = await adapter.getImpactScore(address);
       setEscrowBalance(balance);
       setImpactScore(score);
     } catch (e) {
       console.error("Error al actualizar balances de wallet:", e);
     }
-  }, [address]);
+  }, [address, adapter]);
 
   // Intentar reconectar si hay sesión guardada en localStorage
   useEffect(() => {
@@ -64,24 +52,26 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
     }
   }, [address]);
 
-  // Actualizar balances cuando se conecta una dirección
+  // Actualizar balances cuando se conecta una dirección o se cambia de red
   useEffect(() => {
     if (address) {
       refreshBalances();
       const interval = setInterval(refreshBalances, 15000);
       return () => clearInterval(interval);
+    } else {
+      setEscrowBalance(0);
+      setImpactScore(0);
     }
-  }, [address, refreshBalances]);
+  }, [address, selectedNetwork, refreshBalances]);
 
   const connect = async () => {
     setLoading(true);
     try {
-      // Abre el modal de selección de billetera y retorna la dirección conectada
-      const res = await StellarWalletsKit.authModal();
-      if (res && res.address) {
-        setAddress(res.address);
-        localStorage.setItem("lumina_wallet_address", res.address);
-        return res.address;
+      const walletInfo = await adapter.connect();
+      if (walletInfo && walletInfo.address) {
+        setAddress(walletInfo.address);
+        localStorage.setItem("lumina_wallet_address", walletInfo.address);
+        return walletInfo.address;
       }
       return null;
     } catch (error) {
@@ -94,7 +84,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
 
   const disconnect = async () => {
     try {
-      await StellarWalletsKit.disconnect();
+      await adapter.disconnect();
     } catch (e) {
       console.error("Error al desconectar kit:", e);
     }

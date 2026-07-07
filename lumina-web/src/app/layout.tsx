@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { WalletProvider } from "@/context/WalletContext";
+import { ChainProvider } from "@/context/ChainContext";
 import { ToastProvider } from "@/context/ToastContext";
 import { ToastContainer } from "@/components/Toast";
 import Navbar from "@/components/Navbar";
@@ -68,15 +69,16 @@ export default function RootLayout({
       <body className="flex flex-col min-h-screen font-sans antialiased">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <ToastProvider>
-            <WalletProvider>
-              <Navbar />
-              <main className="flex-grow flex flex-col">
-                {children}
-              </main>
-              <Footer />
-              <ToastContainer />
-
-            </WalletProvider>
+            <ChainProvider>
+              <WalletProvider>
+                <Navbar />
+                <main className="flex-grow flex flex-col">
+                  {children}
+                </main>
+                <Footer />
+                <ToastContainer />
+              </WalletProvider>
+            </ChainProvider>
           </ToastProvider>
         </ThemeProvider>
       </body>
