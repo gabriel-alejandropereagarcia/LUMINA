@@ -23,4 +23,5 @@ export interface ChainAdapter {
   approve(sponsor: string, amount: number): Promise<TxResult>;
   deposit(sponsor: string, amount: number): Promise<TxResult>;
   withdraw(sponsor: string, amount: number): Promise<TxResult>;
+  getHistoricSponsors(): Promise<string[]>;
 }

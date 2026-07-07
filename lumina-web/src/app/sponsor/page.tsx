@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useWallet } from "@/context/WalletContext";
+import { useToast } from "@/context/ToastContext";
 import { txUrl } from "@/lib/explorer";
 
 import { 
@@ -24,6 +25,60 @@ interface LedgerEvent {
 
 export default function SponsorDashboard() {
   const { address, isConnected, connect, escrowBalance, impactScore, refreshBalances } = useWallet();
+  const { toast } = useToast();
+  
+  // Preferencias de Notificación
+  const [sponsorEmail, setSponsorEmail] = useState<string>("");
+  const [sponsorWebhook, setSponsorWebhook] = useState<string>("");
+  const [savingConfig, setSavingConfig] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!address) return;
+    fetch(`/api/sponsor/config?address=${address}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setSponsorEmail(data.email || "");
+          setSponsorWebhook(data.webhookUrl || "");
+        }
+      })
+      .catch(err => console.error("Error al cargar configuración de notificaciones:", err));
+  }, [address]);
+
+  const handleSaveConfig = async () => {
+    if (!address) return;
+    setSavingConfig(true);
+    try {
+      const res = await fetch("/api/sponsor/config", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          address,
+          email: sponsorEmail,
+          webhookUrl: sponsorWebhook
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast({
+          type: "success",
+          title: "Configuración Actualizada",
+          message: "Preferencias de alertas guardadas en producción con éxito."
+        });
+      } else {
+        throw new Error(data.error || "Fallo en guardado.");
+      }
+    } catch (e: any) {
+      console.error(e);
+      toast({
+        type: "error",
+        title: "Error al Guardar",
+        message: e.message || "No se pudo actualizar la configuración."
+      });
+    } finally {
+      setSavingConfig(false);
+    }
+  };
   
   // Yield mode state (DeFi opt-in)
   const [yieldMode, setYieldMode] = useState<boolean>(false);
@@ -309,6 +364,53 @@ export default function SponsorDashboard() {
                 </p>
               </div>
             </div>
+
+            {/* Configuración de Notificaciones (Email + Webhook) */}
+            {isConnected && address && (
+              <div className="p-5 rounded-xl border border-[var(--border)] bg-[var(--card-bg)] space-y-4">
+                <div className="space-y-1">
+                  <span className="text-xs font-bold text-teal-500 uppercase tracking-widest block">Canales de Alerta</span>
+                  <h4 className="text-sm font-bold text-[var(--foreground)]">Configuración de Alertas en Producción</h4>
+                  <p className="text-xs text-[var(--muted)] leading-relaxed">
+                    Recibí notificaciones instantáneas de correos electrónicos y webhooks en tiempo real cuando tus hitos sean certificados y liberados on-chain.
+                  </p>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="space-y-1">
+                    <label htmlFor="sponsor-email-input" className="text-xs font-semibold text-[var(--foreground)] block">Correo Corporativo</label>
+                    <input
+                      type="email"
+                      id="sponsor-email-input"
+                      value={sponsorEmail}
+                      onChange={(e) => setSponsorEmail(e.target.value)}
+                      placeholder="sponsor@empresa.com"
+                      className="w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-xs font-mono text-[var(--foreground)] focus:outline-none focus:ring-1 focus:ring-teal-500"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label htmlFor="sponsor-webhook-input" className="text-xs font-semibold text-[var(--foreground)] block">Webhook URL (Post Request)</label>
+                    <input
+                      type="url"
+                      id="sponsor-webhook-input"
+                      value={sponsorWebhook}
+                      onChange={(e) => setSponsorWebhook(e.target.value)}
+                      placeholder="https://api.empresa.com/webhooks/lumina"
+                      className="w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-xs font-mono text-[var(--foreground)] focus:outline-none focus:ring-1 focus:ring-teal-500"
+                    />
+                  </div>
+                </div>
+
+                <button
+                  onClick={handleSaveConfig}
+                  disabled={savingConfig}
+                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-600 to-green-600 py-3 text-xs font-bold text-white shadow-lg disabled:opacity-50 hover:opacity-90 transition-all cursor-pointer"
+                >
+                  {savingConfig ? "Guardando Preferencias..." : "Guardar Canales de Alerta"}
+                </button>
+              </div>
+            )}
 
             {/* Simulador MIRA */}
             <div className="p-5 rounded-xl border border-[var(--border)] bg-transparent space-y-4">

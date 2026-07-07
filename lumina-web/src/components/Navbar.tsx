@@ -32,6 +32,7 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "Inicio", path: "/" },
+    { name: "Impacto", path: "/impact" },
     { name: "Mi Panel", path: "/sponsor" },
     { name: "Invertir", path: "/invest" },
     ...(isConnected && address === ADMIN_ADDRESS ? [{ name: "Gobernanza", path: "/admin" }] : []),

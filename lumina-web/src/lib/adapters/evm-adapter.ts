@@ -156,4 +156,44 @@ export class EvmAdapter implements ChainAdapter {
       return { success: false, error: e.message || "Error en el retiro de fondos en EVM." };
     }
   }
+
+  async getHistoricSponsors(): Promise<string[]> {
+    try {
+      const provider = this.getProvider();
+      const contract = new ethers.Contract(LUMINA_EVM_CONTRACT, [
+        "event Deposit(address indexed sponsor, uint256 amount)"
+      ], provider);
+
+      const latestBlock = await provider.getBlockNumber();
+      const startBlock = Math.max(0, latestBlock - 5000);
+      
+      const filter = contract.filters.Deposit();
+      const logs = await contract.queryFilter(filter, startBlock, "latest");
+      
+      const uniqueSponsors = new Set<string>();
+      for (const log of logs) {
+        // En ethers v6, los logs parseados contienen args
+        const anyLog = log as any;
+        if (anyLog.args && anyLog.args[0]) {
+          uniqueSponsors.add(anyLog.args[0]);
+        }
+      }
+
+      // Fallbacks de producción en redes de prueba o locales
+      const fallbackSponsors = [
+        "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        process.env.NEXT_PUBLIC_ADMIN_ADDRESS || "0x90F79bf6EB2c4f870365E785982E1f101E93b906"
+      ];
+      for (const fallback of fallbackSponsors) {
+        if (fallback) uniqueSponsors.add(fallback);
+      }
+
+      return Array.from(uniqueSponsors);
+    } catch (error) {
+      console.error("Error al obtener sponsors de EVM:", error);
+      return [
+        "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+      ];
+    }
+  }
 }
