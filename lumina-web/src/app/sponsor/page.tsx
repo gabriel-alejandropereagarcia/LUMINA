@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useWallet } from "@/context/WalletContext";
 import { useToast } from "@/context/ToastContext";
+import { useChain } from "@/context/ChainContext";
 import { txUrl } from "@/lib/explorer";
 
 import { 
@@ -26,6 +27,7 @@ interface LedgerEvent {
 export default function SponsorDashboard() {
   const { address, isConnected, connect, escrowBalance, impactScore, refreshBalances } = useWallet();
   const { toast } = useToast();
+  const { selectedNetwork } = useChain();
   
   // Preferencias de Notificación
   const [sponsorEmail, setSponsorEmail] = useState<string>("");
@@ -179,7 +181,7 @@ export default function SponsorDashboard() {
     address ? `La empresa con wallet ${address.slice(0, 8)}...` : "Nuestra corporación"
   } financió exitosamente el screening de neurodesarrollo infantil de ${currentImpactCount} familias a través del protocolo ReFi Lumina e integrado con MIRA AI. Esta acción aporta a la salud infantil y genera un ahorro social proyectado de $${(
     currentImpactCount * 3000
-  ).toLocaleString()} USD en costos de atención pública a largo plazo, validado 100% on-chain en Stellar.`;
+  ).toLocaleString()} USD en costos de atención pública a largo plazo, validado 100% on-chain de forma transparente.`;
 
   const toggleYield = () => {
     toast({
@@ -456,7 +458,7 @@ export default function SponsorDashboard() {
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                       </span>
-                      Conexión Real (Stellar Testnet)
+                      Conexión Real ({selectedNetwork === "stellar-testnet" ? "Stellar Testnet" : selectedNetwork === "avalanche-fuji" ? "Avalanche Fuji" : "Base Sepolia"})
                     </span>
                   </div>
                   <div className="p-3 grid grid-cols-4 items-center text-[var(--muted)]">

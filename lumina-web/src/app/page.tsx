@@ -96,7 +96,7 @@ export default function Home() {
       {/* Hero Section */}
       <div className={`max-w-4xl text-center space-y-8 z-10 pt-8 fade-in-up ${isVisible ? 'visible' : ''}`}>
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--teal-light)] bg-[var(--teal-light)] text-[var(--teal)] text-xs font-semibold tracking-wide uppercase">
-          <Sparkles className="h-3.5 w-3.5" /> Infraestructura ReFi Universal · Stellar Soroban
+          <Sparkles className="h-3.5 w-3.5" /> Infraestructura ReFi Universal · Multicadena
         </div>
         
         <h1 className="font-serif text-4xl sm:text-6xl font-bold tracking-tight text-[var(--foreground)] leading-tight">
@@ -105,7 +105,7 @@ export default function Home() {
 
         
         <p className="max-w-2xl mx-auto text-base sm:text-lg text-[var(--muted)] leading-relaxed">
-          Infraestructura universal y agnóstica de Economía Regenerativa (ReFi) para el financiamiento programable de hitos de impacto — Ambiental, Social, Educación y Salud — con trazabilidad criptográfica en Stellar.
+          Infraestructura universal y agnóstica de Economía Regenerativa (ReFi) para el financiamiento programable de hitos de impacto — Ambiental, Social, Educación y Salud — con trazabilidad criptográfica multicadena (Stellar y EVM).
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
@@ -221,7 +221,7 @@ export default function Home() {
           <span className="text-xs font-bold text-teal-600 uppercase tracking-widest block">Paso a Paso</span>
           <h2 className="font-serif text-3xl font-bold text-[var(--foreground)] tracking-tight">Cómo Funciona Lumina</h2>
           <p className="text-xs text-[var(--muted)] max-w-md mx-auto">
-            El ciclo de confianza trazable on-chain en Stellar, desde el depósito de fondos hasta la prueba de impacto.
+            El ciclo de confianza trazable on-chain multicadena, desde el depósito de fondos hasta la prueba de impacto.
           </p>
         </div>
 
@@ -249,7 +249,7 @@ export default function Home() {
             {
               step: "03",
               title: "Prueba de Hito",
-              desc: "Se notariza el hash del reporte PDF en la blockchain de Stellar para certificar su validez.",
+              desc: "Se notariza el hash del reporte PDF en la blockchain de destino (Stellar o EVM) para certificar su validez.",
               icon: ShieldCheck,
               color: "text-[var(--gold)]",
               bgColor: "bg-[var(--gold-light)]",
@@ -257,7 +257,7 @@ export default function Home() {
             {
               step: "04",
               title: "Pago & Reputación",
-              desc: "El escrow de Soroban paga a la app y acuña reputación $LUMINA Soulbound al sponsor.",
+              desc: "El escrow inteligente paga a la app y acuña reputación $LUMINA Soulbound al sponsor.",
               icon: Trophy,
               color: "text-indigo-400",
               bgColor: "bg-indigo-500/10",
@@ -294,7 +294,7 @@ export default function Home() {
         <div className="max-w-3xl mx-auto p-6 rounded-2xl border border-[var(--border)] bg-[var(--card-bg)] text-center text-xs text-[var(--muted)] space-y-2">
           <strong className="text-[var(--foreground)] block text-sm">¿Qué es una App Verificadora?</strong>
           <p className="leading-relaxed">
-            ¿Qué es una App Verificadora? Es cualquier aplicación (como un test médico digital, una app de deporte, o análisis satelital) que certifica un hito real. Al confirmarse la acción, la app firma criptográficamente y el contrato en Stellar libera los fondos automáticamente.
+            Es cualquier aplicación (como un test médico digital, una app de deporte, o análisis satelital) que certifica un hito real. Al confirmarse la acción, la app firma criptográficamente y el contrato inteligente en la red seleccionada libera los fondos automáticamente.
           </p>
         </div>
 
@@ -670,7 +670,7 @@ export default function Home() {
             <ul className="space-y-4 text-sm text-[var(--muted)]">
               <li className="flex items-start gap-2">
                 <ShieldCheck className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                <span><strong className="text-[var(--foreground)]">Trazabilidad de Auditoría:</strong> Cada centavo de RSE liberado cuenta con una prueba criptográfica incuestionable en la blockchain de Stellar, visible en tiempo real.</span>
+                <span><strong className="text-[var(--foreground)]">Trazabilidad de Auditoría:</strong> Cada centavo de RSE liberado cuenta con una prueba criptográfica incuestionable en la blockchain (Stellar o EVM), visible en tiempo real.</span>
               </li>
               <li className="flex items-start gap-2">
                 <Lock className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />

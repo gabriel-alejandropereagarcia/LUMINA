@@ -36,8 +36,8 @@ export default function Navbar() {
     { name: "Mi Panel", path: "/sponsor" },
     { name: "Invertir", path: "/invest" },
     ...(isConnected && address === ADMIN_ADDRESS ? [{ name: "Gobernanza", path: "/admin" }] : []),
-    { name: "Pitch Deck", path: "/presentation" },
-    { name: "Jury Portal", path: "/jury" },
+    { name: "Libro Blanco", path: "/presentation" },
+    { name: "Arbitraje", path: "/jury" },
   ];
 
   return (
