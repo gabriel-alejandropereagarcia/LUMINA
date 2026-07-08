@@ -81,7 +81,7 @@ export default function Footer() {
 
         <div className="border-t border-[var(--border)] mt-8 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-[var(--muted)]">
-            Lumina Protocol © {currentYear} — Desarrollado en Stellar para PULSO Hackathon
+            Lumina Protocol © {currentYear} — Capa de infraestructura de fideicomisos on-chain para financiamiento programable de impacto. Código abierto y transparente.
           </p>
           <div className="flex gap-4 text-xs text-[var(--muted)]">
             <span>Transparencia ESG</span>

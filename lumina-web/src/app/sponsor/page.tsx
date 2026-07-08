@@ -82,8 +82,6 @@ export default function SponsorDashboard() {
   
   // Yield mode state (DeFi opt-in)
   const [yieldMode, setYieldMode] = useState<boolean>(false);
-  const [showYieldDisclaimer, setShowYieldDisclaimer] = useState<boolean>(false);
-  const [agreedToYieldRisk, setAgreedToYieldRisk] = useState<boolean>(false);
   const [esgDownloading, setEsgDownloading] = useState<boolean>(false);
   const [prCopied, setPrCopied] = useState<boolean>(false);
 
@@ -92,7 +90,7 @@ export default function SponsorDashboard() {
     {
       id: "1",
       type: "deposit",
-      title: "Depósito de RSE en Custodia (Simulado)",
+      title: "Depósito de RSE en Custodia (Testnet)",
       desc: "Sponsor Corporativo acreditó fondos en Lumina Escrow.",
       amount: 1000,
       timestamp: "Hace 2 horas",
@@ -184,19 +182,11 @@ export default function SponsorDashboard() {
   ).toLocaleString()} USD en costos de atención pública a largo plazo, validado 100% on-chain en Stellar.`;
 
   const toggleYield = () => {
-    if (!yieldMode) {
-      setShowYieldDisclaimer(true);
-    } else {
-      setYieldMode(false);
-      setAgreedToYieldRisk(false);
-    }
-  };
-
-  const confirmYieldActivation = () => {
-    if (agreedToYieldRisk) {
-      setYieldMode(true);
-      setShowYieldDisclaimer(false);
-    }
+    toast({
+      type: "info",
+      title: "Próximamente en Producción",
+      message: "La optimización automatizada de liquidez (DeFi Blend) está planificada para la Fase 3 de la Hoja de Ruta."
+    });
   };
 
   return (
@@ -327,20 +317,14 @@ export default function SponsorDashboard() {
             <div className="p-4 rounded-xl border border-[var(--border)] bg-transparent space-y-4">
               <div className="flex justify-between items-center">
                 <div className="space-y-0.5">
-                  <span className="text-xs font-bold text-[var(--foreground)] block">Activar Modo Yield (DeFi) · SIMULACIÓN</span>
-                  <span className="text-xs text-[var(--muted)] block">Demo conceptual — Blend Protocol no integrado aún</span>
+                  <span className="text-xs font-bold text-[var(--foreground)] block">Optimización DeFi (Suministro de Liquidez)</span>
+                  <span className="text-[10px] text-amber-500 font-semibold block">Próximamente · Desarrollo Planificado en Fase 3</span>
                 </div>
                 <button
                   onClick={toggleYield}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
-                    yieldMode ? "bg-[var(--warn)]" : "bg-[var(--muted-bg)]"
-                  }`}
+                  className="relative inline-flex h-6 w-11 items-center rounded-full bg-zinc-800 border border-zinc-700/50 cursor-pointer"
                 >
-                  <span
-                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                      yieldMode ? "translate-x-6" : "translate-x-1"
-                    }`}
-                  />
+                  <span className="inline-block h-4 w-4 transform rounded-full bg-zinc-500 translate-x-1" />
                 </button>
               </div>
 
@@ -415,10 +399,10 @@ export default function SponsorDashboard() {
             {/* Simulador MIRA */}
             <div className="p-5 rounded-xl border border-[var(--border)] bg-transparent space-y-4">
               <div className="space-y-0.5">
-                <span className="text-xs font-bold text-[var(--muted)] uppercase tracking-widest block">Simulación Local</span>
-                <h4 className="text-xs font-bold text-[var(--foreground)]">Walkthrough del Oráculo MIRA</h4>
+                <span className="text-xs font-bold text-teal-500 uppercase tracking-widest block">Sandbox de Integración</span>
+                <h4 className="text-xs font-bold text-[var(--foreground)]">Consola de Pruebas del Oráculo MIRA</h4>
                 <p className="text-xs text-[var(--muted)] leading-relaxed">
-                  Simulación paso a paso de la lógica on-chain definitiva: MIRA firma el hash y Soroban libera los fondos.
+                  Consola de pruebas para auditar y verificar localmente la firma criptográfica del oráculo y la liberación de fondos on-chain en Stellar Testnet.
                 </p>
               </div>
 
@@ -427,7 +411,7 @@ export default function SponsorDashboard() {
                 disabled={simulating}
                 className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-600 to-green-600 py-3 text-xs font-bold text-white shadow-lg disabled:opacity-50 transition-all cursor-pointer"
               >
-                {simulating ? "Ejecutando Simulación MIRA..." : "Simular Walkthrough On-Chain MIRA"}
+                {simulating ? "Ejecutando Prueba de Integración..." : "Ejecutar Prueba de Integración MIRA"}
               </button>
 
               {simStatus && (
@@ -589,60 +573,7 @@ export default function SponsorDashboard() {
           </div>
         </div>
 
-        {/* DIÁLOGO MODAL YIELD MODE */}
-        {showYieldDisclaimer && (
-          <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-            <div className="glass-card max-w-md w-full p-6 rounded-2xl space-y-4 border border-[var(--border)]">
-              <div className="flex items-center justify-between border-b border-[var(--border)] pb-3">
-                <h4 className="text-sm font-bold font-serif text-[var(--foreground)] flex items-center gap-2">
-                  <AlertTriangle className="h-5 w-5 text-[var(--warn)] animate-pulse" />
-                  Activar Rendimiento DeFi (Opt-In)
-                </h4>
-                <button 
-                  onClick={() => setShowYieldDisclaimer(false)}
-                  className="text-[var(--muted)] hover:text-[var(--foreground)] font-bold"
-                >
-                  ✕
-                </button>
-              </div>
 
-              <div className="text-xs text-[var(--muted)] space-y-3 leading-relaxed">
-                <p>
-                  Estás a punto de activar el **Yield Mode** del protocolo. Esto significa que tus fondos de RSE inactivos en el smart contract serán suministrados al pool de liquidez de **Blend Protocol** en Stellar.
-                </p>
-                <p className="text-[var(--foreground)] font-semibold">
-                  ⚠️ LEER ATENTAMENTE ANTES DE CONFIRMAR:
-                </p>
-                <ul className="list-disc pl-4 space-y-1.5 text-xs">
-                  <li>Lumina **no garantiza** el principal en este modo.</li>
-                  <li>Tus fondos están sujetos a riesgos sistémicos de DeFi (smart contract exploits en Blend, descalces de liquidez del pool).</li>
-                  <li>Si eliges activar, aceptas la plena responsabilidad en caso de pérdida.</li>
-                </ul>
-
-                <div className="pt-2 flex items-center gap-2.5">
-                  <input 
-                    type="checkbox" 
-                    id="chk-risk-agree"
-                    checked={agreedToYieldRisk}
-                    onChange={(e) => setAgreedToYieldRisk(e.target.checked)}
-                    className="h-4 w-4 rounded border-[var(--border)] bg-[var(--card-bg)] text-teal-600 focus:ring-teal-500 cursor-pointer"
-                  />
-                  <label htmlFor="chk-risk-agree" className="text-xs text-[var(--foreground)] font-bold select-none cursor-pointer">
-                    Entiendo el riesgo y acepto la responsabilidad.
-                  </label>
-                </div>
-              </div>
-
-              <button
-                onClick={confirmYieldActivation}
-                disabled={!agreedToYieldRisk}
-                className="w-full bg-[var(--warn)] hover:opacity-80 disabled:opacity-50 py-3 text-xs font-bold text-white rounded-xl shadow-lg transition-all cursor-pointer"
-              >
-                Confirmar Activación de Yield
-              </button>
-            </div>
-          </div>
-        )}
 
       </div>
     </div>

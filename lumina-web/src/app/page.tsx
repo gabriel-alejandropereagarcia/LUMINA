@@ -314,7 +314,7 @@ export default function Home() {
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                 </span>
                 <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">
-                  PROBAR EN VIVO - STELLAR TESTNET
+                  PILOTO ACTIVO EN TESTNET
                 </span>
               </div>
             </div>
@@ -355,7 +355,7 @@ export default function Home() {
               />
               <div className="absolute top-3 right-3 flex items-center gap-1.5 bg-zinc-900/80 border border-zinc-700/50 px-2 py-0.5 rounded-full backdrop-blur-sm">
                 <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">
-                  DEMO CONCEPTUAL
+                  EN DESARROLLO (FASE 2)
                 </span>
               </div>
             </div>
@@ -398,7 +398,7 @@ export default function Home() {
               />
               <div className="absolute top-3 right-3 flex items-center gap-1.5 bg-zinc-900/80 border border-zinc-700/50 px-2 py-0.5 rounded-full backdrop-blur-sm">
                 <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">
-                  DEMO CONCEPTUAL
+                  EN DESARROLLO (FASE 2)
                 </span>
               </div>
             </div>
@@ -754,7 +754,7 @@ export default function Home() {
                 {modalTitle}
               </h3>
               <p className="text-xs text-[var(--muted)] leading-relaxed">
-                Esta es una simulación visual del potencial de Lumina para múltiples verticales de impacto. La lógica on-chain definitiva compartirá la arquitectura de nuestra integración viva con MIRA.
+                Este módulo de impacto está actualmente en fase de diseño técnico e integración de oráculos (Fase 2 de la Hoja de Ruta). Al activarse, los sponsors corporativos podrán direccionar fondos a este hito específico siguiendo la misma arquitectura auditada y transparente de nuestro piloto en vivo con MIRA.
               </p>
             </div>
             <button
