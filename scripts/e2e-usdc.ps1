@@ -1,4 +1,5 @@
 # E2E USDC testnet. Run AFTER Circle faucet credits the sponsor.
+# SAC approve flag: --live_until_ledger (CLI nuevo; no --expiration_ledger).
 # Does not print secrets. Does not invent USDT0.
 #   powershell -File scripts/e2e-usdc.ps1
 $ErrorActionPreference = "Stop"
@@ -31,9 +32,9 @@ if ($usdcClassic -lt 40) {
 
 $rpc = Invoke-RestMethod -Uri "https://soroban-testnet.stellar.org" -Method Post -ContentType "application/json" -Body '{"jsonrpc":"2.0","id":1,"method":"getLatestLedger"}'
 $exp = [int]$rpc.result.sequence + 120000
-Write-Host "approve SAC expiration_ledger=$exp"
+Write-Host "approve SAC live_until_ledger=$exp"
 stellar contract invoke --id $usdcSac --source-account lumina-sponsor --network testnet --send=yes -- `
-  approve --from $sponsor --spender $escrow --amount $amount --expiration_ledger $exp
+  approve --from $sponsor --spender $escrow --amount $amount --live_until_ledger $exp
 if ($LASTEXITCODE -ne 0) { throw "approve failed" }
 
 Write-Host "deposit..."

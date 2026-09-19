@@ -9,7 +9,11 @@ import { txUrl } from "@/lib/explorer";
 const ESCROW = process.env.NEXT_PUBLIC_LUMINA_CONTRACT_ID || "CBZAI24XP2RXDVXLRJNVGVGZ5QRDMNI54GTPBTN4OOLFTSFJRWQ4M3EJ";
 const SPONSOR = process.env.NEXT_PUBLIC_SPONSOR_ADDRESS || "GBRR6QWYT5UIHATCC7SYJITERMDWKLE5HHJCNM5PP6GK2DRB4YPKSP5E";
 const USDT0_TX = process.env.NEXT_PUBLIC_USDT0_PROOF_TX || "";
-const RELEASE_TX = process.env.NEXT_PUBLIC_LAST_RELEASE_TX || "";
+const RELEASE_TX =
+  process.env.NEXT_PUBLIC_LAST_RELEASE_TX ||
+  "a26a36263013a9d38370c4ef55bb9a7f96fa860213e11f4805873b8a2995a522";
+const REPORT_HASH_DEFAULT =
+  "4c39fcc97b18fddae23671ccebf5bb182db64a9e9e27f5f4e01cb365b21664ca";
 const STORAGE_KEY = "lumina-jury-proof";
 
 type Proof = { release: string; hash: string; usdt0: string };
@@ -37,13 +41,15 @@ function JuryBody() {
   const [release, setRelease] = useState(
     params.get("release") || RELEASE_TX || stored.release,
   );
-  const [reportHash, setReportHash] = useState(params.get("hash") || stored.hash);
+  const [reportHash, setReportHash] = useState(
+    params.get("hash") || stored.hash || REPORT_HASH_DEFAULT,
+  );
   const [usdt0, setUsdt0] = useState(params.get("usdt0") || USDT0_TX || stored.usdt0);
 
   useEffect(() => {
     const fromQuery: Proof = {
       release: params.get("release") || RELEASE_TX || stored.release,
-      hash: params.get("hash") || stored.hash,
+      hash: params.get("hash") || stored.hash || REPORT_HASH_DEFAULT,
       usdt0: params.get("usdt0") || USDT0_TX || stored.usdt0,
     };
     setRelease(fromQuery.release);

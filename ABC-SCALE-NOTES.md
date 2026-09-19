@@ -328,12 +328,16 @@ Entrevistas ya hechas (Salta): educación ×2 (Gianella; Gustavo MAE), minera Na
 
 Orden. Si hay que recortar: **nunca Connect ni el E2E USDC.**
 
-1. **E2E live USDC:** faucet Circle (2×20, captcha en tu browser) → `powershell -File scripts/e2e-usdc.ps1` (approve + deposit + assign signer `GBJJCKJ…` + certify) → pegar hashes en `/jury`.
-   Trustline classic USDC (issuer `GBBD47…`) abierta. **15/9 ~18:10 ART: 20.0000000 USDC** en sponsor `GBRR6QWYT5UIHATCC7SYJITERMDWKLE5HHJCNM5PP6GK2DRB4YPKSP5E`. Falta el segundo 20 (Circle: 20 / 2 h). Faucet: https://faucet.circle.com/ · Stellar Testnet. `/jury` pega hashes sin rebuild.
+1. **E2E live USDC: HECHO 19/9.** 40 USDC → approve + deposit + assign `GBJJCKJ…` + certify.
+   Release `a26a36263013a9d38370c4ef55bb9a7f96fa860213e11f4805873b8a2995a522`
+   Report `4c39fcc97b18fddae23671ccebf5bb182db64a9e9e27f5f4e01cb365b21664ca`
+   Deposit tx: `9fdbc2e8865a0a94339884d6345eb628c2d6ee16792ab5ebfe5f0a946765812f`
+   Assign tx: `0f58d322ce32855649d7f8c821987cd822d4181ea7121d0ce3829dfa5f48f9c3`
+   `/jury?release=a26a36263013a9d38370c4ef55bb9a7f96fa860213e11f4805873b8a2995a522&hash=4c39fcc97b18fddae23671ccebf5bb182db64a9e9e27f5f4e01cb365b21664ca`
 2. **USDT0 oficial mainnet:** vos comprás ≥1 unidad (usdt0.to/transfer). Pegamos el hash en `NEXT_PUBLIC_USDT0_PROOF_TX` y `/jury`. No entra al escrow testnet.
 3. Forms: **ABC enviado 19/9** (Scale, Lumina, 2). Apex pendiente: cuenta + Create Your Team = Lumina.
 4. URL pública + deck `/presentation` + video 3 min (guion en canvas war-plan) + freeze.
-5. Commit + push **19/9** a `scale/abc-2026` (+ `master` para Vercel). No commitear `.env.local`.
+5. Commit + push **19/9** `f7c8563` en `scale/abc-2026` + `master`. Vercel proyecto `lumina` desplegó, pero **Deployment Protection (SSO)** tapa las URLs nuevas. El alias público `lumina-impact-protocol.vercel.app` sigue el pitch viejo (otro proyecto / dominio no reasignado). En dashboard: quitar SSO de Production y asignar el dominio. No commitear `.env.local`.
 6. Keys Koywe/Circle: si no llegan, portal simulado y **rotulado**. No bloquea el Demo Day.
 
 Hydration overlay en home/`/empresa` (posible `useCountUp` / theme): preexistente; no es el riel. No perseguirlo si no rompe el demo.
@@ -366,7 +370,7 @@ Carpeta: `C:\Users\gabri\.cursor\projects\d-aplicaciones-Lumina\canvases\`
 | `ecosystem-trust-three-reviews.canvas.tsx` | 15/9: Connect simple vs reputación. Ficha de hito. Tres revisiones (empresa, app, nosotros) |
 | `abc-war-plan-26.canvas.tsx` | 15/9: plan de guerra hasta el 26. Sin Instaward como plan B. USDT0 se compra. |
 
-`project_memory.md` tiene gotchas viejos (contrato `CBLKDMO6…`, MIRA notarize). **Esta nota manda.** Gotchas técnicos que sí heredan: `wasm32v1-none`; SAC `approve(..., expiration_ledger)` = `latestLedger+120000`; Freighter `{ signedTxXdr }`; RPC timeout 30s, fallar si ≠ `PENDING`.
+`project_memory.md` tiene gotchas viejos (contrato `CBLKDMO6…`, MIRA notarize). **Esta nota manda.** Gotchas técnicos que sí heredan: `wasm32v1-none`; SAC `approve(..., live_until_ledger)` = `latestLedger+120000`; Freighter `{ signedTxXdr }`; RPC timeout 30s, fallar si ≠ `PENDING`.
 
 ---
 
@@ -403,3 +407,4 @@ Carpeta: `C:\Users\gabri\.cursor\projects\d-aplicaciones-Lumina\canvases\`
 - 2026-09-18 — Copy juez: forms ABC/Apex abren por problema (no por IDs). Home/presentation/jury/empresa/invest/connect/metadata alineados a una tesis de 20s.
 - 2026-09-19 — **ABC enviado.** Scale · Lumina · 2 (Gabriel Alejandro Perea García + Adriano Gabriel Perea Martin). Confirmación on-page. Apex pendiente.
 - 2026-09-19 tarde — Push Scale a GitHub (`scale/abc-2026` + `master`) para Vercel / workshop. 40 USDC listos para E2E.
+- 2026-09-19 16:40 ART — E2E USDC OK (40 → deposit + assign + certify). Hashes en §9. Vercel `lumina` ready pero SSO; alias público todavía ReFi julio.
