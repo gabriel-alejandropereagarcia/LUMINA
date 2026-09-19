@@ -8,6 +8,7 @@ import { ToastContainer } from "@/components/Toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
+import { EmpresaSessionProvider } from "@/hooks/useEmpresaSession";
 
 
 const inter = Inter({
@@ -29,14 +30,16 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lumina Impact Protocol | Infraestructura ReFi para Hitos de Impacto",
-  description: "Conectamos capital corporativo con impacto social verificado on-chain en Stellar/Soroban. Transparencia ESG, trazabilidad criptográfica, cero fricción administrativa.",
+  title: "Lumina | RSE que se paga cuando el hito es real",
+  description:
+    "La empresa lockea RSE con una factura, sin comprar cripto. La app de impacto cobra el 97,5% on-chain. Quien usa el servicio no paga. Escrow Soroban en Stellar.",
   icons: {
     icon: "/favicon.svg",
   },
   openGraph: {
-    title: "Lumina Impact Protocol",
-    description: "Infraestructura ReFi universal para financiamiento programable de hitos de impacto. Ambiental, Social, Educación y Salud — verificado on-chain en Stellar.",
+    title: "Lumina — el riel RSE en Stellar",
+    description:
+      "Empresa sin wallet. App cobra 97,5% al certificar. Usuario no paga. Escrow Soroban.",
     type: "website",
     locale: "es_ES",
     siteName: "Lumina",
@@ -45,14 +48,15 @@ export const metadata: Metadata = {
         url: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=1200&h=630&fit=crop",
         width: 1200,
         height: 630,
-        alt: "Lumina Impact Protocol — Infraestructura ReFi Universal",
+        alt: "Lumina — protocolo de RSE on-chain",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lumina Impact Protocol",
-    description: "Infraestructura ReFi universal para financiamiento programable de hitos de impacto. Ambiental, Social, Educación y Salud.",
+    title: "Lumina — RSE que se paga cuando el hito es real",
+    description:
+      "Empresa sin wallet. App cobra 97,5%. Usuario no paga. Stellar.",
     images: [
       "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=1200&h=630&fit=crop",
     ],
@@ -71,12 +75,14 @@ export default function RootLayout({
           <ToastProvider>
             <ChainProvider>
               <WalletProvider>
-                <Navbar />
-                <main className="flex-grow flex flex-col">
-                  {children}
-                </main>
-                <Footer />
-                <ToastContainer />
+                <EmpresaSessionProvider>
+                  <Navbar />
+                  <main className="flex-grow flex flex-col">
+                    {children}
+                  </main>
+                  <Footer />
+                  <ToastContainer />
+                </EmpresaSessionProvider>
               </WalletProvider>
             </ChainProvider>
           </ToastProvider>

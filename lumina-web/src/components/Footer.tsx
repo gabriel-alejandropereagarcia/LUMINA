@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { getExplorerUrls } from "@/lib/explorer";
 import { useChain } from "@/context/ChainContext";
 import { ExternalLink } from "lucide-react";
@@ -11,14 +12,14 @@ export default function Footer() {
   const urls = getExplorerUrls(selectedNetwork);
 
   return (
-    <footer className="border-t border-[var(--border)] bg-[var(--card-bg)] backdrop-blur-md mt-24">
+    <footer className="border-t border-[var(--border)] bg-[var(--card-bg)] backdrop-blur-md mt-24 print:hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Col 1: Brand & Desc */}
           <div className="space-y-4">
             <h3 className="font-serif font-bold text-lg text-[var(--foreground)]">Lumina</h3>
             <p className="text-xs text-[var(--muted)] leading-relaxed max-w-sm">
-              Infraestructura de confianza para presupuestos de RSE (Responsabilidad Social Empresaria) en Stellar y Soroban.
+              El capital RSE llega a la app cuando el hito es real. La empresa no toca cripto. Quien usa el servicio no paga.
             </p>
           </div>
 
@@ -56,6 +57,21 @@ export default function Footer() {
             <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--foreground)]">Recursos</h4>
             <ul className="space-y-2">
               <li>
+                <Link href="/empresa" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
+                  Portal Empresa
+                </Link>
+              </li>
+              <li>
+                <Link href="/jury" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
+                  Evidencia (jurado)
+                </Link>
+              </li>
+              <li>
+                <Link href="/connect" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
+                  Connect
+                </Link>
+              </li>
+              <li>
                 <a
                   href="https://github.com/gabriel-alejandropereagarcia/LUMINA"
                   target="_blank"
@@ -81,7 +97,7 @@ export default function Footer() {
 
         <div className="border-t border-[var(--border)] mt-8 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-[var(--muted)]">
-            Lumina Protocol © {currentYear} — Capa de infraestructura de fideicomisos on-chain para financiamiento programable de impacto. Código abierto y transparente.
+            Lumina © {currentYear} — protocolo Scale. Fee 2,5% solo al release.
           </p>
           <div className="flex gap-4 text-xs text-[var(--muted)]">
             <span>Transparencia ESG</span>

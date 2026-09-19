@@ -2,7 +2,7 @@ import * as StellarSdk from "@stellar/stellar-sdk";
 
 // Red y URLs de configuración (Testnet por defecto)
 export const NETWORK = process.env.NEXT_PUBLIC_STELLAR_NETWORK || "testnet";
-export const LUMINA_CONTRACT_ID = process.env.NEXT_PUBLIC_LUMINA_CONTRACT_ID || "CBLKDMO6M5GJZVNPKD2QRCAKGDFUHJCF27EG7MOFRAEHSNWMXAOOG6HA";
+export const LUMINA_CONTRACT_ID = process.env.NEXT_PUBLIC_LUMINA_CONTRACT_ID || "CBZAI24XP2RXDVXLRJNVGVGZ5QRDMNI54GTPBTN4OOLFTSFJRWQ4M3EJ";
 export const USDC_CONTRACT_ID = process.env.NEXT_PUBLIC_USDC_CONTRACT_ID || "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA";
 
 if (LUMINA_CONTRACT_ID.startsWith("CAAAAAAA")) {
@@ -129,8 +129,97 @@ export async function getImpactScore(sponsorAddress: string): Promise<number> {
   return res !== null ? Number(res) : 0;
 }
 
+export async function isOracle(oracleAddress: string): Promise<boolean> {
+  const oracleVal = StellarSdk.Address.fromString(oracleAddress).toScVal();
+  const res = await invokeReadOnly("is_oracle", [oracleVal]);
+  return !!res;
+}
+
 /**
- * Verifica si un reporte MIRA ya está registrado on-chain.
+ * Admin firma add_oracle. Precio en USDC (7 decimales on-chain).
+ * payout es la wallet de la app que cobra el 97.5%.
+ */
+export async function buildAddOracleTx(
+  adminAddress: string,
+  oracleAddress: string,
+  priceUsdc: number,
+  payoutAddress?: string
+): Promise<string> {
+  const account = await rpc.getAccount(adminAddress);
+  const luminaContract = new StellarSdk.Contract(LUMINA_CONTRACT_ID);
+  const oracleVal = StellarSdk.Address.fromString(oracleAddress).toScVal();
+  const priceVal = StellarSdk.nativeToScVal(usdcToStroops(priceUsdc), { type: "i128" });
+  const payoutVal = StellarSdk.Address.fromString(payoutAddress || oracleAddress).toScVal();
+
+  let transaction = new StellarSdk.TransactionBuilder(account, {
+    fee: StellarSdk.BASE_FEE,
+    networkPassphrase: config.networkPassphrase,
+  })
+    .addOperation(luminaContract.call("add_oracle", oracleVal, priceVal, payoutVal))
+    .setTimeout(180)
+    .build();
+
+  const simulation = await rpc.simulateTransaction(transaction);
+  if (StellarSdk.rpc.Api.isSimulationError(simulation)) {
+    throw new Error(`Simulación de add_oracle fallida: ${simulation.error}`);
+  }
+
+  transaction = StellarSdk.rpc.assembleTransaction(transaction, simulation).build();
+  return transaction.toXDR();
+}
+
+export async function buildAllowAssetTx(adminAddress: string, assetContractId: string): Promise<string> {
+  const account = await rpc.getAccount(adminAddress);
+  const luminaContract = new StellarSdk.Contract(LUMINA_CONTRACT_ID);
+  const assetVal = StellarSdk.Address.fromString(assetContractId).toScVal();
+
+  let transaction = new StellarSdk.TransactionBuilder(account, {
+    fee: StellarSdk.BASE_FEE,
+    networkPassphrase: config.networkPassphrase,
+  })
+    .addOperation(luminaContract.call("allow_asset", assetVal))
+    .setTimeout(180)
+    .build();
+
+  const simulation = await rpc.simulateTransaction(transaction);
+  if (StellarSdk.rpc.Api.isSimulationError(simulation)) {
+    throw new Error(`Simulación de allow_asset fallida: ${simulation.error}`);
+  }
+
+  transaction = StellarSdk.rpc.assembleTransaction(transaction, simulation).build();
+  return transaction.toXDR();
+}
+
+export async function buildAssignOracleTx(
+  sponsorAddress: string,
+  assetContractId: string,
+  oracleAddress: string
+): Promise<string> {
+  const account = await rpc.getAccount(sponsorAddress);
+  const luminaContract = new StellarSdk.Contract(LUMINA_CONTRACT_ID);
+  const sponsorVal = StellarSdk.Address.fromString(sponsorAddress).toScVal();
+  const assetVal = StellarSdk.Address.fromString(assetContractId).toScVal();
+  const oracleVal = StellarSdk.Address.fromString(oracleAddress).toScVal();
+
+  let transaction = new StellarSdk.TransactionBuilder(account, {
+    fee: StellarSdk.BASE_FEE,
+    networkPassphrase: config.networkPassphrase,
+  })
+    .addOperation(luminaContract.call("assign_oracle", sponsorVal, assetVal, oracleVal))
+    .setTimeout(180)
+    .build();
+
+  const simulation = await rpc.simulateTransaction(transaction);
+  if (StellarSdk.rpc.Api.isSimulationError(simulation)) {
+    throw new Error(`Simulación de assign_oracle fallida: ${simulation.error}`);
+  }
+
+  transaction = StellarSdk.rpc.assembleTransaction(transaction, simulation).build();
+  return transaction.toXDR();
+}
+
+/**
+ * Verifica si el hash de un hito ya está registrado on-chain.
  */
 export async function isReportVerified(reportHashHex: string): Promise<boolean> {
   const reportBytes = Buffer.from(reportHashHex, "hex");

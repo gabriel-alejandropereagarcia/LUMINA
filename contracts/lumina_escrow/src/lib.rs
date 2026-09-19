@@ -8,20 +8,23 @@ use soroban_sdk::{
 pub struct OracleConfig {
     pub price: i128,          // Tarifa por hito
     pub last_update: u64,     // Timestamp en segundos
+    pub payout: Address,      // Wallet de la app (cobra el 97.5%)
 }
 
 #[contracttype]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum DataKey {
     Admin,                      // Instance: Address
-    UsdcToken,                  // Instance: Address
+    UsdcToken,                  // Instance: Address (asset por defecto / demo USDC)
     Oracle(Address),            // Persistent: bool (Registro de Oráculos Autorizados)
     OracleConfig(Address),      // Persistent: OracleConfig (Configuración de precios y time-locks)
     PlatformWallet,             // Instance: Address
-    SponsorEscrow(Address),     // Persistent: i128
+    SponsorEscrow(Address, Address), // Persistent: i128  (sponsor, asset)
     ImpactScore(Address),       // Persistent: i128
     VerifiedReports(BytesN<32>), // Persistent: bool
-    LockTimestamp(Address),     // Persistent: u64 (Timestamp del último depósito del sponsor)
+    LockTimestamp(Address, Address), // Persistent: u64 (sponsor, asset)
+    AllowedAsset(Address),      // Persistent: bool
+    AssignedOracle(Address, Address), // Persistent: Address (sponsor, asset) → oracle
 }
 
 #[contractevent]
@@ -87,6 +90,9 @@ pub enum Error {
     UnauthorizedOracle = 6,
     PriceAdjustmentLocked = 7,
     EscrowLocked = 8,
+    AssetNotAllowed = 9,
+    OracleMismatch = 10,
+    OracleNotAssigned = 11,
 }
 
 #[contract]
@@ -110,16 +116,21 @@ impl LuminaEscrowContract {
         env.storage().instance().set(&DataKey::Admin, &admin);
         env.storage().instance().set(&DataKey::UsdcToken, &usdc_token);
         env.storage().instance().set(&DataKey::PlatformWallet, &platform_wallet);
+
+        let asset_key = DataKey::AllowedAsset(usdc_token.clone());
+        env.storage().persistent().set(&asset_key, &true);
+        env.storage().persistent().extend_ttl(&asset_key, 17280, 518400);
         
-        // Registrar el oráculo inicial de MIRA
+        // Registrar el primer oráculo autorizado (piloto; el registro admite N apps)
         let oracle_key = DataKey::Oracle(oracle.clone());
         env.storage().persistent().set(&oracle_key, &true);
         env.storage().persistent().extend_ttl(&oracle_key, 17280, 518400);
 
-        let config_key = DataKey::OracleConfig(oracle);
+        let config_key = DataKey::OracleConfig(oracle.clone());
         let config = OracleConfig {
             price: oracle_price,
             last_update: env.ledger().timestamp(),
+            payout: oracle,
         };
         env.storage().persistent().set(&config_key, &config);
         env.storage().persistent().extend_ttl(&config_key, 17280, 518400);
@@ -130,8 +141,67 @@ impl LuminaEscrowContract {
         Ok(())
     }
 
-    /// Agrega un nuevo Oráculo autorizado para emitir certificados de impacto con su precio inicial.
-    pub fn add_oracle(env: Env, oracle: Address, price: i128) -> Result<(), Error> {
+    fn default_asset(env: &Env) -> Result<Address, Error> {
+        env.storage()
+            .instance()
+            .get(&DataKey::UsdcToken)
+            .ok_or(Error::NotInitialized)
+    }
+
+    fn require_allowed_asset(env: &Env, asset: &Address) -> Result<(), Error> {
+        let key = DataKey::AllowedAsset(asset.clone());
+        let allowed: bool = env.storage().persistent().get(&key).unwrap_or(false);
+        if !allowed {
+            return Err(Error::AssetNotAllowed);
+        }
+        Ok(())
+    }
+
+    /// Admin allowlist: el mismo token::Client sirve para USDC testnet y USDT0 SAC oficial.
+    pub fn allow_asset(env: Env, asset: Address) -> Result<(), Error> {
+        let admin: Address = env.storage().instance().get(&DataKey::Admin).ok_or(Error::NotInitialized)?;
+        admin.require_auth();
+        let key = DataKey::AllowedAsset(asset);
+        env.storage().persistent().set(&key, &true);
+        env.storage().persistent().extend_ttl(&key, 17280, 518400);
+        Ok(())
+    }
+
+    pub fn is_allowed_asset(env: Env, asset: Address) -> bool {
+        env.storage()
+            .persistent()
+            .get(&DataKey::AllowedAsset(asset))
+            .unwrap_or(false)
+    }
+
+    /// El sponsor asigna su pozo (asset) a un oráculo autorizado.
+    pub fn assign_oracle(env: Env, sponsor: Address, asset: Address, oracle: Address) -> Result<(), Error> {
+        if !env.storage().instance().has(&DataKey::Admin) {
+            return Err(Error::NotInitialized);
+        }
+        Self::require_allowed_asset(&env, &asset)?;
+        sponsor.require_auth();
+
+        let oracle_key = DataKey::Oracle(oracle.clone());
+        let is_authorized: bool = env.storage().persistent().get(&oracle_key).unwrap_or(false);
+        if !is_authorized {
+            return Err(Error::UnauthorizedOracle);
+        }
+
+        let key = DataKey::AssignedOracle(sponsor, asset);
+        env.storage().persistent().set(&key, &oracle);
+        env.storage().persistent().extend_ttl(&key, 17280, 518400);
+        Ok(())
+    }
+
+    pub fn get_assigned_oracle(env: Env, sponsor: Address, asset: Address) -> Option<Address> {
+        env.storage()
+            .persistent()
+            .get(&DataKey::AssignedOracle(sponsor, asset))
+    }
+
+    /// Agrega un nuevo Oráculo autorizado. `payout` es la wallet de la app que cobra el 97.5%.
+    pub fn add_oracle(env: Env, oracle: Address, price: i128, payout: Address) -> Result<(), Error> {
         let admin: Address = env.storage().instance().get(&DataKey::Admin).ok_or(Error::NotInitialized)?;
         admin.require_auth();
 
@@ -147,6 +217,7 @@ impl LuminaEscrowContract {
         let config = OracleConfig {
             price,
             last_update: env.ledger().timestamp(),
+            payout,
         };
         env.storage().persistent().set(&config_key, &config);
         env.storage().persistent().extend_ttl(&config_key, 17280, 518400);
@@ -196,6 +267,11 @@ impl LuminaEscrowContract {
         }
     }
 
+    pub fn get_oracle_payout(env: Env, oracle: Address) -> Option<Address> {
+        let config: Option<OracleConfig> = env.storage().persistent().get(&DataKey::OracleConfig(oracle));
+        config.map(|c| c.payout)
+    }
+
     /// Ajusta la tarifa del oráculo. Requiere la firma del admin y del oráculo.
     /// Solo se puede ejecutar transcurridos 360 días (time-lock de 1 año).
     pub fn adjust_oracle_price(env: Env, oracle: Address, new_price: i128) -> Result<(), Error> {
@@ -231,8 +307,14 @@ impl LuminaEscrowContract {
         Ok(())
     }
 
-    /// Permite a un patrocinador corporativo (Sponsor) depositar USDC en el contrato.
+    /// Depósito en el asset por defecto (USDC testnet en el demo ABC).
     pub fn deposit(env: Env, sponsor: Address, amount: i128) -> Result<(), Error> {
+        let asset = Self::default_asset(&env)?;
+        Self::deposit_asset(env, sponsor, asset, amount)
+    }
+
+    /// Mismo riel para USDC Circle o USDT0 SAC oficial (`CBSJZEIO5…`).
+    pub fn deposit_asset(env: Env, sponsor: Address, asset: Address, amount: i128) -> Result<(), Error> {
         if !env.storage().instance().has(&DataKey::Admin) {
             return Err(Error::NotInitialized);
         }
@@ -244,20 +326,18 @@ impl LuminaEscrowContract {
 
         env.storage().instance().extend_ttl(17280, 518400);
 
-        // Obtener token USDC y transferir al contrato
-        let usdc_addr: Address = env.storage().instance().get(&DataKey::UsdcToken).ok_or(Error::NotInitialized)?;
-        let usdc_client = token::Client::new(&env, &usdc_addr);
-        usdc_client.transfer(&sponsor, &env.current_contract_address(), &amount);
+        Self::require_allowed_asset(&env, &asset)?;
 
-        // Actualizar balance de custodia del Sponsor
-        let escrow_key = DataKey::SponsorEscrow(sponsor.clone());
+        let token_client = token::Client::new(&env, &asset);
+        token_client.transfer(&sponsor, &env.current_contract_address(), &amount);
+
+        let escrow_key = DataKey::SponsorEscrow(sponsor.clone(), asset.clone());
         let current_balance: i128 = env.storage().persistent().get(&escrow_key).unwrap_or(0);
         let new_balance = current_balance + amount;
         env.storage().persistent().set(&escrow_key, &new_balance);
         env.storage().persistent().extend_ttl(&escrow_key, 17280, 518400);
 
-        // Registrar timestamp de bloqueo (solo si no existe uno activo, para no resetear el timer)
-        let lock_key = DataKey::LockTimestamp(sponsor.clone());
+        let lock_key = DataKey::LockTimestamp(sponsor.clone(), asset.clone());
         if !env.storage().persistent().has(&lock_key) {
             env.storage().persistent().set(&lock_key, &env.ledger().timestamp());
         }
@@ -275,6 +355,11 @@ impl LuminaEscrowContract {
 
     /// Permite a un patrocinador retirar sus fondos en garantía si transcurrieron 12 meses sin usarse.
     pub fn withdraw_escrow(env: Env, sponsor: Address, amount: i128) -> Result<(), Error> {
+        let asset = Self::default_asset(&env)?;
+        Self::withdraw_escrow_asset(env, sponsor, asset, amount)
+    }
+
+    pub fn withdraw_escrow_asset(env: Env, sponsor: Address, asset: Address, amount: i128) -> Result<(), Error> {
         if !env.storage().instance().has(&DataKey::Admin) {
             return Err(Error::NotInitialized);
         }
@@ -286,13 +371,15 @@ impl LuminaEscrowContract {
 
         env.storage().instance().extend_ttl(17280, 518400);
 
-        let escrow_key = DataKey::SponsorEscrow(sponsor.clone());
+        Self::require_allowed_asset(&env, &asset)?;
+
+        let escrow_key = DataKey::SponsorEscrow(sponsor.clone(), asset.clone());
         let current_balance: i128 = env.storage().persistent().get(&escrow_key).unwrap_or(0);
         if current_balance < amount {
             return Err(Error::InsufficientEscrow);
         }
 
-        let lock_key = DataKey::LockTimestamp(sponsor.clone());
+        let lock_key = DataKey::LockTimestamp(sponsor.clone(), asset.clone());
         let last_deposit: u64 = env.storage().persistent().get(&lock_key).unwrap_or(0);
 
         // Enforce 1 year time lock (360 days in seconds)
@@ -308,12 +395,9 @@ impl LuminaEscrowContract {
             env.storage().persistent().remove(&lock_key);
         }
 
-        // Transferir USDC de vuelta al sponsor
-        let usdc_addr: Address = env.storage().instance().get(&DataKey::UsdcToken).ok_or(Error::NotInitialized)?;
-        let usdc_client = token::Client::new(&env, &usdc_addr);
-        usdc_client.transfer(&env.current_contract_address(), &sponsor, &amount);
+        let token_client = token::Client::new(&env, &asset);
+        token_client.transfer(&env.current_contract_address(), &sponsor, &amount);
 
-        // Publicar evento de retiro
         WithdrawEvent {
             sponsor: sponsor.clone(),
             amount,
@@ -323,12 +407,23 @@ impl LuminaEscrowContract {
         Ok(())
     }
 
-    /// Verifica la firma del oráculo clínico/social al completarse una evaluación,
-    /// deduce la cantidad de la cuenta del sponsor y libera los fondos a la billetera de la plataforma.
+    /// La app (oráculo) certifica el hito. El 97.5% va a su payout; el 2.5% al protocolo.
     pub fn release_impact(
         env: Env,
         oracle: Address,
         sponsor: Address,
+        amount: i128,
+        report_hash: BytesN<32>,
+    ) -> Result<(), Error> {
+        let asset = Self::default_asset(&env)?;
+        Self::release_impact_asset(env, oracle, sponsor, asset, amount, report_hash)
+    }
+
+    pub fn release_impact_asset(
+        env: Env,
+        oracle: Address,
+        sponsor: Address,
+        asset: Address,
         amount: i128,
         report_hash: BytesN<32>,
     ) -> Result<(), Error> {
@@ -339,12 +434,10 @@ impl LuminaEscrowContract {
             return Err(Error::InvalidAmount);
         }
 
-        // Requerir autorización de la firma del Oráculo que llama
         oracle.require_auth();
 
         env.storage().instance().extend_ttl(17280, 518400);
 
-        // Validar que el oráculo esté autorizado en el registro del protocolo y coincida la tarifa
         let oracle_key = DataKey::Oracle(oracle.clone());
         let is_authorized: bool = env.storage().persistent().get(&oracle_key).unwrap_or(false);
         if !is_authorized {
@@ -357,55 +450,57 @@ impl LuminaEscrowContract {
             return Err(Error::InvalidAmount);
         }
 
-        // Evitar doble reclamo del mismo reporte (deduplicación persistente)
         let report_key = DataKey::VerifiedReports(report_hash.clone());
         if env.storage().persistent().has(&report_key) {
             return Err(Error::ReportAlreadyVerified);
         }
 
-        // Verificar saldo del sponsor
-        let escrow_key = DataKey::SponsorEscrow(sponsor.clone());
+        Self::require_allowed_asset(&env, &asset)?;
+
+        let assigned: Address = env
+            .storage()
+            .persistent()
+            .get(&DataKey::AssignedOracle(sponsor.clone(), asset.clone()))
+            .ok_or(Error::OracleNotAssigned)?;
+        if assigned != oracle {
+            return Err(Error::OracleMismatch);
+        }
+
+        let escrow_key = DataKey::SponsorEscrow(sponsor.clone(), asset.clone());
         let current_balance: i128 = env.storage().persistent().get(&escrow_key).unwrap_or(0);
         if current_balance < amount {
             return Err(Error::InsufficientEscrow);
         }
 
-        // Descontar saldo de custodia
         let new_balance = current_balance - amount;
         env.storage().persistent().set(&escrow_key, &new_balance);
         env.storage().persistent().extend_ttl(&escrow_key, 17280, 518400);
 
         if new_balance == 0 {
-            let lock_key = DataKey::LockTimestamp(sponsor.clone());
+            let lock_key = DataKey::LockTimestamp(sponsor.clone(), asset.clone());
             env.storage().persistent().remove(&lock_key);
         }
 
-        // Incrementar score de impacto del Sponsor (Reputación Soulbound)
         let score_key = DataKey::ImpactScore(sponsor.clone());
         let current_score: i128 = env.storage().persistent().get(&score_key).unwrap_or(0);
         let new_score = current_score + 1;
         env.storage().persistent().set(&score_key, &new_score);
         env.storage().persistent().extend_ttl(&score_key, 17280, 518400);
 
-        // Registrar el hash del reporte en almacenamiento persistente para evitar doble gasto
         env.storage().persistent().set(&report_key, &true);
         env.storage().persistent().extend_ttl(&report_key, 17280, 518400);
 
-        // Transferir USDC a la billetera de destino (plataforma/sostenibilidad) con split de comisión del 2.5%
-        let usdc_addr: Address = env.storage().instance().get(&DataKey::UsdcToken).ok_or(Error::NotInitialized)?;
-        let usdc_client = token::Client::new(&env, &usdc_addr);
-        let platform_wallet: Address = env.storage().instance().get(&DataKey::PlatformWallet).ok_or(Error::NotInitialized)?;
-        let admin: Address = env.storage().instance().get(&DataKey::Admin).ok_or(Error::NotInitialized)?;
+        let token_client = token::Client::new(&env, &asset);
+        let protocol_wallet: Address = env.storage().instance().get(&DataKey::PlatformWallet).ok_or(Error::NotInitialized)?;
 
         let protocol_fee = (amount * 25) / 1000;
-        let provider_amount = amount - protocol_fee;
+        let app_amount = amount - protocol_fee;
 
         if protocol_fee > 0 {
-            usdc_client.transfer(&env.current_contract_address(), &admin, &protocol_fee);
+            token_client.transfer(&env.current_contract_address(), &protocol_wallet, &protocol_fee);
         }
-        usdc_client.transfer(&env.current_contract_address(), &platform_wallet, &provider_amount);
+        token_client.transfer(&env.current_contract_address(), &config.payout, &app_amount);
 
-        // Publicar evento de impacto liberado usando la macro #[contractevent]
         ImpactReleasedEvent {
             sponsor: sponsor.clone(),
             oracle: oracle.clone(),
@@ -419,8 +514,19 @@ impl LuminaEscrowContract {
 
     /// Retorna el saldo en garantía de un sponsor.
     pub fn get_escrow_balance(env: Env, sponsor: Address) -> i128 {
-        let escrow_key = DataKey::SponsorEscrow(sponsor);
+        let asset = match Self::default_asset(&env) {
+            Ok(a) => a,
+            Err(_) => return 0,
+        };
+        let escrow_key = DataKey::SponsorEscrow(sponsor, asset);
         env.storage().persistent().get(&escrow_key).unwrap_or(0)
+    }
+
+    pub fn get_escrow_balance_asset(env: Env, sponsor: Address, asset: Address) -> i128 {
+        env.storage()
+            .persistent()
+            .get(&DataKey::SponsorEscrow(sponsor, asset))
+            .unwrap_or(0)
     }
 
     /// Retorna la cantidad de evaluaciones/cribados financiados por un sponsor (Soulbound Impact Score).

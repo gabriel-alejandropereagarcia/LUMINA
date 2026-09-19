@@ -1,5 +1,9 @@
 import { ChainAdapter, WalletInfo, TxResult } from "./chain-adapter";
-import { StellarWalletsKit } from "@creit.tech/stellar-wallets-kit";
+import {
+  connectStellarWallet,
+  disconnectStellarWallet,
+  signStellarTransaction,
+} from "@/lib/integrations/wallets-kit";
 import {
   getEscrowBalance,
   getImpactScore,
@@ -8,10 +12,15 @@ import {
   buildDepositTx,
   buildWithdrawTx,
   submitSorobanTransaction,
-  config,
   rpc,
   LUMINA_CONTRACT_ID
 } from "@/lib/stellar";
+
+async function signAndSubmit(xdr: string, address: string): Promise<string> {
+  const signedTxXdr = await signStellarTransaction(xdr, address);
+  if (!signedTxXdr) throw new Error("Firma de transacción rechazada por el usuario.");
+  return submitSorobanTransaction(signedTxXdr);
+}
 
 export class StellarAdapter implements ChainAdapter {
   readonly chainId = "stellar-testnet";
@@ -21,23 +30,19 @@ export class StellarAdapter implements ChainAdapter {
   async connect(): Promise<WalletInfo | null> {
     try {
       if (typeof window === "undefined") return null;
-      
-      const res = await StellarWalletsKit.authModal();
-      if (res && res.address) {
-        return { address: res.address };
-      }
-      return null;
+      const address = await connectStellarWallet();
+      return address ? { address } : null;
     } catch (e: any) {
-      console.error("Error al conectar Freighter:", e);
+      console.error("Error al conectar wallet Stellar:", e);
       return null;
     }
   }
 
   async disconnect(): Promise<void> {
     try {
-      await StellarWalletsKit.disconnect();
+      await disconnectStellarWallet();
     } catch (e) {
-      console.error("Error al desconectar Freighter:", e);
+      console.error("Error al desconectar wallet Stellar:", e);
     }
   }
 
@@ -62,13 +67,7 @@ export class StellarAdapter implements ChainAdapter {
   async approve(sponsor: string, amount: number): Promise<TxResult> {
     try {
       const xdr = await buildApproveTx(sponsor, amount);
-      const { signTransaction } = require("@stellar/freighter-api");
-      const { signedTxXdr } = await signTransaction(xdr, {
-        networkPassphrase: config.networkPassphrase,
-      });
-      
-      if (!signedTxXdr) throw new Error("Firma de transacción rechazada por el usuario.");
-      const hash = await submitSorobanTransaction(signedTxXdr);
+      const hash = await signAndSubmit(xdr, sponsor);
       return { success: true, hash };
     } catch (e: any) {
       return { success: false, error: e.message || "Error al procesar la aprobación de USDC en Stellar." };
@@ -78,13 +77,7 @@ export class StellarAdapter implements ChainAdapter {
   async deposit(sponsor: string, amount: number): Promise<TxResult> {
     try {
       const xdr = await buildDepositTx(sponsor, amount);
-      const { signTransaction } = require("@stellar/freighter-api");
-      const { signedTxXdr } = await signTransaction(xdr, {
-        networkPassphrase: config.networkPassphrase,
-      });
-
-      if (!signedTxXdr) throw new Error("Firma de transacción rechazada por el usuario.");
-      const hash = await submitSorobanTransaction(signedTxXdr);
+      const hash = await signAndSubmit(xdr, sponsor);
       return { success: true, hash };
     } catch (e: any) {
       return { success: false, error: e.message || "Error al procesar el depósito en Stellar." };
@@ -94,13 +87,7 @@ export class StellarAdapter implements ChainAdapter {
   async withdraw(sponsor: string, amount: number): Promise<TxResult> {
     try {
       const xdr = await buildWithdrawTx(sponsor, amount);
-      const { signTransaction } = require("@stellar/freighter-api");
-      const { signedTxXdr } = await signTransaction(xdr, {
-        networkPassphrase: config.networkPassphrase,
-      });
-
-      if (!signedTxXdr) throw new Error("Firma de transacción rechazada por el usuario.");
-      const hash = await submitSorobanTransaction(signedTxXdr);
+      const hash = await signAndSubmit(xdr, sponsor);
       return { success: true, hash };
     } catch (e: any) {
       return { success: false, error: e.message || "Error al procesar el retiro en Stellar." };
@@ -147,21 +134,10 @@ export class StellarAdapter implements ChainAdapter {
         }
       }
 
-      // Fallbacks de producción para asegurar disponibilidad
-      const fallbackSponsors = [
-        process.env.NEXT_PUBLIC_ADMIN_ADDRESS || "GDWOVSXOW7U5S4HY3Z336F4G65RPH3P7KLY6Z2NLO3MNE22EETB2MIRA",
-        "GC7K2N7IHM22E2QNYB36GZNY36KLY6Z2NLO3MNE22EETB2MIRA47A"
-      ];
-      for (const fallback of fallbackSponsors) {
-        if (fallback) uniqueSponsors.add(fallback);
-      }
-
       return Array.from(uniqueSponsors);
     } catch (error) {
       console.error("Error al obtener sponsors de Stellar Soroban:", error);
-      return [
-        process.env.NEXT_PUBLIC_ADMIN_ADDRESS || "GDWOVSXOW7U5S4HY3Z336F4G65RPH3P7KLY6Z2NLO3MNE22EETB2MIRA"
-      ];
+      return [];
     }
   }
 }

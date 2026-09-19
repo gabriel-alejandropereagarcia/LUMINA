@@ -94,40 +94,37 @@ async function sendNotifications(sponsorAddress: string, amount: number, txHash:
 
 export async function POST(request: Request) {
   try {
+    const expected = process.env.CERTIFY_SECRET || process.env.ORACLE_SECRET;
+    const header = request.headers.get("authorization") || "";
+    const token = header.startsWith("Bearer ") ? header.slice(7) : request.headers.get("x-app-secret");
+    if (!expected || token !== expected) {
+      return NextResponse.json({ error: "No autorizado." }, { status: 401 });
+    }
+
     const body = await request.json();
     const { sponsorAddress, amount, reportHashHex } = body;
 
-    if (!sponsorAddress || !amount) {
+    if (!sponsorAddress || !amount || !reportHashHex) {
       return NextResponse.json(
-        { error: "Faltan parámetros requeridos: sponsorAddress y amount." },
+        { error: "Requeridos: sponsorAddress, amount y reportHashHex (64 hex)." },
         { status: 400 }
       );
     }
 
-    // Obtener la clave privada del oráculo del entorno del servidor
+    if (!/^[0-9a-fA-F]{64}$/.test(reportHashHex)) {
+      return NextResponse.json({ error: "reportHashHex debe ser SHA-256 (64 hex)." }, { status: 400 });
+    }
+
     const oracleSecret = process.env.ORACLE_SECRET;
     if (!oracleSecret) {
-      console.error("⚠️ ORACLE_SECRET no está configurada en las variables de entorno del servidor.");
       return NextResponse.json(
-        { error: "Error de configuración interna del servidor: Oráculo no configurado." },
+        { error: "ORACLE_SECRET no configurada." },
         { status: 500 }
       );
     }
 
-    // 1. Generar o convertir el hash de reporte de 32 bytes
-    let reportHashBytes = new Uint8Array(32);
-    let targetReportHashHex = reportHashHex;
-
-    if (targetReportHashHex) {
-      // Usar el hash enviado si está presente
-      const buffer = Buffer.from(targetReportHashHex, "hex");
-      reportHashBytes = new Uint8Array(buffer);
-    } else {
-      // Generar uno nuevo si no se provee
-      const crypto = require("crypto");
-      crypto.randomFillSync(reportHashBytes);
-      targetReportHashHex = Buffer.from(reportHashBytes).toString("hex");
-    }
+    const reportHashBytes = new Uint8Array(Buffer.from(reportHashHex, "hex"));
+    const targetReportHashHex = reportHashHex;
 
     // 2. Cargar Keypair del Oráculo para firma criptográfica
     const oracleKeypair = StellarSdk.Keypair.fromSecret(oracleSecret);
@@ -165,7 +162,7 @@ export async function POST(request: Request) {
 
     transaction = StellarSdk.rpc.assembleTransaction(transaction, simulation).build();
 
-    // Firmar con la clave privada del Oráculo MIRA (almacenada segura server-side)
+    // Firma server-side del oráculo autorizado (el piloto actual es MIRA)
     transaction.sign(oracleKeypair);
 
     // 4. Enviar a la red Stellar RPC

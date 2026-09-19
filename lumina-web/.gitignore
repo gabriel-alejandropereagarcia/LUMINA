@@ -33,6 +33,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# Portal Empresa demo store (aportes / certificados locales)
+.data/
+
 # vercel
 .vercel
 

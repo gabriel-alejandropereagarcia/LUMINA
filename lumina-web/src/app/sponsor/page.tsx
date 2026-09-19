@@ -84,6 +84,9 @@ export default function SponsorDashboard() {
   
   // Yield mode state (DeFi opt-in)
   const [yieldMode, setYieldMode] = useState<boolean>(false);
+  const [defindexApy, setDefindexApy] = useState<number | null>(null);
+  const [defindexReady, setDefindexReady] = useState<boolean>(false);
+  const [yieldLoading, setYieldLoading] = useState<boolean>(false);
   const [esgDownloading, setEsgDownloading] = useState<boolean>(false);
   const [prCopied, setPrCopied] = useState<boolean>(false);
 
@@ -179,16 +182,70 @@ export default function SponsorDashboard() {
 
   const prTextCopy = `Lumina Protocol Report: ${
     address ? `La empresa con wallet ${address.slice(0, 8)}...` : "Nuestra corporación"
-  } financió exitosamente el screening de neurodesarrollo infantil de ${currentImpactCount} familias a través del protocolo ReFi Lumina e integrado con MIRA AI. Esta acción aporta a la salud infantil y genera un ahorro social proyectado de $${(
+  } fondeó ${currentImpactCount} hitos a través de Lumina (demo pool / RSE de prueba). MIRA es una app de impacto en desarrollo, no el sponsor. Ahorro social proyectado de $${(
     currentImpactCount * 3000
   ).toLocaleString()} USD en costos de atención pública a largo plazo, validado 100% on-chain de forma transparente.`;
 
-  const toggleYield = () => {
-    toast({
-      type: "info",
-      title: "Próximamente en Producción",
-      message: "La optimización automatizada de liquidez (DeFi Blend) está planificada para la Fase 3 de la Hoja de Ruta."
-    });
+  useEffect(() => {
+    const params = address ? `?address=${address}` : "";
+    fetch(`/api/integrations/defindex${params}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setDefindexReady(Boolean(data.configured));
+        setDefindexApy(typeof data.apyPercent === "number" ? data.apyPercent : null);
+      })
+      .catch(() => {
+        setDefindexReady(false);
+      });
+  }, [address]);
+
+  const toggleYield = async () => {
+    if (!address) {
+      toast({
+        type: "info",
+        title: "Conectá tu wallet",
+        message: "DeFindex necesita una wallet Stellar para armar el depósito de yield.",
+      });
+      return;
+    }
+
+    if (!defindexReady || currentEscrowUSD <= 0) {
+      toast({
+        type: "info",
+        title: "DeFindex (lista SCF)",
+        message: defindexReady
+          ? "No hay USDC ocioso para asignar."
+          : "Configurá DEFINDEX_API_KEY y DEFINDEX_VAULT_ADDRESS para depositar yield real. Blend ya no está en la lista SCF.",
+      });
+      return;
+    }
+
+    setYieldLoading(true);
+    try {
+      const res = await fetch("/api/integrations/defindex", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ caller: address, amount: currentEscrowUSD }),
+      });
+      const data = await res.json();
+      if (!data.xdr) {
+        throw new Error(data.error || "DeFindex no devolvió un XDR.");
+      }
+      const { signAndSubmitStellarXdr } = await import("@/lib/integrations/sign-and-submit");
+      const hash = await signAndSubmitStellarXdr(data.xdr, address);
+      setYieldMode(true);
+      toast({
+        type: "success",
+        title: "Depósito DeFindex enviado",
+        message: "USDC ocioso ruteado al vault DeFindex.",
+        txHash: hash,
+      });
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "No se pudo asignar a DeFindex.";
+      toast({ type: "error", title: "DeFindex", message });
+    } finally {
+      setYieldLoading(false);
+    }
   };
 
   return (
@@ -201,7 +258,7 @@ export default function SponsorDashboard() {
           <div className="p-4 rounded-xl border border-teal-500/20 bg-[var(--teal-light)] text-xs text-teal-500 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
             <div className="space-y-0.5">
               <span className="font-bold uppercase tracking-wider block text-xs">💡 MODO DEMOSTRACIÓN ACTIVO</span>
-              <p className="text-[var(--muted)]">Estás viendo datos simulados. Conecta tu Freighter Wallet para gestionar tus garantías reales on-chain.</p>
+              <p className="text-[var(--muted)]">Estás viendo datos simulados. Conectá una wallet Stellar para gestionar tus garantías reales on-chain.</p>
             </div>
             <button 
               onClick={connect}
@@ -255,7 +312,7 @@ export default function SponsorDashboard() {
           {/* Yield Comprometido en Blend */}
           <div className="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider">Yield Mode en Blend (DeFi)</span>
+              <span className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider">Yield Mode en DeFindex</span>
               <Activity className={`h-4.5 w-4.5 ${yieldMode ? "text-[var(--warn)] animate-pulse" : "text-[var(--muted)]"}`} />
             </div>
             <div>
@@ -263,7 +320,11 @@ export default function SponsorDashboard() {
                 {(yieldMode ? currentEscrowUSD : 0).toLocaleString()} USDC
               </span>
               <p className="text-xs text-[var(--muted)] mt-1">
-                {yieldMode ? "Generando ~5.4% APY en Blend" : "Inactivo (0% APY)"}
+                {yieldMode
+                  ? `Generando ${defindexApy != null ? `~${defindexApy}%` : "APY"} en DeFindex`
+                  : defindexApy != null
+                    ? `Listo · ${defindexApy}% APY`
+                    : "Inactivo (DeFindex)"}
               </p>
             </div>
           </div>
@@ -279,7 +340,7 @@ export default function SponsorDashboard() {
                 {(currentEscrowUSD > 40 ? 40 : 0)} USDC
               </span>
               <p className="text-xs text-[var(--muted)] mt-1">
-                Comprometido para la siguiente evaluación de MIRA.
+                Comprometido para el próximo hito de la app asignada.
               </p>
             </div>
           </div>
@@ -320,13 +381,18 @@ export default function SponsorDashboard() {
               <div className="flex justify-between items-center">
                 <div className="space-y-0.5">
                   <span className="text-xs font-bold text-[var(--foreground)] block">Optimización DeFi (Suministro de Liquidez)</span>
-                  <span className="text-[10px] text-amber-500 font-semibold block">Próximamente · Desarrollo Planificado en Fase 3</span>
+                  <span className="text-[10px] text-amber-500 font-semibold block">
+                    {defindexReady ? "Vault DeFindex · lista SCF" : "Requiere DEFINDEX_API_KEY · lista SCF"}
+                  </span>
                 </div>
                 <button
                   onClick={toggleYield}
-                  className="relative inline-flex h-6 w-11 items-center rounded-full bg-zinc-800 border border-zinc-700/50 cursor-pointer"
+                  disabled={yieldLoading}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full border cursor-pointer disabled:opacity-50 ${
+                    yieldMode ? "bg-teal-600 border-teal-500" : "bg-zinc-800 border-zinc-700/50"
+                  }`}
                 >
-                  <span className="inline-block h-4 w-4 transform rounded-full bg-zinc-500 translate-x-1" />
+                  <span className={`inline-block h-4 w-4 transform rounded-full bg-zinc-200 ${yieldMode ? "translate-x-6" : "translate-x-1"}`} />
                 </button>
               </div>
 
@@ -334,7 +400,7 @@ export default function SponsorDashboard() {
                 <div className="rounded-lg border-[var(--warn-border)] bg-[var(--warn-bg)] p-3 flex gap-2 items-start text-amber-400 text-xs leading-relaxed">
                   <AlertTriangle className="h-4 w-4 flex-shrink-0" />
                   <p>
-                    <strong>FONDOS SUJETOS A RIESGO:</strong> Tus USDC inactivos están depositados en Blend Protocol. Lumina no se responsabiliza ni garantiza el principal ante fallas en contratos de terceros.
+                    <strong>FONDOS SUJETOS A RIESGO:</strong> Tus USDC inactivos se asignan a un vault DeFindex. Lumina no garantiza el principal ante fallas de contratos de terceros.
                   </p>
                 </div>
               )}
@@ -346,7 +412,7 @@ export default function SponsorDashboard() {
               <div className="space-y-1">
                 <strong>Garantía de Tiempo Comprometida:</strong>
                 <p className="text-xs text-[var(--muted)] leading-relaxed">
-                  Tus fondos asignados a un hito están protegidos por contrato en Soroban. Si la app de impacto (MIRA) no valida el trabajo antes del vencimiento de 12 meses, los fondos se desbloquearán automáticamente para retiro.
+                  Tus fondos asignados a un hito están protegidos en Soroban. Si la app verificadora no certifica el resultado en 12 meses, el remanente se puede retirar.
                 </p>
               </div>
             </div>
@@ -402,7 +468,7 @@ export default function SponsorDashboard() {
             <div className="p-5 rounded-xl border border-[var(--border)] bg-transparent space-y-4">
               <div className="space-y-0.5">
                 <span className="text-xs font-bold text-teal-500 uppercase tracking-widest block">Sandbox de Integración</span>
-                <h4 className="text-xs font-bold text-[var(--foreground)]">Consola de Pruebas del Oráculo MIRA</h4>
+                <h4 className="text-xs font-bold text-[var(--foreground)]">Consola de prueba de oráculo (ejemplo: MIRA)</h4>
                 <p className="text-xs text-[var(--muted)] leading-relaxed">
                   Consola de pruebas para auditar y verificar localmente la firma criptográfica del oráculo y la liberación de fondos on-chain en Stellar Testnet.
                 </p>
@@ -413,7 +479,7 @@ export default function SponsorDashboard() {
                 disabled={simulating}
                 className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-600 to-green-600 py-3 text-xs font-bold text-white shadow-lg disabled:opacity-50 transition-all cursor-pointer"
               >
-                {simulating ? "Ejecutando Prueba de Integración..." : "Ejecutar Prueba de Integración MIRA"}
+                {simulating ? "Ejecutando prueba..." : "Simular hito (local · no es on-chain)"}
               </button>
 
               {simStatus && (
@@ -450,7 +516,7 @@ export default function SponsorDashboard() {
                 </div>
                 <div className="divide-y divide-[var(--border)]">
                   <div className="p-3 grid grid-cols-4 items-center text-[var(--muted)]">
-                    <span className="font-semibold text-[var(--foreground)]">MIRA AI (Salud)</span>
+                    <span className="font-semibold text-[var(--foreground)]">MIRA AI · impacto WIP</span>
                     <span className="font-mono">{currentImpactCount} evaluados</span>
                     <span className="font-mono text-emerald-400">${totalFundingUSD} USDC</span>
                     <span className="text-right text-xs font-semibold flex items-center justify-end gap-1.5 text-emerald-400">
@@ -462,19 +528,11 @@ export default function SponsorDashboard() {
                     </span>
                   </div>
                   <div className="p-3 grid grid-cols-4 items-center text-[var(--muted)]">
-                    <span className="font-semibold text-[var(--foreground)]/60">FitSteps (Deporte)</span>
-                    <span className="font-mono">0 caminatas</span>
+                    <span className="font-semibold text-[var(--foreground)]/60">Otras apps</span>
+                    <span className="font-mono">—</span>
                     <span className="font-mono text-zinc-500">$0 USDC</span>
-                    <span className="text-right text-xs text-zinc-500 font-semibold flex items-center justify-end gap-1">
-                      Demo Conceptual
-                    </span>
-                  </div>
-                  <div className="p-3 grid grid-cols-4 items-center text-[var(--muted)]">
-                    <span className="font-semibold text-[var(--foreground)]/60">EcoForest (Ambiente)</span>
-                    <span className="font-mono">0 árboles</span>
-                    <span className="font-mono text-zinc-500">$0 USDC</span>
-                    <span className="text-right text-xs text-zinc-500 font-semibold flex items-center justify-end gap-1">
-                      Demo Conceptual
+                    <span className="text-right text-xs text-zinc-500 font-semibold">
+                      Entran por /connect
                     </span>
                   </div>
                 </div>

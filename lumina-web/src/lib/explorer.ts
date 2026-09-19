@@ -25,7 +25,7 @@ const USDC_EVM_CONTRACT = process.env.NEXT_PUBLIC_USDC_EVM_CONTRACT_ID || "0xe7f
 
 export function getExplorerUrls(network: string) {
   if (network === "stellar-testnet") {
-    const stellarContract = process.env.NEXT_PUBLIC_LUMINA_CONTRACT_ID || "CBLKDMO6M5GJZVNPKD2QRCAKGDFUHJCF27EG7MOFRAEHSNWMXAOOG6HA";
+    const stellarContract = process.env.NEXT_PUBLIC_LUMINA_CONTRACT_ID || "CBZAI24XP2RXDVXLRJNVGVGZ5QRDMNI54GTPBTN4OOLFTSFJRWQ4M3EJ";
     const stellarUsdc = process.env.NEXT_PUBLIC_USDC_CONTRACT_ID || "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA";
     return {
       name: "Stellar Expert (Testnet)",

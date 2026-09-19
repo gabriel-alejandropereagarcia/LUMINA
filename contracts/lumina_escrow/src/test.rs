@@ -67,6 +67,8 @@ fn test_lumina_flow() {
     assert_eq!(client.get_escrow_balance(&sponsor), 100i128);
     assert_eq!(usdc_client.balance(&sponsor), 900i128);
     assert_eq!(usdc_client.balance(&contract_id), 100i128);
+    client.assign_oracle(&sponsor, &usdc_address, &oracle);
+    assert_eq!(client.get_oracle_payout(&oracle), Some(oracle.clone()));
 
     // Generar un hash de reporte (simulación del PDF MIRA)
     let mut report_hash_bytes = [0u8; 32];
@@ -104,8 +106,9 @@ fn test_lumina_flow() {
     assert_eq!(client.get_escrow_balance(&sponsor), 60i128);
     assert_eq!(client.get_impact_score(&sponsor), 1);
     assert_eq!(usdc_client.balance(&contract_id), 60i128);
-    assert_eq!(usdc_client.balance(&platform_wallet), 39i128);
-    assert_eq!(usdc_client.balance(&admin), 1i128);
+    assert_eq!(usdc_client.balance(&oracle), 39i128);
+    assert_eq!(usdc_client.balance(&platform_wallet), 1i128);
+    assert_eq!(usdc_client.balance(&admin), 0i128);
     assert_eq!(client.is_report_verified(&report_hash), true);
 
     // Verificar que no se pueda reutilizar el mismo hash de reporte (doble cobro)
@@ -123,14 +126,16 @@ fn test_lumina_flow() {
 
     // Agregar el nuevo oráculo a través del admin con tarifa de 20 USDC y verificar
     assert_eq!(client.is_oracle(&unauthorized_oracle), false);
-    client.add_oracle(&unauthorized_oracle, &20i128);
+    client.add_oracle(&unauthorized_oracle, &20i128, &unauthorized_oracle);
     assert_eq!(client.is_oracle(&unauthorized_oracle), true);
     assert_eq!(client.get_oracle_price(&unauthorized_oracle), 20i128);
-    
+    client.assign_oracle(&sponsor, &usdc_address, &unauthorized_oracle);
+
     client.release_impact(&unauthorized_oracle, &sponsor, &20i128, &another_report_hash);
     assert_eq!(client.get_escrow_balance(&sponsor), 40i128); // 60 - 20 = 40
-    assert_eq!(usdc_client.balance(&platform_wallet), 59i128);
-    assert_eq!(usdc_client.balance(&admin), 1i128);
+    assert_eq!(usdc_client.balance(&unauthorized_oracle), 20i128);
+    assert_eq!(usdc_client.balance(&platform_wallet), 1i128);
+    assert_eq!(usdc_client.balance(&admin), 0i128);
 
     // --- Pruebas de Ajuste de Tarifas y Time-Locks ---
 
@@ -155,8 +160,9 @@ fn test_lumina_flow() {
 
     client.release_impact(&unauthorized_oracle, &sponsor, &30i128, &third_report_hash);
     assert_eq!(client.get_escrow_balance(&sponsor), 10i128); // 40 - 30 = 10
-    assert_eq!(usdc_client.balance(&platform_wallet), 89i128);
-    assert_eq!(usdc_client.balance(&admin), 1i128);
+    assert_eq!(usdc_client.balance(&unauthorized_oracle), 50i128);
+    assert_eq!(usdc_client.balance(&platform_wallet), 1i128);
+    assert_eq!(usdc_client.balance(&admin), 0i128);
 }
 
 #[test]
@@ -298,8 +304,141 @@ fn test_transfer_admin() {
     // Intentar agregar un oráculo. add_oracle leerá el Admin de storage (que ahora debe ser new_admin).
     // Con mock_all_auths() activo, esto validará que new_admin autorizó la llamada.
     let another_oracle = Address::generate(&env);
-    client.add_oracle(&another_oracle, &50i128);
+    client.add_oracle(&another_oracle, &50i128, &another_oracle);
     
     assert_eq!(client.is_oracle(&another_oracle), true);
+}
+
+#[test]
+fn test_allow_asset_and_assign_oracle() {
+    let env = Env::default();
+    env.mock_all_auths();
+
+    let admin = Address::generate(&env);
+    let sponsor = Address::generate(&env);
+    let oracle = Address::generate(&env);
+    let other_oracle = Address::generate(&env);
+    let platform_wallet = Address::generate(&env);
+
+    let usdc_admin = Address::generate(&env);
+    let usdc_address = env.register_stellar_asset_contract_v2(usdc_admin.clone()).address();
+    let usdc_sac = token::StellarAssetClient::new(&env, &usdc_address);
+    usdc_sac.mint(&sponsor, &200i128);
+
+    let other_asset = env.register_stellar_asset_contract_v2(usdc_admin).address();
+
+    let contract_id = env.register(LuminaEscrowContract, ());
+    let client = LuminaEscrowContractClient::new(&env, &contract_id);
+    client.initialize(&admin, &usdc_address, &oracle, &40i128, &platform_wallet);
+
+    assert_eq!(client.is_allowed_asset(&usdc_address), true);
+    assert_eq!(client.is_allowed_asset(&other_asset), false);
+    client.allow_asset(&other_asset);
+    assert_eq!(client.is_allowed_asset(&other_asset), true);
+
+    client.deposit(&sponsor, &80i128);
+    client.assign_oracle(&sponsor, &usdc_address, &oracle);
+
+    let mut hash_ok = [0u8; 32];
+    hash_ok[0] = 7;
+    client.release_impact(&oracle, &sponsor, &40i128, &BytesN::from_array(&env, &hash_ok));
+    assert_eq!(client.get_escrow_balance(&sponsor), 40i128);
+
+    client.add_oracle(&other_oracle, &40i128, &other_oracle);
+    let mut hash_bad = [0u8; 32];
+    hash_bad[0] = 8;
+    let mismatch = client.try_release_impact(
+        &other_oracle,
+        &sponsor,
+        &40i128,
+        &BytesN::from_array(&env, &hash_bad),
+    );
+    assert!(mismatch.is_err());
+}
+
+#[test]
+fn test_deposit_asset_uses_allowlist() {
+    let env = Env::default();
+    env.mock_all_auths();
+
+    let admin = Address::generate(&env);
+    let sponsor = Address::generate(&env);
+    let oracle = Address::generate(&env);
+    let platform_wallet = Address::generate(&env);
+    let token_admin = Address::generate(&env);
+    let usdc = env.register_stellar_asset_contract_v2(token_admin.clone()).address();
+    let extra = env.register_stellar_asset_contract_v2(token_admin).address();
+    token::StellarAssetClient::new(&env, &usdc).mint(&sponsor, &50i128);
+    token::StellarAssetClient::new(&env, &extra).mint(&sponsor, &50i128);
+
+    let contract_id = env.register(LuminaEscrowContract, ());
+    let client = LuminaEscrowContractClient::new(&env, &contract_id);
+    client.initialize(&admin, &usdc, &oracle, &40i128, &platform_wallet);
+
+    let denied = client.try_deposit_asset(&sponsor, &extra, &10i128);
+    assert!(denied.is_err());
+
+    client.allow_asset(&extra);
+    client.deposit_asset(&sponsor, &extra, &10i128);
+    assert_eq!(client.get_escrow_balance_asset(&sponsor, &extra), 10i128);
+    assert_eq!(client.get_escrow_balance(&sponsor), 0);
+}
+
+#[test]
+fn test_release_requires_assign_and_pays_app() {
+    let env = Env::default();
+    env.mock_all_auths();
+
+    let admin = Address::generate(&env);
+    let sponsor = Address::generate(&env);
+    let oracle = Address::generate(&env);
+    let app_payout = Address::generate(&env);
+    let platform_wallet = Address::generate(&env);
+    let token_admin = Address::generate(&env);
+    let usdc = env.register_stellar_asset_contract_v2(token_admin.clone()).address();
+    let extra = env.register_stellar_asset_contract_v2(token_admin).address();
+    token::StellarAssetClient::new(&env, &usdc).mint(&sponsor, &80i128);
+    token::StellarAssetClient::new(&env, &extra).mint(&sponsor, &80i128);
+
+    let contract_id = env.register(LuminaEscrowContract, ());
+    let client = LuminaEscrowContractClient::new(&env, &contract_id);
+    client.initialize(&admin, &usdc, &oracle, &40i128, &platform_wallet);
+
+    client.deposit(&sponsor, &40i128);
+    let mut hash_unassigned = [0u8; 32];
+    hash_unassigned[0] = 1;
+    let denied = client.try_release_impact(
+        &oracle,
+        &sponsor,
+        &40i128,
+        &BytesN::from_array(&env, &hash_unassigned),
+    );
+    assert!(denied.is_err());
+
+    client.add_oracle(&oracle, &40i128, &app_payout);
+    client.assign_oracle(&sponsor, &usdc, &oracle);
+    client.release_impact(&oracle, &sponsor, &40i128, &BytesN::from_array(&env, &hash_unassigned));
+
+    let usdc_client = token::Client::new(&env, &usdc);
+    assert_eq!(usdc_client.balance(&app_payout), 39i128);
+    assert_eq!(usdc_client.balance(&platform_wallet), 1i128);
+    assert_eq!(usdc_client.balance(&oracle), 0i128);
+
+    client.allow_asset(&extra);
+    client.deposit_asset(&sponsor, &extra, &40i128);
+    client.assign_oracle(&sponsor, &extra, &oracle);
+    let mut hash_extra = [0u8; 32];
+    hash_extra[0] = 2;
+    client.release_impact_asset(
+        &oracle,
+        &sponsor,
+        &extra,
+        &40i128,
+        &BytesN::from_array(&env, &hash_extra),
+    );
+    let extra_client = token::Client::new(&env, &extra);
+    assert_eq!(extra_client.balance(&app_payout), 39i128);
+    assert_eq!(extra_client.balance(&platform_wallet), 1i128);
+    assert_eq!(client.get_escrow_balance_asset(&sponsor, &extra), 0);
 }
 

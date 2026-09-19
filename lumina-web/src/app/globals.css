@@ -199,3 +199,19 @@ body::after {
 .stagger.visible > *:nth-child(3) { transition-delay: 200ms; opacity: 1; transform: translateY(0); }
 .stagger.visible > *:nth-child(4) { transition-delay: 300ms; opacity: 1; transform: translateY(0); }
 
+@media print {
+  body::before,
+  body::after {
+    display: none !important;
+  }
+
+  .cert-sheet {
+    box-shadow: none !important;
+    max-width: none !important;
+  }
+
+  .glass-card:hover {
+    transform: none;
+  }
+}
+

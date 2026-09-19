@@ -1,5 +1,7 @@
 # Lumina Project Memory & Context Directory
 
+**Argentina Builder Challenge (Scale, sep 2026):** la fuente de continuidad es [`ABC-SCALE-NOTES.md`](./ABC-SCALE-NOTES.md). Leela primero. Tesis, IDs, riel fiat, USDT0, PuenteMAE (ayuda social, sin OS) y el prompt del próximo agente están ahí. Este archivo tiene gotchas técnicos; si choca con las notas ABC, **mandan las notas**.
+
 Este archivo es la **fuente única de verdad (Single Source of Truth)** para el desarrollo y mantenimiento del protocolo Lumina en Stellar/Soroban. Debe ser consultado y leído al inicio de cada sesión para evitar la pérdida de contexto sobre decisiones arquitectónicas, estado del código, límites del MVP y convenciones del equipo.
 
 ---

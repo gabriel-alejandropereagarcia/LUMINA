@@ -1,129 +1,289 @@
 "use client";
 
-import { 
-  ShieldAlert, Scale, HelpCircle, AlertTriangle, 
-  Clock, CheckCircle, FileText, ArrowLeft, Ban
-} from "lucide-react";
+import { FormEvent, Suspense, useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { USDC_TESTNET_CLASSIC, USDC_TESTNET_SAC, USDT0_OFFICIAL } from "@/lib/official-assets";
+import { txUrl } from "@/lib/explorer";
 
-export default function DisputeResolutionPortal() {
+const ESCROW = process.env.NEXT_PUBLIC_LUMINA_CONTRACT_ID || "CBZAI24XP2RXDVXLRJNVGVGZ5QRDMNI54GTPBTN4OOLFTSFJRWQ4M3EJ";
+const SPONSOR = process.env.NEXT_PUBLIC_SPONSOR_ADDRESS || "GBRR6QWYT5UIHATCC7SYJITERMDWKLE5HHJCNM5PP6GK2DRB4YPKSP5E";
+const USDT0_TX = process.env.NEXT_PUBLIC_USDT0_PROOF_TX || "";
+const RELEASE_TX = process.env.NEXT_PUBLIC_LAST_RELEASE_TX || "";
+const STORAGE_KEY = "lumina-jury-proof";
+
+type Proof = { release: string; hash: string; usdt0: string };
+
+function readStored(): Proof {
+  if (typeof window === "undefined") return { release: "", hash: "", usdt0: "" };
+  try {
+    const raw = sessionStorage.getItem(STORAGE_KEY);
+    if (!raw) return { release: "", hash: "", usdt0: "" };
+    const parsed = JSON.parse(raw) as Partial<Proof>;
+    return {
+      release: typeof parsed.release === "string" ? parsed.release : "",
+      hash: typeof parsed.hash === "string" ? parsed.hash : "",
+      usdt0: typeof parsed.usdt0 === "string" ? parsed.usdt0 : "",
+    };
+  } catch {
+    return { release: "", hash: "", usdt0: "" };
+  }
+}
+
+function JuryBody() {
+  const params = useSearchParams();
+  const router = useRouter();
+  const stored = readStored();
+  const [release, setRelease] = useState(
+    params.get("release") || RELEASE_TX || stored.release,
+  );
+  const [reportHash, setReportHash] = useState(params.get("hash") || stored.hash);
+  const [usdt0, setUsdt0] = useState(params.get("usdt0") || USDT0_TX || stored.usdt0);
+
+  useEffect(() => {
+    const fromQuery: Proof = {
+      release: params.get("release") || RELEASE_TX || stored.release,
+      hash: params.get("hash") || stored.hash,
+      usdt0: params.get("usdt0") || USDT0_TX || stored.usdt0,
+    };
+    setRelease(fromQuery.release);
+    setReportHash(fromQuery.hash);
+    setUsdt0(fromQuery.usdt0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params]);
+
+  const releaseShown = release.trim();
+  const hashShown = reportHash.trim();
+  const usdt0Shown = usdt0.trim();
+
+  const applyProof = (event: FormEvent) => {
+    event.preventDefault();
+    const next: Proof = {
+      release: release.trim(),
+      hash: reportHash.trim(),
+      usdt0: usdt0.trim(),
+    };
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    const query = new URLSearchParams();
+    if (next.release) query.set("release", next.release);
+    if (next.hash) query.set("hash", next.hash);
+    if (next.usdt0) query.set("usdt0", next.usdt0);
+    router.replace(query.size ? `/jury?${query.toString()}` : "/jury");
+  };
+
   return (
-    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto space-y-8">
-        
-        {/* Header */}
-        <div className="space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-xs font-semibold tracking-wide uppercase">
-            <Clock className="h-3.5 w-3.5 animate-pulse" />
-            Módulo En Desarrollo · Fase 2 de la Hoja de Ruta
-          </div>
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-teal-400 to-green-400 bg-clip-text text-transparent">
-            Portal de Arbitraje y Resolución de Disputas
-          </h1>
-          <p className="text-sm text-[var(--muted)] leading-relaxed">
-            Mecanismo descentralizado para auditar reclamaciones de hitos de impacto y resolver disputas comerciales entre sponsors y oráculos validadores de forma transparente.
+    <div className="min-h-[calc(100vh-4rem)] px-4 py-16 sm:px-6 lg:px-8 max-w-3xl mx-auto space-y-8">
+      <div className="space-y-3">
+        <span className="text-xs font-bold text-teal-600 uppercase tracking-widest">
+          Argentina Builder Challenge · Scale · Demo Day 26/9
+        </span>
+        <h1 className="font-serif text-4xl font-bold text-[var(--foreground)]">
+          Lo que el jurado tiene que ver
+        </h1>
+        <p className="text-sm text-[var(--muted)] leading-relaxed">
+          Tres minutos: empresa sin cripto, release USDC en testnet, USDT0 oficial en mainnet.
+          Una tesis. Hashes reales.
+        </p>
+      </div>
+
+      <section className="space-y-2 text-sm text-[var(--muted)]">
+        <h2 className="text-[var(--foreground)] font-bold">El camino de 3 minutos</h2>
+        <ol className="list-decimal pl-5 space-y-2">
+          <li>
+            <Link href="/empresa" className="text-teal-500 underline">
+              /empresa
+            </Link>{" "}
+            — factura RSE, panel de unidades (10 niño-mes), PDF de tres bloques. Sin Freighter.
+          </li>
+          <li>
+            <Link href="/invest" className="text-teal-500 underline">
+              /invest
+            </Link>{" "}
+            — Freighter testnet, 40 USDC Circle, asignar MIRA. Solo el juez firma acá.
+          </li>
+          <li>
+            Certify: <code className="font-mono">npx tsx examples/certify.ts</code> con{" "}
+            <code className="font-mono">LUMINA_SPONSOR</code> = la G que depositó. 97.5% a la app.
+          </li>
+        </ol>
+      </section>
+
+      <section className="space-y-3 text-sm">
+        <h2 className="text-[var(--foreground)] font-bold">Pegar hashes (sin rebuild)</h2>
+        <p className="text-xs text-[var(--muted)]">
+          Tras faucet + certify, o tras comprar USDT0, pegá acá. Queda en la URL y en esta pestaña.
+        </p>
+        <form onSubmit={applyProof} className="space-y-2">
+          <label className="block space-y-1">
+            <span className="text-xs font-semibold text-[var(--muted)]">Release tx (testnet)</span>
+            <input
+              value={release}
+              onChange={(e) => setRelease(e.target.value)}
+              placeholder="hash de release_impact"
+              className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 font-mono text-xs"
+            />
+          </label>
+          <label className="block space-y-1">
+            <span className="text-xs font-semibold text-[var(--muted)]">reportHash (64 hex)</span>
+            <input
+              value={reportHash}
+              onChange={(e) => setReportHash(e.target.value)}
+              placeholder="sha256 del fact"
+              className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 font-mono text-xs"
+            />
+          </label>
+          <label className="block space-y-1">
+            <span className="text-xs font-semibold text-[var(--muted)]">USDT0 tx (mainnet)</span>
+            <input
+              value={usdt0}
+              onChange={(e) => setUsdt0(e.target.value)}
+              placeholder="hash stellar.expert public"
+              className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 font-mono text-xs"
+            />
+          </label>
+          <button
+            type="submit"
+            className="rounded-xl bg-teal-600 px-4 py-2 text-xs font-bold text-white"
+          >
+            Mostrar en esta página
+          </button>
+        </form>
+      </section>
+
+      <section className="space-y-2 text-sm">
+        <h2 className="text-[var(--foreground)] font-bold">Prueba USDC (testnet)</h2>
+        {releaseShown ? (
+          <p className="text-xs font-mono break-all">
+            Release:{" "}
+            <a href={txUrl(releaseShown)} className="text-teal-500 underline" target="_blank" rel="noreferrer">
+              {releaseShown}
+            </a>
           </p>
-        </div>
-
-        {/* Warning Banner */}
-        <div className="p-4 rounded-xl border border-amber-500/20 bg-amber-500/5 text-amber-300 text-xs leading-relaxed space-y-1">
-          <span className="font-bold uppercase tracking-wider block">⚠️ ESPECIFICACIÓN DE DISEÑO</span>
-          <p>
-            Esta sección describe la arquitectura teórica del sistema de arbitraje que se desplegará en la Fase 2. La lógica contractual actual opera de forma automática; este portal servirá de interfaz para la DAO de resolución de disputas cuando el protocolo migre a Mainnet.
+        ) : (
+          <p className="text-sm text-[var(--muted)]">
+            Todavía no hay release. Faucet Circle (2×20 USDC, 2 h) a{" "}
+            <code className="font-mono break-all">{SPONSOR}</code>. Después:{" "}
+            <code className="font-mono">powershell -File scripts/e2e-usdc.ps1</code>.
           </p>
-        </div>
+        )}
+        {hashShown ? (
+          <p className="text-xs font-mono break-all text-[var(--muted)]">reportHash: {hashShown}</p>
+        ) : null}
+      </section>
 
-        {/* ¿Cómo funciona el Arbitraje? */}
-        <div className="glass-card p-6 sm:p-8 rounded-2xl border border-[var(--border)] space-y-6">
-          <h2 className="text-lg font-bold text-[var(--foreground)] flex items-center gap-2">
-            <Scale className="h-5 w-5 text-teal-400" />
-            Protocolo de Resolución de Conflictos (Dispute Protocol)
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 rounded-xl bg-[var(--muted-bg)] border border-[var(--border)] space-y-2">
-              <div className="h-8 w-8 rounded-lg bg-red-500/10 text-red-400 flex items-center justify-center font-bold text-xs">
-                1
-              </div>
-              <h4 className="text-xs font-bold text-[var(--foreground)]">Elevación del Reclamo</h4>
-              <p className="text-[10px] text-[var(--muted)] leading-relaxed">
-                Si un sponsor detecta que un reporte de impacto notarizado SHA-256 es falso o carece de sustento físico, puede congelar el cobro e iniciar una disputa on-chain.
-              </p>
-            </div>
+      <section className="space-y-2 text-sm">
+        <h2 className="text-[var(--foreground)] font-bold">Prueba USDT0 (mainnet oficial)</h2>
+        <p className="text-sm text-[var(--muted)]">
+          No hay USDT0 de testnet. SAC {USDT0_OFFICIAL.sac.slice(0, 8)}… · 7 decimales · clawback.
+          Transfer UI:{" "}
+          <a href={USDT0_OFFICIAL.transferUi} className="text-teal-500 underline" target="_blank" rel="noreferrer">
+            usdt0.to/transfer
+          </a>
+          .
+        </p>
+        {usdt0Shown ? (
+          <p className="text-xs font-mono break-all">
+            Tx mainnet:{" "}
+            <a
+              href={`https://stellar.expert/explorer/public/tx/${usdt0Shown}`}
+              className="text-teal-500 underline"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {usdt0Shown}
+            </a>
+          </p>
+        ) : (
+          <p className="text-sm text-amber-700">
+            Pendiente: 1 unidad USDT0 oficial y el hash pegado arriba. No se finge.
+          </p>
+        )}
+      </section>
 
-            <div className="p-4 rounded-xl bg-[var(--muted-bg)] border border-[var(--border)] space-y-2">
-              <div className="h-8 w-8 rounded-lg bg-yellow-500/10 text-yellow-400 flex items-center justify-center font-bold text-xs">
-                2
-              </div>
-              <h4 className="text-xs font-bold text-[var(--foreground)]">Fase de Auditoría (DAO)</h4>
-              <p className="text-[10px] text-[var(--muted)] leading-relaxed">
-                Los árbitros elegidos por la gobernanza analizan el hash SHA-256 y solicitan pruebas físicas (reporte completo encriptado bajo llave del oráculo) para cotejar la veracidad.
-              </p>
-            </div>
+      <section className="space-y-2 text-sm text-[var(--muted)]">
+        <h2 className="text-[var(--foreground)] font-bold">Forms ABC + Apex</h2>
+        <p>
+          Cheat sheet campo a campo (form live Scale) en ABC-SCALE-NOTES §3.
+          Cierra ABC el 21/9. Falta PII del lead y del compañero para enviar.
+        </p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>
+            <a
+              href="https://argentinabuilderchallenge.netlify.app/aplicar"
+              className="text-teal-500 underline"
+              target="_blank"
+              rel="noreferrer"
+            >
+              ABC aplicar
+            </a>
+            {" "}— este cuenta. Track Scale. Equipo Lumina, 2 personas, hub Salta, BAF.
+          </li>
+          <li>
+            <a
+              href="https://stellarapex.nearx.com.br/"
+              className="text-teal-500 underline"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Stellar Apex
+            </a>
+            {" "}— cuenta + equipo. Instaward “coming soon”.
+          </li>
+        </ul>
+      </section>
 
-            <div className="p-4 rounded-xl bg-[var(--muted-bg)] border border-[var(--border)] space-y-2">
-              <div className="h-8 w-8 rounded-lg bg-green-500/10 text-green-400 flex items-center justify-center font-bold text-xs">
-                3
-              </div>
-              <h4 className="text-xs font-bold text-[var(--foreground)]">Veredicto e Infracción</h4>
-              <p className="text-[10px] text-[var(--muted)] leading-relaxed">
-                Si se comprueba fraude, el oráculo es revocado on-chain. Los fondos en garantía en disputa retornan al sponsor y el oráculo es penalizado financieramente.
-              </p>
-            </div>
-          </div>
-        </div>
+      <section className="space-y-2 text-xs font-mono text-[var(--muted)] break-all">
+        <h2 className="font-sans text-sm font-bold text-[var(--foreground)]">Addresses</h2>
+        <p>Escrow testnet: {ESCROW}</p>
+        <p>Admin: {process.env.NEXT_PUBLIC_ADMIN_ADDRESS || "GBKDKKKCMCB5CQG25R37F7VIHGO62557HZQUU4CZWTOTUK6HKLMNUDMK"}</p>
+        <p>Oracle (firma certify): {process.env.NEXT_PUBLIC_ORACLE_ADDRESS || "GBJJCKJBEF2ILRD5LGWXGH5BQIKZ6EYFDS3RHQZQ5KBCOV4XHSDESM7W"}</p>
+        <p>Sponsor demo: {SPONSOR}</p>
+        <p>USDC classic: {USDC_TESTNET_CLASSIC.code}:{USDC_TESTNET_CLASSIC.issuer}</p>
+        <p>USDC SAC: {USDC_TESTNET_SAC}</p>
+        <p>
+          USDT0: {USDT0_OFFICIAL.code}:{USDT0_OFFICIAL.issuer}
+        </p>
+      </section>
 
-        {/* Mock Interface de Disputas (Solo Lectura) */}
-        <div className="glass-card p-6 sm:p-8 rounded-2xl border border-[var(--border)] space-y-4 opacity-75">
-          <div className="flex justify-between items-center border-b border-[var(--border)] pb-3">
-            <h3 className="text-sm font-bold text-[var(--foreground)]">
-              Vista Previa: Consola de Arbitraje Descentralizado
-            </h3>
-            <span className="text-[10px] font-mono bg-zinc-800 text-zinc-400 px-2 py-0.5 rounded border border-zinc-700">
-              Mock Visual
-            </span>
-          </div>
-
-          <div className="space-y-3">
-            <div className="p-3 rounded-lg border border-red-500/20 bg-red-500/5 flex justify-between items-center text-xs">
-              <div className="space-y-1">
-                <span className="font-mono text-[var(--muted)]">[DISPUTA-092] · Caso MIRA Testnet</span>
-                <p className="font-semibold">Reclamación de Hito por Reporte Clínico Incompleto</p>
-              </div>
-              <div className="text-right space-y-1">
-                <span className="px-2.5 py-0.5 rounded-full bg-red-500/20 text-red-400 font-bold text-[10px]">
-                  Bajo Arbitraje
-                </span>
-                <p className="text-[10px] text-[var(--muted)] font-mono">Hash: a7f8...e221</p>
-              </div>
-            </div>
-
-            <div className="p-3 rounded-lg border border-green-500/20 bg-green-500/5 flex justify-between items-center text-xs">
-              <div className="space-y-1">
-                <span className="font-mono text-[var(--muted)]">[DISPUTA-089] · Caso EcoForest</span>
-                <p className="font-semibold">Falta de consistencia en coordenadas de reforestación satelital</p>
-              </div>
-              <div className="text-right space-y-1">
-                <span className="px-2.5 py-0.5 rounded-full bg-green-500/20 text-green-400 font-bold text-[10px]">
-                  Resuelto - Reembolsado
-                </span>
-                <p className="text-[10px] text-[var(--muted)] font-mono">Hash: b82c...99a1</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Back navigation */}
-        <div className="flex justify-between items-center text-xs text-[var(--muted)]">
-          <Link href="/" className="flex items-center gap-1 hover:text-teal-400 transition-colors">
-            <ArrowLeft className="h-4 w-4" /> Volver al Inicio
+      <section className="space-y-2 text-sm text-[var(--muted)]">
+        <h2 className="text-[var(--foreground)] font-bold">Apps de ejemplo</h2>
+        <p>
+          MIRA: cribado M-CHAT-R/F, WIP, no firma Stellar. PuenteMAE: ayuda social a docentes de
+          inclusión, no obra social, no facturación a OS. El jurado certifica con el script, no con
+          la UX clínica.
+        </p>
+        <p>
+          Panel de unidades:{" "}
+          <Link href="/empresa/portal" className="text-teal-500 underline">
+            /empresa/portal
+          </Link>{" "}
+          y pack{" "}
+          <Link href="/empresa/impacto" className="text-teal-500 underline">
+            /empresa/impacto
           </Link>
-          <Link href="/presentation" className="text-teal-500 hover:underline font-bold">
-            Ver Libro Blanco & Hoja de Ruta →
-          </Link>
-        </div>
+          .
+        </p>
+      </section>
 
+      <div className="flex flex-wrap gap-4 text-sm">
+        <Link href="/connect" className="text-teal-500 underline">
+          Connect
+        </Link>
+        <Link href="/developers" className="text-teal-500 underline">
+          Developers
+        </Link>
+        <Link href="/presentation" className="text-teal-500 underline">
+          Deck
+        </Link>
       </div>
     </div>
+  );
+}
+
+export default function JuryEvidencePage() {
+  return (
+    <Suspense fallback={<div className="p-16 text-sm text-[var(--muted)]">Cargando evidencia…</div>}>
+      <JuryBody />
+    </Suspense>
   );
 }

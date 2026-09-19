@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { useChain } from "./ChainContext";
+import { getConnectedStellarAddress } from "@/lib/integrations/wallets-kit";
 
 interface WalletContextType {
   address: string | null;
@@ -35,12 +36,28 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
     }
   }, [address, adapter]);
 
-  // Intentar reconectar si hay sesión guardada en localStorage
   useEffect(() => {
-    const savedAddress = localStorage.getItem("lumina_wallet_address");
-    if (savedAddress) {
-      setAddress(savedAddress);
-    }
+    let cancelled = false;
+    const restore = async () => {
+      try {
+        const kitAddress = await getConnectedStellarAddress();
+        if (!cancelled && kitAddress) {
+          setAddress(kitAddress);
+          localStorage.setItem("lumina_wallet_address", kitAddress);
+          return;
+        }
+      } catch {
+        // Seguir con localStorage si el kit aún no tiene sesión
+      }
+      const savedAddress = localStorage.getItem("lumina_wallet_address");
+      if (!cancelled && savedAddress) {
+        setAddress(savedAddress);
+      }
+    };
+    restore();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   // Sincronizar cookie de sesión para validación server-side en el middleware

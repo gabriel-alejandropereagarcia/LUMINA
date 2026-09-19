@@ -7,6 +7,9 @@ import {
   Lock, Unlock, Landmark, BarChart3, Users, HelpCircle, RefreshCw 
 } from "lucide-react";
 import ConfirmModal from "@/components/ConfirmModal";
+import { buildAddOracleTx, buildAllowAssetTx, submitSorobanTransaction } from "@/lib/stellar";
+import { signStellarTransaction } from "@/lib/integrations/wallets-kit";
+import { USDT0_OFFICIAL } from "@/lib/official-assets";
 
 
 interface OracleItem {
@@ -28,19 +31,12 @@ export default function AdminPortal() {
   // States for Oracle registry
   const [oracles, setOracles] = useState<OracleItem[]>([
     {
-      address: "GCVF5NZW3PMLUWR7R5KND6HND4T2KND4T2KND4T2KND4T2KND4T2KND4",
-      name: "MIRA AI (Screening Neurodesarrollo)",
+      address: process.env.NEXT_PUBLIC_ORACLE_ADDRESS || process.env.NEXT_PUBLIC_MIRA_ORACLE_ADDRESS || "GBJJCKJBEF2ILRD5LGWXGH5BQIKZ6EYFDS3RHQZQ5KBCOV4XHSDESM7W",
+      name: "MIRA AI · impacto WIP (aún no firma)",
       price: 40,
-      lastUpdate: "2026-06-21",
-      daysRemaining: 350, // Locked
+      lastUpdate: "pendiente Connect",
+      daysRemaining: 0,
     },
-    {
-      address: "GDNJU7W3PMLUWR7R5KND6HND4T2KND4T2KND4T2KND4T2KND4T2KND4T2",
-      name: "EcoForest (Reforestación)",
-      price: 5,
-      lastUpdate: "2025-05-15",
-      daysRemaining: 0, // Unlocked (more than 1 year elapsed)
-    }
   ]);
 
   const [newOracleAddress, setNewOracleAddress] = useState("");
@@ -75,25 +71,39 @@ export default function AdminPortal() {
     if (!newOracleAddress || !newOracleName || !newOraclePrice) return;
 
     setAdminLoading(true);
-    setAdminStatus("Enviando transacción 'add_oracle' a Stellar Testnet...");
-
-    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     const newItem: OracleItem = {
       address: newOracleAddress,
       name: newOracleName,
       price: Number(newOraclePrice),
       lastUpdate: new Date().toISOString().split("T")[0],
-      daysRemaining: 360, // Locked from now
+      daysRemaining: 360,
     };
 
-    setOracles((prev) => [...prev, newItem]);
-    setNewOracleAddress("");
-    setNewOracleName("");
-    setNewOraclePrice("");
-    setAdminLoading(false);
-    setAdminStatus("Aplicación de impacto agregada y registrada en la blockchain con éxito!");
-    setTimeout(() => setAdminStatus(null), 3000);
+    try {
+      if (isActualAdmin && address) {
+        setAdminStatus("Firmá add_oracle en la wallet (on-chain, no simulación)...");
+        const xdr = await buildAddOracleTx(address, newOracleAddress, Number(newOraclePrice), newOracleAddress);
+        const signed = await signStellarTransaction(xdr, address);
+        if (!signed) throw new Error("Firma rechazada.");
+        const hash = await submitSorobanTransaction(signed);
+        setAdminStatus(`Oráculo registrado on-chain. Tx ${hash.slice(0, 12)}…`);
+      } else {
+        setAdminStatus("Sandbox: no se envió add_oracle. Conectá la wallet admin para firmar de verdad.");
+        await new Promise((resolve) => setTimeout(resolve, 600));
+      }
+
+      setOracles((prev) => [...prev, newItem]);
+      setNewOracleAddress("");
+      setNewOracleName("");
+      setNewOraclePrice("");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Error al registrar oráculo.";
+      setAdminStatus(message);
+    } finally {
+      setAdminLoading(false);
+      setTimeout(() => setAdminStatus(null), 8000);
+    }
   };
 
   const handleRemoveOracle = (oracleAddr: string) => {
@@ -228,8 +238,8 @@ export default function AdminPortal() {
                   <BarChart3 className="h-5 w-5 text-teal-500" />
                 </div>
                 <div>
-                  <span className="text-3xl font-bold tracking-tight text-[var(--foreground)] font-mono">1,820 USDC</span>
-                  <p className="text-xs text-[var(--muted)] mt-1">Suma consolidada de todas las cuentas.</p>
+                  <span className="text-3xl font-bold tracking-tight text-[var(--foreground)] font-mono">on-chain</span>
+                  <p className="text-xs text-[var(--muted)] mt-1">Sin TVL inventado. El saldo vive en el escrow.</p>
                 </div>
               </div>
 
@@ -250,8 +260,8 @@ export default function AdminPortal() {
                   <Landmark className="h-5 w-5 text-emerald-400" />
                 </div>
                 <div>
-                  <span className="text-3xl font-bold tracking-tight text-[var(--foreground)] font-mono">45.50 USDC</span>
-                  <p className="text-xs text-[var(--muted)] mt-1">Acumulado para sustentabilidad del core.</p>
+                  <span className="text-3xl font-bold tracking-tight text-[var(--foreground)] font-mono">2.5%</span>
+                  <p className="text-xs text-[var(--muted)] mt-1">Fee de protocolo por release. Sin acumulado mock.</p>
                 </div>
               </div>
             </div>
@@ -313,6 +323,36 @@ export default function AdminPortal() {
                     Registrar y Desplegar
                   </button>
                 </form>
+
+                <div className="border-t border-[var(--border)] pt-4 space-y-2">
+                  <p className="text-[11px] text-[var(--muted)] leading-relaxed">
+                    Allowlist USDT0 oficial (SAC mainnet {USDT0_OFFICIAL.sac.slice(0, 8)}…). Requiere escrow v2 redeployado.
+                    No inventa un USDT0 de testnet.
+                  </p>
+                  <button
+                    type="button"
+                    disabled={adminLoading || !isActualAdmin || !address}
+                    onClick={async () => {
+                      if (!address) return;
+                      setAdminLoading(true);
+                      try {
+                        const xdr = await buildAllowAssetTx(address, USDT0_OFFICIAL.sac);
+                        const signed = await signStellarTransaction(xdr, address);
+                        if (!signed) throw new Error("Firma rechazada.");
+                        const hash = await submitSorobanTransaction(signed);
+                        setAdminStatus(`USDT0 oficial en allowlist. ${hash.slice(0, 12)}…`);
+                      } catch (err: unknown) {
+                        setAdminStatus(err instanceof Error ? err.message : "allow_asset falló (¿redeploy v2?)");
+                      } finally {
+                        setAdminLoading(false);
+                        setTimeout(() => setAdminStatus(null), 8000);
+                      }
+                    }}
+                    className="w-full rounded-xl border border-[var(--border)] py-2 text-[11px] font-bold disabled:opacity-40"
+                  >
+                    Allowlist USDT0 oficial (admin)
+                  </button>
+                </div>
               </div>
 
               {/* Registro de Oráculos */}

@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  transpilePackages: [
+    "@creit.tech/stellar-wallets-kit",
+    "@koyweforest/koywe-ramp-sdk",
+    "@soroswap/sdk",
+    "@defindex/sdk",
+  ],
   images: {
     remotePatterns: [
       {
