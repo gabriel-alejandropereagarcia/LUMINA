@@ -30,16 +30,16 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lumina | Hay ganas de ayudar. Hay quien no puede pagar.",
+  title: "Lumina | La ayuda se paga el día que ocurre",
   description:
-    "Lumina une capital de impacto con quien no puede pagar, cuando el hito es real. La empresa paga una factura, no cripto. La app cobra el 97,5% on-chain. Quien usa el servicio no paga.",
+    "Quien la necesita no pone un peso. La empresa cubre con una factura, no con cripto. La app cobra el 97,5% en Stellar cuando el hecho es cierto.",
   icons: {
     icon: "/favicon.svg",
   },
   openGraph: {
-    title: "Lumina — hay ganas de ayudar. Hay quien no puede pagar.",
+    title: "Lumina — la ayuda se paga el día que ocurre",
     description:
-      "Las unimos cuando el hito es real. Empresa paga factura, no cripto. App cobra 97,5%. Quien usa el servicio no paga.",
+      "Quien la necesita no pone un peso. Factura, no cripto. 97,5% a la app cuando el hecho es cierto.",
     type: "website",
     locale: "es_ES",
     siteName: "Lumina",

@@ -1,10 +1,10 @@
 # Lumina
 
-**Hay ganas de ayudar. Hay quien no puede pagar. Lumina las une cuando el hito es real.**
+**La ayuda se paga el día que ocurre. Quien la necesita, no pone un peso.**
 
-La empresa lockea con una factura — sin wallet. La app de impacto cobra el **97,5% on-chain**. Quien usa el servicio **no paga**.
+Una empresa cubre el servicio con una factura — sin wallet, sin comprar cripto. La app que hizo el trabajo cobra el **97,5%** en Stellar. Si el hecho no ocurrió, el capital vuelve y Lumina cobra **cero**.
 
-Nació en Salta. El riel es global.
+Nació en Salta. El protocolo no tiene frontera.
 
 [Live](https://lumina-dusky-pi.vercel.app) · [Evidencia](https://lumina-dusky-pi.vercel.app/jury) · [Portal empresa](https://lumina-dusky-pi.vercel.app/empresa) · [Registrá tu app](https://lumina-dusky-pi.vercel.app/connect#registro)
 
@@ -16,19 +16,19 @@ Nació en Salta. El riel es global.
 
 ## El problema
 
-Hay capital de RSE / impacto que quiere llegar. Hay familias, escuelas y clínicas que no pueden pagar el servicio. En el medio hay planillas, meses de atraso, y apps que hacen el trabajo y cobran tarde — o no cobran.
+Una empresa quiere pagar un cribado, un mes de apoyo escolar, una consulta. Del otro lado hay una familia que no puede. En el medio hay un informe, tres meses, y una app que ya hizo el trabajo.
 
-Eso no es un problema argentino. En Salta lo escuchamos primero (una tesorería que **no puede tocar cripto**, docentes MAE, un hospital). El producto no se queda ahí: cualquier empresa que quiera pagar impacto con prueba, y cualquier app que certifique un hito, entra al mismo riel.
+Eso no es un problema argentino. Es lo que pasa cada vez que el capital de impacto se rinde en una planilla y el servicio se cobra en la puerta. En Salta lo vimos de cerca — tesorerías que no pueden tocar cripto, docentes MAE, un hospital. El protocolo sirve en cualquier lugar donde haya presupuesto para ayudar y alguien que no pueda pagar.
 
 ## Qué es (y qué no)
 
-Lumina **no** es la clínica ni el sponsor. Es el protocolo:
+Lumina **no** es la clínica ni el sponsor. Es el protocolo que corta esa espera:
 
 1. La empresa paga una **factura de servicio**. No abre Freighter. No compra cripto.
-2. Una app listada en Connect certifica un hito (unidad + cantidad, nunca un DNI).
-3. El escrow Soroban paga **97,5%** a esa app y **2,5%** al protocolo, solo al `release`. Sin hito a los 12 meses, withdraw y Lumina cobra **0%**.
+2. Una app listada en Connect certifica el hecho (unidad + cantidad, nunca un DNI).
+3. El escrow Soroban paga **97,5%** a esa app y **2,5%** al protocolo, solo al `release`. Sin hecho a los 12 meses, withdraw y Lumina cobra **0%**.
 
-MIRA (cribado) y PuenteMAE (ayuda social a docentes) son **apps de ejemplo** en Connect. Viven en otros repos. Este repo es el riel.
+MIRA (cribado) y PuenteMAE (ayuda social a docentes) son **apps de ejemplo** en Connect. Viven en otros repos. Este repo es el protocolo.
 
 ---
 

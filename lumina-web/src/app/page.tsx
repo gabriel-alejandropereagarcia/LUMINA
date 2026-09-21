@@ -42,13 +42,13 @@ export default function Home() {
         </div>
         
         <h1 className="font-serif text-4xl sm:text-6xl font-bold tracking-tight text-[var(--foreground)] leading-tight">
-          Hay ganas de ayudar. Hay quien <span className="text-gradient">no puede pagar</span>
+          La ayuda se paga el <span className="text-gradient">día que ocurre</span>
         </h1>
 
         
         <p className="max-w-2xl mx-auto text-base sm:text-lg text-[var(--muted)] leading-relaxed">
-          Lumina las une cuando el hito es real. La empresa paga una factura — no cripto.
-          La app cobra el 97,5% on-chain. Quien usa el servicio no paga.
+          Quien la necesita no pone un peso. La empresa cubre con una factura — no con cripto.
+          La app cobra el 97,5% cuando el hecho es cierto.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
@@ -154,9 +154,9 @@ export default function Home() {
               Empresa, app y familia. Nadie más en el medio.
             </h2>
             <p className="text-sm text-[var(--muted)] leading-relaxed">
-              Quien puede ayudar lockea con una factura. Quien necesita no paga.
-              La app cobra on-chain cuando el hito es real. MIRA y PuenteMAE son apps
-              en Connect — Lumina es el riel. El demo usa USDC Circle testnet; USDT0 es mainnet oficial.
+              La empresa cubre. Quien necesita no paga. La app cobra el día del hecho.
+              MIRA y PuenteMAE son apps en Connect — Lumina no es la clínica. El demo usa
+              USDC Circle testnet; USDT0 es mainnet oficial.
             </p>
             <div className="grid grid-cols-3 gap-4 pt-4">
               {[
@@ -381,7 +381,7 @@ export default function Home() {
           <h2 className="font-serif text-3xl font-bold text-[var(--foreground)] tracking-tight">Tres minutos. Un camino.</h2>
           <p className="text-xs text-[var(--muted)] max-w-lg mx-auto">
             Portal empresa (sin wallet) → depósito USDC → certify → evidencia en explorer.
-            El riel nació en Salta. Sirve donde haya ganas de ayudar y alguien que no pueda pagar.
+            Nació en Salta. Sirve donde haya presupuesto para ayudar y alguien que no pueda pagar.
           </p>
         </div>
         <div className="glass-card p-8 rounded-2xl max-w-2xl mx-auto space-y-4 text-sm text-[var(--muted)]">

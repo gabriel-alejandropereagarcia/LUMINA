@@ -1,6 +1,6 @@
 # lumina-web
 
-Front de Lumina. Hay ganas de ayudar. Hay quien no puede pagar. Las unimos cuando el hito es real.
+Front de Lumina. La ayuda se paga el día que ocurre. Quien la necesita, no pone un peso.
 
 - Demo: https://lumina-dusky-pi.vercel.app
 - Evidencia: https://lumina-dusky-pi.vercel.app/jury

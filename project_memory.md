@@ -1,8 +1,8 @@
 # Lumina — contexto Scale
 
-Hay ganas de ayudar. Hay quien no puede pagar. Lumina las une cuando el hito es real.
+La ayuda se paga el día que ocurre. Quien la necesita, no pone un peso.
 
-La empresa lockea con factura (sin wallet), la app cobra el **97,5% on-chain**, quien usa el servicio **no paga**. Nació en Salta (ABC Scale). El riel es global.
+La empresa cubre con factura (sin wallet), la app cobra el **97,5%** en Stellar, quien recibe la ayuda **no paga**. Nació en Salta (ABC Scale). El protocolo no tiene frontera.
 
 ## Hechos
 

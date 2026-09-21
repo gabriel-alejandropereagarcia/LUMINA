@@ -31,8 +31,8 @@ export default function WhitepaperAndRoadmap() {
             Lumina
           </h1>
           <p className="mt-4 text-sm text-[var(--muted)] max-w-2xl mx-auto">
-            Hay ganas de ayudar. Hay quien no puede pagar. Lumina las une cuando el hito es real.
-            La empresa no toca cripto. Quien usa el servicio no paga.
+            La ayuda se paga el día que ocurre. Quien la necesita, no pone un peso.
+            La empresa no toca cripto. El 97,5% llega a quien hizo el trabajo.
           </p>
         </div>
 
@@ -75,23 +75,22 @@ export default function WhitepaperAndRoadmap() {
                   1. El problema
                 </h2>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  Hay empresas que quieren ayudar y personas que no pueden pagar el servicio.
-                  Hoy el capital se queda en una planilla. Las apps cobran meses tarde. La familia
-                  paga, o el servicio no llega. Eso no es un problema de un país: es el hueco
-                  entre la gana de ayudar y quien la necesita.
+                  Una empresa quiere pagar un cribado, un mes de apoyo, una consulta.
+                  Del otro lado hay una familia que no puede. En el medio hay un informe,
+                  tres meses, y una app que ya hizo el trabajo. El capital de impacto se
+                  rinde en Excel. El servicio se cobra en la puerta.
                 </p>
                 <div className="rounded-xl border border-teal-500/10 bg-teal-500/5 p-4 space-y-2">
-                  <h4 className="text-xs font-bold text-teal-400">Lumina es el riel</h4>
+                  <h4 className="text-xs font-bold text-teal-400">Lumina corta esa espera</h4>
                   <p className="text-xs leading-relaxed text-[var(--muted)]">
-                    La empresa paga una factura. El capital se libera a la app solo con certify.
-                    Hash del hecho. Sin DNI. Sin obra social. Lumina no se queda con el capital.
+                    La empresa paga una factura. El capital se libera a la app el día del
+                    hecho. Hash, no DNI. Sin obra social. Lumina no se queda con el capital.
                   </p>
                 </div>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  Tres partes: compliance ve unidades, la app cobra el 97,5%, quien usa el
-                  servicio no paga. Lo validamos primero en Salta (docentes MAE, una minera que
-                  no puede tocar cripto). El riel sirve en cualquier tesorería que pague impacto
-                  con prueba.
+                  Tres partes: compliance ve unidades, la app cobra el 97,5%, quien recibe
+                  la ayuda no paga. Lo vimos primero en Salta. El protocolo sirve en
+                  cualquier tesorería que pague impacto con prueba.
                 </p>
               </div>
             )}

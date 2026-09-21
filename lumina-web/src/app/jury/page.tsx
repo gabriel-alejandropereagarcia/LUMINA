@@ -81,9 +81,9 @@ function JuryBody() {
           Evidencia on-chain
         </h1>
         <p className="text-sm text-[var(--muted)] leading-relaxed">
-          Hay ganas de ayudar. Hay quien no puede pagar. Lumina las une cuando el hito es
-          real: la empresa no toca cripto, la app cobra el 97,5%, quien usa el servicio no
-          paga. Abajo está el loop del 19/9 (40 USDC Circle testnet) y cómo repetirlo.{" "}
+          La ayuda se paga el día que ocurre. Quien la necesita no pone un peso.
+          La empresa no toca cripto. La app cobra el 97,5%. Abajo, el loop del 19/9
+          (40 USDC Circle testnet) y cómo recorrerlo.{" "}
           <Link href="/presentation" className="text-teal-500 underline">
             Tesis en 8 slides
           </Link>
