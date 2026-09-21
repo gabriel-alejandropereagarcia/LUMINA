@@ -2,10 +2,10 @@
 
 ## 1. Brand Soul
 
-Lumina is the trust infrastructure between corporate CSR budgets and verified on-chain social impact. We enable traditional companies to fund neurodevelopmental screenings (MIRA) and reforestation (EcoForest) with cryptographic transparency, zero administrative friction.
+Lumina is the protocol between CSR capital and verified impact. A company pays an invoice. An app certifies a fact. 97.5% lands on Stellar. The end user never pays.
 
 **Tone**: Professional · Empathetic · Technically credible  
-**Audience**: CSR / RSE (LATAM) and technical reviewers of the Scale protocol.
+**Audience**: CSR / RSE and technical reviewers.
 
 ## 2. Color Palette
 

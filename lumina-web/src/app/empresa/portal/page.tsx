@@ -145,7 +145,7 @@ export default function EmpresaPortalPage() {
         title: "Orden de pago lista",
         message: data.aporte?.providerError
           ? `Cobrador no live: ${data.aporte.providerError}`
-          : "Pagás un servicio a Lumina. No comprás cripto. En ABC no transfieras pesos.",
+          : "Pagás un servicio a Lumina. No comprás cripto. Cobro ARS: en trabajo.",
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error.");

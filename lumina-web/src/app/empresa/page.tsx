@@ -155,8 +155,7 @@ export default function EmpresaLandingPage() {
                 <ArrowRight className="h-4 w-4" />
               </button>
               <p className="text-[11px] text-[var(--muted)] leading-relaxed">
-                Demo sin contraseña. En producción: KYB del cobrador (PSAV o
-                Circle HQ). Lumina no vende USDC a la empresa.
+                Demo sin contraseña. Cobro ARS: en trabajo. Lumina no vende USDC a la empresa.
               </p>
             </form>
           )}
@@ -164,8 +163,8 @@ export default function EmpresaLandingPage() {
       </div>
 
       <p className="text-[11px] text-[var(--muted)] leading-relaxed max-w-3xl">
-        Pagás un servicio de RSE, no comprás cripto. En este demo el cobro ARS está simulado —
-        no transferir pesos reales. El camino on-chain con Freighter está en{" "}
+        Pagás un servicio de RSE, no comprás cripto. Cobro ARS: en trabajo — no transferir
+        pesos reales. El recorrido on-chain con Freighter está en{" "}
         <Link href="/invest" className="underline font-semibold">
           /invest
         </Link>

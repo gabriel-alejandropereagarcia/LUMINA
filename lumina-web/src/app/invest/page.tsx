@@ -11,9 +11,7 @@ import { USDC_TESTNET_SAC, USDT0_OFFICIAL } from "@/lib/official-assets";
 import { buildAssignOracleTx, submitSorobanTransaction } from "@/lib/stellar";
 import { signStellarTransaction } from "@/lib/integrations/wallets-kit";
 import Link from "next/link";
-import { Coins, ShieldCheck, Wallet, ArrowRight, Loader2, Info, Building, AlertTriangle, Activity } from "lucide-react";
-import KoyweOnramp from "@/components/integrations/KoyweOnramp";
-import SoroswapPanel from "@/components/integrations/SoroswapPanel";
+import { Coins, ShieldCheck, Wallet, ArrowRight, Loader2, Info, AlertTriangle, Activity } from "lucide-react";
 import CertifyDemoButton from "@/components/CertifyDemoButton";
 
 
@@ -25,7 +23,7 @@ function InvestPortal() {
   const searchParams = useSearchParams();
 
   
-  const [activeTab, setActiveTab] = useState<"web3" | "koywe">("web3");
+  const [activeTab] = useState<"web3">("web3");
   const assignableApps = listedForAssign();
   const [selectedAppId, setSelectedAppId] = useState("mira");
   const selectedApp = getImpactApp(selectedAppId) ?? assignableApps[0] ?? IMPACT_APPS[0];
@@ -114,7 +112,7 @@ function InvestPortal() {
       console.error(err);
       let errMsg = err.message || "Error al procesar la aprobación en USDC.";
       if (errMsg.includes("Error(Contract, #10)") || errMsg.includes("resulting balance is not within the allowed range")) {
-        errMsg = "Saldo de USDC insuficiente. Reclamá USDC de prueba en faucet.circle.com o usá el on-ramp Koywe.";
+        errMsg = "Saldo de USDC insuficiente. Reclamá USDC de prueba en faucet.circle.com.";
       }
       setError(errMsg);
       toast({
@@ -198,7 +196,7 @@ function InvestPortal() {
       console.error(err);
       let errMsg = err.message || "Error al procesar el depósito en custodia.";
       if (errMsg.includes("Error(Contract, #10)") || errMsg.includes("resulting balance is not within the allowed range")) {
-        errMsg = "Saldo de USDC insuficiente. Reclamá USDC de prueba en faucet.circle.com o usá el on-ramp Koywe.";
+        errMsg = "Saldo de USDC insuficiente. Reclamá USDC de prueba en faucet.circle.com.";
       }
       setError(errMsg);
       toast({
@@ -222,7 +220,7 @@ function InvestPortal() {
         </h1>
         <p className="max-w-2xl mx-auto text-sm text-[var(--muted)]">
           Depositá 40 USDC Circle, asigná la app y liberá con certify. Freighter solo acá.
-          Una tesorería real entra por{" "}
+          Una tesorería entra por{" "}
           <Link href="/empresa" className="text-teal-600 font-semibold underline">
             /empresa
           </Link>
@@ -242,7 +240,7 @@ function InvestPortal() {
         {/* Panel de Información de la Wallet / Balances */}
         <div className="glass-card p-8 rounded-2xl md:col-span-1 space-y-6">
           <h2 className="text-lg font-bold text-[var(--foreground)] font-serif flex items-center gap-2">
-            <Wallet className="h-5 w-5 text-teal-500" /> Wallet del juez
+            <Wallet className="h-5 w-5 text-teal-500" /> Tu wallet
           </h2>
 
           {isConnected && address ? (
@@ -279,27 +277,7 @@ function InvestPortal() {
 
         {/* Formulario de Depósito / Tabs */}
         <div className="glass-card p-8 rounded-2xl md:col-span-2 space-y-6">
-          {/* Selector de Pestañas */}
-          <div className="flex rounded-xl bg-[var(--card-bg)] p-1 border border-[var(--border)]">
-            <button
-              onClick={() => setActiveTab("web3")}
-              className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                activeTab === "web3" ? "bg-teal-600 text-[var(--foreground)] shadow-md" : "text-[var(--muted)] hover:text-[var(--foreground)]"
-              }`}
-            >
-              <Coins className="h-4 w-4" /> Web3 USDC
-            </button>
-            <button
-              onClick={() => setActiveTab("koywe")}
-              className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                activeTab === "koywe" ? "bg-teal-600 text-[var(--foreground)] shadow-md" : "text-[var(--muted)] hover:text-[var(--foreground)]"
-              }`}
-            >
-              <Building className="h-4 w-4" /> On-ramp LATAM (Koywe)
-            </button>
-          </div>
-
-          {/* CONTENIDO PESTAÑA A: WEB3 DEPOSIT */}
+          {/* Recorrido USDC testnet */}
           {activeTab === "web3" && (
             <div className="space-y-4">
               <div className="rounded-xl border border-[var(--border)] bg-white/2 p-4 text-xs text-[var(--muted)] leading-relaxed flex gap-2.5 items-start">
@@ -324,13 +302,11 @@ function InvestPortal() {
                     className="rounded-lg px-3 py-1.5 text-[11px] font-bold border border-[var(--border)] text-[var(--muted)]"
                     title={`SAC oficial ${USDT0_OFFICIAL.sac}. No existe en testnet.`}
                   >
-                    USDT0 oficial · mainnet only
+                    USDT0 oficial · próximamente
                   </span>
                 </div>
                 <p className="text-[11px] text-[var(--muted)] leading-relaxed">
-                  Demo ABC = Circle USDC ({USDC_TESTNET_SAC.slice(0, 8)}…). USDT0 = mismo{" "}
-                  <code className="font-mono">token::Client</code> contra {USDT0_OFFICIAL.symbol} {USDT0_OFFICIAL.decimals} dec
-                  (I3). No se fabrica un USDT0 de testnet.
+                  Testnet: USDC Circle. USDT0 oficial: próximamente (solo mainnet).
                 </p>
               </div>
 
@@ -517,17 +493,7 @@ function InvestPortal() {
                   amount={selectedApp.priceUsdc}
                 />
               )}
-
-              <p className="text-[11px] text-[var(--muted)]">
-                CCTP y Soroswap son extras. El demo Scale es deposit → assign → certificar.
-              </p>
-              <CctpHint network={selectedNetwork} />
-              <SoroswapPanel address={address} />
             </div>
-          )}
-
-          {activeTab === "koywe" && (
-            <KoyweOnramp address={address} isConnected={isConnected} onConnect={connect} />
           )}
 
 

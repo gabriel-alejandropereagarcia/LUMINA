@@ -32,7 +32,7 @@ export default function AdminPortal() {
   const [oracles, setOracles] = useState<OracleItem[]>([
     {
       address: process.env.NEXT_PUBLIC_ORACLE_ADDRESS || process.env.NEXT_PUBLIC_MIRA_ORACLE_ADDRESS || "GBJJCKJBEF2ILRD5LGWXGH5BQIKZ6EYFDS3RHQZQ5KBCOV4XHSDESM7W",
-      name: "MIRA AI · impacto WIP (aún no firma)",
+      name: "MIRA AI · en trabajo",
       price: 40,
       lastUpdate: "pendiente Connect",
       daysRemaining: 0,
@@ -239,7 +239,7 @@ export default function AdminPortal() {
                 </div>
                 <div>
                   <span className="text-3xl font-bold tracking-tight text-[var(--foreground)] font-mono">on-chain</span>
-                  <p className="text-xs text-[var(--muted)] mt-1">Sin TVL inventado. El saldo vive en el escrow.</p>
+                  <p className="text-xs text-[var(--muted)] mt-1">El saldo vive en el escrow.</p>
                 </div>
               </div>
 
@@ -261,7 +261,7 @@ export default function AdminPortal() {
                 </div>
                 <div>
                   <span className="text-3xl font-bold tracking-tight text-[var(--foreground)] font-mono">2.5%</span>
-                  <p className="text-xs text-[var(--muted)] mt-1">Fee de protocolo por release. Sin acumulado mock.</p>
+                  <p className="text-xs text-[var(--muted)] mt-1">Fee de protocolo por release.</p>
                 </div>
               </div>
             </div>

@@ -28,8 +28,8 @@ export type ImpactApp = {
 };
 
 /**
- * Catálogo curado Scale. La unidad del hito (niño-mes, cribado) es lo que
- * suma el panel de la empresa. No se mockean apps inventadas.
+ * Catálogo curado. La unidad del hito (niño-mes, cribado) es lo que
+ * suma el panel de la empresa.
  */
 export const IMPACT_APPS: ImpactApp[] = [
   {
@@ -37,15 +37,15 @@ export const IMPACT_APPS: ImpactApp[] = [
     name: "MIRA AI",
     category: "salud",
     categoryLabel: "Salud",
-    tagline: "App de impacto · en desarrollo",
+    tagline: "App de impacto · en trabajo",
     milestone: "1 cribado M-CHAT-R/F completado",
     description:
-      "Cribado temprano (M-CHAT-R/F + informe). Entra por Connect: Lumina no es la clínica. El riel se libera con certify; MIRA guarda el PDF.",
+      "Cribado temprano (M-CHAT-R/F + informe). Entra por Connect: Lumina no es la clínica. El protocolo se libera con certify; MIRA guarda el PDF.",
     priceUsdc: 40,
     status: "wip",
-    statusLabel: "En desarrollo · impacto",
+    statusLabel: "En trabajo",
     image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&h=300&fit=crop",
-    imageAlt: "MIRA AI — app de impacto en desarrollo",
+    imageAlt: "MIRA AI — app de impacto en trabajo",
     oracleAddress:
       process.env.NEXT_PUBLIC_ORACLE_ADDRESS ||
       process.env.NEXT_PUBLIC_MIRA_ORACLE_ADDRESS ||
@@ -71,7 +71,7 @@ export const IMPACT_APPS: ImpactApp[] = [
       "Ayuda social con plata de RSE. El docente cobra ARS a su CBU. La familia no paga. No factura obras sociales — Lumina no opera ese sistema.",
     priceUsdc: 40,
     status: "wip",
-    statusLabel: "En desarrollo · ayuda social",
+    statusLabel: "En trabajo",
     image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&h=300&fit=crop",
     imageAlt: "PuenteMAE — apoyo a la inclusión",
     oracleAddress: process.env.NEXT_PUBLIC_PUENTEMAE_ORACLE_ADDRESS || "",

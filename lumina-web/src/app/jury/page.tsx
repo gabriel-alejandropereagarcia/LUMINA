@@ -126,15 +126,15 @@ function JuryBody() {
             <Link href="/empresa" className="text-teal-500 underline">
               /empresa
             </Link>{" "}
-            — factura sin Freighter. El cobro en pesos está simulado y rotulado. El PDF no
-            afirma payout hasta que haya release.
+            — factura sin Freighter. Cobro ARS: en trabajo (este recorrido muestra la UX).
+            El PDF no afirma payout hasta que haya release.
           </li>
           <li>
             <Link href="/invest" className="text-teal-500 underline">
               /invest
             </Link>{" "}
-            — Freighter + USDC testnet: deposit y assign. Después, el botón Certificar hito
-            (si este deploy tiene el oracle) o esta página con las txs de arriba.
+            — Freighter + USDC testnet: deposit y assign. Después, Certificar hito
+            o las txs de arriba.
           </li>
           <li>
             Contrato:{" "}
@@ -179,7 +179,7 @@ function JuryBody() {
             <input
               value={usdt0}
               onChange={(e) => setUsdt0(e.target.value)}
-              placeholder="vacío = todavía no hay prueba oficial"
+              placeholder="vacío = próximamente"
               className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 font-mono text-xs"
             />
           </label>
@@ -222,7 +222,7 @@ function JuryBody() {
             </a>
           </p>
         ) : (
-          <p className="text-sm text-amber-700">Pendiente: 1 unidad oficial y su hash. El demo ABC es USDC testnet.</p>
+          <p className="text-sm text-[var(--muted)]">USDT0 mainnet: próximamente. Hoy el recorrido usa USDC testnet.</p>
         )}
       </section>
 
@@ -241,8 +241,8 @@ function JuryBody() {
       <section className="space-y-2 text-sm text-[var(--muted)]">
         <h2 className="text-[var(--foreground)] font-bold">Apps de ejemplo</h2>
         <p>
-          MIRA y PuenteMAE están listadas en Connect. No viven en este repo. El jurado no
-          abre una UX clínica: certifica el riel.
+          MIRA y PuenteMAE están listadas en Connect. No viven en este repo. El certify
+          prueba el protocolo, no la UX de cada app.
         </p>
       </section>
 

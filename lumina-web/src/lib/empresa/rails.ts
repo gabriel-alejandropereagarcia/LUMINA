@@ -87,16 +87,16 @@ export function detectFiatRail(): FiatRail {
       settlesOnStellar: false,
       companySeesWallet: true,
       legalRank: 9,
-      notes: "Eso pide Freighter. Quedó en /invest para el juez, no en /empresa.",
+      notes: "Eso pide Freighter. Quedó en /invest, no en /empresa.",
     };
   }
   return {
     id: "simulation",
-    label: "Simulación ABC · misma UX que PAYIN",
+    label: "Cobro ARS · en trabajo",
     live: false,
     settlesOnStellar: false,
     companySeesWallet: false,
     legalRank: 0,
-    notes: "Orden de ejemplo. No transferir pesos. Enchufá KOYWE_API_KEY o CIRCLE_API_KEY.",
+      notes: "Orden de ejemplo. No transferir pesos. Cobro ARS: en trabajo.",
   };
 }

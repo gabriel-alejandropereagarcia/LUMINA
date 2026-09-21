@@ -6,7 +6,7 @@ export function middleware(request: NextRequest) {
 
   // Proteger la ruta admin
   if (pathname.startsWith("/admin")) {
-    // Permitir acceso libre en redes de prueba para la evaluación del jurado
+    // Permitir acceso libre en redes de prueba
     if (process.env.NEXT_PUBLIC_STELLAR_NETWORK !== "mainnet") {
       return NextResponse.next();
     }

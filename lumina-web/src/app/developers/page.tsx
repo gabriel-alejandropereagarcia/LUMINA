@@ -47,13 +47,13 @@ Authorization: Bearer <secret de la app>
       </p>
 
       <div className="rounded-2xl border border-[var(--border)] p-4 text-xs space-y-2 text-[var(--muted)]">
-        <p className="font-semibold text-[var(--foreground)]">Assets (hechos, no mocks)</p>
+        <p className="font-semibold text-[var(--foreground)]">Assets</p>
         <p>
-          USDC testnet (demo ABC):{" "}
+          USDC testnet:{" "}
           <span className="font-mono break-all">{USDC_TESTNET_SAC}</span>
         </p>
         <p>
-          USDT0 oficial mainnet SAC:{" "}
+          USDT0 oficial (mainnet, próximamente en el recorrido):{" "}
           <span className="font-mono break-all">{USDT0_OFFICIAL.sac}</span>
           . Testnet oficial: no existe. Clawback: sí. Docs:{" "}
           <a href={USDT0_OFFICIAL.docs} className="text-teal-400 underline" target="_blank" rel="noreferrer">

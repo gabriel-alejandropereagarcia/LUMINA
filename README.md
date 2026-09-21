@@ -52,7 +52,7 @@ MIRA (cribado) y PuenteMAE (ayuda social a docentes) son **apps de ejemplo** en 
 | Oracle (firma) | `GBJJCKJBEF2ILRD5LGWXGH5BQIKZ6EYFDS3RHQZQ5KBCOV4XHSDESM7W` |
 | Sponsor demo | `GBRR6QWYT5UIHATCC7SYJITERMDWKLE5HHJCNM5PP6GK2DRB4YPKSP5E` |
 
-USDT0 oficial existe **solo en mainnet**. No hay token de testnet inventado. Esa prueba queda pendiente hasta una tx en [usdt0.to/transfer](https://usdt0.to/transfer).
+USDT0 oficial: **próximamente** (solo mainnet). Hoy el recorrido usa USDC Circle testnet.
 
 ---
 
@@ -60,7 +60,7 @@ USDT0 oficial existe **solo en mainnet**. No hay token de testnet inventado. Esa
 
 | Paso | Ruta | Qué es |
 |---|---|---|
-| 1 | [`/empresa`](https://lumina-dusky-pi.vercel.app/empresa) | Factura, sin Freighter. El cobro ARS está **simulado** y rotulado. |
+| 1 | [`/empresa`](https://lumina-dusky-pi.vercel.app/empresa) | Factura, sin Freighter. Cobro ARS: **en trabajo**. |
 | 2 | [`/invest`](https://lumina-dusky-pi.vercel.app/invest) | Freighter + USDC Circle testnet: `deposit` + `assign_oracle`. Live. |
 | 3 | Botón **Certificar hito** en `/invest`, o hashes en [`/jury`](https://lumina-dusky-pi.vercel.app/jury) | `release_impact_asset` → 97,5% a la app. |
 

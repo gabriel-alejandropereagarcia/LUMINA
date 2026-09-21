@@ -25,7 +25,7 @@ function authorize(request: Request): boolean {
 /**
  * La app certifica un hito. Si manda `fact`, el hash es el del hecho
  * (unidad + commitments) y el panel de la empresa puede sumar. Sin fact
- * queda el path legado del juez (solo reportHash).
+ * queda el path legado (solo reportHash).
  */
 export async function POST(request: Request) {
   try {

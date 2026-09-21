@@ -111,8 +111,8 @@ export default function CertificadoDoc({ certificado }: { certificado: Certifica
 
         {certificado.simulation && (
           <p className="text-xs text-[#8A6A1A] bg-[#F7E7C0] border border-[#D4A84B]/40 rounded-lg px-3 py-2">
-            Simulación: el hash es del hecho (unidad + cantidad). No hubo release on-chain. El
-            97,5% todavía no se pagó. El juez Freighter sigue en /invest.
+            Recorrido de prueba: el hash es del hecho (unidad + cantidad). No hubo release
+            on-chain. El 97,5% todavía no se pagó. El depósito Stellar está en /invest.
           </p>
         )}
 

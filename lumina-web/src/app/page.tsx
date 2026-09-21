@@ -251,10 +251,10 @@ export default function Home() {
         </div>
 
         <div className="max-w-3xl mx-auto p-6 rounded-2xl border border-[var(--border)] bg-[var(--card-bg)] text-center text-xs text-[var(--muted)] space-y-2">
-          <strong className="text-[var(--foreground)] block text-sm">Connect, no un marketplace inventado</strong>
+          <strong className="text-[var(--foreground)] block text-sm">Connect: el enchufe de las apps</strong>
           <p className="leading-relaxed">
-            MIRA (cribado) y PuenteMAE (ayuda social a docentes — no obra social) ya tienen ficha.
-            El riel se libera con certify, no con una UX clínica.
+            MIRA (cribado) y PuenteMAE (ayuda social a docentes) ya tienen ficha.
+            El protocolo se libera con certify, no con la UX de cada app.
           </p>
         </div>
 
@@ -378,16 +378,16 @@ export default function Home() {
       {/* DEMO POOL — sin sponsors inventados */}
       <div className="w-full space-y-8 z-10 pt-12 border-t border-[var(--border)]">
         <div className="text-center space-y-3">
-          <span className="text-xs font-bold text-teal-600 uppercase tracking-widest block">Demo Day 26/9</span>
+          <span className="text-xs font-bold text-teal-600 uppercase tracking-widest block">Recorrido</span>
           <h2 className="font-serif text-3xl font-bold text-[var(--foreground)] tracking-tight">Tres minutos. Un camino.</h2>
           <p className="text-xs text-[var(--muted)] max-w-lg mx-auto">
             Portal empresa (sin wallet) → depósito USDC → certify → evidencia en explorer.
-            Nació en Salta. Sirve donde haya presupuesto para ayudar y alguien que no pueda pagar.
+            Nació en Salta. El protocolo no tiene fronteras.
           </p>
         </div>
         <div className="glass-card p-8 rounded-2xl max-w-2xl mx-auto space-y-4 text-sm text-[var(--muted)]">
           <p>
-            Empezá por el portal si sos compliance. Por el depósito si sos jurado técnico. Los hashes son reales.
+            Empezá por el portal si sos compliance. Por el depósito si querés ver Stellar. Los hashes son reales.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link href="/empresa" className="rounded-xl bg-teal-600 px-4 py-2 text-xs font-bold text-white">
@@ -397,7 +397,7 @@ export default function Home() {
               Demo on-chain (Freighter)
             </Link>
             <Link href="/jury" className="rounded-xl border border-[var(--border)] px-4 py-2 text-xs font-bold text-[var(--foreground)]">
-              Evidencia para el jurado
+              Evidencia on-chain
             </Link>
           </div>
         </div>
@@ -451,9 +451,9 @@ export default function Home() {
 
             {mapHoverDot && (
               <div className="absolute bottom-3 left-3 right-3 bg-[var(--card-bg)] backdrop-blur-xl border border-[var(--border)] rounded-lg p-2.5 text-xs shadow-2xl">
-                {mapHoverDot === "ba" && <p className="text-[var(--foreground)]"><strong>CABA:</strong> hub del challenge. El demo es virtual; el riel se prueba acá.</p>}
-                {mapHoverDot === "cba" && <p className="text-[var(--foreground)]"><strong>Córdoba:</strong> hub ABC. Todavía sin certify — el mapa no finge impacto.</p>}
-                {mapHoverDot === "salta" && <p className="text-[var(--foreground)]"><strong>Salta:</strong> acá nació Lumina. Entrevistas MAE y minera. Hub del equipo.</p>}
+                {mapHoverDot === "ba" && <p className="text-[var(--foreground)]"><strong>CABA:</strong> el protocolo se prueba acá, en Stellar testnet.</p>}
+                {mapHoverDot === "cba" && <p className="text-[var(--foreground)]"><strong>Córdoba:</strong> próximamente. El mapa no finge certify.</p>}
+                {mapHoverDot === "salta" && <p className="text-[var(--foreground)]"><strong>Salta:</strong> acá nació Lumina. Hub del equipo.</p>}
               </div>
             )}
           </div>
@@ -471,7 +471,7 @@ export default function Home() {
           </div>
 
           <div className="rounded-xl border border-dashed border-[var(--border)] p-6 text-xs text-[var(--muted)] text-center space-y-2">
-            <p>El directorio se llena con el primer release. El jurado puede ser ese primer depósito.</p>
+            <p>El directorio se llena con el primer release. Podés ser ese depósito.</p>
             <Link href="/invest" className="text-teal-500 underline">Probar el riel con USDC testnet</Link>
           </div>
         </div>
@@ -479,7 +479,7 @@ export default function Home() {
 
       {/* NOTA DE DESARROLLO / TRANSPARENCIA */}
       <p className="w-full text-center text-[10px] text-[var(--muted)]/60 font-mono tracking-wide z-10 -mt-4">
-        Scale ABC 2026: USDC Circle testnet para el demo. USDT0 = SAC oficial mainnet (no existe en testnet; no se fabrica).
+        Testnet: USDC Circle. USDT0 oficial: próximamente (solo mainnet).
       </p>
 
       {/* Dual Audience Value Propositions */}

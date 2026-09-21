@@ -14,8 +14,8 @@ export default function WhitepaperAndRoadmap() {
     { id: "contract", title: "2. Escrow y time-lock", icon: Lock },
     { id: "security", title: "3. Hash y firma de la app", icon: ShieldCheck },
     { id: "economics", title: "4. Fee 2,5% al release", icon: Coins },
-    { id: "roadmap", title: "5. Después del 26/9", icon: Milestone },
-    { id: "scale", title: "6. Demo Day 26/9", icon: FileText },
+    { id: "roadmap", title: "5. Próximamente", icon: Milestone },
+    { id: "scale", title: "6. Recorrido", icon: FileText },
   ];
 
   return (
@@ -25,7 +25,7 @@ export default function WhitepaperAndRoadmap() {
         {/* Header */}
         <div className="text-center mb-12">
           <span className="text-xs font-bold text-teal-500 uppercase tracking-widest block mb-2">
-            Protocolo Scale · Demo Day 26/9
+            Impacto sin fricción
           </span>
           <h1 className="text-4xl font-serif font-bold tracking-tight bg-gradient-to-r from-teal-400 to-green-400 bg-clip-text text-transparent sm:text-5xl">
             Lumina
@@ -193,7 +193,7 @@ export default function WhitepaperAndRoadmap() {
               <div className="space-y-6 animate-fadeIn">
                 <h2 className="text-2xl font-serif font-bold text-[var(--foreground)] flex items-center gap-2 border-b border-[var(--border)] pb-3">
                   <Milestone className="h-6 w-6 text-teal-400" />
-                  5. Qué sigue después del 26/9
+                  5. Próximamente
                 </h2>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
                   El riel ya existe. Lo que escala es compliance, más apps y el mismo contrato:
@@ -202,23 +202,23 @@ export default function WhitepaperAndRoadmap() {
                 <div className="space-y-4">
                   {[
                     {
-                      fase: "Fase 1 · En Curso",
+                      fase: "En curso",
                       title: "Auditoría de Seguridad y Verificación Formal",
                       desc: "El contrato paga a la app. Assign obligatorio. Certify con la key de esa app. USDC testnet + path USDT0 oficial."
                     },
                     {
-                      fase: "Fase 2 · Planificado",
-                      title: "Consorcio de Oráculos y Arbitraje Descentralizado",
+                      fase: "En trabajo",
+                      title: "Consorcio de oráculos y disputas",
                       desc: "Creación de un registro de oráculos gobernado multifirma por instituciones del tercer sector y el despliegue del Portal de Disputas para resolver controversias sobre validaciones."
                     },
                     {
-                      fase: "Fase 3 · Planificado",
-                      title: "Compliance Regulatorio y KYB Corporativo",
+                      fase: "En trabajo",
+                      title: "Compliance y KYB corporativo",
                       desc: "Riel fiat para tesorerías que no pueden tocar cripto (BCRA). No cambia el protocolo: entra el mismo escrow."
                     },
                     {
-                      fase: "Fase 4 · Planificado",
-                      title: "Más apps en el mismo riel",
+                      fase: "Próximamente",
+                      title: "Más apps en el mismo protocolo",
                       desc: "MIRA u otras apps pegan el mismo POST /api/v1/certify. Connect es ficha + auditoría chica, no otro producto."
                     }
                   ].map((item, i) => (
@@ -244,23 +244,23 @@ export default function WhitepaperAndRoadmap() {
               <div className="space-y-6 animate-fadeIn">
                 <h2 className="text-2xl font-serif font-bold text-[var(--foreground)] flex items-center gap-2 border-b border-[var(--border)] pb-3">
                   <FileText className="h-6 w-6 text-teal-400" />
-                  6. Demo Day · 26/9 · 3 minutos
+                  6. Recorrido
                 </h2>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  Una tesis. El jurado no necesita el repo para entenderla.
+                  Impacto sin fricción. Una factura. Un certify. El 97,5% en Stellar.
                 </p>
                 <ol className="text-sm text-[var(--muted)] space-y-3 list-decimal pl-5">
                   <li>
-                    <strong className="text-[var(--foreground)]">0–20s · Home.</strong> El capital
-                    llega a la app cuando el hito es real. La empresa no toca cripto. La familia no paga.
+                    <strong className="text-[var(--foreground)]">0–20s · Home.</strong> Impacto sin
+                    fricción. La empresa no toca cripto. El usuario final nunca paga.
                   </li>
                   <li>
                     <strong className="text-[var(--foreground)]">20–50s · /empresa + pack.</strong>{" "}
                     Factura. Panel: 10 niño-mes. PDF de tres bloques. Sin Freighter.
                   </li>
                   <li>
-                    <strong className="text-[var(--foreground)]">50–110s · /invest.</strong> El juez
-                    deposita 40 USDC Circle testnet y asigna la app. Freighter solo acá.
+                    <strong className="text-[var(--foreground)]">50–110s · /invest.</strong> Depósito
+                    de 40 USDC Circle testnet y assign de la app. Freighter solo acá.
                   </li>
                   <li>
                     <strong className="text-[var(--foreground)]">110–150s · certify.</strong> En
@@ -269,7 +269,7 @@ export default function WhitepaperAndRoadmap() {
                   </li>
                   <li>
                     <strong className="text-[var(--foreground)]">150–170s · /jury.</strong> Tx USDC
-                    + tx USDT0 oficial mainnet. Sin token inventado.
+                    + tx USDT0 oficial mainnet. USDT0: próximamente.
                   </li>
                   <li>
                     <strong className="text-[var(--foreground)]">170–180s · cierre.</strong> Connect
