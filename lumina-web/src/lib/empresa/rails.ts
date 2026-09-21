@@ -53,7 +53,7 @@ export function detectFiatRail(): FiatRail {
       settlesOnStellar: false,
       companySeesWallet: false,
       legalRank: 1,
-      notes: "La empresa paga pesos a Lumina. No compra cripto. El cobrador recibe por nosotros.",
+      notes: "La empresa paga pesos a Lumina. El cobrador recibe por nosotros.",
     };
   }
   if (isCircleMintConfigured()) {
@@ -64,7 +64,7 @@ export function detectFiatRail(): FiatRail {
       settlesOnStellar: true,
       companySeesWallet: false,
       legalRank: 1,
-      notes: "Wire USD de la HQ. La SA argentina no toca cripto.",
+      notes: "Wire USD de la HQ.",
     };
   }
   if (process.env.BLINDPAY_API_KEY && process.env.BLINDPAY_INSTANCE_ID) {

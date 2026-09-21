@@ -6,7 +6,7 @@ Hoy, una empresa quiere financiar salud, educación o asistencia. Una familia lo
 
 Lumina lo resuelve.
 
-La empresa paga una factura — sin cuenta cripto. La app confirma que el trabajo se hizo: una unidad, una cantidad. Si ocurrió, se cobra el **97,5%**. Si no ocurrió, el capital vuelve. El usuario final nunca paga.
+La empresa paga una factura. La app confirma que el trabajo se hizo: una unidad, una cantidad. Si ocurrió, se cobra el **97,5%**. Si no ocurrió, el capital vuelve. El usuario final nunca paga.
 
 Nacimos en Salta. Sirve donde haya alguien que quiere ayudar y alguien que no puede pagar.
 
@@ -24,19 +24,19 @@ Una empresa quiere financiar salud, educación o asistencia. Una familia lo nece
 
 Eso no es un problema de un país. Es lo que pasa cada vez que el impacto se rinde en una planilla y el servicio se cobra en la puerta. En Salta lo vimos de cerca.
 
-## Qué es (y qué no)
+## Qué es Lumina
 
-Lumina **no** es la clínica ni el sponsor. Es el camino:
+Lumina ilumina el camino:
 
-1. **Empresas en Lumina** pagan una **factura**. No abren una cuenta cripto. No compran cripto.
-2. **Apps en Lumina** confirman el trabajo (unidad + cantidad, nunca un DNI).
+1. **Empresas en Lumina** pagan una **factura**.
+2. **Apps en Lumina** confirman el trabajo (unidad + cantidad).
 3. Esa app cobra **97,5%**. Lumina cobra **2,5%**, solo si hubo impacto. Sin trabajo a los 12 meses, el dinero vuelve y Lumina cobra **0%**.
 
 **Por qué ahora.** El impacto necesita velocidad y un recibo que se pueda mostrar. Lumina convierte burocracia en cobro el mismo día.
 
 **Visión.** Escalar desde Argentina al mundo.
 
-MIRA (cribado) y PuenteMAE (ayuda a docentes) son las **primeras apps en Lumina**. Lumina no es la clínica ni la escuela.
+MIRA (cribado) y PuenteMAE (ayuda a docentes) son las **primeras apps en Lumina**.
 
 ---
 
@@ -60,11 +60,11 @@ USDT0 oficial: **próximamente**. Hoy el recorrido usa USDC Circle de prueba.
 
 | Paso | Ruta | Qué es |
 |---|---|---|
-| 1 | [`/empresa`](https://lumina-dusky-pi.vercel.app/empresa) | Empresas en Lumina. Factura, sin cuenta cripto. Cobro en pesos: **en trabajo**. |
+| 1 | [`/empresa`](https://lumina-dusky-pi.vercel.app/empresa) | Empresas en Lumina. Factura. Cobro en pesos: **en trabajo**. |
 | 2 | [`/invest`](https://lumina-dusky-pi.vercel.app/invest) | Probar Lumina. Freighter + USDC de prueba. Live. |
 | 3 | Confirmar el trabajo en `/invest`, o [`/jury`](https://lumina-dusky-pi.vercel.app/jury) | Recibos Lumina. 97,5% a la app. |
 
-El PDF de Empresas en Lumina **no** dice que se pagó hasta que la app cobra.
+El PDF de Empresas en Lumina sale cuando la app cobra.
 
 ---
 

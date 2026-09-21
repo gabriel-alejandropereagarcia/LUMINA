@@ -82,7 +82,7 @@ export default function WhitepaperAndRoadmap() {
                 <div className="rounded-xl border border-teal-500/10 bg-teal-500/5 p-4 space-y-2">
                   <h4 className="text-xs font-bold text-teal-400">Lumina ilumina el camino</h4>
                   <p className="text-xs leading-relaxed text-[var(--muted)]">
-                    Conecta a quien quiere ayudar. Factura — sin cuenta cripto.
+                    Conecta a quien quiere ayudar. Una factura.
                     La app confirma el trabajo. Si ocurrió, 97,5% a la app. Si no, el
                     capital vuelve. La familia no paga.
                   </p>
@@ -102,7 +102,7 @@ export default function WhitepaperAndRoadmap() {
                   2. El dinero queda reservado 12 meses
                 </h2>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  La empresa paga un servicio (factura, no cripto). El dinero queda reservado.
+                  La empresa paga un servicio. El dinero queda reservado.
                   Solo la app elegida cobra. Si en 12 meses el trabajo no ocurrió, la empresa recupera todo.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -138,7 +138,7 @@ export default function WhitepaperAndRoadmap() {
                   3. Solo esa app cobra
                 </h2>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  La app confirma el trabajo. Sin DNI ni clínica. Nadie más puede cobrar ese pago.
+                  La app confirma el trabajo. Nadie más puede cobrar ese pago.
                 </p>
                 <div className="p-4 rounded-xl bg-slate-950 font-mono text-[11px] text-teal-400 space-y-2 border border-slate-800">
                   <p className="text-slate-500">// Cómo se parte el pago</p>
@@ -210,7 +210,7 @@ export default function WhitepaperAndRoadmap() {
                     {
                       fase: "En trabajo",
                       title: "Factura en pesos, de verdad",
-                      desc: "Tesorerías que no pueden tocar cripto pagan igual. El cobro no cambia. En trabajo."
+                      desc: "Las tesorerías pagan con una factura. El cobro no cambia. En trabajo."
                     },
                     {
                       fase: "Próximamente",
@@ -252,11 +252,11 @@ export default function WhitepaperAndRoadmap() {
                   </li>
                   <li>
                     <strong className="text-[var(--foreground)]">Empresas en Lumina.</strong>{" "}
-                    Factura. Panel: 10 niño-mes. PDF. Sin cuenta cripto.
+                    Factura. Panel: 10 niño-mes. PDF.
                   </li>
                   <li>
                     <strong className="text-[var(--foreground)]">Probar Lumina.</strong> Un pago de
-                    prueba y elegís qué financiar. Freighter solo acá.
+                    prueba y elegís qué financiar.
                   </li>
                   <li>
                     <strong className="text-[var(--foreground)]">Confirmar.</strong> La app

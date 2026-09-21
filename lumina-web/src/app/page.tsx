@@ -184,7 +184,7 @@ export default function Home() {
             {
               step: "01",
               title: "La empresa paga",
-              desc: "Una factura, como cualquier proveedor. No abre una cuenta cripto.",
+              desc: "Una factura, como cualquier proveedor.",
               icon: Coins,
               color: "text-teal-500",
               bgColor: "bg-teal-500/10",
@@ -200,7 +200,7 @@ export default function Home() {
             {
               step: "03",
               title: "Confirma que ocurrió",
-              desc: "Unidad y cantidad. Sin DNI. Sin papeles de meses.",
+              desc: "Unidad y cantidad.",
               icon: ShieldCheck,
               color: "text-[var(--gold)]",
               bgColor: "bg-[var(--gold-light)]",
@@ -237,7 +237,7 @@ export default function Home() {
           <span className="text-xs font-bold text-teal-600 uppercase tracking-widest block">Apps en Lumina</span>
           <h2 className="font-serif text-3xl font-bold text-[var(--foreground)] tracking-tight">Las primeras luces en el camino</h2>
           <p className="text-xs text-[var(--muted)] max-w-lg mx-auto">
-            Lumina no es la clínica ni la escuela. MIRA y PuenteMAE cobran acá cuando el trabajo se hizo.
+            MIRA y PuenteMAE cobran acá cuando el trabajo se hizo.
           </p>
         </div>
 
@@ -402,7 +402,7 @@ export default function Home() {
               <MapPin className="h-5 w-5 text-teal-600" /> Dónde nació
             </h3>
             <p className="text-xs text-[var(--muted)] mt-1">
-              Nació en Salta. Los puntos se llenan cuando hay un trabajo cobrado, no con un mapa de marketing.
+              Nació en Salta. Los puntos se llenan cuando hay un trabajo cobrado.
             </p>
           </div>
 
@@ -455,7 +455,7 @@ export default function Home() {
               <Trophy className="h-4 w-4 text-teal-600" /> Trabajos cobrados
             </h3>
             <p className="text-xs text-[var(--muted)]">
-              Acá aparecen cuando hay un pago o un cobro. Sin marcas de relleno.
+              Acá aparecen cuando hay un pago o un cobro.
             </p>
           </div>
 
@@ -497,7 +497,7 @@ export default function Home() {
               </li>
               <li className="flex items-start gap-2">
                 <Lock className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                <span><strong className="text-[var(--foreground)]">Privacidad:</strong> no viaja DNI ni clínica.</span>
+                <span><strong className="text-[var(--foreground)]">Privacidad:</strong> el recibo cubre el trabajo.</span>
               </li>
               <li className="flex items-start gap-2">
                 <Coins className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />

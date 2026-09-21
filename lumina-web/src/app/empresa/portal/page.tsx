@@ -76,7 +76,7 @@ export default function EmpresaPortalPage() {
       toast({
         type: "success",
         title: "Pago recibido por el cobrador",
-        message: "Cuando se acredite, el dinero queda reservado. Sin cuenta cripto.",
+        message: "Cuando se acredite, el dinero queda reservado.",
       });
     }
     if (paid === "0") {
@@ -118,7 +118,7 @@ export default function EmpresaPortalPage() {
         message:
           action === "confirmar"
             ? "Cuando se acredite, el dinero queda reservado."
-            : "El dinero queda reservado para lo que elegiste. Esa app confirma el trabajo. La empresa no firma nada más.",
+            : "El dinero queda reservado para lo que elegiste. Esa app confirma el trabajo.",
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error.");
@@ -150,7 +150,7 @@ export default function EmpresaPortalPage() {
         title: "Orden de pago lista",
         message: data.aporte?.providerError
           ? `Cobrador no live: ${data.aporte.providerError}`
-          : "Pagás un servicio a Lumina. No comprás cripto. Cobro ARS: en trabajo.",
+          : "Pagás un servicio a Lumina. Cobro ARS: en trabajo.",
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error.");
@@ -196,7 +196,7 @@ export default function EmpresaPortalPage() {
             Resumen de impacto →
           </Link>
           <p className="text-xs text-[var(--muted)] max-w-sm">
-            Pagás un servicio, no comprás cripto. {rail?.label ?? "Simulación"}.
+            Pagás un servicio a Lumina. {rail?.label ?? "Simulación"}.
             {rail?.live ? " El cobrador está activo." : " No transferir pesos reales."}
           </p>
         </div>
@@ -235,7 +235,7 @@ export default function EmpresaPortalPage() {
         <section className="lg:col-span-2 glass-card p-6 rounded-2xl space-y-4">
           <h2 className="font-serif text-lg font-bold text-[var(--foreground)]">Qué financiás</h2>
           <p className="text-xs text-[var(--muted)] leading-relaxed">
-            Vos elegís el trabajo. Lumina reserva esa plata. No elige por vos.
+            Elegí el trabajo y el monto.
           </p>
           <form onSubmit={onCreate} className="space-y-4" id="form-empresa-aporte">
             <label className="block space-y-1">
@@ -373,7 +373,7 @@ export default function EmpresaPortalPage() {
                       </dt>
                       <dd className="font-mono text-xs">
                         {active.checkoutUrl
-                          ? "Koywe PAYIN — no es un CBU de Lumina"
+                          ? "Checkout Koywe"
                           : (active.paymentInstructions?.cbu ?? DEMO_PAYMENT.cbu)}
                       </dd>
                     </div>
@@ -421,7 +421,7 @@ export default function EmpresaPortalPage() {
                 )}
                 {active.status === "pendiente_psav" && rail?.live && (
                   <p className="text-xs text-[var(--muted)] py-2">
-                    Esperando que se acredite el pago. La empresa no firma nada más.
+                    Esperando que se acredite el pago.
                   </p>
                 )}
                 {active.status === "pendiente_psav" && !rail?.live && (
@@ -518,7 +518,7 @@ export default function EmpresaPortalPage() {
         {certificados.length === 0 ? (
           <p className="text-sm text-[var(--muted)]">
             Cuando la app confirma el trabajo, acá aparece el documento. Quien usó
-            la app ve el mismo PDF — nunca una cuenta cripto.
+            la app ve el mismo PDF.
           </p>
         ) : (
           <ul className="space-y-2">

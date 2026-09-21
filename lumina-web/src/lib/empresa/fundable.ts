@@ -36,7 +36,7 @@ function fromListing(listing: AppListing): FundableOption {
   };
 }
 
-/** Todo lo que una empresa puede elegir financiar. Lumina no elige. */
+/** Catálogo de trabajos que una empresa puede financiar. */
 export async function listFundableOptions(): Promise<FundableOption[]> {
   const catalog = IMPACT_APPS.filter((app) => !app.paused).map(fromCatalog);
   const knownSchemas = new Set(catalog.map((item) => item.schemaId));

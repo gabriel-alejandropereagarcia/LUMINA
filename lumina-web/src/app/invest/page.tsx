@@ -225,7 +225,7 @@ function InvestPortal() {
           <Link href="/empresa" className="text-teal-600 font-semibold underline">
             Empresas en Lumina
           </Link>
-          {" "}con una factura, sin cuenta cripto.
+          {" "}con una factura.
         </p>
         <p className="max-w-2xl mx-auto text-xs text-[var(--muted)] rounded-xl border border-[var(--border)] bg-[var(--card-bg)] px-4 py-3">
           Al final, los recibos:{" "}
@@ -264,7 +264,7 @@ function InvestPortal() {
             </div>
           ) : (
             <div className="text-center py-6 space-y-4">
-              <p className="text-sm text-[var(--muted)]">Conectá Freighter para ver saldos reales. Solo hace falta acá, para probar un pago.</p>
+              <p className="text-sm text-[var(--muted)]">Conectá Freighter para ver saldos reales.</p>
               <button
                 onClick={connect}
                 id="btn-refi-connect"

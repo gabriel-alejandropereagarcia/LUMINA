@@ -73,8 +73,7 @@ export default function EmpresaImpactoPage() {
         <p className="text-xs font-bold text-teal-600 uppercase tracking-widest">Resumen de impacto</p>
         <h1 className="font-serif text-3xl font-bold">{session.company}</h1>
         <p className="text-sm text-[var(--muted)] leading-relaxed">
-          Unidades financiadas. Cada una sale de la ficha de la app. Lumina atestigua el pago.
-          El trabajo lo confirma la app.
+          Unidades financiadas. Cada una sale de la ficha de la app.
         </p>
       </header>
 

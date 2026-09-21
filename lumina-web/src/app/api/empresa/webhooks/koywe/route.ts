@@ -14,7 +14,7 @@ import {
 export const runtime = "nodejs";
 
 /**
- * Webhook Koywe PAYIN. La empresa pagó ARS a Lumina (servicio), no compró USDC.
+ * Webhook Koywe PAYIN. La empresa pagó ARS a Lumina.
  * order.completed / PAYIN completed → tesorería deposita.
  */
 function isPayinCompleted(payload: Record<string, unknown>): boolean {

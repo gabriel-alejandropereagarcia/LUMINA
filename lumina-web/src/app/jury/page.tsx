@@ -81,7 +81,7 @@ function JuryBody() {
           Recibos Lumina
         </h1>
         <p className="text-sm text-[var(--muted)] leading-relaxed">
-          Impacto sin fricción. Factura, no cripto. Si el trabajo ocurrió, el 97,5% llega a la app.
+          Impacto sin fricción. Una factura. Si el trabajo ocurrió, el 97,5% llega a la app.
           Si no, el dinero vuelve. El usuario final nunca paga. Abajo, el pago del 19/9
           y cómo recorrerlo.{" "}
           <Link href="/presentation" className="text-teal-500 underline">
@@ -126,8 +126,8 @@ function JuryBody() {
             <Link href="/empresa" className="text-teal-500 underline">
               Empresas en Lumina
             </Link>{" "}
-            — factura, sin cuenta cripto. El cobro en pesos: en trabajo (este recorrido muestra cómo se ve).
-            El PDF no dice que se pagó hasta que la app cobra.
+            — factura. El cobro en pesos: en trabajo (este recorrido muestra cómo se ve).
+            El PDF sale cuando la app cobra.
           </li>
           <li>
             <Link href="/invest" className="text-teal-500 underline">
@@ -235,8 +235,8 @@ function JuryBody() {
       <section className="space-y-3 text-sm text-[var(--muted)]">
         <h2 className="text-[var(--foreground)] font-bold">Apps en Lumina</h2>
         <p>
-          Lumina no es la clínica ni la escuela. Las apps confirman el
-          trabajo y cobran el 97,5%. El usuario final nunca paga.
+          MIRA y PuenteMAE cobran cuando el trabajo se hizo. El 97,5% llega a la app.
+          El usuario final nunca paga.
         </p>
         <ul className="space-y-2">
           <li>

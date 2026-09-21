@@ -53,7 +53,7 @@ export async function POST(request: Request) {
   }
   if (body.acceptedToS !== true) {
     return NextResponse.json(
-      { error: "Tenés que aceptar los términos de listing (Lumina no avala el gasto post-release ni el aula)." },
+      { error: "Tenés que aceptar los términos." },
       { status: 400 },
     );
   }
@@ -66,7 +66,7 @@ export async function POST(request: Request) {
     lockPriceUsd,
     hashIncludes: hashIncludes || "schema, período, quantity, subject_commitment, sponsor, monto",
     hashExcludes: hashExcludes || "DNI, CUD, diagnóstico, escuela",
-    postReleasePromise: postReleasePromise || "La app paga al beneficiario en fiat. Lumina no lo ejecuta.",
+    postReleasePromise: postReleasePromise || "La app paga al beneficiario en pesos.",
     oracle,
     payout: payout || oracle,
     milestone,

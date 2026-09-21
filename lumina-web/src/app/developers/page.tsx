@@ -15,7 +15,7 @@ export default function DevelopersPage() {
         </h1>
         <p className="text-sm text-[var(--muted)] leading-relaxed">
           La app avisa que el trabajo se hizo (unidad, cantidad).
-          El panel de la empresa suma esas unidades, no un número de marketing.
+          El panel de la empresa suma esas unidades.
         </p>
       </div>
 

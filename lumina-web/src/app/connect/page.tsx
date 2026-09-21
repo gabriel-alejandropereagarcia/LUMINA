@@ -41,7 +41,7 @@ export default function ConnectPage() {
   const [valueMethod, setValueMethod] = useState("");
   const [milestone, setMilestone] = useState("");
   const [hashExcludes, setHashExcludes] = useState("DNI, CUD, diagnóstico, escuela");
-  const [postRelease, setPostRelease] = useState("Pago en pesos al beneficiario. Lumina no lo ejecuta.");
+  const [postRelease, setPostRelease] = useState("Pago en pesos al beneficiario.");
   const [acceptedToS, setAcceptedToS] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -180,9 +180,9 @@ export default function ConnectPage() {
           Tu app entra a Lumina
         </h1>
         <p className="text-sm text-[var(--muted)] leading-relaxed">
-          Completá una ficha. No hace falta cuenta cripto. Lumina revisa
-          qué cobrás y a quién. Cuando el trabajo se hizo, cobrás el 97,5%.
-          Las empresas en Lumina suman esas unidades — no el marketing.
+          Completá una ficha. Lumina revisa qué cobrás y a quién.
+          Cuando el trabajo se hizo, cobrás el 97,5%.
+          Las empresas en Lumina suman esas unidades.
         </p>
         <a
           href="#registro"
@@ -258,9 +258,8 @@ export default function ConnectPage() {
           <li>Una prueba de cobro en el entorno de prueba.</li>
         </ol>
         <p className="text-xs text-[var(--muted)]">
-          No visitamos el aula. No seguimos la cuenta del docente. Si rompés el esquema, se
-          pausa el alta. No digas “certificado por Lumina” como impacto: el trabajo lo
-          confirmás vos.
+          Revisamos la ficha. El trabajo lo confirmás vos. Si rompés el esquema, se
+          pausa el alta.
         </p>
       </section>
 
@@ -285,7 +284,7 @@ export default function ConnectPage() {
             Paso 1 · Pedí el alta
           </p>
           <p className="text-xs text-[var(--muted)]">
-            Completá la ficha. Queda en revisión. No hace falta ser admin.
+            Completá la ficha. Queda en revisión.
           </p>
         </div>
         <label className="block space-y-1">
@@ -315,7 +314,7 @@ export default function ConnectPage() {
           <input value={hashExcludes} onChange={(e) => setHashExcludes(e.target.value)} className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2" />
         </label>
         <label className="block space-y-1">
-          <span className="text-xs font-semibold text-[var(--muted)]">Después del cobro (promesa tuya, no de Lumina)</span>
+          <span className="text-xs font-semibold text-[var(--muted)]">Qué hace tu app después del cobro</span>
           <input value={postRelease} onChange={(e) => setPostRelease(e.target.value)} className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2" />
         </label>
         <label className="block space-y-1">
@@ -339,9 +338,8 @@ export default function ConnectPage() {
             className="mt-0.5"
           />
           <span>
-            Acepto: Lumina audita la ficha, no el aula. No digo “certificado por Lumina” como impacto.
-            El 97,5% es mío. Quien usa la app no paga. No meto datos de menores en el recibo público.
-            Si rompo el esquema, el alta se pausa.
+            Acepto: Lumina revisa la ficha. El 97,5% es mío. Quien usa la app no paga.
+            El recibo público no lleva datos de menores. Si rompo el esquema, el alta se pausa.
           </span>
         </label>
         <button type="submit" disabled={loading || !acceptedToS} className="w-full rounded-xl border border-teal-600 py-3 text-xs font-bold text-teal-700 disabled:opacity-50">
@@ -386,7 +384,7 @@ export default function ConnectPage() {
           <Plug className="h-5 w-5 text-teal-500 shrink-0" />
           <span>
             <strong className="text-[var(--foreground)]">Ficha.</strong> Unidad + valor + prohibidos.
-            Sin eso las empresas en Lumina no pueden decir “10 niños”.
+            Con eso las empresas en Lumina pueden decir “10 niños”.
           </span>
         </li>
         <li className="flex gap-3">
@@ -399,8 +397,7 @@ export default function ConnectPage() {
         <li className="flex gap-3">
           <ShieldCheck className="h-5 w-5 text-teal-500 shrink-0" />
           <span>
-            <strong className="text-[var(--foreground)]">Pago.</strong> 97,5% a la app. Lumina no
-            sigue la cuenta del docente.
+            <strong className="text-[var(--foreground)]">Pago.</strong> 97,5% a la app. La app paga al beneficiario.
           </span>
         </li>
       </ol>

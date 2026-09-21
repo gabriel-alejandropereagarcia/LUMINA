@@ -55,15 +55,14 @@ export default function EmpresaLandingPage() {
             Pagás el impacto como pagás cualquier proveedor
           </h1>
           <p className="text-base text-[var(--muted)] leading-relaxed max-w-xl">
-            Transferís pesos. No abrís una cuenta cripto. El panel cuenta 10 niño-mes, no una
-            planilla de dólares. Cada trabajo deja un PDF. Quien usa la app no paga.
+            Transferís pesos. El panel cuenta 10 niño-mes. Cada trabajo deja un PDF. Quien usa la app no paga.
           </p>
 
           <ul className="space-y-3 text-sm text-[var(--muted)]">
             {[
               {
                 icon: Landmark,
-                text: "Una factura. Lumina cobra el servicio. Vos no comprás cripto.",
+                text: "Una factura. Lumina cobra el servicio.",
               },
               {
                 icon: Lock,
@@ -71,7 +70,7 @@ export default function EmpresaLandingPage() {
               },
               {
                 icon: FileCheck,
-                text: "Un PDF: qué se hizo, cuánto se pagó. Sin DNI ni clínica.",
+                text: "Un PDF: qué se hizo, cuánto se pagó.",
               },
               {
                 icon: ShieldCheck,
@@ -96,7 +95,7 @@ export default function EmpresaLandingPage() {
                 Entrar a Lumina
               </h2>
               <p className="text-xs text-[var(--muted)]">
-                Email de la empresa. Sin cuenta cripto.
+                Email de la empresa.
               </p>
             </div>
           </div>
@@ -155,7 +154,7 @@ export default function EmpresaLandingPage() {
                 <ArrowRight className="h-4 w-4" />
               </button>
               <p className="text-[11px] text-[var(--muted)] leading-relaxed">
-                Entrás con el email. El cobro en pesos: en trabajo. Lumina no te vende cripto.
+                Entrás con el email. El cobro en pesos: en trabajo.
               </p>
             </form>
           )}
@@ -163,8 +162,8 @@ export default function EmpresaLandingPage() {
       </div>
 
       <p className="text-[11px] text-[var(--muted)] leading-relaxed max-w-3xl">
-        Pagás un servicio, no comprás cripto. El cobro en pesos: en trabajo — no transferir
-        dinero real.         Si querés ver un pago de prueba, andá a{" "}
+        Pagás un servicio a Lumina. El cobro en pesos: en trabajo — no transferir
+        dinero real. Si querés ver un pago de prueba, andá a{" "}
         <Link href="/invest" className="underline font-semibold">
           Probar Lumina
         </Link>

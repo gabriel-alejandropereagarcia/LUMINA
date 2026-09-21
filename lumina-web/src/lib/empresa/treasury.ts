@@ -12,8 +12,7 @@ import { isTreasuryDepositEnabled } from "./rails";
 import type { Aporte } from "./types";
 
 /**
- * Tesorería Lumina reserva lo que la empresa ya eligió.
- * No elige la app: usa aporte.appId.
+ * Tesorería Lumina reserva el pago con la app que la empresa eligió (aporte.appId).
  */
 export async function maybeTreasuryDeposit(aporte: Aporte): Promise<{
   attempted: boolean;

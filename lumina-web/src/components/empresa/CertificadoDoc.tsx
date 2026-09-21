@@ -64,8 +64,7 @@ export default function CertificadoDoc({ certificado }: { certificado: Certifica
               <>
                 Reserva {formatUsd(certificado.amountUsd)}. El 97,5% (
                 {formatUsd(certificado.payoutAppUsd)}) fue a {certificado.appName}. El 2,5% (
-                {formatUsd(certificado.feeUsd)}) es de Lumina. Quien usó la app no pagó. La empresa no
-                compró cripto.
+                {formatUsd(certificado.feeUsd)}) es de Lumina. Quien usó la app no pagó.
               </>
             )}
           </p>
@@ -127,7 +126,7 @@ export default function CertificadoDoc({ certificado }: { certificado: Certifica
 
         <footer className="border-t border-[#0D5E6A]/15 pt-4 space-y-1">
           <p className="text-[11px] text-[#5A6B7A] leading-relaxed">
-            Sin DNI, historia clínica ni escuela (Ley 25.326). En el recibo público no viajan datos personales.
+            El recibo público cubre el trabajo y el pago. Datos personales quedan fuera (Ley 25.326).
           </p>
           <p className="text-[11px] text-[#5A6B7A]">
             Si no hay trabajo en 12 meses, la empresa recupera el aporte por el mismo camino.
