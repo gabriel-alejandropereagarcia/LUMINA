@@ -18,6 +18,12 @@ MIRA/
 # Agent metadata
 .atl/
 
+# Handoff local con PII — no publicar
+ABC-SCALE-NOTES.md
+
+# Runtime data local
+lumina-web/.data/
+
 # OS/System files
 .DS_Store
 Thumbs.db

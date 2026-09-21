@@ -30,16 +30,21 @@ export default function Navbar() {
 
   const ADMIN_ADDRESS = process.env.NEXT_PUBLIC_ADMIN_ADDRESS || "";
 
-  const navLinks = [
-    { name: "Inicio", path: "/" },
-    { name: "Empresa", path: "/empresa" },
-    { name: "Demo juez", path: "/invest" },
-    { name: "Connect", path: "/connect" },
-    { name: "Developers", path: "/developers" },
-    ...(isConnected && address === ADMIN_ADDRESS ? [{ name: "Gobernanza", path: "/admin" }] : []),
-    { name: "Evidencia", path: "/jury" },
-    { name: "Protocolo", path: "/presentation" },
-  ];
+  const navLinks = isEmpresaSurface
+    ? [
+        { name: "Inicio", path: "/" },
+        { name: "Portal", path: "/empresa" },
+        { name: "Connect", path: "/connect" },
+      ]
+    : [
+        { name: "Inicio", path: "/" },
+        { name: "Empresa", path: "/empresa" },
+        { name: "Connect", path: "/connect" },
+        { name: "Developers", path: "/developers" },
+        { name: "Demo", path: "/invest" },
+        { name: "Evidencia", path: "/jury" },
+        ...(isConnected && address === ADMIN_ADDRESS ? [{ name: "Gobernanza", path: "/admin" }] : []),
+      ];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-[var(--background)]/80 backdrop-blur-md print:hidden">

@@ -28,13 +28,19 @@ export function EmpresaSessionProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   const refresh = useCallback(async () => {
-    const response = await fetch("/api/empresa/session");
-    const data = await response.json();
-    const next = (data.session ?? null) as EmpresaSession | null;
-    setSession(next);
-    setRail(data.rail ?? null);
-    setLoading(false);
-    return next;
+    try {
+      const response = await fetch("/api/empresa/session");
+      const data = await response.json();
+      const next = (data.session ?? null) as EmpresaSession | null;
+      setSession(next);
+      setRail(data.rail ?? null);
+      return next;
+    } catch {
+      setSession(null);
+      return null;
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {

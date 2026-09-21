@@ -69,13 +69,17 @@ export default function Home() {
           </Link>
         </div>
         <p className="text-xs text-[var(--muted)]">
-          Juez:{" "}
-          <Link href="/invest" id="btn-hero-invest" className="text-teal-600 underline">
-            demo on-chain con Freighter
+          ¿Tenés una app de impacto?{" "}
+          <Link href="/connect#registro" className="text-teal-600 underline">
+            Registrala en Connect
+          </Link>
+          {" · "}
+          <Link href="/invest" className="text-teal-600 underline">
+            Demo on-chain
           </Link>
           {" · "}
           <Link href="/jury" className="text-teal-600 underline">
-            evidencia para el jurado
+            Hashes en explorer
           </Link>
           .
         </p>
@@ -145,14 +149,14 @@ export default function Home() {
             />
           </div>
           <div className="space-y-4 max-w-xl text-center lg:text-left">
-            <span className="text-xs font-bold text-teal-600 uppercase tracking-widest block">Tres ganadores</span>
+            <span className="text-xs font-bold text-teal-600 uppercase tracking-widest block">Tres partes</span>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[var(--foreground)] tracking-tight">
               Empresa, app y familia. Nadie más en el medio.
             </h2>
             <p className="text-sm text-[var(--muted)] leading-relaxed">
               Compliance ve unidades (10 niño-mes), no una planilla. La app cobra on-chain.
               Quien usa el servicio no toca una seed. MIRA y PuenteMAE son apps en Connect —
-              Lumina es el riel. El jurado prueba con USDC testnet; USDT0 se muestra en mainnet oficial.
+              Lumina es el riel. El demo on-chain usa USDC Circle testnet; USDT0 se muestra en mainnet oficial.
             </p>
             <div className="grid grid-cols-3 gap-4 pt-4">
               {[
@@ -249,7 +253,7 @@ export default function Home() {
           <strong className="text-[var(--foreground)] block text-sm">Connect, no un marketplace inventado</strong>
           <p className="leading-relaxed">
             MIRA (cribado) y PuenteMAE (ayuda social a docentes — no obra social) ya tienen ficha.
-            El jurado libera con certify, no con una UX clínica.
+            El riel se libera con certify, no con una UX clínica.
           </p>
         </div>
 
@@ -356,7 +360,7 @@ export default function Home() {
                 <p className="text-[10px] font-bold uppercase tracking-widest text-teal-600">Lumina Connect</p>
                 <h3 className="text-lg font-bold text-[var(--foreground)]">Tu app acá</h3>
                 <p className="text-xs text-[var(--muted)] leading-relaxed">
-                  Ficha + certify por API. El jurado ve un release sin abrir la UX de la app.
+                  Ficha + certify por API. El release se ve en explorer, sin abrir tu producto.
                 </p>
               </div>
               <Link
@@ -552,7 +556,7 @@ export default function Home() {
             asignamos adentro (Connect, empresas, infra), no tres transfers.
           </p>
           <ul className="space-y-2 text-xs text-[var(--muted)] leading-relaxed pl-4 list-disc">
-            <li><strong className="text-[var(--foreground)]">1% OSS</strong> — Connect y nuevas apps</li>
+            <li><strong className="text-[var(--foreground)]">1% Connect</strong> — listing y nuevas apps</li>
             <li><strong className="text-[var(--foreground)]">1% captación</strong> — empresas RSE</li>
             <li><strong className="text-[var(--foreground)]">0,5% infra</strong> — RPC, hosting, soporte</li>
           </ul>

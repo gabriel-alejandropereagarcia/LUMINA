@@ -63,7 +63,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/jury" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
-                  Evidencia (jurado)
+                  Evidencia on-chain
                 </Link>
               </li>
               <li>

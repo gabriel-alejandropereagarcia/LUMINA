@@ -116,13 +116,20 @@ export default function ConnectPage() {
           Lumina Connect · Scale
         </span>
         <h1 className="font-serif text-4xl font-bold tracking-tight text-[var(--foreground)]">
-          Tu app cobra el 97,5%
+          Registrá tu app en Connect
         </h1>
         <p className="text-sm text-[var(--muted)] leading-relaxed">
-          Publicás la ficha (unidad, valor, qué entra al hash) y una auditoría chica. Después
-          certificar por API y cobrar on-chain. Lumina no gasta ese dinero por vos. El panel
-          de la empresa suma las unidades que congelaste — no el marketing.
+          Completá la ficha. No hace falta wallet para pedir el alta. Lumina revisa unidad,
+          valor y qué entra al hash; después el admin publica <span className="font-mono">add_oracle</span>{" "}
+          y cobrás el 97,5% on-chain. El panel de la empresa suma esas unidades — no el marketing.
         </p>
+        <a
+          href="#registro"
+          className="inline-flex items-center gap-2 rounded-xl bg-teal-600 px-5 py-3 text-sm font-bold text-white hover:bg-teal-500"
+        >
+          Ir al formulario de alta
+          <ArrowRight className="h-4 w-4" />
+        </a>
       </div>
 
       <section className="rounded-2xl border border-[var(--border)] p-5 space-y-3 text-sm">
@@ -159,16 +166,24 @@ export default function ConnectPage() {
         </ul>
       </section>
 
-      <form onSubmit={handleListing} className="rounded-2xl border border-[var(--border)] bg-[var(--card-bg)] p-6 space-y-4 text-sm">
-        <p className="text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
-          1. Pedir alta (ficha)
-        </p>
+      <form id="registro" onSubmit={handleListing} className="rounded-2xl border border-[var(--border)] bg-[var(--card-bg)] p-6 space-y-4 text-sm scroll-mt-24">
+        <div className="space-y-1">
+          <p className="text-xs font-bold uppercase tracking-wider text-teal-600">
+            Paso 1 · Pedí el alta de tu app
+          </p>
+          <p className="text-xs text-[var(--muted)]">
+            Esto es el registro. Queda pending hasta que Lumina firme on-chain. No necesitás
+            ser admin.
+          </p>
+        </div>
         <label className="block space-y-1">
           <span className="text-xs font-semibold text-[var(--muted)]">Nombre de la app</span>
           <input required value={name} onChange={(e) => setName(e.target.value)} className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2" />
         </label>
         <label className="block space-y-1">
-          <span className="text-xs font-semibold text-[var(--muted)]">schemaId (inmutable)</span>
+          <span className="text-xs font-semibold text-[var(--muted)]">
+            Identificador del hito (no se cambia después)
+          </span>
           <input required value={schemaId} onChange={(e) => setSchemaId(e.target.value)} placeholder="miapp.nino-mes.v1" className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 font-mono text-xs" />
         </label>
         <label className="block space-y-1">
@@ -218,14 +233,20 @@ export default function ConnectPage() {
           </span>
         </label>
         <button type="submit" disabled={loading || !acceptedToS} className="w-full rounded-xl border border-teal-600 py-3 text-xs font-bold text-teal-700 disabled:opacity-50">
-          {loading ? "Enviando…" : "Enviar ficha (queda pending)"}
+          {loading ? "Enviando…" : "Enviar registro (queda pending)"}
         </button>
       </form>
 
       <form onSubmit={handleRegister} className="rounded-2xl border border-[var(--border)] p-6 space-y-3 text-sm">
-        <p className="text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
-          2. Admin: add_oracle on-chain
-        </p>
+        <div className="space-y-1">
+          <p className="text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
+            Paso 2 · Solo el admin de Lumina
+          </p>
+          <p className="text-xs text-[var(--muted)]">
+            Si acabás de enviar la ficha, no tenés que tocar esto. Acá se firma{" "}
+            <span className="font-mono">add_oracle</span> después de la auditoría.
+          </p>
+        </div>
         {!isConnected ? (
           <button type="button" onClick={connect} className="w-full rounded-xl border border-[var(--border)] py-3 text-xs font-bold">
             Conectar wallet

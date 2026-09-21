@@ -89,7 +89,7 @@ Node 22+. Freighter en testnet. USDC: [faucet.circle.com](https://faucet.circle.
 
 ## Fee
 
-On-chain el contrato manda **2,5% a una sola wallet de protocolo** y **97,5% a la app**. El desglose 1% / 1% / 0,5% (OSS, captación, infra) es **asignación interna**, no tres transfers.
+On-chain el contrato manda **2,5% a una sola wallet de protocolo** y **97,5% a la app**. El desglose 1% / 1% / 0,5% (Connect, captación, infra) es **asignación interna**, no tres transfers.
 
 ---
 

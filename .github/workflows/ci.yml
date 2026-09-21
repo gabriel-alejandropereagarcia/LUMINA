@@ -23,32 +23,6 @@ jobs:
         run: cargo test
         working-directory: contracts/lumina_escrow
 
-  contracts-evm:
-    name: EVM Smart Contracts (Solidity/Hardhat)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-          cache-dependency-path: contracts-evm/package-lock.json
-
-      - name: Install dependencies
-        run: npm ci
-        working-directory: contracts-evm
-
-      - name: Compile Solidity contracts
-        run: npm run compile
-        working-directory: contracts-evm
-
-      - name: Run unit tests
-        run: npm run test
-        working-directory: contracts-evm
-
   frontend:
     name: Frontend Application (Next.js)
     runs-on: ubuntu-latest

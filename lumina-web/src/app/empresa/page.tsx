@@ -46,33 +46,24 @@ export default function EmpresaLandingPage() {
 
   return (
     <div className="min-h-[calc(100vh-4rem)] px-4 py-12 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-16">
-      <div className="rounded-xl border border-[var(--gold-border,#D4A84B)]/30 bg-[var(--gold-light)] px-4 py-3 text-xs text-[var(--gold)]">
-        Pagás un servicio de RSE, no comprás cripto. En el demo ABC el cobro ARS es simulado —
-        no transferir pesos reales. El jurado on-chain entra por{" "}
-        <Link href="/invest" className="underline font-semibold">
-          /invest
-        </Link>
-        .
-      </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         <div className="space-y-6">
           <span className="text-xs font-bold text-teal-600 uppercase tracking-widest">
             Portal Empresa
           </span>
           <h1 className="font-serif text-4xl sm:text-5xl font-bold tracking-tight text-[var(--foreground)] leading-tight">
-            Lockeá RSE como pagás cualquier proveedor
+            Pagás RSE como pagás cualquier proveedor
           </h1>
           <p className="text-base text-[var(--muted)] leading-relaxed max-w-xl">
-            Transferís ARS. No abrís wallet. El panel cuenta 10 niño-mes, no una planilla de
-            dólares. Cada hito deja PDF + hash. Quien usa la app de impacto no paga.
+            En producción transferís ARS. No abrís wallet. El panel cuenta 10 niño-mes, no una
+            planilla de dólares. Cada hito deja PDF + hash. Quien usa la app de impacto no paga.
           </p>
 
           <ul className="space-y-3 text-sm text-[var(--muted)]">
             {[
               {
                 icon: Landmark,
-                text: "Factura de servicio RSE. El PSAV cobra para Lumina. No sos clienta de un exchange.",
+                text: "Factura de servicio RSE. El PSAV cobra para Lumina. No sos cliente de un exchange.",
               },
               {
                 icon: Lock,
@@ -171,6 +162,15 @@ export default function EmpresaLandingPage() {
           )}
         </div>
       </div>
+
+      <p className="text-[11px] text-[var(--muted)] leading-relaxed max-w-3xl">
+        Pagás un servicio de RSE, no comprás cripto. En este demo el cobro ARS está simulado —
+        no transferir pesos reales. El camino on-chain con Freighter está en{" "}
+        <Link href="/invest" className="underline font-semibold">
+          /invest
+        </Link>
+        .
+      </p>
     </div>
   );
 }

@@ -1,4 +1,9 @@
-# Plan de Mejora Estética — Lumina Impact Protocol
+# ARCHIVO (julio 2026) — no es el brief Scale
+
+Plan estético de una iteración anterior. El producto live es el riel RSE Scale
+en `lumina-web/`. No usar este documento como tesis ni como backlog.
+
+# Plan de Mejora Estética — Lumina
 
 > Basado en: auditoría de frontend, investigación de audiencia (RSE LATAM + hackathon),
 > mejores prácticas de diseño para salud-impacto-fintech, y análisis del código actual.
@@ -105,7 +110,7 @@ mismo producto se vea apropiado para cada audiencia en el contexto correcto.
 
 **Por qué teal y no índigo:**
 - Teal está en el "trust family" (57% de sitios de salud usan azul/teal)
-- Se diferencia de cualquier otro protocolo ReFi
+- Se diferencia de un gestor RSE tradicional: el 97,5% llega on-chain a la app
 - Combina calidez del verde con profesionalismo del azul
 - Pasa a OKLCH para gradientes vívidos entre teal y warm gold
 

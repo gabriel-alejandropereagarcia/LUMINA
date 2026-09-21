@@ -40,7 +40,7 @@ export const IMPACT_APPS: ImpactApp[] = [
     tagline: "App de impacto · en desarrollo",
     milestone: "1 cribado M-CHAT-R/F completado",
     description:
-      "Cribado temprano (M-CHAT-R/F + informe). Entra por Connect: Lumina no es la clínica. El jurado libera el riel; MIRA guarda el PDF.",
+      "Cribado temprano (M-CHAT-R/F + informe). Entra por Connect: Lumina no es la clínica. El riel se libera con certify; MIRA guarda el PDF.",
     priceUsdc: 40,
     status: "wip",
     statusLabel: "En desarrollo · impacto",

@@ -5,7 +5,7 @@
 Lumina is the trust infrastructure between corporate CSR budgets and verified on-chain social impact. We enable traditional companies to fund neurodevelopmental screenings (MIRA) and reforestation (EcoForest) with cryptographic transparency, zero administrative friction.
 
 **Tone**: Professional · Empathetic · Technically credible  
-**Audience**: CSR Directors (LATAM) + Hackathon jury (technical)
+**Audience**: CSR / RSE (LATAM) and technical reviewers of the Scale protocol.
 
 ## 2. Color Palette
 
