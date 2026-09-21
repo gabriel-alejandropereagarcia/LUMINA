@@ -19,7 +19,7 @@ export default function Footer() {
           <div className="space-y-4">
             <h3 className="font-serif font-bold text-lg text-[var(--foreground)]">Lumina</h3>
             <p className="text-xs text-[var(--muted)] leading-relaxed max-w-sm">
-              La ayuda se paga el día que ocurre. Quien la necesita, no pone un peso.
+              Impacto sin fricción. La empresa paga una factura. El usuario final nunca paga.
             </p>
           </div>
 

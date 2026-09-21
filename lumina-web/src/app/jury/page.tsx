@@ -81,9 +81,9 @@ function JuryBody() {
           Evidencia on-chain
         </h1>
         <p className="text-sm text-[var(--muted)] leading-relaxed">
-          La ayuda se paga el día que ocurre. Quien la necesita no pone un peso.
-          La empresa no toca cripto. La app cobra el 97,5%. Abajo, el loop del 19/9
-          (40 USDC Circle testnet) y cómo recorrerlo.{" "}
+          Impacto sin fricción. Factura, no cripto. Si el hecho ocurrió, 97,5% en Stellar.
+          Si no, el capital vuelve. El usuario final nunca paga. Abajo, el loop del 19/9
+          y cómo recorrerlo.{" "}
           <Link href="/presentation" className="text-teal-500 underline">
             Tesis en 8 slides
           </Link>

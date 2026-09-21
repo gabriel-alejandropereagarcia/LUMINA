@@ -1,8 +1,6 @@
 # Lumina — contexto Scale
 
-La ayuda se paga el día que ocurre. Quien la necesita, no pone un peso.
-
-La empresa cubre con factura (sin wallet), la app cobra el **97,5%** en Stellar, quien recibe la ayuda **no paga**. Nació en Salta (ABC Scale). El protocolo no tiene frontera.
+Impacto sin fricción. La empresa paga una factura; la app cobra el **97,5%** en Stellar si el hecho ocurrió; el usuario final **nunca paga**. Nacimos en Salta. El protocolo no tiene fronteras.
 
 ## Hechos
 

@@ -1,10 +1,14 @@
 # Lumina
 
-**La ayuda se paga el día que ocurre. Quien la necesita, no pone un peso.**
+**Impacto sin fricción.**
 
-Una empresa cubre el servicio con una factura — sin wallet, sin comprar cripto. La app que hizo el trabajo cobra el **97,5%** en Stellar. Si el hecho no ocurrió, el capital vuelve y Lumina cobra **cero**.
+Hoy, una empresa quiere financiar salud, educación o asistencia. Una familia lo necesita, pero el capital se pierde en informes, meses de espera y burocracia.
 
-Nació en Salta. El protocolo no tiene frontera.
+Lumina lo resuelve.
+
+La empresa paga una factura simple — sin wallets, sin cripto. La app certifica el hecho: una unidad, una cantidad. Si ocurrió, se cobra el **97,5%** en Stellar. Si no ocurrió, el capital vuelve. El usuario final nunca paga.
+
+Nacimos en Salta. El protocolo no tiene fronteras.
 
 [Live](https://lumina-dusky-pi.vercel.app) · [Evidencia](https://lumina-dusky-pi.vercel.app/jury) · [Portal empresa](https://lumina-dusky-pi.vercel.app/empresa) · [Registrá tu app](https://lumina-dusky-pi.vercel.app/connect#registro)
 
@@ -16,17 +20,21 @@ Nació en Salta. El protocolo no tiene frontera.
 
 ## El problema
 
-Una empresa quiere pagar un cribado, un mes de apoyo escolar, una consulta. Del otro lado hay una familia que no puede. En el medio hay un informe, tres meses, y una app que ya hizo el trabajo.
+Una empresa quiere financiar salud, educación o asistencia. Una familia lo necesita. El capital se pierde en informes, meses de espera y burocracia.
 
-Eso no es un problema argentino. Es lo que pasa cada vez que el capital de impacto se rinde en una planilla y el servicio se cobra en la puerta. En Salta lo vimos de cerca — tesorerías que no pueden tocar cripto, docentes MAE, un hospital. El protocolo sirve en cualquier lugar donde haya presupuesto para ayudar y alguien que no pueda pagar.
+Eso no es un problema de un país. Es lo que pasa cada vez que el impacto se rinde en una planilla y el servicio se cobra en la puerta. En Salta lo vimos de cerca. El protocolo sirve donde haya presupuesto para ayudar y alguien que no pueda pagar.
 
 ## Qué es (y qué no)
 
-Lumina **no** es la clínica ni el sponsor. Es el protocolo que corta esa espera:
+Lumina **no** es la clínica ni el sponsor. Es el protocolo:
 
 1. La empresa paga una **factura de servicio**. No abre Freighter. No compra cripto.
 2. Una app listada en Connect certifica el hecho (unidad + cantidad, nunca un DNI).
 3. El escrow Soroban paga **97,5%** a esa app y **2,5%** al protocolo, solo al `release`. Sin hecho a los 12 meses, withdraw y Lumina cobra **0%**.
+
+**Por qué ahora.** El capital de impacto necesita trazabilidad y velocidad. Lumina convierte burocracia en ejecución inmediata.
+
+**Visión.** Escalar desde Argentina al mundo.
 
 MIRA (cribado) y PuenteMAE (ayuda social a docentes) son **apps de ejemplo** en Connect. Viven en otros repos. Este repo es el protocolo.
 

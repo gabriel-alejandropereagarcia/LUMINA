@@ -38,17 +38,18 @@ export default function Home() {
       {/* Hero Section */}
       <div className={`max-w-4xl text-center space-y-8 z-10 pt-8 fade-in-up ${isVisible ? 'visible' : ''}`}>
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--teal-light)] bg-[var(--teal-light)] text-[var(--teal)] text-xs font-semibold tracking-wide uppercase">
-          <Sparkles className="h-3.5 w-3.5" /> Lumina · Scale · Stellar
+          <Sparkles className="h-3.5 w-3.5" /> Lumina · Impacto sin fricción
         </div>
         
         <h1 className="font-serif text-4xl sm:text-6xl font-bold tracking-tight text-[var(--foreground)] leading-tight">
-          La ayuda se paga el <span className="text-gradient">día que ocurre</span>
+          Impacto <span className="text-gradient">sin fricción</span>
         </h1>
 
         
         <p className="max-w-2xl mx-auto text-base sm:text-lg text-[var(--muted)] leading-relaxed">
-          Quien la necesita no pone un peso. La empresa cubre con una factura — no con cripto.
-          La app cobra el 97,5% cuando el hecho es cierto.
+          Hoy una empresa quiere financiar salud, educación o asistencia. Una familia lo
+          necesita. El capital se pierde en informes y meses de espera. Lumina lo resuelve:
+          una factura, el 97,5% a la app, el usuario final nunca paga.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">

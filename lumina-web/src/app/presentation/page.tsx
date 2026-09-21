@@ -31,8 +31,8 @@ export default function WhitepaperAndRoadmap() {
             Lumina
           </h1>
           <p className="mt-4 text-sm text-[var(--muted)] max-w-2xl mx-auto">
-            La ayuda se paga el día que ocurre. Quien la necesita, no pone un peso.
-            La empresa no toca cripto. El 97,5% llega a quien hizo el trabajo.
+            Impacto sin fricción. La empresa paga una factura — sin wallets, sin cripto.
+            Si el hecho ocurrió, el 97,5% se cobra en Stellar. El usuario final nunca paga.
           </p>
         </div>
 
@@ -75,22 +75,22 @@ export default function WhitepaperAndRoadmap() {
                   1. El problema
                 </h2>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  Una empresa quiere pagar un cribado, un mes de apoyo, una consulta.
-                  Del otro lado hay una familia que no puede. En el medio hay un informe,
-                  tres meses, y una app que ya hizo el trabajo. El capital de impacto se
-                  rinde en Excel. El servicio se cobra en la puerta.
+                  Hoy, una empresa quiere financiar salud, educación o asistencia.
+                  Una familia lo necesita, pero el capital se pierde en informes, meses
+                  de espera y burocracia.
                 </p>
                 <div className="rounded-xl border border-teal-500/10 bg-teal-500/5 p-4 space-y-2">
-                  <h4 className="text-xs font-bold text-teal-400">Lumina corta esa espera</h4>
+                  <h4 className="text-xs font-bold text-teal-400">Lumina lo resuelve</h4>
                   <p className="text-xs leading-relaxed text-[var(--muted)]">
-                    La empresa paga una factura. El capital se libera a la app el día del
-                    hecho. Hash, no DNI. Sin obra social. Lumina no se queda con el capital.
+                    Factura simple — sin wallets, sin cripto. La app certifica el hecho:
+                    una unidad, una cantidad. Si ocurrió, 97,5% en Stellar. Si no, el
+                    capital vuelve. El usuario final nunca paga.
                   </p>
                 </div>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  Tres partes: compliance ve unidades, la app cobra el 97,5%, quien recibe
-                  la ayuda no paga. Lo vimos primero en Salta. El protocolo sirve en
-                  cualquier tesorería que pague impacto con prueba.
+                  El capital de impacto necesita trazabilidad y velocidad. Lumina convierte
+                  burocracia en ejecución inmediata. Nacimos en Salta. Visión: escalar desde
+                  Argentina al mundo.
                 </p>
               </div>
             )}
