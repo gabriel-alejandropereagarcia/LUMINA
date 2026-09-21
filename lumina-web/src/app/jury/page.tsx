@@ -94,7 +94,7 @@ function JuryBody() {
       <section className="space-y-3 rounded-2xl border border-[var(--border)] p-5">
         <h2 className="text-[var(--foreground)] font-bold">Pago del 19/9 · 40 USDC de prueba</h2>
         <p className="text-xs text-[var(--muted)]">
-          La empresa pagó → se eligió MIRA → MIRA cobró. Cada enlace abre el recibo.
+          La empresa pagó → la empresa eligió MIRA → MIRA cobró. Cada enlace abre el recibo.
         </p>
         <ul className="space-y-2 text-xs font-mono break-all">
           <li>
@@ -104,7 +104,7 @@ function JuryBody() {
             </a>
           </li>
           <li>
-            Se eligió MIRA:{" "}
+            La empresa eligió MIRA:{" "}
             <a href={txUrl(EVIDENCE.assign)} className="text-teal-500 underline" target="_blank" rel="noreferrer">
               {EVIDENCE.assign}
             </a>
@@ -133,7 +133,7 @@ function JuryBody() {
             <Link href="/invest" className="text-teal-500 underline">
               Probar Lumina
             </Link>{" "}
-            — Freighter + USDC de prueba: depositás y elegís la app. Después, confirmá el trabajo
+            — Freighter + USDC de prueba: depositás y elegís qué financiar. Después, confirmá el trabajo
             o usá los recibos de arriba.
           </li>
           <li>

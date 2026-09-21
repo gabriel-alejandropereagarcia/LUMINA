@@ -172,8 +172,8 @@ function InvestPortal() {
           const assignHash = await submitSorobanTransaction(signedAssign);
           toast({
             type: "success",
-            title: "App elegida",
-            message: `${selectedApp.name} es quien cobra este pago.`,
+            title: "Elegiste qué financiar",
+            message: `${selectedApp.name} cobra este pago cuando el trabajo se hizo.`,
             txHash: assignHash,
           });
         }
@@ -181,7 +181,7 @@ function InvestPortal() {
         const msg = assignErr instanceof Error ? assignErr.message : String(assignErr);
         toast({
           type: "info",
-          title: "Pago reservado · falta elegir la app",
+          title: "Pago reservado · falta elegir qué financiar",
           message:
             msg.includes("UnauthorizedOracle")
               ? "La app que firma no es la que cobra. El dinero ya está reservado."
@@ -220,7 +220,7 @@ function InvestPortal() {
           Probar Lumina
         </h1>
         <p className="max-w-2xl mx-auto text-sm text-[var(--muted)]">
-          Acá se ve el cobro: depositás, elegís la app, ella confirma el trabajo y cobra el 97,5%.
+          Acá se ve el cobro: depositás, elegís qué financiar, esa app confirma el trabajo y cobra el 97,5%.
           Una empresa entra por{" "}
           <Link href="/empresa" className="text-teal-600 font-semibold underline">
             Empresas en Lumina
@@ -285,7 +285,7 @@ function InvestPortal() {
                 <Info className="h-4 w-4 text-teal-500 flex-shrink-0 mt-0.5" />
                 <div className="space-y-1.5">
                   <p>
-                    Conectá Freighter y tené USDC de prueba. Depositás, elegís la app, ella confirma y cobra.
+                    Conectá Freighter y tené USDC de prueba. Depositás, elegís qué financiar, esa app confirma y cobra.
                   </p>
                   <p className="text-[var(--warn)]/90 font-bold">
                     El dinero queda reservado 12 meses. Si el trabajo no ocurre, lo recuperás. Lumina cobra 0% en ese caso.
@@ -333,7 +333,7 @@ function InvestPortal() {
               </div>
 
               <div className="space-y-2">
-                <span className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">App que cobra este trabajo</span>
+                <span className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">Qué financiás</span>
                 <div className="flex flex-wrap gap-2">
                   {assignableApps.map((app) => (
                     <button

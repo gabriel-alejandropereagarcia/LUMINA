@@ -4,7 +4,7 @@ import { createKoywePayin, isKoywePayinReady } from "@/lib/empresa/koywe-payin";
 import { DEMO_PAYMENT, arsFromUsd } from "@/lib/empresa/payment";
 import { readSession } from "@/lib/empresa/session";
 import { createAporte, listAportes, patchAporte } from "@/lib/empresa/store";
-import { IMPACT_APPS, getImpactApp } from "@/lib/impact-apps";
+import { getImpactApp } from "@/lib/impact-apps";
 
 export const runtime = "nodejs";
 
@@ -33,15 +33,15 @@ export async function POST(request: Request) {
 
   const body = await request.json().catch(() => ({}));
   const amountUsd = Number(body.amountUsd);
-  const appId = typeof body.appId === "string" ? body.appId : "mira";
+  const appId = typeof body.appId === "string" ? body.appId.trim() : "";
 
   if (!Number.isFinite(amountUsd) || amountUsd < 1 || amountUsd > 100_000) {
     return NextResponse.json({ error: "El monto tiene que estar entre 1 y 100.000 USD." }, { status: 400 });
   }
 
-  const app = getImpactApp(appId) ?? IMPACT_APPS[0];
+  const app = getImpactApp(appId);
   if (!app) {
-    return NextResponse.json({ error: "No hay una app de impacto para asignar." }, { status: 400 });
+    return NextResponse.json({ error: "Elegí qué financiás." }, { status: 400 });
   }
   if (app.paused) {
     return NextResponse.json({ error: "Esa app está pausada." }, { status: 403 });

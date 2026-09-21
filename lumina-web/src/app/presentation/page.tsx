@@ -256,7 +256,7 @@ export default function WhitepaperAndRoadmap() {
                   </li>
                   <li>
                     <strong className="text-[var(--foreground)]">Probar Lumina.</strong> Un pago de
-                    prueba y se elige la app. Freighter solo acá.
+                    prueba y elegís qué financiar. Freighter solo acá.
                   </li>
                   <li>
                     <strong className="text-[var(--foreground)]">Confirmar.</strong> La app

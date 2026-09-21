@@ -113,7 +113,7 @@ export default function EmpresaPortalPage() {
         message:
           action === "confirmar"
             ? "Cuando se acredite, el dinero queda reservado."
-            : "El dinero queda reservado. La app confirma el trabajo. La empresa no firma nada más.",
+            : "El dinero queda reservado para lo que elegiste. Esa app confirma el trabajo. La empresa no firma nada más.",
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error.");
@@ -228,7 +228,10 @@ export default function EmpresaPortalPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
         <section className="lg:col-span-2 glass-card p-6 rounded-2xl space-y-4">
-          <h2 className="font-serif text-lg font-bold text-[var(--foreground)]">Pagar impacto</h2>
+          <h2 className="font-serif text-lg font-bold text-[var(--foreground)]">Qué financiás</h2>
+          <p className="text-xs text-[var(--muted)] leading-relaxed">
+            Vos elegís el trabajo. Lumina reserva esa plata. No elige por vos.
+          </p>
           <form onSubmit={onCreate} className="space-y-4" id="form-empresa-aporte">
             <label className="block space-y-1">
               <span className="text-xs font-semibold text-[var(--muted)]">Monto en USD</span>
@@ -251,11 +254,12 @@ export default function EmpresaPortalPage() {
               </span>
             </label>
             <label className="block space-y-1">
-              <span className="text-xs font-semibold text-[var(--muted)]">App de impacto</span>
+              <span className="text-xs font-semibold text-[var(--muted)]">Qué cubrís</span>
               <select
                 id="empresa-app"
                 value={appId}
                 onChange={(event) => setAppId(event.target.value)}
+                required
                 className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-sm"
               >
                 {IMPACT_APPS.map((app) => (
@@ -403,10 +407,10 @@ export default function EmpresaPortalPage() {
                   <div className="space-y-2">
                     <p className="text-xs text-[var(--muted)] leading-relaxed">
                       {active.sponsorAddress || active.txHash
-                        ? "Dinero reservado. El PDF aparece cuando la app confirma que el trabajo se hizo."
+                        ? `Dinero reservado para lo que elegiste: ${active.appName}. El PDF aparece cuando esa app confirma el trabajo.`
                         : ops?.treasuryReady
-                          ? "El pago se acreditó. Lumina está reservando el dinero."
-                          : "El pago está anotado. Lumina reserva cuando la tesorería está activa."}
+                          ? `El pago se acreditó. Lumina está reservando lo que elegiste: ${active.appName}.`
+                          : `El pago está anotado para ${active.appName}. Lumina reserva cuando la tesorería está activa.`}
                     </p>
                     {new Date(active.lockUntil).getTime() <= Date.now() && (
                       <button
@@ -435,7 +439,7 @@ export default function EmpresaPortalPage() {
                 {new Intl.DateTimeFormat("es-AR", { dateStyle: "medium" }).format(
                   new Date(active.lockUntil),
                 )}
-                . App: {active.appName}.
+                . Lo que elegiste: {active.appName}.
               </p>
             </div>
           )}
