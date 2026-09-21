@@ -7,6 +7,7 @@ import { hashFact, subjectCommitment } from "@/lib/hito/hash";
 import { claimCommitments } from "@/lib/hito/registry";
 import { getImpactApp } from "@/lib/impact-apps";
 import { isSchemaPaused } from "@/lib/hito/listing-store";
+import { DEMO_PAYMENT } from "./payment";
 
 const DATA_DIR = path.join(process.cwd(), ".data");
 const FILE = path.join(DATA_DIR, "empresa.json");
@@ -142,11 +143,11 @@ export async function createAporte(input: {
     lockPriceUsd: input.lockPriceUsd,
     paymentInstructions: {
       kind: "simulation",
-      beneficiary: "Lumina — cobrado por Alerce Argentina SRL",
-      license: "PSAV CNV N°24 · cobrador de un servicio, no exchange de la empresa",
-      alias: "lumina.rse.demo",
-      cbu: "0000000000000000000000",
-      bankLabel: "Cuenta del PSAV socio (simulación ABC)",
+      beneficiary: DEMO_PAYMENT.beneficiary,
+      license: DEMO_PAYMENT.license,
+      alias: DEMO_PAYMENT.alias,
+      cbu: DEMO_PAYMENT.cbu,
+      bankLabel: DEMO_PAYMENT.bankLabel,
     },
   };
   db.aportes.push(aporte);
@@ -182,7 +183,7 @@ export async function creditAporte(id: string, empresaId: string): Promise<Aport
   const aporte = db.aportes.find((item) => item.id === id && item.empresaId === empresaId);
   if (!aporte) throw new Error("Aporte no encontrado.");
   if (aporte.status !== "pendiente_psav" && aporte.status !== "orden") {
-    throw new Error("El PSAV todavía no puede acreditar este aporte.");
+    throw new Error("Todavía no se puede acreditar este pago.");
   }
   if (aporte.status === "orden") {
     aporte.transferConfirmedAt = aporte.transferConfirmedAt ?? new Date().toISOString();
@@ -210,7 +211,7 @@ export async function issueCertificado(id: string, empresaId: string): Promise<C
   const aporte = db.aportes.find((item) => item.id === id && item.empresaId === empresaId);
   if (!aporte) throw new Error("Aporte no encontrado.");
   if (aporte.status !== "en_escrow") {
-    throw new Error("El aporte tiene que estar en escrow para certificar.");
+    throw new Error("El dinero tiene que estar reservado para emitir el certificado.");
   }
   if (aporte.certificadoId) {
     const existing = db.certificados.find((item) => item.id === aporte.certificadoId);
@@ -222,7 +223,7 @@ export async function issueCertificado(id: string, empresaId: string): Promise<C
   const app = getImpactApp(aporte.appId);
   if (!app) throw new Error("La app de este aporte ya no está en el catálogo.");
   if (app.paused || (await isSchemaPaused(app.schemaId))) {
-    throw new Error("Esa app está pausada. No se emiten hitos nuevos.");
+    throw new Error("Esa app está pausada. No se emiten trabajos nuevos.");
   }
 
   const lockPriceUsd = aporte.lockPriceUsd || app.priceUsdc;

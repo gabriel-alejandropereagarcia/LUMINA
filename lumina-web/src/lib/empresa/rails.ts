@@ -49,12 +49,12 @@ export function detectFiatRail(): FiatRail {
   if (isKoywePayinConfigured()) {
     return {
       id: "koywe-payin",
-      label: "Koywe PAYIN · Alerce PSAV N°24",
+      label: "Cobro en pesos (Koywe)",
       live: true,
       settlesOnStellar: false,
       companySeesWallet: false,
       legalRank: 1,
-      notes: "La empresa paga ARS a Lumina. No compra USDC. El PSAV cobra para nosotros.",
+      notes: "La empresa paga pesos a Lumina. No compra cripto. El cobrador recibe por nosotros.",
     };
   }
   if (isCircleMintConfigured()) {

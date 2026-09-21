@@ -48,7 +48,7 @@ const ToastItem: React.FC<{ toast: ToastType; onClose: () => void }> = ({ toast,
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 mt-2 text-xs font-medium text-[var(--teal)] hover:text-[var(--green)] hover:underline transition-colors font-mono"
               >
-                Ver en Stellar Expert
+                Ver recibo del pago
                 <ExternalLink className="h-3 w-3" />
               </a>
             )}

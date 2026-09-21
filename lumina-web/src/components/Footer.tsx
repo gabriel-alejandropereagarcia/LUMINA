@@ -25,7 +25,7 @@ export default function Footer() {
 
           {/* Col 2: Smart Contracts */}
           <div className="space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--foreground)]">Contratos Inteligentes</h4>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--foreground)]">Comprobantes</h4>
             <ul className="space-y-2">
               <li>
                 <a
@@ -63,12 +63,12 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/jury" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
-                  Evidencia on-chain
+                  Comprobantes
                 </Link>
               </li>
               <li>
                 <Link href="/connect" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
-                  Connect
+                  Sumá tu app
                 </Link>
               </li>
               <li>
@@ -88,7 +88,7 @@ export default function Footer() {
 
               <li>
                 <span className="text-xs text-[var(--muted)]">
-                  Red Activa: {urls.name}
+                  Red: {urls.name}
                 </span>
               </li>
             </ul>
@@ -97,12 +97,12 @@ export default function Footer() {
 
         <div className="border-t border-[var(--border)] mt-8 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-[var(--muted)]">
-            Lumina © {currentYear} — protocolo Scale. Fee 2,5% solo al release.
+            Lumina © {currentYear} — 2,5% solo si hubo impacto.
           </p>
           <div className="flex gap-4 text-xs text-[var(--muted)]">
-            <span>Transparencia ESG</span>
+            <span>Recibo público</span>
             <span>•</span>
-            <span>Trazabilidad On-Chain</span>
+            <span>Familia no paga</span>
           </div>
         </div>
       </div>

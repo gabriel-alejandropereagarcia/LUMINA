@@ -1,14 +1,14 @@
 /** Orden de pago de demostración. No es un CBU real. No transferir pesos. */
 export const DEMO_PAYMENT = {
   beneficiary: "Lumina — cobrado por Alerce Argentina SRL",
-  license: "PSAV CNV N°24 · cobrador de un servicio, no exchange de la empresa",
+  license: "Cobrador de un servicio, no un exchange",
   alias: "lumina.rse.demo",
   cbu: "0000000000000000000000",
-  bankLabel: "Cuenta del PSAV socio (simulación ABC)",
+  bankLabel: "Cuenta del cobrador (simulación)",
   fxNote: "1 USD = 1.400 ARS · tipo de cambio ilustrativo, no es una cotización live",
   usdToArs: 1400,
   legalNote:
-    "Pagás un servicio de RSE a Lumina. No comprás cripto. El PSAV cobra para nosotros; tesorería Lumina deposita USDC propio.",
+    "Pagás un servicio a Lumina. No comprás cripto. El cobrador recibe los pesos por nosotros.",
 } as const;
 
 export function arsFromUsd(amountUsd: number): number {

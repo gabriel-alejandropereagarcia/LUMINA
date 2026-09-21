@@ -44,12 +44,12 @@ export default function CertifyDemoButton({ sponsor, amount }: Props) {
         throw new Error(
           typeof json.error === "string"
             ? json.error
-            : "No se pudo certificar. Si este deploy no tiene oracle, usá /jury (evidencia 19/9).",
+            : "No se pudo confirmar. Si este deploy no tiene la clave de la app, usá los comprobantes del 19/9.",
         );
       }
       setResult({ hash: json.hash, reportHash: json.reportHash });
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Certify falló.");
+      setError(err instanceof Error ? err.message : "No se pudo confirmar el trabajo.");
     } finally {
       setBusy(false);
     }
@@ -58,12 +58,12 @@ export default function CertifyDemoButton({ sponsor, amount }: Props) {
   if (result) {
     return (
       <p className="text-xs text-[var(--muted)] leading-relaxed">
-        Release listo.{" "}
+        Cobro listo.{" "}
         <Link
           href={`/jury?release=${result.hash}&hash=${result.reportHash}`}
           className="text-teal-500 underline"
         >
-          Ver en /jury
+          Ver comprobante
         </Link>
       </p>
     );
@@ -77,11 +77,11 @@ export default function CertifyDemoButton({ sponsor, amount }: Props) {
         disabled={busy || !sponsor.startsWith("G")}
         className="w-full rounded-xl border border-teal-500/40 px-4 py-3 text-sm font-semibold text-teal-600 hover:bg-[var(--teal-light)] disabled:opacity-50"
       >
-        {busy ? "Certificando on-chain…" : "Certificar hito (testnet)"}
+        {busy ? "Confirmando el trabajo…" : "Confirmar que el trabajo se hizo"}
       </button>
       <p className="text-[11px] text-[var(--muted)] leading-relaxed">
-        Firma el oracle del demo y paga el 97,5% a la app. Solo testnet. Si falla, la evidencia
-        del 19/9 está en /jury.
+        Confirma el trabajo de prueba y paga el 97,5% a la app. Si falla, los comprobantes
+        del 19/9 están en Comprobantes.
       </p>
       {error ? <p className="text-xs text-red-500">{error}</p> : null}
     </div>

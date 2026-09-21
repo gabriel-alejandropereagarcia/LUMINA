@@ -33,8 +33,8 @@ export function getExplorerUrls(network: string) {
       usdcAddress: stellarUsdc,
       contractUrl: `https://stellar.expert/explorer/testnet/contract/${stellarContract}`,
       usdcUrl: `https://stellar.expert/explorer/testnet/contract/${stellarUsdc}`,
-      contractLabel: `Lumina Escrow (${stellarContract.substring(0, 8)}...${stellarContract.substring(stellarContract.length - 4)})`,
-      usdcLabel: `USDC Token (${stellarUsdc.substring(0, 8)}...${stellarUsdc.substring(stellarUsdc.length - 4)})`,
+      contractLabel: `Lumina (${stellarContract.substring(0, 8)}...${stellarContract.substring(stellarContract.length - 4)})`,
+      usdcLabel: `USDC (${stellarUsdc.substring(0, 8)}...${stellarUsdc.substring(stellarUsdc.length - 4)})`,
       txUrl: (hash: string) => `https://stellar.expert/explorer/testnet/tx/${hash}`
     };
   } else if (network === "avalanche-fuji") {
@@ -44,8 +44,8 @@ export function getExplorerUrls(network: string) {
       usdcAddress: USDC_EVM_CONTRACT,
       contractUrl: `https://testnet.snowtrace.io/address/${LUMINA_EVM_CONTRACT}`,
       usdcUrl: `https://testnet.snowtrace.io/address/${USDC_EVM_CONTRACT}`,
-      contractLabel: `Lumina Escrow (${LUMINA_EVM_CONTRACT.substring(0, 8)}...${LUMINA_EVM_CONTRACT.substring(LUMINA_EVM_CONTRACT.length - 4)})`,
-      usdcLabel: `USDC Token (${USDC_EVM_CONTRACT.substring(0, 8)}...${USDC_EVM_CONTRACT.substring(USDC_EVM_CONTRACT.length - 4)})`,
+      contractLabel: `Lumina (${LUMINA_EVM_CONTRACT.substring(0, 8)}...${LUMINA_EVM_CONTRACT.substring(LUMINA_EVM_CONTRACT.length - 4)})`,
+      usdcLabel: `USDC (${USDC_EVM_CONTRACT.substring(0, 8)}...${USDC_EVM_CONTRACT.substring(USDC_EVM_CONTRACT.length - 4)})`,
       txUrl: (hash: string) => `https://testnet.snowtrace.io/tx/${hash}`
     };
   } else {
@@ -56,8 +56,8 @@ export function getExplorerUrls(network: string) {
       usdcAddress: USDC_EVM_CONTRACT,
       contractUrl: `https://sepolia.basescan.org/address/${LUMINA_EVM_CONTRACT}`,
       usdcUrl: `https://sepolia.basescan.org/address/${USDC_EVM_CONTRACT}`,
-      contractLabel: `Lumina Escrow (${LUMINA_EVM_CONTRACT.substring(0, 8)}...${LUMINA_EVM_CONTRACT.substring(LUMINA_EVM_CONTRACT.length - 4)})`,
-      usdcLabel: `USDC Token (${USDC_EVM_CONTRACT.substring(0, 8)}...${USDC_EVM_CONTRACT.substring(USDC_EVM_CONTRACT.length - 4)})`,
+      contractLabel: `Lumina (${LUMINA_EVM_CONTRACT.substring(0, 8)}...${LUMINA_EVM_CONTRACT.substring(LUMINA_EVM_CONTRACT.length - 4)})`,
+      usdcLabel: `USDC (${USDC_EVM_CONTRACT.substring(0, 8)}...${USDC_EVM_CONTRACT.substring(USDC_EVM_CONTRACT.length - 4)})`,
       txUrl: (hash: string) => `https://sepolia.basescan.org/tx/${hash}`
     };
   }

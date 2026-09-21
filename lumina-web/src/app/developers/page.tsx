@@ -14,8 +14,8 @@ export default function DevelopersPage() {
           Un POST. El 97,5% llega a la app.
         </h1>
         <p className="text-sm text-[var(--muted)] leading-relaxed">
-          La app manda un <code className="font-mono">fact</code> (unidad, cantidad, commitments).
-          Hash SHA-256. El panel de la empresa suma esas unidades, no un número de marketing.
+          La app avisa que el trabajo se hizo (unidad, cantidad).
+          El panel de la empresa suma esas unidades, no un número de marketing.
         </p>
       </div>
 
@@ -41,8 +41,7 @@ Authorization: Bearer <secret de la app>
       </pre>
 
       <p className="text-xs text-[var(--muted)]">
-        Si mandás <code className="font-mono">reportHash</code> tiene que coincidir con el hash del
-        fact. El mismo subject_commitment + schema + período no se cobra dos veces. Script:{" "}
+        El mismo trabajo (misma persona, mismo período) no se cobra dos veces. Ejemplo:{" "}
         <code className="font-mono">npx tsx examples/certify.ts</code>.
       </p>
 
@@ -55,7 +54,7 @@ Authorization: Bearer <secret de la app>
         <p>
           USDT0 oficial (mainnet, próximamente en el recorrido):{" "}
           <span className="font-mono break-all">{USDT0_OFFICIAL.sac}</span>
-          . Testnet oficial: no existe. Clawback: sí. Docs:{" "}
+          . Entorno de prueba oficial: no existe. Docs:{" "}
           <a href={USDT0_OFFICIAL.docs} className="text-teal-400 underline" target="_blank" rel="noreferrer">
             SDF USDT0
           </a>
@@ -64,7 +63,7 @@ Authorization: Bearer <secret de la app>
       </div>
 
       <Link href="/connect" className="text-sm text-teal-500 underline">
-        ← Volver a Connect
+        ← Volver a Apps
       </Link>
     </div>
   );

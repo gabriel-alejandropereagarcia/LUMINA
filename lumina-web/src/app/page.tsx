@@ -58,7 +58,7 @@ export default function Home() {
             id="btn-hero-empresa"
             className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-600 to-green-600 px-8 py-4 text-base font-semibold text-white shadow-lg hover:from-teal-700 hover:to-green-700 transition-all hover:scale-105 active:scale-95 cursor-pointer"
           >
-            Soy empresa · portal RSE
+            Soy empresa
             <ArrowRight className="h-5 w-5" />
           </Link>
           <Link
@@ -66,23 +66,17 @@ export default function Home() {
             id="btn-hero-connect"
             className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--card-bg)] px-8 py-4 text-base font-semibold text-[var(--foreground)] hover:bg-[var(--teal-light)] transition-all hover:scale-105 active:scale-95 cursor-pointer"
           >
-            Soy app · Connect
+            Tengo una app
           </Link>
         </div>
         <p className="text-xs text-[var(--muted)]">
-          ¿Tenés una app de impacto?{" "}
           <Link href="/connect#registro" className="text-teal-600 underline">
-            Registrala en Connect
-          </Link>
-          {" · "}
-          <Link href="/invest" className="text-teal-600 underline">
-            Demo on-chain
+            Sumá tu app
           </Link>
           {" · "}
           <Link href="/jury" className="text-teal-600 underline">
-            Hashes en explorer
+            Ver comprobantes
           </Link>
-          .
         </p>
       </div>
 
@@ -94,7 +88,7 @@ export default function Home() {
             <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
           </svg>
           <span className="font-mono text-xs font-bold uppercase tracking-wider text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors">
-            Stellar Network
+            Recibo público
           </span>
         </div>
 
@@ -105,7 +99,7 @@ export default function Home() {
             <polyline points="2 12 12 17 22 12" />
           </svg>
           <span className="font-mono text-xs font-bold uppercase tracking-wider text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors">
-            Soroban Smart Contracts
+            Pago automático
           </span>
         </div>
 
@@ -114,7 +108,7 @@ export default function Home() {
             $
           </div>
           <span className="font-mono text-xs font-bold uppercase tracking-wider text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors">
-            USDC Circle (demo)
+            Familia no paga
           </span>
         </div>
       </div>
@@ -122,10 +116,10 @@ export default function Home() {
       {/* Protocol Stats Board */}
       <div className={`w-full grid grid-cols-2 md:grid-cols-4 gap-4 z-10 stagger ${isVisible ? 'visible' : ''}`}>
         {[
-          { label: "Al hito (fee 2.5%)", value: `${(payoutCount / 10).toFixed(1)}%`, icon: ShieldCheck, color: "text-green-500", ref: payoutRef },
-          { label: "Lock de retiro", value: `${lockCount} meses`, icon: Heart, color: "text-[var(--danger)]", ref: lockRef },
-          { label: "Apps en Connect", value: `${appsCount} listadas`, icon: Users, color: "text-teal-500", ref: appsRef },
-          { label: "Fee del protocolo", value: `${(feeCount / 10).toFixed(1)}%`, icon: Coins, color: "text-[var(--warn)]", ref: feeRef },
+          { label: "A la app", value: `${(payoutCount / 10).toFixed(1)}%`, icon: ShieldCheck, color: "text-green-500", ref: payoutRef },
+          { label: "Si no ocurre, se devuelve", value: `${lockCount} meses`, icon: Heart, color: "text-[var(--danger)]", ref: lockRef },
+          { label: "Apps", value: `${appsCount}`, icon: Users, color: "text-teal-500", ref: appsRef },
+          { label: "Fee de Lumina", value: `${(feeCount / 10).toFixed(1)}%`, icon: Coins, color: "text-[var(--warn)]", ref: feeRef },
         ].map((stat, i) => (
           <div key={i} ref={stat.ref} className="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4">
             <div className="flex items-center justify-between">
@@ -155,15 +149,13 @@ export default function Home() {
               Empresa, app y familia. Nadie más en el medio.
             </h2>
             <p className="text-sm text-[var(--muted)] leading-relaxed">
-              La empresa cubre. Quien necesita no paga. La app cobra el día del hecho.
-              MIRA y PuenteMAE son apps en Connect — Lumina no es la clínica. El demo usa
-              USDC Circle testnet; USDT0 es mainnet oficial.
+              La empresa cubre. Quien necesita no paga. La app cobra cuando el trabajo se hizo.
             </p>
             <div className="grid grid-cols-3 gap-4 pt-4">
               {[
                 { value: `${IMPACT_APPS.length}`, label: "App en catálogo", ref: familiasRef },
-                { value: `${mchatCount}`, label: "Hitos on-chain (hoy)", ref: mchatRef },
-                { value: `${fondosCount}.5%`, label: "Fondos al hito", ref: fondosRef },
+                { value: `${mchatCount}`, label: "Trabajos cobrados", ref: mchatRef },
+                { value: `${fondosCount}.5%`, label: "Llega a la app", ref: fondosRef },
               ].map((m, i) => (
                 <div key={i} ref={m.ref} className="text-center">
                   <div className="font-serif text-2xl font-bold text-teal-600 font-mono">{m.value}</div>
@@ -181,7 +173,7 @@ export default function Home() {
           <span className="text-xs font-bold text-teal-600 uppercase tracking-widest block">Un ciclo</span>
           <h2 className="font-serif text-3xl font-bold text-[var(--foreground)] tracking-tight">Cómo funciona</h2>
           <p className="text-xs text-[var(--muted)] max-w-md mx-auto">
-            Lock → servicio → certify → cobro. Si no hay hito, la empresa recupera y Lumina cobra 0%.
+            Paga → trabaja → confirma → cobra. Si no ocurrió, la empresa recupera y Lumina cobra 0%.
           </p>
         </div>
 
@@ -192,24 +184,24 @@ export default function Home() {
           {[
             {
               step: "01",
-              title: "Empresa lockea",
-              desc: "Paga una factura RSE. Sin wallet. El capital queda 12 meses; si no hay hito, recupera.",
+              title: "La empresa paga",
+              desc: "Una factura, como cualquier proveedor. No abre una cuenta cripto.",
               icon: Coins,
               color: "text-teal-500",
               bgColor: "bg-teal-500/10",
             },
             {
               step: "02",
-              title: "La app presta",
-              desc: "Ejecuta el hito (cribado, niño-mes…). Quien usa la app no paga: lo cubre la RSE.",
+              title: "La app trabaja",
+              desc: "Hace el cribado, el mes de apoyo, lo que sea. Quien lo recibe no paga.",
               icon: Activity,
               color: "text-emerald-500",
               bgColor: "bg-emerald-500/10",
             },
             {
               step: "03",
-              title: "Certifica el hecho",
-              desc: "Hash del hito (unidad + cantidad). Sin DNI. Solo la app asignada puede liberar el pozo.",
+              title: "Confirma que ocurrió",
+              desc: "Unidad y cantidad. Sin DNI. Sin papeles de meses.",
               icon: ShieldCheck,
               color: "text-[var(--gold)]",
               bgColor: "bg-[var(--gold-light)]",
@@ -217,7 +209,7 @@ export default function Home() {
             {
               step: "04",
               title: "Cobra el 97,5%",
-              desc: "On-chain a la wallet de la app. Lumina 2,5% solo al release. Certificado PDF para la empresa.",
+              desc: "El mismo día. Lumina se queda 2,5% solo si hubo impacto. La empresa recibe un PDF.",
               icon: Trophy,
               color: "text-indigo-400",
               bgColor: "bg-indigo-500/10",
@@ -244,17 +236,16 @@ export default function Home() {
       <div id="marketplace" className="w-full space-y-8 z-10 pt-12 border-t border-[var(--border)]">
         <div className="text-center space-y-3">
           <span className="text-xs font-bold text-teal-600 uppercase tracking-widest block">Apps de impacto</span>
-          <h2 className="font-serif text-3xl font-bold text-[var(--foreground)] tracking-tight">Dos apps. El mismo riel.</h2>
+          <h2 className="font-serif text-3xl font-bold text-[var(--foreground)] tracking-tight">Dos apps. El mismo camino.</h2>
           <p className="text-xs text-[var(--muted)] max-w-lg mx-auto">
-            Lumina no es la app de cribado ni la de docentes. Es el enchufe. Otras verticales entran por Connect.
+            Lumina no es la clínica ni la escuela. Es el medio de pago. Otras apps entran igual.
           </p>
         </div>
 
         <div className="max-w-3xl mx-auto p-6 rounded-2xl border border-[var(--border)] bg-[var(--card-bg)] text-center text-xs text-[var(--muted)] space-y-2">
-          <strong className="text-[var(--foreground)] block text-sm">Connect: el enchufe de las apps</strong>
+          <strong className="text-[var(--foreground)] block text-sm">Sumá tu app</strong>
           <p className="leading-relaxed">
-            MIRA (cribado) y PuenteMAE (ayuda social a docentes) ya tienen ficha.
-            El protocolo se libera con certify, no con la UX de cada app.
+            MIRA hace cribados. PuenteMAE ayuda a docentes. Las dos cobran cuando el trabajo se hizo.
           </p>
         </div>
 
@@ -311,7 +302,7 @@ export default function Home() {
                   </div>
                   <div className="space-y-4">
                     <div className="flex justify-between items-center border-t border-[var(--border)] pt-4">
-                      <span className="text-xs text-[var(--muted)]">USDC por hito</span>
+                      <span className="text-xs text-[var(--muted)]">USDC por trabajo</span>
                       <strong className="text-[var(--foreground)] font-mono text-base">{app.priceUsdc.toFixed(2)} USDC</strong>
                     </div>
                     {app.status === "wip" ? (
@@ -320,13 +311,13 @@ export default function Home() {
                           href={`/invest?app=${app.id}`}
                           className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-600 to-green-600 py-3 text-xs font-bold text-white shadow-md hover:from-teal-700 hover:to-green-700 transition-all"
                         >
-                          Asignar demo
+                          Probar un pago
                         </Link>
                         <Link
                           href="/connect"
                           className="flex items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--card-bg)] py-3 text-xs font-bold text-[var(--foreground)] hover:bg-[var(--teal-light)] transition-all"
                         >
-                          Ver Connect
+                          Ver la app
                         </Link>
                       </div>
                     ) : isLive ? (
@@ -334,7 +325,7 @@ export default function Home() {
                         href={`/invest?app=${app.id}`}
                         className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-600 to-green-600 py-3 text-xs font-bold text-white shadow-md hover:from-teal-700 hover:to-green-700 transition-all hover:scale-105 active:scale-95 cursor-pointer"
                       >
-                        Fondear este hito
+                        Pagar este trabajo
                         <ArrowRight className="h-4 w-4" />
                       </Link>
                     ) : (
@@ -345,7 +336,7 @@ export default function Home() {
                         }}
                         className="w-full flex items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--card-bg)] py-3 text-xs font-bold text-[var(--foreground)] hover:bg-[var(--teal-light)] transition-all hover:scale-105 active:scale-95 cursor-pointer"
                       >
-                        Cómo se integra
+                        Cómo se suma
                       </button>
                     )}
                   </div>
@@ -358,17 +349,17 @@ export default function Home() {
                 <span className="p-3 rounded-xl block w-fit bg-[var(--teal-light)] text-teal-600">
                   <Plug className="h-6 w-6" />
                 </span>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-teal-600">Lumina Connect</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-teal-600">Para apps</p>
                 <h3 className="text-lg font-bold text-[var(--foreground)]">Tu app acá</h3>
                 <p className="text-xs text-[var(--muted)] leading-relaxed">
-                  Ficha + certify por API. El release se ve en explorer, sin abrir tu producto.
+                  Completá una ficha. Cuando el trabajo se hizo, cobrás el 97,5%.
                 </p>
               </div>
               <Link
                 href="/connect"
                 className="w-full flex items-center justify-center gap-2 rounded-xl bg-teal-600 py-3 text-xs font-bold text-white"
               >
-                Empezar registro
+                Sumarme
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -381,23 +372,22 @@ export default function Home() {
           <span className="text-xs font-bold text-teal-600 uppercase tracking-widest block">Recorrido</span>
           <h2 className="font-serif text-3xl font-bold text-[var(--foreground)] tracking-tight">Tres minutos. Un camino.</h2>
           <p className="text-xs text-[var(--muted)] max-w-lg mx-auto">
-            Portal empresa (sin wallet) → depósito USDC → certify → evidencia en explorer.
-            Nació en Salta. El protocolo no tiene fronteras.
+            Empresa paga la factura. App hace el trabajo. Se ve el comprobante. Nació en Salta.
           </p>
         </div>
         <div className="glass-card p-8 rounded-2xl max-w-2xl mx-auto space-y-4 text-sm text-[var(--muted)]">
           <p>
-            Empezá por el portal si sos compliance. Por el depósito si querés ver Stellar. Los hashes son reales.
+            Empezá por el portal si pagás el impacto. Por Probar si querés ver el pago en la red.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link href="/empresa" className="rounded-xl bg-teal-600 px-4 py-2 text-xs font-bold text-white">
               Portal Empresa
             </Link>
             <Link href="/invest" className="rounded-xl border border-[var(--border)] px-4 py-2 text-xs font-bold text-[var(--foreground)]">
-              Demo on-chain (Freighter)
+              Probar un pago
             </Link>
             <Link href="/jury" className="rounded-xl border border-[var(--border)] px-4 py-2 text-xs font-bold text-[var(--foreground)]">
-              Evidencia on-chain
+              Comprobantes
             </Link>
           </div>
         </div>
@@ -413,7 +403,7 @@ export default function Home() {
               <MapPin className="h-5 w-5 text-teal-600" /> Dónde nació
             </h3>
             <p className="text-xs text-[var(--muted)] mt-1">
-              Hub Salta. Los puntos de impacto se llenan con certify on-chain, no con un mapa de marketing.
+              Nació en Salta. Los puntos se llenan cuando hay un trabajo cobrado, no con un mapa de marketing.
             </p>
           </div>
 
@@ -451,8 +441,8 @@ export default function Home() {
 
             {mapHoverDot && (
               <div className="absolute bottom-3 left-3 right-3 bg-[var(--card-bg)] backdrop-blur-xl border border-[var(--border)] rounded-lg p-2.5 text-xs shadow-2xl">
-                {mapHoverDot === "ba" && <p className="text-[var(--foreground)]"><strong>CABA:</strong> el protocolo se prueba acá, en Stellar testnet.</p>}
-                {mapHoverDot === "cba" && <p className="text-[var(--foreground)]"><strong>Córdoba:</strong> próximamente. El mapa no finge certify.</p>}
+                {mapHoverDot === "ba" && <p className="text-[var(--foreground)]"><strong>CABA:</strong> acá se prueba el pago.</p>}
+                {mapHoverDot === "cba" && <p className="text-[var(--foreground)]"><strong>Córdoba:</strong> próximamente. El mapa no inventa trabajo.</p>}
                 {mapHoverDot === "salta" && <p className="text-[var(--foreground)]"><strong>Salta:</strong> acá nació Lumina. Hub del equipo.</p>}
               </div>
             )}
@@ -463,16 +453,16 @@ export default function Home() {
         <div className="lg:col-span-1 glass-card p-6 rounded-2xl space-y-4">
           <div>
             <h3 className="text-sm font-bold text-[var(--foreground)] flex items-center gap-2">
-              <Trophy className="h-4 w-4 text-teal-600" /> Releases on-chain
+              <Trophy className="h-4 w-4 text-teal-600" /> Trabajos cobrados
             </h3>
             <p className="text-xs text-[var(--muted)]">
-              Acá aparecen wallets cuando hay depósito o certify. No hay marcas de relleno.
+              Acá aparecen cuando hay un pago o un cobro. Sin marcas de relleno.
             </p>
           </div>
 
           <div className="rounded-xl border border-dashed border-[var(--border)] p-6 text-xs text-[var(--muted)] text-center space-y-2">
-            <p>El directorio se llena con el primer release. Podés ser ese depósito.</p>
-            <Link href="/invest" className="text-teal-500 underline">Probar el riel con USDC testnet</Link>
+            <p>El directorio se llena con el primer cobro. Podés ser ese pago.</p>
+            <Link href="/invest" className="text-teal-500 underline">Probar un pago</Link>
           </div>
         </div>
       </div>
@@ -486,10 +476,10 @@ export default function Home() {
       <div className="w-full space-y-12 z-10 pt-12 border-t border-[var(--border)]">
         <div className="text-center space-y-4">
           <h2 className="font-serif text-3xl font-bold text-[var(--foreground)] tracking-tight">
-            Dos puertas, un riel
+            Dos puertas
           </h2>
           <p className="max-w-xl mx-auto text-sm text-[var(--muted)]">
-            Compliance entra sin wallet. La app cobra on-chain cuando el hito es real.
+            La empresa entra con una factura. La app cobra cuando el trabajo se hizo.
           </p>
         </div>
 
@@ -499,20 +489,20 @@ export default function Home() {
               <div className="h-8 w-8 flex items-center justify-center rounded-lg bg-[var(--teal-light)] text-teal-600">
                 <BarChart3 className="h-5 w-5" />
               </div>
-              <h3 className="text-lg font-bold text-[var(--foreground)]">Para RSE / compliance</h3>
+              <h3 className="text-lg font-bold text-[var(--foreground)]">Si sos empresa</h3>
             </div>
             <ul className="space-y-4 text-sm text-[var(--muted)]">
               <li className="flex items-start gap-2">
                 <ShieldCheck className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                <span><strong className="text-[var(--foreground)]">Auditoría:</strong> unidad + hash + tx. Sabés que el 97,5% llegó a la app.</span>
+                <span><strong className="text-[var(--foreground)]">Sabés qué se pagó:</strong> unidades reales y un PDF. El 97,5% llega a la app.</span>
               </li>
               <li className="flex items-start gap-2">
                 <Lock className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                <span><strong className="text-[var(--foreground)]">Privacidad:</strong> on-chain solo el hash. Sin DNI ni clínica.</span>
+                <span><strong className="text-[var(--foreground)]">Privacidad:</strong> no viaja DNI ni clínica.</span>
               </li>
               <li className="flex items-start gap-2">
                 <Coins className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                <span><strong className="text-[var(--foreground)]">Sin gestores:</strong> factura RSE, no exchange. Fee solo si hubo hito.</span>
+                <span><strong className="text-[var(--foreground)]">Una factura:</strong> pagás como a cualquier proveedor. Fee solo si hubo impacto.</span>
               </li>
             </ul>
           </div>
@@ -522,16 +512,16 @@ export default function Home() {
               <div className="h-8 w-8 flex items-center justify-center rounded-lg bg-[var(--green-light)] text-green-600">
                 <Scale className="h-5 w-5" />
               </div>
-              <h3 className="text-lg font-bold text-[var(--foreground)]">Para apps / builders</h3>
+              <h3 className="text-lg font-bold text-[var(--foreground)]">Si tenés una app</h3>
             </div>
             <ul className="space-y-4 text-sm text-[var(--muted)]">
               <li className="flex items-start gap-2">
                 <Cpu className="h-5 w-5 text-teal-500 flex-shrink-0 mt-0.5" />
-                <span><strong className="text-[var(--foreground)]">Connect:</strong> ficha + certify por API. Vos cobrás el 97,5%.</span>
+                <span><strong className="text-[var(--foreground)]">Te sumás:</strong> una ficha. Vos cobrás el 97,5%.</span>
               </li>
               <li className="flex items-start gap-2">
                 <ShieldCheck className="h-5 w-5 text-teal-500 flex-shrink-0 mt-0.5" />
-                <span><strong className="text-[var(--foreground)]">Assign:</strong> solo la app elegida libera ese pozo.</span>
+                <span><strong className="text-[var(--foreground)]">Solo tu app:</strong> nadie más cobra ese trabajo.</span>
               </li>
               <li className="flex items-start gap-2">
                 <Coins className="h-5 w-5 text-teal-500 flex-shrink-0 mt-0.5" />
@@ -552,14 +542,13 @@ export default function Home() {
             2,5% solo si hubo impacto
           </h2>
           <p className="text-sm text-[var(--muted)] leading-relaxed">
-            A los 12 meses sin hito, la empresa retira y Lumina cobra 0%.
-            El fee on-chain es 2,5% a la wallet del protocolo. El 1% / 1% / 0,5% es cómo lo
-            asignamos adentro (Connect, empresas, infra), no tres transfers.
+            A los 12 meses sin trabajo hecho, la empresa retira y Lumina cobra 0%.
+            El 2,5% es de Lumina, una sola vez, solo si se pagó el impacto.
           </p>
           <ul className="space-y-2 text-xs text-[var(--muted)] leading-relaxed pl-4 list-disc">
-            <li><strong className="text-[var(--foreground)]">1% Connect</strong> — listing y nuevas apps</li>
-            <li><strong className="text-[var(--foreground)]">1% captación</strong> — empresas RSE</li>
-            <li><strong className="text-[var(--foreground)]">0,5% infra</strong> — RPC, hosting, soporte</li>
+            <li><strong className="text-[var(--foreground)]">1% apps</strong> — para sumar más equipos</li>
+            <li><strong className="text-[var(--foreground)]">1% empresas</strong> — para que más tesorerías paguen impacto</li>
+            <li><strong className="text-[var(--foreground)]">0,5% sistema</strong> — para que el cobro llegue</li>
           </ul>
         </div>
 
@@ -570,7 +559,7 @@ export default function Home() {
           </div>
           <div className="p-5 rounded-2xl bg-[var(--teal-light)] border border-teal-500/20 text-center">
             <span className="block text-3xl font-extrabold text-teal-600">2.5%</span>
-            <span className="text-xs text-teal-600 font-bold uppercase tracking-wider block mt-1">Al protocolo</span>
+            <span className="text-xs text-teal-600 font-bold uppercase tracking-wider block mt-1">Fee de Lumina</span>
           </div>
         </div>
       </div>
@@ -590,7 +579,7 @@ export default function Home() {
                 {modalTitle}
               </h3>
               <p className="text-xs text-[var(--muted)] leading-relaxed">
-                Se registra como oráculo en Connect, define el precio del hito y firma el hash. El contrato no cambia. El capital se libera solo cuando el hito ocurrió.
+                Se suma con una ficha. Define el precio del trabajo. Cobra el 97,5% cuando ese trabajo se hizo.
               </p>
             </div>
             <button

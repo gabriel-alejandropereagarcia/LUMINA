@@ -104,7 +104,7 @@ function InvestPortal() {
       toast({
         type: "success",
         title: "Aprobación Exitosa",
-        message: `${cleanAmount} USDC aprobados correctamente para el protocolo.`,
+        message: `${cleanAmount} USDC aprobados para reservar el pago.`,
         txHash: res.hash
       });
       setStep(2);
@@ -151,11 +151,11 @@ function InvestPortal() {
         throw new Error(res.error || "Fallo en el depósito de fondos.");
       }
 
-      setStatus("Depósito en custodia completado. Asignando el pozo a la app...");
+      setStatus("Pago reservado. Eligiendo la app...");
       toast({
         type: "success",
         title: "Depósito Acreditado",
-        message: `Depósito de ${cleanAmount} USDC en escrow.`,
+        message: `Reservamos ${cleanAmount} USDC. La app cobra cuando el trabajo se hizo.`,
         txHash: res.hash
       });
 
@@ -171,8 +171,8 @@ function InvestPortal() {
           const assignHash = await submitSorobanTransaction(signedAssign);
           toast({
             type: "success",
-            title: "App asignada on-chain",
-            message: `${selectedApp.name} puede certificar este pozo.`,
+            title: "App elegida",
+            message: `${selectedApp.name} es quien cobra este pago.`,
             txHash: assignHash,
           });
         }
@@ -180,11 +180,11 @@ function InvestPortal() {
         const msg = assignErr instanceof Error ? assignErr.message : String(assignErr);
         toast({
           type: "info",
-          title: "Depósito ok · assign pendiente",
+          title: "Pago reservado · falta elegir la app",
           message:
             msg.includes("UnauthorizedOracle")
-              ? "Assign usa el signer de certify, no la wallet de payout. El USDC ya está en custodia."
-              : `No se pudo asignar: ${msg}`,
+              ? "La app que firma no es la que cobra. El dinero ya está reservado."
+              : `No se pudo elegir la app: ${msg}`,
         });
       }
 
@@ -194,7 +194,7 @@ function InvestPortal() {
       await refreshBalances();
     } catch (err: any) {
       console.error(err);
-      let errMsg = err.message || "Error al procesar el depósito en custodia.";
+      let errMsg = err.message || "No se pudo reservar el pago.";
       if (errMsg.includes("Error(Contract, #10)") || errMsg.includes("resulting balance is not within the allowed range")) {
         errMsg = "Saldo de USDC insuficiente. Reclamá USDC de prueba en faucet.circle.com.";
       }
@@ -216,20 +216,20 @@ function InvestPortal() {
       {/* Encabezado */}
       <div className="text-center space-y-4">
         <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-[var(--teal)] via-[var(--green)] to-[var(--gold)] bg-clip-text text-transparent">
-          Probá el riel · USDC testnet
+          Probá un pago
         </h1>
         <p className="max-w-2xl mx-auto text-sm text-[var(--muted)]">
-          Depositá 40 USDC Circle, asigná la app y liberá con certify. Freighter solo acá.
-          Una tesorería entra por{" "}
+          Acá se ve el cobro: depositás, elegís la app, ella confirma el trabajo y cobra el 97,5%.
+          Una empresa entra por{" "}
           <Link href="/empresa" className="text-teal-600 font-semibold underline">
-            /empresa
+            el portal
           </Link>
-          {" "}(factura, sin wallet). USDT0 oficial vive en mainnet.
+          {" "}con una factura, sin cuenta cripto.
         </p>
         <p className="max-w-2xl mx-auto text-xs text-[var(--muted)] rounded-xl border border-[var(--border)] bg-[var(--card-bg)] px-4 py-3">
-          Evidencia al final:{" "}
+          Al final, los comprobantes:{" "}
           <Link href="/jury" className="text-teal-600 font-semibold underline">
-            /jury
+            ver recibos
           </Link>
           .
         </p>
@@ -240,7 +240,7 @@ function InvestPortal() {
         {/* Panel de Información de la Wallet / Balances */}
         <div className="glass-card p-8 rounded-2xl md:col-span-1 space-y-6">
           <h2 className="text-lg font-bold text-[var(--foreground)] font-serif flex items-center gap-2">
-            <Wallet className="h-5 w-5 text-teal-500" /> Tu wallet
+            <Wallet className="h-5 w-5 text-teal-500" /> Tu cuenta
           </h2>
 
           {isConnected && address ? (
@@ -252,18 +252,18 @@ function InvestPortal() {
 
               <div className="border-t border-[var(--border)] pt-4 space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-xs text-[var(--muted)] font-semibold uppercase">Fondo en Custodia</span>
+                  <span className="text-xs text-[var(--muted)] font-semibold uppercase">Dinero reservado</span>
                   <span className="text-lg font-bold text-[var(--foreground)]" id="refi-escrow-balance">{escrowBalance.toLocaleString()} USDC</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-xs text-[var(--muted)] font-semibold uppercase">Impacto Acumulado</span>
-                  <span className="text-lg font-bold text-teal-500" id="refi-impact-score">{impactScore} Hitos</span>
+                  <span className="text-lg font-bold text-teal-500" id="refi-impact-score">{impactScore} trabajos</span>
                 </div>
               </div>
             </div>
           ) : (
             <div className="text-center py-6 space-y-4">
-              <p className="text-sm text-[var(--muted)]">Billetera no conectada. Conectá Freighter, xBull u otra wallet Stellar para ver saldos reales.</p>
+              <p className="text-sm text-[var(--muted)]">Conectá Freighter para ver saldos reales. Solo hace falta acá, para probar un pago.</p>
               <button
                 onClick={connect}
                 id="btn-refi-connect"
@@ -284,10 +284,10 @@ function InvestPortal() {
                 <Info className="h-4 w-4 text-teal-500 flex-shrink-0 mt-0.5" />
                 <div className="space-y-1.5">
                   <p>
-                    Conectá una wallet Stellar (Freighter, xBull, WalletConnect) y tené USDC (SAC) en Testnet. El flujo es directo y descentralizado.
+                    Conectá Freighter y tené USDC de prueba. Depositás, elegís la app, ella confirma y cobra.
                   </p>
                   <p className="text-[var(--warn)]/90 font-bold">
-                    ⚠️ CUSTODIA: los fondos quedan 12 meses. Si ninguna app verificadora certifica hitos en ese plazo, el sponsor puede reclamar el remanente.
+                    El dinero queda reservado 12 meses. Si el trabajo no ocurre, lo recuperás. Lumina cobra 0% en ese caso.
                   </p>
                 </div>
               </div>
@@ -332,7 +332,7 @@ function InvestPortal() {
               </div>
 
               <div className="space-y-2">
-                <span className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">App que va a certificar el hito</span>
+                <span className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wider">App que cobra este trabajo</span>
                 <div className="flex flex-wrap gap-2">
                   {assignableApps.map((app) => (
                     <button
@@ -346,14 +346,14 @@ function InvestPortal() {
                       }`}
                     >
                       {app.name} · {app.priceUsdc} USDC
-                      {app.status === "wip" ? " · en desarrollo" : ""}
+                      {app.status === "wip" ? " · en trabajo" : ""}
                     </button>
                   ))}
                 </div>
                 <p className="text-xs text-[var(--muted)] leading-relaxed">{selectedApp.milestone}</p>
                 {selectedApp.oracleAddress.startsWith("G") ? (
                   <p className="text-[10px] font-mono text-[var(--muted)] break-all leading-relaxed">
-                    Firma certify / assign: {selectedApp.oracleAddress}
+                    Confirma el trabajo: {selectedApp.oracleAddress}
                     {selectedApp.payoutAddress.startsWith("G") ? (
                       <>
                         <br />
@@ -371,7 +371,7 @@ function InvestPortal() {
                     <div className="space-y-1">
                       <h4 className="text-xs font-bold text-[var(--warn)] uppercase tracking-wider">Aporte parcial</h4>
                       <p className="text-xs text-[var(--warn)] leading-relaxed">
-                        El hito de {selectedApp.name} cuesta {selectedApp.priceUsdc} USDC. El depósito queda en escrow igual; podés completar o elegir otra app.
+                        Este trabajo de {selectedApp.name} cuesta {selectedApp.priceUsdc} USDC. El dinero queda reservado igual; podés completar o elegir otra app.
                       </p>
                     </div>
                   </div>
@@ -389,7 +389,7 @@ function InvestPortal() {
                       }}
                       className="flex-1 rounded-lg bg-[var(--card-bg)] hover:bg-[var(--teal-light)] py-2 px-3 text-xs font-bold text-[var(--muted)] border border-[var(--border)] transition-all cursor-pointer text-center"
                     >
-                      Elegir un hito más chico
+                      Elegir un trabajo más chico
                     </button>
                     <button 
                       onClick={() => {
@@ -411,7 +411,7 @@ function InvestPortal() {
                   </div>
                   <div className={`p-4 rounded-xl border transition-all ${step === 2 ? "border-teal-600 bg-[var(--teal-light)] text-[var(--foreground)]" : "border-[var(--border)] bg-white/2 text-[var(--muted)]"}`}>
                     <span className="block text-xs font-bold uppercase tracking-wider">Paso 2</span>
-                    <span className="text-xs font-semibold">Depositar en Custodia</span>
+                    <span className="text-xs font-semibold">Reservar el pago</span>
                   </div>
                 </div>
               )}
@@ -451,7 +451,7 @@ function InvestPortal() {
                         </>
                       ) : (
                         <>
-                          Paso 2: Confirmar Custodia
+                          Paso 2: Reservar el pago
                           <ShieldCheck className="h-5 w-5" />
                         </>
                       )}
@@ -464,7 +464,7 @@ function InvestPortal() {
                     onClick={connect}
                     className="w-full rounded-xl bg-teal-600 hover:bg-teal-700 py-4 text-base font-semibold text-[var(--foreground)] transition-all cursor-pointer text-center"
                   >
-                    Conectar Billetera para depositar
+                    Conectar Freighter para depositar
                   </button>
                 </div>
               )}
@@ -500,7 +500,7 @@ function InvestPortal() {
           {/* Información del Contrato */}
           <div className="border-t border-[var(--border)] pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs text-[var(--muted)]">
             <div className="space-y-1">
-              <span>Contrato Lumina:</span>
+              <span>Comprobante Lumina:</span>
               <a
                 href={urls.contractUrl}
                 target="_blank"
@@ -511,7 +511,7 @@ function InvestPortal() {
               </a>
             </div>
             <div className="space-y-1 sm:text-right">
-              <span>Contrato USDC:</span>
+              <span>USDC de prueba:</span>
               <a
                 href={urls.usdcUrl}
                 target="_blank"
@@ -532,10 +532,10 @@ function InvestPortal() {
             <span className="text-xs font-bold text-teal-500 uppercase tracking-widest">Planificación</span>
             <h2 className="text-xl font-bold text-[var(--foreground)] font-serif flex items-center gap-2 mt-1">
               <Activity className="h-5 w-5 text-teal-500" />
-              Cuántos hitos con este presupuesto
+              Cuántos trabajos con este presupuesto
             </h2>
             <p className="text-xs text-[var(--muted)] mt-1">
-              Proyección simple: precio de lock por app vs presupuesto total.
+              Una cuenta simple: precio de cada trabajo vs el total.
             </p>
           </div>
 
@@ -577,7 +577,7 @@ function InvestPortal() {
                   </div>
                   <div className="space-y-2">
                     <div className="flex justify-between text-xs">
-                      <span className="text-[var(--muted)]">Hitos con este presupuesto:</span>
+                      <span className="text-[var(--muted)]">Trabajos con este presupuesto:</span>
                       <strong className="text-[var(--foreground)]">{Math.floor(simBudget / app.priceUsdc)}</strong>
                     </div>
                     <div className="flex justify-between text-xs">

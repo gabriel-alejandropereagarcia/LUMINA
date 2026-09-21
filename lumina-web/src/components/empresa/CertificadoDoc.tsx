@@ -13,7 +13,7 @@ function formatDate(iso: string): string {
 
 export default function CertificadoDoc({ certificado }: { certificado: Certificado }) {
   const quantity = certificado.quantity ?? 0;
-  const unitLabel = certificado.unitLabel || "hito";
+  const unitLabel = certificado.unitLabel || "trabajo";
 
   return (
     <article className="cert-sheet mx-auto w-full max-w-[800px] bg-[#FBF9F4] text-[#1A232E] shadow-2xl print:shadow-none">
@@ -21,13 +21,13 @@ export default function CertificadoDoc({ certificado }: { certificado: Certifica
         <header className="flex items-start justify-between gap-4">
           <div>
             <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#0D5E6A]">
-              Lumina Protocol
+              Lumina
             </p>
             <h1 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight mt-1">
-              Certificado de hito
+              Certificado de impacto
             </h1>
             <p className="text-sm text-[#5A6B7A] mt-2">
-              Para auditorías RSE · unidad + pago + hash
+              Qué se hizo, cuánto se pagó, recibo
             </p>
           </div>
           <div className="h-16 w-16 rounded-full border-2 border-[#0D5E6A] flex items-center justify-center shrink-0">
@@ -56,15 +56,15 @@ export default function CertificadoDoc({ certificado }: { certificado: Certifica
           <p className="text-sm leading-relaxed">
             {certificado.simulation ? (
               <>
-                Lock {formatUsd(certificado.amountUsd)}. El 97,5% (
-                {formatUsd(certificado.payoutAppUsd)}) se paga on-chain a {certificado.appName}{" "}
-                cuando el oráculo certifica el hito. Este documento todavía no es un payout.
+                Reserva {formatUsd(certificado.amountUsd)}. El 97,5% (
+                {formatUsd(certificado.payoutAppUsd)}) se paga a {certificado.appName}{" "}
+                cuando confirma el trabajo. Este documento todavía no es un cobro.
               </>
             ) : (
               <>
-                Lock {formatUsd(certificado.amountUsd)}. El 97,5% (
+                Reserva {formatUsd(certificado.amountUsd)}. El 97,5% (
                 {formatUsd(certificado.payoutAppUsd)}) fue a {certificado.appName}. El 2,5% (
-                {formatUsd(certificado.feeUsd)}) es el riel. Quien usó la app no pagó. La empresa no
+                {formatUsd(certificado.feeUsd)}) es de Lumina. Quien usó la app no pagó. La empresa no
                 compró cripto.
               </>
             )}
@@ -84,7 +84,7 @@ export default function CertificadoDoc({ certificado }: { certificado: Certifica
             </div>
             <div className="sm:col-span-2 border border-[#0D5E6A]/15 rounded-xl p-4 bg-white/70">
               <dt className="text-[10px] uppercase tracking-wider text-[#5A6B7A] font-bold">
-                SHA-256 del hecho (recomputable desde el canonical)
+                Código del trabajo (único, para que no se cobre dos veces)
               </dt>
               <dd className="font-mono text-[11px] mt-1 break-all leading-relaxed">
                 {certificado.reportHash}
@@ -93,7 +93,7 @@ export default function CertificadoDoc({ certificado }: { certificado: Certifica
             {certificado.canonical ? (
               <div className="sm:col-span-2 border border-[#0D5E6A]/15 rounded-xl p-4 bg-white/70">
                 <dt className="text-[10px] uppercase tracking-wider text-[#5A6B7A] font-bold">
-                  Canonical JSON
+                  Detalle del trabajo
                 </dt>
                 <dd className="font-mono text-[10px] mt-1 break-all leading-relaxed text-[#5A6B7A]">
                   {certificado.canonical}
@@ -105,20 +105,20 @@ export default function CertificadoDoc({ certificado }: { certificado: Certifica
 
         <section className="space-y-2">
           <p className="text-[10px] font-bold uppercase tracking-wider text-[#0D5E6A]">3. Alcance</p>
-          <p className="text-sm text-[#1A232E]">{certificado.scopeLumina || "Lumina registra el pago y la unicidad del hash."}</p>
+          <p className="text-sm text-[#1A232E]">{certificado.scopeLumina || "Lumina registra el pago. El mismo trabajo no se cobra dos veces."}</p>
           <p className="text-sm text-[#5A6B7A]">{certificado.scopeApp}</p>
         </section>
 
         {certificado.simulation && (
           <p className="text-xs text-[#8A6A1A] bg-[#F7E7C0] border border-[#D4A84B]/40 rounded-lg px-3 py-2">
-            Recorrido de prueba: el hash es del hecho (unidad + cantidad). No hubo release
-            on-chain. El 97,5% todavía no se pagó. El depósito Stellar está en /invest.
+            Recorrido de prueba: el código identifica el trabajo (unidad + cantidad). El 97,5%
+            todavía no se pagó. El pago de prueba está en Probar.
           </p>
         )}
 
         {certificado.txHash && (
           <p className="text-xs font-mono break-all text-[#5A6B7A]">
-            Tx Stellar:{" "}
+            Tx del cobro:{" "}
             <a href={txUrl(certificado.txHash)} className="underline" target="_blank" rel="noreferrer">
               {certificado.txHash}
             </a>
@@ -127,11 +127,10 @@ export default function CertificadoDoc({ certificado }: { certificado: Certifica
 
         <footer className="border-t border-[#0D5E6A]/15 pt-4 space-y-1">
           <p className="text-[11px] text-[#5A6B7A] leading-relaxed">
-            Sin DNI, historia clínica ni escuela (Ley 25.326). On-chain vive el hash. Los
-            subject_commitment son ciegos.
+            Sin DNI, historia clínica ni escuela (Ley 25.326). En el recibo público no viajan datos personales.
           </p>
           <p className="text-[11px] text-[#5A6B7A]">
-            Si no hay hito en 12 meses, la empresa recupera el aporte en fiat por el mismo riel.
+            Si no hay trabajo en 12 meses, la empresa recupera el aporte por el mismo camino.
           </p>
         </footer>
       </div>

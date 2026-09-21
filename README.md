@@ -6,14 +6,14 @@ Hoy, una empresa quiere financiar salud, educación o asistencia. Una familia lo
 
 Lumina lo resuelve.
 
-La empresa paga una factura simple — sin wallets, sin cripto. La app certifica el hecho: una unidad, una cantidad. Si ocurrió, se cobra el **97,5%** en Stellar. Si no ocurrió, el capital vuelve. El usuario final nunca paga.
+La empresa paga una factura — sin cuenta cripto. La app confirma que el trabajo se hizo: una unidad, una cantidad. Si ocurrió, se cobra el **97,5%**. Si no ocurrió, el capital vuelve. El usuario final nunca paga.
 
-Nacimos en Salta. El protocolo no tiene fronteras.
+Nacimos en Salta. Sirve donde haya alguien que quiere ayudar y alguien que no puede pagar.
 
-[Live](https://lumina-dusky-pi.vercel.app) · [Evidencia](https://lumina-dusky-pi.vercel.app/jury) · [Portal empresa](https://lumina-dusky-pi.vercel.app/empresa) · [Registrá tu app](https://lumina-dusky-pi.vercel.app/connect#registro)
+[Live](https://lumina-dusky-pi.vercel.app) · [Comprobantes](https://lumina-dusky-pi.vercel.app/jury) · [Portal empresa](https://lumina-dusky-pi.vercel.app/empresa) · [Sumá tu app](https://lumina-dusky-pi.vercel.app/connect#registro)
 
 ![Stellar Testnet](https://img.shields.io/badge/Stellar-Testnet-7D5BA6?logo=stellar&logoColor=white)
-![Soroban](https://img.shields.io/badge/Soroban-escrow%20v3-blue)
+![Soroban](https://img.shields.io/badge/Soroban-Lumina-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
@@ -22,37 +22,37 @@ Nacimos en Salta. El protocolo no tiene fronteras.
 
 Una empresa quiere financiar salud, educación o asistencia. Una familia lo necesita. El capital se pierde en informes, meses de espera y burocracia.
 
-Eso no es un problema de un país. Es lo que pasa cada vez que el impacto se rinde en una planilla y el servicio se cobra en la puerta. En Salta lo vimos de cerca. El protocolo sirve donde haya presupuesto para ayudar y alguien que no pueda pagar.
+Eso no es un problema de un país. Es lo que pasa cada vez que el impacto se rinde en una planilla y el servicio se cobra en la puerta. En Salta lo vimos de cerca.
 
 ## Qué es (y qué no)
 
-Lumina **no** es la clínica ni el sponsor. Es el protocolo:
+Lumina **no** es la clínica ni el sponsor. Es el medio de pago:
 
-1. La empresa paga una **factura de servicio**. No abre Freighter. No compra cripto.
-2. Una app listada en Connect certifica el hecho (unidad + cantidad, nunca un DNI).
-3. El escrow Soroban paga **97,5%** a esa app y **2,5%** al protocolo, solo al `release`. Sin hecho a los 12 meses, withdraw y Lumina cobra **0%**.
+1. La empresa paga una **factura**. No abre una cuenta cripto. No compra cripto.
+2. Una app confirma el trabajo (unidad + cantidad, nunca un DNI).
+3. Esa app cobra **97,5%**. Lumina cobra **2,5%**, solo si hubo impacto. Sin trabajo a los 12 meses, el dinero vuelve y Lumina cobra **0%**.
 
-**Por qué ahora.** El capital de impacto necesita trazabilidad y velocidad. Lumina convierte burocracia en ejecución inmediata.
+**Por qué ahora.** El impacto necesita velocidad y un recibo que se pueda mostrar. Lumina convierte burocracia en cobro el mismo día.
 
 **Visión.** Escalar desde Argentina al mundo.
 
-MIRA (cribado) y PuenteMAE (ayuda social a docentes) son **apps de ejemplo** en Connect. Viven en otros repos. Este repo es el protocolo.
+MIRA (cribado) y PuenteMAE (ayuda a docentes) son **apps de ejemplo**. Lumina no es la clínica ni la escuela.
 
 ---
 
-## Evidencia live (testnet, 19/9/2026)
+## Comprobantes (19/9/2026)
 
 | Qué | Valor |
 |---|---|
-| Escrow v3 | [`CBZAI24XP2RXDVXLRJNVGVGZ5QRDMNI54GTPBTN4OOLFTSFJRWQ4M3EJ`](https://stellar.expert/explorer/testnet/contract/CBZAI24XP2RXDVXLRJNVGVGZ5QRDMNI54GTPBTN4OOLFTSFJRWQ4M3EJ) |
-| USDC SAC (Circle testnet) | [`CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA`](https://stellar.expert/explorer/testnet/contract/CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA) |
-| Deposit 40 USDC | [`9fdbc2e8…`](https://stellar.expert/explorer/testnet/tx/9fdbc2e8865a0a94339884d6345eb628c2d6ee16792ab5ebfe5f0a946765812f) |
-| Release / certify | [`a26a3626…`](https://stellar.expert/explorer/testnet/tx/a26a36263013a9d38370c4ef55bb9a7f96fa860213e11f4805873b8a2995a522) |
-| reportHash | `4c39fcc97b18fddae23671ccebf5bb182db64a9e9e27f5f4e01cb365b21664ca` |
-| Oracle (firma) | `GBJJCKJBEF2ILRD5LGWXGH5BQIKZ6EYFDS3RHQZQ5KBCOV4XHSDESM7W` |
-| Sponsor demo | `GBRR6QWYT5UIHATCC7SYJITERMDWKLE5HHJCNM5PP6GK2DRB4YPKSP5E` |
+| Reserva | [`CBZAI24XP2RXDVXLRJNVGVGZ5QRDMNI54GTPBTN4OOLFTSFJRWQ4M3EJ`](https://stellar.expert/explorer/testnet/contract/CBZAI24XP2RXDVXLRJNVGVGZ5QRDMNI54GTPBTN4OOLFTSFJRWQ4M3EJ) |
+| USDC de prueba | [`CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA`](https://stellar.expert/explorer/testnet/contract/CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA) |
+| La empresa pagó 40 USDC | [`9fdbc2e8…`](https://stellar.expert/explorer/testnet/tx/9fdbc2e8865a0a94339884d6345eb628c2d6ee16792ab5ebfe5f0a946765812f) |
+| MIRA cobró el 97,5% | [`a26a3626…`](https://stellar.expert/explorer/testnet/tx/a26a36263013a9d38370c4ef55bb9a7f96fa860213e11f4805873b8a2995a522) |
+| Código del trabajo | `4c39fcc97b18fddae23671ccebf5bb182db64a9e9e27f5f4e01cb365b21664ca` |
+| App (firma) | `GBJJCKJBEF2ILRD5LGWXGH5BQIKZ6EYFDS3RHQZQ5KBCOV4XHSDESM7W` |
+| Empresa de prueba | `GBRR6QWYT5UIHATCC7SYJITERMDWKLE5HHJCNM5PP6GK2DRB4YPKSP5E` |
 
-USDT0 oficial: **próximamente** (solo mainnet). Hoy el recorrido usa USDC Circle testnet.
+USDT0 oficial: **próximamente**. Hoy el recorrido usa USDC Circle de prueba.
 
 ---
 
@@ -60,11 +60,11 @@ USDT0 oficial: **próximamente** (solo mainnet). Hoy el recorrido usa USDC Circl
 
 | Paso | Ruta | Qué es |
 |---|---|---|
-| 1 | [`/empresa`](https://lumina-dusky-pi.vercel.app/empresa) | Factura, sin Freighter. Cobro ARS: **en trabajo**. |
-| 2 | [`/invest`](https://lumina-dusky-pi.vercel.app/invest) | Freighter + USDC Circle testnet: `deposit` + `assign_oracle`. Live. |
-| 3 | Botón **Certificar hito** en `/invest`, o hashes en [`/jury`](https://lumina-dusky-pi.vercel.app/jury) | `release_impact_asset` → 97,5% a la app. |
+| 1 | [`/empresa`](https://lumina-dusky-pi.vercel.app/empresa) | Factura, sin cuenta cripto. Cobro en pesos: **en trabajo**. |
+| 2 | [`/invest`](https://lumina-dusky-pi.vercel.app/invest) | Freighter + USDC de prueba: pagás y elegís la app. Live. |
+| 3 | Botón **Confirmar que el trabajo se hizo** en `/invest`, o recibos en [`/jury`](https://lumina-dusky-pi.vercel.app/jury) | 97,5% a la app. |
 
-El PDF del portal **no** afirma un payout on-chain hasta que exista el release.
+El PDF del portal **no** dice que se pagó hasta que la app cobra.
 
 ---
 
@@ -94,7 +94,7 @@ npm run dev
 
 Node 22+. Freighter en testnet. USDC: [faucet.circle.com](https://faucet.circle.com/) (Stellar Testnet).
 
-On-chain: **2,5% a una sola wallet** y **97,5% a la app**. El 1% / 1% / 0,5% (Connect, captación, infra) es asignación interna, no tres transfers.
+El cobro: **2,5% a Lumina** y **97,5% a la app**. El 1% / 1% / 0,5% (apps, empresas, sistema) es cómo lo usamos adentro, no tres pagos separados.
 
 ---
 

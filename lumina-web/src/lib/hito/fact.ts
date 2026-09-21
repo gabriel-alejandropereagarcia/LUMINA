@@ -11,10 +11,10 @@ export type HitoFact = {
 };
 
 export const LUMINA_CLAIMS =
-  "Lumina registra el pago, la unicidad del hash y que la ficha de la app estaba publicada. No visita el aula y no sigue el CBU.";
+  "Lumina registra el pago y que ese trabajo no se cobra dos veces. No visita el aula y no sigue la cuenta del docente.";
 
 export const APP_CLAIMS =
-  "La app de impacto afirma que el hecho ocurrió, según su ficha. Lumina no avala el gasto posterior del 97,5%.";
+  "La app afirma que el trabajo ocurrió, según su ficha. Lumina no avala el gasto posterior del 97,5%.";
 
 export function currentPeriod(date = new Date()): string {
   return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}`;

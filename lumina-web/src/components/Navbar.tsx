@@ -15,6 +15,10 @@ export default function Navbar() {
   const { session: empresaSession, logout: logoutEmpresa } = useEmpresaSession();
   const [hasFreighter, setHasFreighter] = useState<boolean>(true);
   const isEmpresaSurface = pathname.startsWith("/empresa") || pathname.startsWith("/c/");
+  const showWallet =
+    pathname.startsWith("/invest") ||
+    pathname.startsWith("/admin") ||
+    pathname.startsWith("/connect");
 
   useEffect(() => {
     const checkFreighter = async () => {
@@ -34,15 +38,14 @@ export default function Navbar() {
     ? [
         { name: "Inicio", path: "/" },
         { name: "Portal", path: "/empresa" },
-        { name: "Connect", path: "/connect" },
+        { name: "Apps", path: "/connect" },
       ]
     : [
         { name: "Inicio", path: "/" },
         { name: "Empresa", path: "/empresa" },
-        { name: "Connect", path: "/connect" },
-        { name: "Developers", path: "/developers" },
-        { name: "Demo", path: "/invest" },
-        { name: "Evidencia", path: "/jury" },
+        { name: "Apps", path: "/connect" },
+        { name: "Probar", path: "/invest" },
+        { name: "Comprobantes", path: "/jury" },
         ...(isConnected && address === ADMIN_ADDRESS ? [{ name: "Gobernanza", path: "/admin" }] : []),
       ];
 
@@ -113,20 +116,20 @@ export default function Navbar() {
             )
           ) : (
             <>
-              {!hasFreighter && !isConnected && (
+              {!hasFreighter && !isConnected && pathname.startsWith("/invest") && (
                 <a
                   href="https://www.freighter.app/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full border border-[var(--gold-light)] bg-[var(--gold-light)] text-[var(--gold)] text-xs font-semibold hover:opacity-80 transition-all"
-                  title="Freighter es una de las wallets del Stellar Wallets Kit"
+                  title="Cuenta digital para probar un pago"
                 >
                   <AlertTriangle className="h-3.5 w-3.5" />
-                  Freighter (opcional)
+                  Instalar Freighter
                 </a>
               )}
 
-              {isConnected && address ? (
+                  {isConnected && address && showWallet ? (
                 <div className="flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--card-bg)] pl-3 pr-1 py-1">
                   <span className="text-xs font-mono text-[var(--foreground)]" id="wallet-address-display">
                     {address.slice(0, 4)}...{address.slice(-4)}
@@ -135,12 +138,12 @@ export default function Navbar() {
                     onClick={disconnect}
                     id="btn-disconnect-wallet"
                     className="flex h-7 w-7 items-center justify-center rounded-full bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition-all cursor-pointer"
-                    title="Desconectar Billetera"
+                    title="Salir"
                   >
                     <LogOut className="h-4 w-4" />
                   </button>
                 </div>
-              ) : (
+              ) : showWallet ? (
                 <button
                   onClick={connect}
                   disabled={loading}
@@ -152,9 +155,9 @@ export default function Navbar() {
                   ) : (
                     <Wallet className="h-4 w-4" />
                   )}
-                  {loading ? "Conectando..." : "Conectar Wallet"}
+                  {loading ? "Conectando..." : "Conectar"}
                 </button>
-              )}
+              ) : null}
             </>
           )}
         </div>

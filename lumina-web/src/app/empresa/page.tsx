@@ -52,30 +52,30 @@ export default function EmpresaLandingPage() {
             Portal Empresa
           </span>
           <h1 className="font-serif text-4xl sm:text-5xl font-bold tracking-tight text-[var(--foreground)] leading-tight">
-            Pagás RSE como pagás cualquier proveedor
+            Pagás el impacto como pagás cualquier proveedor
           </h1>
           <p className="text-base text-[var(--muted)] leading-relaxed max-w-xl">
-            En producción transferís ARS. No abrís wallet. El panel cuenta 10 niño-mes, no una
-            planilla de dólares. Cada hito deja PDF + hash. Quien usa la app de impacto no paga.
+            Transferís pesos. No abrís una cuenta cripto. El panel cuenta 10 niño-mes, no una
+            planilla de dólares. Cada trabajo deja un PDF. Quien usa la app no paga.
           </p>
 
           <ul className="space-y-3 text-sm text-[var(--muted)]">
             {[
               {
                 icon: Landmark,
-                text: "Factura de servicio RSE. El PSAV cobra para Lumina. No sos cliente de un exchange.",
+                text: "Una factura. Lumina cobra el servicio. Vos no comprás cripto.",
               },
               {
                 icon: Lock,
-                text: "Capital locked 12 meses. Sin hito, recuperás. Fee 2,5% solo si hubo release.",
+                text: "El dinero queda reservado 12 meses. Si el trabajo no ocurre, recuperás todo. El 2,5% solo si hubo impacto.",
               },
               {
                 icon: FileCheck,
-                text: "Certificado imprimible: unidad, pago y hash. Sin DNI ni clínica.",
+                text: "Un PDF: qué se hizo, cuánto se pagó. Sin DNI ni clínica.",
               },
               {
                 icon: ShieldCheck,
-                text: "La app cobra el 97,5%. La familia no toca cripto.",
+                text: "La app cobra el 97,5%. La familia no paga.",
               },
             ].map((item) => (
               <li key={item.text} className="flex gap-3 items-start">
@@ -96,7 +96,7 @@ export default function EmpresaLandingPage() {
                 Entrar al portal
               </h2>
               <p className="text-xs text-[var(--muted)]">
-                Email corporativo. Cero Freighter, cero seed.
+                Email de la empresa. Sin cuenta cripto.
               </p>
             </div>
           </div>
@@ -155,7 +155,7 @@ export default function EmpresaLandingPage() {
                 <ArrowRight className="h-4 w-4" />
               </button>
               <p className="text-[11px] text-[var(--muted)] leading-relaxed">
-                Demo sin contraseña. Cobro ARS: en trabajo. Lumina no vende USDC a la empresa.
+                Entrás con el email. El cobro en pesos: en trabajo. Lumina no te vende cripto.
               </p>
             </form>
           )}
@@ -163,10 +163,10 @@ export default function EmpresaLandingPage() {
       </div>
 
       <p className="text-[11px] text-[var(--muted)] leading-relaxed max-w-3xl">
-        Pagás un servicio de RSE, no comprás cripto. Cobro ARS: en trabajo — no transferir
-        pesos reales. El recorrido on-chain con Freighter está en{" "}
+        Pagás un servicio, no comprás cripto. El cobro en pesos: en trabajo — no transferir
+        dinero real. Si querés ver un pago de prueba, andá a{" "}
         <Link href="/invest" className="underline font-semibold">
-          /invest
+          Probar
         </Link>
         .
       </p>

@@ -40,7 +40,7 @@ export default function EmpresaImpactoPage() {
     return (
       <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center text-sm text-[var(--muted)]">
         <Loader2 className="h-5 w-5 animate-spin mr-2" />
-        Cargando pack RSE…
+        Cargando resumen…
       </div>
     );
   }
@@ -70,11 +70,11 @@ export default function EmpresaImpactoPage() {
       </div>
 
       <header className="space-y-2">
-        <p className="text-xs font-bold text-teal-600 uppercase tracking-widest">Pack RSE</p>
+        <p className="text-xs font-bold text-teal-600 uppercase tracking-widest">Resumen de impacto</p>
         <h1 className="font-serif text-3xl font-bold">{session.company}</h1>
         <p className="text-sm text-[var(--muted)] leading-relaxed">
-          Unidades financiadas. Cada una sale de la ficha de la app y lleva un SHA-256.
-          Lumina atestigua el pago y la unicidad. El hecho lo certifica la app.
+          Unidades financiadas. Cada una sale de la ficha de la app. Lumina atestigua el pago.
+          El trabajo lo confirma la app.
         </p>
       </header>
 
@@ -82,11 +82,11 @@ export default function EmpresaImpactoPage() {
 
       {sentence ? (
         <blockquote className="rounded-2xl border border-[var(--border)] bg-[var(--card-bg)] p-5 text-sm leading-relaxed">
-            En este período financiamos {sentence}. Cada hito tiene certificado (unidad, hash,
-            Stellar cuando hay tx). El 97,5% fue a esa app.
+            En este período financiamos {sentence}. Cada trabajo tiene un certificado
+            (qué se hizo y cuánto se pagó). El 97,5% fue a esa app.
         </blockquote>
       ) : (
-        <p className="text-sm text-[var(--muted)]">Todavía no hay hitos certificados.</p>
+        <p className="text-sm text-[var(--muted)]">Todavía no hay trabajos confirmados.</p>
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -106,7 +106,7 @@ export default function EmpresaImpactoPage() {
             <th className="px-3 py-2">Período</th>
             <th className="px-3 py-2">Unidad</th>
             <th className="px-3 py-2">Qty</th>
-            <th className="px-3 py-2">Hash</th>
+            <th className="px-3 py-2">Recibo</th>
           </tr>
         </thead>
         <tbody>

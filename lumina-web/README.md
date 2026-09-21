@@ -3,8 +3,8 @@
 Front de Lumina. Impacto sin fricción.
 
 - Demo: https://lumina-dusky-pi.vercel.app
-- Evidencia: https://lumina-dusky-pi.vercel.app/jury
-- Escrow testnet: `CBZAI24XP2RXDVXLRJNVGVGZ5QRDMNI54GTPBTN4OOLFTSFJRWQ4M3EJ`
+- Comprobantes: https://lumina-dusky-pi.vercel.app/jury
+- Reserva testnet: `CBZAI24XP2RXDVXLRJNVGVGZ5QRDMNI54GTPBTN4OOLFTSFJRWQ4M3EJ`
 
 ```bash
 npm install

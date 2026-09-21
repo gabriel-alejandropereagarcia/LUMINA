@@ -1,0 +1,31 @@
+---
+description: Voz de adopción de Lumina. Toda copy visible debe pasar el test de la abuela. Blockchain es el recibo, nunca el titular.
+alwaysApply: true
+---
+
+# Copy: adopción, no protocolo
+
+Lumina gana si una empresa, una familia o un juez entiende sin saber blockchain.
+
+**Pitch canónico (no parafrasear la tesis):** Impacto sin fricción. La empresa paga una factura. El 97,5% llega a la app. El usuario final nunca paga. Si el trabajo no ocurrió, el dinero vuelve y Lumina cobra 0%.
+
+## Superficies
+
+| Quién | Rutas | Voz |
+|---|---|---|
+| Empresa / familia | `/`, `/empresa`, `/c/`, PDF | Factura, trabajo hecho, cobro 97,5%, familia no paga. Cero cripto. |
+| App que se suma | `/connect` | Ficha, cobrás cuando el trabajo se hizo. Cero `add_oracle`. |
+| Demo / juez | `/invest`, `/jury` | Humanos primero. Hashes y txs **después**, con etiqueta humana. Freighter **solo** `/invest`. |
+| Devs | `/developers`, código | API ok. Títulos humanos. |
+
+Incompleto = **en trabajo** / **próximamente**. Nunca “No se finge”, WIP, OS, script, conversación interna, “próximos sprints”.
+
+## Prohibido en UI (salvo `/invest` `/admin` y labels de tx en `/jury`)
+
+Freighter, PSAV, SHA-256, hash, on-chain, escrow, webhook, add_oracle, Dry-run, Clawback, Anti-Replay, lockea, riel, RPC, listing, oráculo, certify, explorer, seed, SAC, HitoFact, canonical, wallet (en empresa), Contratos Inteligentes, Trazabilidad On-Chain, Demo Day, protocolo Scale como titular.
+
+## Diccionario
+
+factura · trabajo hecho · cobro 97,5% · familia no paga · recibo / comprobante · dinero reservado · se elige la app · confirmar que ocurrió · Sumá tu app · en trabajo / próximamente
+
+Antes de mergear copy: ¿lo entiende alguien que no sabe qué es Stellar? Si no, reescribí. No inventar PII. Scale, no Genesis. Empresa paga factura, no cripto.

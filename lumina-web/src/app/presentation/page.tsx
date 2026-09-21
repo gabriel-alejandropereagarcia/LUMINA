@@ -11,9 +11,9 @@ export default function WhitepaperAndRoadmap() {
 
   const sections = [
     { id: "intro", title: "1. El problema", icon: BookOpen },
-    { id: "contract", title: "2. Escrow y time-lock", icon: Lock },
-    { id: "security", title: "3. Hash y firma de la app", icon: ShieldCheck },
-    { id: "economics", title: "4. Fee 2,5% al release", icon: Coins },
+    { id: "contract", title: "2. El dinero queda reservado", icon: Lock },
+    { id: "security", title: "3. Solo esa app cobra", icon: ShieldCheck },
+    { id: "economics", title: "4. 2,5% solo si hubo impacto", icon: Coins },
     { id: "roadmap", title: "5. Próximamente", icon: Milestone },
     { id: "scale", title: "6. Recorrido", icon: FileText },
   ];
@@ -82,14 +82,14 @@ export default function WhitepaperAndRoadmap() {
                 <div className="rounded-xl border border-teal-500/10 bg-teal-500/5 p-4 space-y-2">
                   <h4 className="text-xs font-bold text-teal-400">Lumina lo resuelve</h4>
                   <p className="text-xs leading-relaxed text-[var(--muted)]">
-                    Factura simple — sin wallets, sin cripto. La app certifica el hecho:
-                    una unidad, una cantidad. Si ocurrió, 97,5% en Stellar. Si no, el
+                    Factura simple — sin cuenta cripto. La app confirma el trabajo:
+                    una unidad, una cantidad. Si ocurrió, 97,5% a la app. Si no, el
                     capital vuelve. El usuario final nunca paga.
                   </p>
                 </div>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  El capital de impacto necesita trazabilidad y velocidad. Lumina convierte
-                  burocracia en ejecución inmediata. Nacimos en Salta. Visión: escalar desde
+                  El capital de impacto necesita velocidad y un recibo que se pueda mostrar.
+                  Lumina convierte burocracia en cobro el mismo día. Nacimos en Salta. Visión: escalar desde
                   Argentina al mundo.
                 </p>
               </div>
@@ -99,35 +99,34 @@ export default function WhitepaperAndRoadmap() {
               <div className="space-y-6 animate-fadeIn">
                 <h2 className="text-2xl font-serif font-bold text-[var(--foreground)] flex items-center gap-2 border-b border-[var(--border)] pb-3">
                   <Lock className="h-6 w-6 text-teal-400" />
-                  2. Escrow y time-lock de 12 meses
+                  2. El dinero queda reservado 12 meses
                 </h2>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  El núcleo es un contrato Soroban. La empresa paga un servicio RSE (factura, no cripto).
-                  Tesorería Lumina lockea USDC Circle en el demo, o USDT0 oficial en mainnet cuando hay
-                  unidad real. Solo la app asignada libera. Sin hito en 12 meses, la empresa recupera.
+                  La empresa paga un servicio (factura, no cripto). El dinero queda reservado.
+                  Solo la app elegida cobra. Si en 12 meses el trabajo no ocurrió, la empresa recupera todo.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 rounded-xl border border-[var(--border)] bg-[var(--background)]">
                     <h4 className="text-xs font-bold text-[var(--foreground)] flex items-center gap-2 mb-2">
                       <Lock className="h-4 w-4 text-amber-500" />
-                      Garantía Time-Lock de 12 Meses
+                      12 meses, o vuelve
                     </h4>
                     <p className="text-[11px] leading-relaxed text-[var(--muted)]">
-                      Si un oráculo no certifica el hito dentro de los 12 meses, los fondos se desbloquean y la empresa los recupera. Lumina cobra 0% en ese withdraw.
+                      Si la app no confirma el trabajo en 12 meses, la empresa recupera el dinero. Lumina cobra 0%.
                     </p>
                   </div>
                   <div className="p-4 rounded-xl border border-[var(--border)] bg-[var(--background)]">
                     <h4 className="text-xs font-bold text-[var(--foreground)] flex items-center gap-2 mb-2">
                       <ShieldCheck className="h-4 w-4 text-emerald-500" />
-                      Deduplicación Anti-Replay
+                      El mismo trabajo no se cobra dos veces
                     </h4>
                     <p className="text-[11px] leading-relaxed text-[var(--muted)]">
-                      Cada hito certificado genera un hash SHA-256 único del reporte de impacto. El contrato almacena de forma persistente estos hashes; si se intenta enviar el mismo hash de reporte dos veces, la transacción es inmediatamente rechazada por el ledger.
+                      Cada trabajo deja un código único. Si se intenta cobrar el mismo hecho otra vez, el pago se rechaza.
                     </p>
                   </div>
                 </div>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  Adicionalmente, el registro de oráculos autorizados permite revocar de inmediato las credenciales de cualquier aplicación que emita firmas inválidas o maliciosas, conteniendo el riesgo financiero.
+                  Si una app firma mal, Lumina puede sacarla del camino de inmediato.
                 </p>
               </div>
             )}
@@ -136,21 +135,19 @@ export default function WhitepaperAndRoadmap() {
               <div className="space-y-6 animate-fadeIn">
                 <h2 className="text-2xl font-serif font-bold text-[var(--foreground)] flex items-center gap-2 border-b border-[var(--border)] pb-3">
                   <ShieldCheck className="h-6 w-6 text-teal-400" />
-                  3. Hash y firma de la app
+                  3. Solo esa app cobra
                 </h2>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  La app firma <code className="font-mono">release_impact</code> en Soroban con su key.
-                  El hito es un SHA-256. Sin DNI ni clínica. El contrato exige que esa app
-                  esté asignada al pozo de la empresa.
+                  La app confirma el trabajo. Sin DNI ni clínica. Nadie más puede cobrar ese pago.
                 </p>
                 <div className="p-4 rounded-xl bg-slate-950 font-mono text-[11px] text-teal-400 space-y-2 border border-slate-800">
-                  <p className="text-slate-500">// Split on-chain</p>
-                  <p>protocol_fee = amount * 25 / 1000  // 2.5% → tesorería del protocolo</p>
-                  <p>app_amount   = amount - protocol_fee // 97.5% → OracleConfig.payout</p>
+                  <p className="text-slate-500">// Cómo se parte el pago</p>
+                  <p>fee de Lumina = 2,5%</p>
+                  <p>a la app       = 97,5%</p>
                 </div>
                 <ul className="list-disc pl-5 space-y-2 text-xs text-[var(--muted)]">
-                  <li><strong>Assign obligatorio:</strong> otra app registrada no puede vaciar el pozo.</li>
-                  <li><strong>Hash único:</strong> el mismo reporte no se cobra dos veces.</li>
+                  <li><strong>App elegida:</strong> otra app no puede vaciar ese pago.</li>
+                  <li><strong>Código único:</strong> el mismo trabajo no se cobra dos veces.</li>
                 </ul>
               </div>
             )}
@@ -159,32 +156,31 @@ export default function WhitepaperAndRoadmap() {
               <div className="space-y-6 animate-fadeIn">
                 <h2 className="text-2xl font-serif font-bold text-[var(--foreground)] flex items-center gap-2 border-b border-[var(--border)] pb-3">
                   <Coins className="h-6 w-6 text-teal-400" />
-                  4. Fee 2,5% — solo al release
+                  4. 2,5% — solo si hubo impacto
                 </h2>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  Si no hay hito, Lumina cobra 0%. On-chain el 2,5% va a una sola wallet de
-                  protocolo. El 1% / 1% / 0,5% es asignación interna (OSS, captación, infra), no
-                  tres transfers.
+                  Si no hay trabajo, Lumina cobra 0%. El 2,5% es de Lumina, una sola vez.
+                  Adentro lo usamos así: 1% apps, 1% empresas, 0,5% sistema.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="p-4 rounded-xl border border-[var(--border)] bg-[var(--background)]">
                     <span className="text-lg font-bold text-teal-400 font-mono block">1.0%</span>
-                    <span className="text-xs font-bold text-[var(--foreground)] block mt-1">Desarrollo Abierto</span>
-                    <p className="text-[10px] text-[var(--muted)] mt-1">Fondeo de recompensas (bounties) para programadores de integraciones de oráculos.</p>
+                    <span className="text-xs font-bold text-[var(--foreground)] block mt-1">Más apps</span>
+                    <p className="text-[10px] text-[var(--muted)] mt-1">Para que más equipos se sumen y cobren cuando el trabajo se hizo.</p>
                   </div>
                   <div className="p-4 rounded-xl border border-[var(--border)] bg-[var(--background)]">
                     <span className="text-lg font-bold text-green-400 font-mono block">1.0%</span>
-                    <span className="text-xs font-bold text-[var(--foreground)] block mt-1">Difusión y Captación</span>
-                    <p className="text-[10px] text-[var(--muted)] mt-1">Esfuerzos de marketing para incorporar patrocinadores corporativos del sector tradicional.</p>
+                    <span className="text-xs font-bold text-[var(--foreground)] block mt-1">Más empresas</span>
+                    <p className="text-[10px] text-[var(--muted)] mt-1">Para que más tesorerías paguen impacto con una factura.</p>
                   </div>
                   <div className="p-4 rounded-xl border border-[var(--border)] bg-[var(--background)]">
                     <span className="text-lg font-bold text-emerald-400 font-mono block">0.5%</span>
-                    <span className="text-xs font-bold text-[var(--foreground)] block mt-1">Infraestructura</span>
-                    <p className="text-[10px] text-[var(--muted)] mt-1">Gastos de hosting, auditorías formales anuales y mantenimiento de nodos RPC estables.</p>
+                    <span className="text-xs font-bold text-[var(--foreground)] block mt-1">Sistema</span>
+                    <p className="text-[10px] text-[var(--muted)] mt-1">Para que el cobro llegue y el recibo se vea.</p>
                   </div>
                 </div>
                 <p className="text-xs text-[var(--muted)] leading-relaxed italic">
-                  *Nota de transparencia: Las liberaciones con montos pequeños están protegidas por división entera para evitar el cobro de fees que superen la transacción.*
+                  En montos chicos, Lumina nunca cobra más de lo que se pagó.
                 </p>
               </div>
             )}
@@ -196,30 +192,30 @@ export default function WhitepaperAndRoadmap() {
                   5. Próximamente
                 </h2>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  El riel ya existe. Lo que escala es compliance, más apps y el mismo contrato:
+                  El camino ya existe. Lo que escala es más empresas, más apps y el mismo cobro:
                 </p>
 
                 <div className="space-y-4">
                   {[
                     {
                       fase: "En curso",
-                      title: "Auditoría de Seguridad y Verificación Formal",
-                      desc: "El contrato paga a la app. Assign obligatorio. Certify con la key de esa app. USDC testnet + path USDT0 oficial."
+                      title: "El cobro ya corre",
+                      desc: "La empresa paga. La app cobra el 97,5% cuando el trabajo se hizo. USDC de prueba hoy. USDT0 oficial: próximamente."
                     },
                     {
                       fase: "En trabajo",
-                      title: "Consorcio de oráculos y disputas",
-                      desc: "Creación de un registro de oráculos gobernado multifirma por instituciones del tercer sector y el despliegue del Portal de Disputas para resolver controversias sobre validaciones."
+                      title: "Más de una voz si hay disputa",
+                      desc: "Si hay duda sobre un trabajo, instituciones del tercer sector pueden resolverlo. En trabajo."
                     },
                     {
                       fase: "En trabajo",
-                      title: "Compliance y KYB corporativo",
-                      desc: "Riel fiat para tesorerías que no pueden tocar cripto (BCRA). No cambia el protocolo: entra el mismo escrow."
+                      title: "Factura en pesos, de verdad",
+                      desc: "Tesorerías que no pueden tocar cripto pagan igual. El cobro no cambia. En trabajo."
                     },
                     {
                       fase: "Próximamente",
-                      title: "Más apps en el mismo protocolo",
-                      desc: "MIRA u otras apps pegan el mismo POST /api/v1/certify. Connect es ficha + auditoría chica, no otro producto."
+                      title: "Más apps en el mismo camino",
+                      desc: "MIRA u otras confirman el trabajo igual. Sumarse es una ficha, no otro producto."
                     }
                   ].map((item, i) => (
                     <div key={i} className="flex gap-4 p-4 rounded-xl border border-[var(--border)] bg-[var(--background)]">
@@ -247,33 +243,32 @@ export default function WhitepaperAndRoadmap() {
                   6. Recorrido
                 </h2>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  Impacto sin fricción. Una factura. Un certify. El 97,5% en Stellar.
+                  Impacto sin fricción. Una factura. Un trabajo hecho. El 97,5% a la app.
                 </p>
                 <ol className="text-sm text-[var(--muted)] space-y-3 list-decimal pl-5">
                   <li>
-                    <strong className="text-[var(--foreground)]">0–20s · Home.</strong> Impacto sin
+                    <strong className="text-[var(--foreground)]">Inicio.</strong> Impacto sin
                     fricción. La empresa no toca cripto. El usuario final nunca paga.
                   </li>
                   <li>
-                    <strong className="text-[var(--foreground)]">20–50s · /empresa + pack.</strong>{" "}
-                    Factura. Panel: 10 niño-mes. PDF de tres bloques. Sin Freighter.
+                    <strong className="text-[var(--foreground)]">Portal empresa.</strong>{" "}
+                    Factura. Panel: 10 niño-mes. PDF. Sin cuenta cripto.
                   </li>
                   <li>
-                    <strong className="text-[var(--foreground)]">50–110s · /invest.</strong> Depósito
-                    de 40 USDC Circle testnet y assign de la app. Freighter solo acá.
+                    <strong className="text-[var(--foreground)]">Probar.</strong> Un pago de
+                    prueba y se elige la app. Freighter solo acá.
                   </li>
                   <li>
-                    <strong className="text-[var(--foreground)]">110–150s · certify.</strong> En
-                    /invest, botón Certificar hito (testnet) o la evidencia ya corrida en /jury.
-                    97,5% a la app. Explorer.
+                    <strong className="text-[var(--foreground)]">Confirmar.</strong> La app
+                    dice que el trabajo se hizo. 97,5% a la app. Recibo en Comprobantes.
                   </li>
                   <li>
-                    <strong className="text-[var(--foreground)]">150–170s · /jury.</strong> Tx USDC
-                    + tx USDT0 oficial mainnet. USDT0: próximamente.
+                    <strong className="text-[var(--foreground)]">Comprobantes.</strong> Se ve
+                    el pago. USDT0: próximamente.
                   </li>
                   <li>
-                    <strong className="text-[var(--foreground)]">170–180s · cierre.</strong> Connect
-                    es el enchufe. PuenteMAE es ayuda social a docentes. Lumina cobra 0% si no hubo hito.
+                    <strong className="text-[var(--foreground)]">Cierre.</strong> Sumá tu app.
+                    PuenteMAE es ayuda a docentes. Lumina cobra 0% si no hubo trabajo.
                   </li>
                 </ol>
                 <p className="text-[11px] text-[var(--muted)]">

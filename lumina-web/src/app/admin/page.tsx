@@ -166,11 +166,11 @@ export default function AdminPortal() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-[var(--border)] pb-8">
           <div className="space-y-2">
             <span className="text-xs font-bold text-[var(--danger)] uppercase tracking-widest flex items-center gap-1.5">
-              <Landmark className="h-3.5 w-3.5" /> Lumina Protocol Governance
+              <Landmark className="h-3.5 w-3.5" /> Administración
             </span>
             <h1 className="text-4xl font-extrabold text-[var(--foreground)] tracking-tight">Panel de Administración</h1>
             <p className="text-[var(--muted)] max-w-2xl text-xs leading-relaxed">
-              Consola técnica de control de oráculos de impacto y ajustes de precios con bloqueos de tiempo para la administración del escrow.
+              Publicá apps, ajustá precios y mirá el dinero reservado.
             </p>
           </div>
 
@@ -202,7 +202,7 @@ export default function AdminPortal() {
             <div className="space-y-2">
               <h2 className="text-xl font-bold font-serif text-[var(--foreground)]">Acceso Restringido</h2>
               <p className="text-xs text-[var(--muted)] leading-relaxed">
-                Esta sección es exclusiva para el administrador del contrato inteligente Lumina. Conecta tu Freighter Wallet autorizada para continuar.
+                Esta sección es solo para el admin de Lumina. Conectá Freighter para continuar.
               </p>
             </div>
             {isConnected ? (
@@ -234,34 +234,34 @@ export default function AdminPortal() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider">Volumen Total en Custodia</span>
+                  <span className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider">Dinero reservado</span>
                   <BarChart3 className="h-5 w-5 text-teal-500" />
                 </div>
                 <div>
-                  <span className="text-3xl font-bold tracking-tight text-[var(--foreground)] font-mono">on-chain</span>
-                  <p className="text-xs text-[var(--muted)] mt-1">El saldo vive en el escrow.</p>
+                  <span className="text-3xl font-bold tracking-tight text-[var(--foreground)] font-mono">en reserva</span>
+                  <p className="text-xs text-[var(--muted)] mt-1">El saldo está reservado hasta que el trabajo se haga.</p>
                 </div>
               </div>
 
               <div className="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider">Oráculos de Impacto Activos</span>
+                  <span className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider">Apps activas</span>
                   <Users className="h-5 w-5 text-teal-500" />
                 </div>
                 <div>
                   <span className="text-3xl font-bold tracking-tight text-[var(--foreground)] font-mono">{oracles.length} Apps</span>
-                  <p className="text-xs text-[var(--muted)] mt-1">Entidades autorizadas a firmar hitos.</p>
+                  <p className="text-xs text-[var(--muted)] mt-1">Apps autorizadas a confirmar trabajo.</p>
                 </div>
               </div>
 
               <div className="glass-card p-6 rounded-2xl flex flex-col justify-between space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider">Comisiones de Protocolo (2.5%)</span>
+                  <span className="text-xs font-bold text-[var(--muted)] uppercase tracking-wider">Fee de Lumina (2.5%)</span>
                   <Landmark className="h-5 w-5 text-emerald-400" />
                 </div>
                 <div>
                   <span className="text-3xl font-bold tracking-tight text-[var(--foreground)] font-mono">2.5%</span>
-                  <p className="text-xs text-[var(--muted)] mt-1">Fee de protocolo por release.</p>
+                  <p className="text-xs text-[var(--muted)] mt-1">Solo si hubo impacto.</p>
                 </div>
               </div>
             </div>
@@ -276,7 +276,7 @@ export default function AdminPortal() {
                     <Plus className="h-4 w-4 text-teal-500" /> Registrar Aplicación de Impacto
                   </h3>
                   <p className="text-xs text-[var(--muted)] leading-relaxed">
-                    Ingresa los datos para autorizar a una nueva aplicación en el registro on-chain de Lumina.
+                    Ingresa los datos para autorizar una nueva app.
                   </p>
                 </div>
 
@@ -293,7 +293,7 @@ export default function AdminPortal() {
                     />
                   </div>
                   <div>
-                    <label className="block text-[var(--muted)] mb-1 font-semibold">Dirección del Oráculo (Public Key)</label>
+                    <label className="block text-[var(--muted)] mb-1 font-semibold">Cuenta que confirma (G…)</label>
                     <input
                       type="text"
                       placeholder="Dirección Stellar G..."
@@ -304,7 +304,7 @@ export default function AdminPortal() {
                     />
                   </div>
                   <div>
-                    <label className="block text-[var(--muted)] mb-1 font-semibold">Costo por Hito (USDC)</label>
+                    <label className="block text-[var(--muted)] mb-1 font-semibold">Costo por trabajo (USDC)</label>
                     <input
                       type="number"
                       placeholder="Monto en USDC (ej. 40)"
@@ -359,7 +359,7 @@ export default function AdminPortal() {
               <div className="glass-card p-6 rounded-2xl lg:col-span-3 space-y-4 flex flex-col min-h-[380px]">
                 <div>
                   <h3 className="text-sm font-bold font-serif text-[var(--foreground)]">Registro de Aplicaciones de Impacto Autorizadas</h3>
-                  <p className="text-xs text-[var(--muted)] mt-0.5">Control de tarifas y estados de time-lock on-chain.</p>
+                  <p className="text-xs text-[var(--muted)] mt-0.5">Precios y plazos de cada app.</p>
                 </div>
 
                 <div className="space-y-4 flex-grow overflow-y-auto pr-2 custom-scrollbar">

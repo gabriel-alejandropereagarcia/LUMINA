@@ -20,9 +20,9 @@ import { useToast } from "@/context/ToastContext";
 
 const STATUS_LABEL: Record<Aporte["status"], string> = {
   orden: "Orden de transferencia",
-  pendiente_psav: "Esperando PSAV",
-  en_escrow: "En escrow",
-  certificado: "Hito certificado",
+  pendiente_psav: "Esperando el cobro",
+  en_escrow: "Dinero reservado",
+  certificado: "Trabajo confirmado",
 };
 
 export default function EmpresaPortalPage() {
@@ -70,7 +70,7 @@ export default function EmpresaPortalPage() {
       toast({
         type: "success",
         title: "Pago recibido por el cobrador",
-        message: "Cuando el webhook acredite, el aporte pasa a escrow. Sin billetera.",
+        message: "Cuando se acredite, el dinero queda reservado. Sin cuenta cripto.",
       });
     }
     if (paid === "0") {
@@ -78,7 +78,7 @@ export default function EmpresaPortalPage() {
       toast({
         type: "error",
         title: "El cobrador no confirmó el pago",
-        message: "Podés reintentar desde la orden. No se debitó el protocolo.",
+        message: "Podés reintentar desde la orden. No se debitó nada.",
       });
     }
   }, [toast]);
@@ -109,11 +109,11 @@ export default function EmpresaPortalPage() {
         title:
           action === "confirmar"
             ? "Transferencia indicada"
-            : "Aporte acreditado en escrow",
+            : "Pago acreditado",
         message:
           action === "confirmar"
-            ? "En producción el PSAV confirma el crédito. Acá lo simulamos."
-            : "El protocolo depositaría on-chain. La empresa no firma.",
+            ? "En producción el cobrador confirma. Acá lo simulamos."
+            : "El dinero queda reservado. La empresa no firma nada más.",
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error.");
@@ -188,11 +188,11 @@ export default function EmpresaPortalPage() {
         </div>
         <div className="flex flex-col items-start sm:items-end gap-2">
           <Link href="/empresa/impacto" className="text-xs font-bold text-teal-600 uppercase tracking-wider">
-            Pack RSE →
+            Resumen de impacto →
           </Link>
           <p className="text-xs text-[var(--muted)] max-w-sm">
-            Pagás un servicio de RSE, no comprás cripto. {rail?.label ?? "Simulación ABC"}.
-            {rail?.live ? " Cobrador live." : " No transferir pesos reales."}
+            Pagás un servicio, no comprás cripto. {rail?.label ?? "Simulación"}.
+            {rail?.live ? " El cobrador está activo." : " No transferir pesos reales."}
           </p>
         </div>
       </div>
@@ -200,8 +200,8 @@ export default function EmpresaPortalPage() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {[
           { label: "En proceso", value: formatUsd(locked), icon: Lock },
-          { label: "Certificado (USD)", value: formatUsd(certified), icon: FileCheck },
-          { label: "Fee del riel", value: "2.5%", icon: Landmark },
+          { label: "Confirmado", value: formatUsd(certified), icon: FileCheck },
+          { label: "Fee de Lumina", value: "2.5%", icon: Landmark },
         ].map((stat) => (
           <div key={stat.label} className="glass-card p-5 rounded-2xl space-y-2">
             <div className="flex items-center justify-between text-xs text-[var(--muted)] uppercase tracking-wider">
@@ -220,7 +220,7 @@ export default function EmpresaPortalPage() {
               <p className="text-xs text-[var(--muted)] uppercase tracking-wider">{row.appName}</p>
               <p className="font-serif text-3xl font-bold text-[var(--foreground)]">{row.quantity}</p>
               <p className="text-sm text-[var(--foreground)]">{row.unitLabel}</p>
-              <p className="text-[11px] text-[var(--muted)]">{formatUsd(row.amountUsd)} lockeados</p>
+              <p className="text-[11px] text-[var(--muted)]">{formatUsd(row.amountUsd)} reservados</p>
             </div>
           ))}
         </div>
@@ -228,7 +228,7 @@ export default function EmpresaPortalPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
         <section className="lg:col-span-2 glass-card p-6 rounded-2xl space-y-4">
-          <h2 className="font-serif text-lg font-bold text-[var(--foreground)]">Fondear RSE</h2>
+          <h2 className="font-serif text-lg font-bold text-[var(--foreground)]">Pagar impacto</h2>
           <form onSubmit={onCreate} className="space-y-4" id="form-empresa-aporte">
             <label className="block space-y-1">
               <span className="text-xs font-semibold text-[var(--muted)]">Monto en USD</span>
@@ -246,7 +246,7 @@ export default function EmpresaPortalPage() {
               <span className="text-[11px] text-[var(--muted)]">
                 Equivale a {formatArs(Number(amountUsd || 0) * DEMO_PAYMENT.usdToArs)} · {DEMO_PAYMENT.fxNote}
                 {selectedApp
-                  ? ` · ${previewQty} ${selectedApp.unitLabel} (US$ ${selectedApp.priceUsdc} / hito)`
+                  ? ` · ${previewQty} ${selectedApp.unitLabel} (US$ ${selectedApp.priceUsdc} c/u)`
                   : ""}
               </span>
             </label>
@@ -282,7 +282,7 @@ export default function EmpresaPortalPage() {
           {!active ? (
             <p className="text-sm text-[var(--muted)]">
               Todavía no hay órdenes. Generá una a la izquierda. En producción el
-              cobrador (Koywe PAYIN o Circle HQ) abre el checkout.
+              cobrador abre el pago.
             </p>
           ) : (
             <div className="space-y-4">
@@ -386,7 +386,7 @@ export default function EmpresaPortalPage() {
                 )}
                 {active.status === "pendiente_psav" && rail?.live && (
                   <p className="text-xs text-[var(--muted)] py-2">
-                    Esperando webhook del cobrador. Tesorería Lumina deposita; la empresa no firma.
+                    Esperando que se acredite el pago. La empresa no firma nada más.
                   </p>
                 )}
                 {active.status === "pendiente_psav" && !rail?.live && (
@@ -396,7 +396,7 @@ export default function EmpresaPortalPage() {
                     disabled={!!busy}
                     className="rounded-xl bg-teal-600 px-4 py-2 text-xs font-bold text-white cursor-pointer disabled:opacity-50"
                   >
-                    Simular acreditación PSAV
+                    Simular que el pago llegó
                   </button>
                 )}
                 {active.status === "en_escrow" && (
@@ -406,7 +406,7 @@ export default function EmpresaPortalPage() {
                     disabled={!!busy}
                     className="rounded-xl bg-teal-600 px-4 py-2 text-xs font-bold text-white cursor-pointer disabled:opacity-50"
                   >
-                    Emitir certificado de hito
+                    Emitir certificado
                   </button>
                 )}
                 {active.status === "certificado" && active.certificadoId && (
@@ -420,7 +420,7 @@ export default function EmpresaPortalPage() {
                 )}
               </div>
               <p className="text-[11px] text-[var(--muted)] leading-relaxed">
-                Lock hasta{" "}
+                Reservado hasta{" "}
                 {new Intl.DateTimeFormat("es-AR", { dateStyle: "medium" }).format(
                   new Date(active.lockUntil),
                 )}
@@ -471,8 +471,8 @@ export default function EmpresaPortalPage() {
         <h2 className="font-serif text-lg font-bold text-[var(--foreground)]">Certificados</h2>
         {certificados.length === 0 ? (
           <p className="text-sm text-[var(--muted)]">
-            Cuando la app certifica el hito, acá aparece el documento. El usuario de
-            esa app ve el mismo PDF — nunca una wallet.
+            Cuando la app confirma el trabajo, acá aparece el documento. Quien usó
+            la app ve el mismo PDF — nunca una cuenta cripto.
           </p>
         ) : (
           <ul className="space-y-2">
@@ -486,7 +486,7 @@ export default function EmpresaPortalPage() {
                     <strong className="text-[var(--foreground)]">{item.appName}</strong>
                     <span className="text-[var(--muted)]">
                       {" "}
-                      · {item.quantity ?? 0} {item.unitLabel ?? "hito"} · {formatUsd(item.amountUsd)}
+                      · {item.quantity ?? 0} {item.unitLabel ?? "trabajo"} · {formatUsd(item.amountUsd)}
                     </span>
                     <span className="block font-mono text-[11px] text-[var(--muted)] mt-1">
                       {item.reportHash.slice(0, 16)}…

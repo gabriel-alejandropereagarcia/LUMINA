@@ -78,44 +78,44 @@ function JuryBody() {
           Argentina Builder Challenge · Scale
         </span>
         <h1 className="font-serif text-4xl font-bold text-[var(--foreground)]">
-          Evidencia on-chain
+          Comprobantes
         </h1>
         <p className="text-sm text-[var(--muted)] leading-relaxed">
-          Impacto sin fricción. Factura, no cripto. Si el hecho ocurrió, 97,5% en Stellar.
-          Si no, el capital vuelve. El usuario final nunca paga. Abajo, el loop del 19/9
+          Impacto sin fricción. Factura, no cripto. Si el trabajo ocurrió, el 97,5% llega a la app.
+          Si no, el dinero vuelve. El usuario final nunca paga. Abajo, el pago del 19/9
           y cómo recorrerlo.{" "}
           <Link href="/presentation" className="text-teal-500 underline">
-            Tesis en 8 slides
+            Cómo funciona, en 8 slides
           </Link>
           .
         </p>
       </div>
 
       <section className="space-y-3 rounded-2xl border border-[var(--border)] p-5">
-        <h2 className="text-[var(--foreground)] font-bold">E2E 19/9 · 40 USDC testnet</h2>
+        <h2 className="text-[var(--foreground)] font-bold">Pago del 19/9 · 40 USDC de prueba</h2>
         <p className="text-xs text-[var(--muted)]">
-          Deposit → assign MIRA → certify. Explorer abre la tx, no un PDF.
+          La empresa pagó → se eligió MIRA → MIRA cobró. Cada enlace abre el recibo.
         </p>
         <ul className="space-y-2 text-xs font-mono break-all">
           <li>
-            Deposit:{" "}
+            La empresa pagó:{" "}
             <a href={txUrl(EVIDENCE.deposit)} className="text-teal-500 underline" target="_blank" rel="noreferrer">
               {EVIDENCE.deposit}
             </a>
           </li>
           <li>
-            Assign:{" "}
+            Se eligió MIRA:{" "}
             <a href={txUrl(EVIDENCE.assign)} className="text-teal-500 underline" target="_blank" rel="noreferrer">
               {EVIDENCE.assign}
             </a>
           </li>
           <li>
-            Release (97,5% a la app):{" "}
+            MIRA cobró el 97,5%:{" "}
             <a href={txUrl(EVIDENCE.release)} className="text-teal-500 underline" target="_blank" rel="noreferrer">
               {EVIDENCE.release}
             </a>
           </li>
-          <li className="text-[var(--muted)]">reportHash: {EVIDENCE.reportHash}</li>
+          <li className="text-[var(--muted)]">Código del trabajo: {EVIDENCE.reportHash}</li>
         </ul>
       </section>
 
@@ -124,20 +124,20 @@ function JuryBody() {
         <ol className="list-decimal pl-5 space-y-2">
           <li>
             <Link href="/empresa" className="text-teal-500 underline">
-              /empresa
+              Portal empresa
             </Link>{" "}
-            — factura sin Freighter. Cobro ARS: en trabajo (este recorrido muestra la UX).
-            El PDF no afirma payout hasta que haya release.
+            — factura, sin cuenta cripto. El cobro en pesos: en trabajo (este recorrido muestra cómo se ve).
+            El PDF no dice que se pagó hasta que la app cobra.
           </li>
           <li>
             <Link href="/invest" className="text-teal-500 underline">
-              /invest
+              Probar un pago
             </Link>{" "}
-            — Freighter + USDC testnet: deposit y assign. Después, Certificar hito
-            o las txs de arriba.
+            — Freighter + USDC de prueba: depositás y elegís la app. Después, confirmá el trabajo
+            o usá los recibos de arriba.
           </li>
           <li>
-            Contrato:{" "}
+            Recibo:{" "}
             <a
               href={`https://stellar.expert/explorer/testnet/contract/${ESCROW}`}
               className="text-teal-500 underline font-mono break-all"
@@ -151,26 +151,26 @@ function JuryBody() {
       </section>
 
       <section className="space-y-3 text-sm">
-        <h2 className="text-[var(--foreground)] font-bold">Otra tx (opcional)</h2>
+        <h2 className="text-[var(--foreground)] font-bold">Otro recibo (opcional)</h2>
         <p className="text-xs text-[var(--muted)]">
-          Si corriste un release nuevo, pegalo acá. No reemplaza la evidencia del 19/9.
+          Si corriste un cobro nuevo, pegalo acá. No reemplaza el del 19/9.
         </p>
         <form onSubmit={applyProof} className="space-y-2">
           <label className="block space-y-1">
-            <span className="text-xs font-semibold text-[var(--muted)]">Release tx</span>
+            <span className="text-xs font-semibold text-[var(--muted)]">Recibo del cobro</span>
             <input
               value={release}
               onChange={(e) => setRelease(e.target.value)}
-              placeholder="hash de release_impact"
+              placeholder="identificador del cobro"
               className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 font-mono text-xs"
             />
           </label>
           <label className="block space-y-1">
-            <span className="text-xs font-semibold text-[var(--muted)]">reportHash</span>
+            <span className="text-xs font-semibold text-[var(--muted)]">Código del trabajo</span>
             <input
               value={reportHash}
               onChange={(e) => setReportHash(e.target.value)}
-              placeholder="sha256 del fact"
+              placeholder="código único"
               className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 font-mono text-xs"
             />
           </label>
@@ -204,7 +204,7 @@ function JuryBody() {
       <section className="space-y-2 text-sm">
         <h2 className="text-[var(--foreground)] font-bold">USDT0</h2>
         <p className="text-sm text-[var(--muted)]">
-          Hoy el recorrido usa USDC Circle en testnet. USDT0 oficial en mainnet: próximamente.
+          Hoy el recorrido usa USDC Circle de prueba. USDT0 oficial: próximamente.
         </p>
         {usdt0Shown ? (
           <p className="text-xs font-mono break-all">
@@ -221,22 +221,22 @@ function JuryBody() {
       </section>
 
       <section className="space-y-2 text-xs font-mono text-[var(--muted)] break-all">
-        <h2 className="font-sans text-sm font-bold text-[var(--foreground)]">Addresses</h2>
-        <p>Escrow: {ESCROW}</p>
+        <h2 className="font-sans text-sm font-bold text-[var(--foreground)]">Cuentas</h2>
+        <p>Reserva: {ESCROW}</p>
         <p>Admin: {process.env.NEXT_PUBLIC_ADMIN_ADDRESS || "GBKDKKKCMCB5CQG25R37F7VIHGO62557HZQUU4CZWTOTUK6HKLMNUDMK"}</p>
-        <p>Oracle: {process.env.NEXT_PUBLIC_ORACLE_ADDRESS || "GBJJCKJBEF2ILRD5LGWXGH5BQIKZ6EYFDS3RHQZQ5KBCOV4XHSDESM7W"}</p>
+        <p>App (firma): {process.env.NEXT_PUBLIC_ORACLE_ADDRESS || "GBJJCKJBEF2ILRD5LGWXGH5BQIKZ6EYFDS3RHQZQ5KBCOV4XHSDESM7W"}</p>
         <p>Sponsor: {SPONSOR}</p>
         <p>
           USDC: {USDC_TESTNET_CLASSIC.code}:{USDC_TESTNET_CLASSIC.issuer}
         </p>
-        <p>SAC: {USDC_TESTNET_SAC}</p>
+        <p>USDC: {USDC_TESTNET_SAC}</p>
       </section>
 
       <section className="space-y-3 text-sm text-[var(--muted)]">
-        <h2 className="text-[var(--foreground)] font-bold">Dos apps, el mismo protocolo</h2>
+        <h2 className="text-[var(--foreground)] font-bold">Dos apps, el mismo camino</h2>
         <p>
-          Lumina no es la clínica ni la escuela. Son apps que se enchufan: certifican el
-          hecho y cobran el 97,5%. El usuario final nunca paga.
+          Lumina no es la clínica ni la escuela. Son apps que se suman: confirman el
+          trabajo y cobran el 97,5%. El usuario final nunca paga.
         </p>
         <ul className="space-y-2">
           <li>
@@ -252,10 +252,10 @@ function JuryBody() {
 
       <div className="flex flex-wrap gap-4 text-sm">
         <Link href="/connect" className="text-teal-500 underline">
-          Registrar una app
+          Sumá tu app
         </Link>
         <Link href="/developers" className="text-teal-500 underline">
-          API de certify
+          Cómo se cobra
         </Link>
         <Link href="/empresa" className="text-teal-500 underline">
           Portal empresa
@@ -270,7 +270,7 @@ function JuryBody() {
 
 export default function JuryEvidencePage() {
   return (
-    <Suspense fallback={<div className="p-16 text-sm text-[var(--muted)]">Cargando evidencia…</div>}>
+    <Suspense fallback={<div className="p-16 text-sm text-[var(--muted)]">Cargando comprobantes…</div>}>
       <JuryBody />
     </Suspense>
   );

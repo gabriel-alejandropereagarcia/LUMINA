@@ -40,7 +40,7 @@ export const IMPACT_APPS: ImpactApp[] = [
     tagline: "App de impacto · en trabajo",
     milestone: "1 cribado M-CHAT-R/F completado",
     description:
-      "Cribado temprano (M-CHAT-R/F + informe). Entra por Connect: Lumina no es la clínica. El protocolo se libera con certify; MIRA guarda el PDF.",
+      "Cribado temprano (M-CHAT-R/F + informe). Lumina no es la clínica: MIRA hace el trabajo y cobra cuando se hizo. El informe queda en MIRA.",
     priceUsdc: 40,
     status: "wip",
     statusLabel: "En trabajo",
@@ -55,7 +55,7 @@ export const IMPACT_APPS: ImpactApp[] = [
       "GDWOBCG7XPQZOMO7FAOJB73RDDJX4TV3OHP5CIBRYPI3TXMWRYMJ6FHV",
     schemaId: "mira.cribado.v1",
     unitLabel: "cribado M-CHAT-R/F",
-    valueMethod: "1 hito = 1 informe de cribado hasheado. No es diagnóstico.",
+    valueMethod: "1 trabajo = 1 informe de cribado. No es un diagnóstico.",
     hashIncludes: "schema, período, quantity, subject_commitment ciego, sponsor, monto",
     hashExcludes: "DNI, clínica, nombre del niño, escuela",
     postReleasePromise: "El informe queda en MIRA. Lumina no ve el PDF.",
@@ -68,7 +68,7 @@ export const IMPACT_APPS: ImpactApp[] = [
     tagline: "Ayuda social a docentes de inclusión",
     milestone: "1 niño-mes de apoyo a la inclusión",
     description:
-      "Ayuda social con plata de RSE. El docente cobra ARS a su CBU. La familia no paga. No factura obras sociales — Lumina no opera ese sistema.",
+      "Ayuda social con plata de la empresa. El docente cobra en pesos a su cuenta. La familia no paga. Lumina no factura obras sociales.",
     priceUsdc: 40,
     status: "wip",
     statusLabel: "En trabajo",
@@ -79,10 +79,10 @@ export const IMPACT_APPS: ImpactApp[] = [
     schemaId: "puentemae.nino-mes.v1",
     unitLabel: "niño-mes de apoyo a la inclusión",
     valueMethod:
-      "1 hito = 1 niño-mes. Referencia nomenclador Res. 2775/2026 hora MAE $16.068,31 (ilustrativo, no liquidación OS).",
+      "1 trabajo = 1 niño-mes. Referencia nomenclador Res. 2775/2026 hora MAE $16.068,31 (ilustrativo, no liquidación de obra social).",
     hashIncludes: "schema, período, quantity, subject_commitment ciego, sponsor, monto",
     hashExcludes: "DNI, CUD, diagnóstico, escuela, CBU",
-    postReleasePromise: "La app paga ARS al CBU del docente. Lumina no ejecuta ni atestigua ese pago.",
+    postReleasePromise: "La app paga en pesos a la cuenta del docente. Lumina no ejecuta ni atestigua ese pago.",
   },
 ];
 

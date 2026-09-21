@@ -48,15 +48,15 @@ export const metadata: Metadata = {
         url: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=1200&h=630&fit=crop",
         width: 1200,
         height: 630,
-        alt: "Lumina — protocolo de RSE on-chain",
+        alt: "Lumina — impacto sin fricción",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lumina — RSE que se paga cuando el hito es real",
+    title: "Lumina — el impacto se paga cuando el trabajo es real",
     description:
-      "Empresa sin wallet. App cobra 97,5%. Usuario no paga. Stellar.",
+      "Empresa sin cuenta cripto. App cobra 97,5%. El usuario no paga.",
     images: [
       "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=1200&h=630&fit=crop",
     ],
