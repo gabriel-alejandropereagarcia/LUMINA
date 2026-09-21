@@ -168,26 +168,57 @@ Un jurado entiende la tesis en 20 segundos y termina el loop sin pedirnos Zoom: 
 
 Luma hub Salta (aparte del form): https://luma.com/1jp3wlnj — kickoff ya fue 12/9; igual sirve si el form pide reservar.
 
-### C. Apex (stellarapex.nearx.com.br) — no reemplaza ABC
+### C. Apex — Submission 1 (oficial, no reemplaza el form ABC)
 
-Rounds Instaward: **coming soon**. Igual hay que existir como equipo.
+Web: **https://stellarapex.org/** (ya no nearx). Login: Google o Stellar Passport. Email todavía no.
 
-1. Crear cuenta (email del lead).
-2. **Create Your Team** → nombre `Lumina`.
-3. Invitar al compañero (mismo email que en ABC).
-4. No esperar el round abierto para tener el equipo.
+**Deadline Submission 1: lunes 21/9, 10:00 ART.** BAF cuenta commits 11:00–12:00. Sin proyecto en Apex, no revisan.
 
-**Bio / about (pegar):**
+Repo `LUMINA` es **privado**: para que cuenten commits, hacerlo público o dar acceso a BAF.
+
+#### Perfil del lead (Gabriel)
+
+| Campo | Pegar |
+|---|---|
+| Name | Gabriel Alejandro Perea García |
+| Location | Salta, Argentina |
+| GitHub | https://github.com/gabriel-alejandropereagarcia |
+| Skills (5) | Soroban · TypeScript · Next.js · Rust · Stellar |
+
+**Bio (perfil):**
 
 ```
-Argentine CSR treasuries cannot hold crypto — and still have to prove impact. Lumina is the Stellar rail: companies lock funds with an invoice (no wallet), impact apps certify a real milestone and receive 97.5% on-chain, end users never pay. Live Soroban escrow, invoice portal, Connect API. ABC demo: Circle USDC. Production path: official USDT0.
+Founder of Lumina, a Stellar protocol that lets CSR treasuries lock impact capital with an invoice — no wallet — and pays impact apps 97.5% on-chain when a milestone is certified. Building from Salta, Argentina.
 ```
 
-**Pitch corto (si pide 1 línea):**
+#### Proyecto Lumina (Create your first project)
+
+| Campo | Pegar |
+|---|---|
+| Name | Lumina |
+| Tagline | CSR capital reaches the impact app only when the milestone is real. |
+| Stage | **Testnet** |
+| Chapter | Argentina / Argentina Builder Challenge / BAF (el que liste el form) |
+| GitHub | https://github.com/gabriel-alejandropereagarcia/LUMINA |
+| Website | https://lumina-dusky-pi.vercel.app |
+| Demo | https://lumina-dusky-pi.vercel.app/jury |
+| Contract | CBZAI24XP2RXDVXLRJNVGVGZ5QRDMNI54GTPBTN4OOLFTSFJRWQ4M3EJ |
+| Open source | No, unless the repo is public |
+| Team | Invite adrianogabrielpm@gmail.com |
+
+**Description:**
 
 ```
-RSE sin cripto → la app cobra el 97,5% cuando el hito es real → el usuario no paga.
+Argentine CSR treasuries cannot hold crypto — and still have to prove impact. The apps that actually deliver (early screening, school support) have no rail to get paid the day the milestone happens. Families either pay, or the service never arrives.
+
+Lumina is the rail, not the clinic and not the sponsor. A company locks funds for 12 months with a service invoice. An impact app certifies a milestone — unit plus quantity, never a national ID — and receives 97.5% on-chain. If nothing happened, the company recovers and Lumina earns 0%. The person using the app never pays.
+
+Live on Stellar testnet: Soroban escrow, Connect listing + certify API, invoice portal for compliance, and a jury path with real Circle USDC. Production path is official USDT0 on mainnet. We do not invent a testnet stand-in.
+
+Argentina Builder Challenge · Scale · Hub Salta.
 ```
+
+Pending approval after create is normal. Keep committing on `master`.
 
 Reglamento: https://argentinabuilderchallenge.netlify.app/reglamento  
 Genesis = repo desde el 12/9, sin código propio anterior como base. Scale = producto que ya existe + feature en branch nueva.
@@ -378,7 +409,7 @@ Carpeta: `C:\Users\gabri\.cursor\projects\d-aplicaciones-Lumina\canvases\`
 
 - Challenge: https://argentinabuilderchallenge.netlify.app/
 - Reglamento / aplicar: ver §3
-- Apex: https://stellarapex.nearx.com.br/
+- Apex: https://stellarapex.org/
 - USDT0 SDF: https://developers.stellar.org/docs/tokens/usdt0-layerzero
 - Transfer UI: https://usdt0.to/transfer
 - Koywe PAYIN: https://docs.koywe.com/en/accepting-payments

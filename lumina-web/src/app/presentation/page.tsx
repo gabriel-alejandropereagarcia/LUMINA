@@ -161,7 +161,9 @@ export default function WhitepaperAndRoadmap() {
                   4. Fee 2,5% — solo al release
                 </h2>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  Si no hay hito, Lumina cobra 0%. El 2,5% se parte on-chain en cada release y mantiene el riel:
+                  Si no hay hito, Lumina cobra 0%. On-chain el 2,5% va a una sola wallet de
+                  protocolo. El 1% / 1% / 0,5% es asignación interna (OSS, captación, infra), no
+                  tres transfers.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="p-4 rounded-xl border border-[var(--border)] bg-[var(--background)]">
@@ -260,9 +262,9 @@ export default function WhitepaperAndRoadmap() {
                     deposita 40 USDC Circle testnet y asigna la app. Freighter solo acá.
                   </li>
                   <li>
-                    <strong className="text-[var(--foreground)]">110–150s · certify.</strong>{" "}
-                    <code className="font-mono">npx tsx examples/certify.ts</code>. 97,5% a la app.
-                    Hash único. Explorer.
+                    <strong className="text-[var(--foreground)]">110–150s · certify.</strong> En
+                    /invest, botón Certificar hito (testnet) o la evidencia ya corrida en /jury.
+                    97,5% a la app. Explorer.
                   </li>
                   <li>
                     <strong className="text-[var(--foreground)]">150–170s · /jury.</strong> Tx USDC
@@ -274,7 +276,7 @@ export default function WhitepaperAndRoadmap() {
                   </li>
                 </ol>
                 <p className="text-[11px] text-[var(--muted)]">
-                  Forms: argentinabuilderchallenge.netlify.app/aplicar · stellarapex.nearx.com.br
+                  Forms: argentinabuilderchallenge.netlify.app/aplicar · stellarapex.org
                 </p>
               </div>
             )}

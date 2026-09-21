@@ -35,7 +35,7 @@ Es crucial no confundir la funcionalidad implementada hoy con lo planificado par
 
 *   **Red de Stellar:** `Testnet`
 *   **USDC Token Contract (SAC):** `CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA`
-*   **Lumina Escrow Contract:** `CBLKDMO6M5GJZVNPKD2QRCAKGDFUHJCF27EG7MOFRAEHSNWMXAOOG6HA`
+*   **Lumina Escrow Contract:** `CBZAI24XP2RXDVXLRJNVGVGZ5QRDMNI54GTPBTN4OOLFTSFJRWQ4M3EJ`
     *   *Nota:* Este contrato cuenta con un **Registro de Oráculos Autorizados** gestionado por el Admin.
 *   **MIRA Oracle Address:** `GDWOBCG7XPQZOMO7FAOJB73RDDJX4TV3OHP5CIBRYPI3TXMWRYMJ6FHV`
     *   *Secret Key:* `<ROTATED — stored in .env only, never in code>` (Configurado en el `.env.local` de MIRA).

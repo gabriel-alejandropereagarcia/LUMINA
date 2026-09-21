@@ -54,10 +54,20 @@ export default function CertificadoDoc({ certificado }: { certificado: Certifica
         <section className="space-y-3">
           <p className="text-[10px] font-bold uppercase tracking-wider text-[#0D5E6A]">2. Pago</p>
           <p className="text-sm leading-relaxed">
-            Lock {formatUsd(certificado.amountUsd)}. El 97.5% (
-            {formatUsd(certificado.payoutAppUsd)}) fue a {certificado.appName}. El 2.5% (
-            {formatUsd(certificado.feeUsd)}) es el riel. Quien usó la app no pagó. La empresa no
-            compró cripto.
+            {certificado.simulation ? (
+              <>
+                Lock {formatUsd(certificado.amountUsd)}. El 97,5% (
+                {formatUsd(certificado.payoutAppUsd)}) se paga on-chain a {certificado.appName}{" "}
+                cuando el oráculo certifica el hito. Este documento todavía no es un payout.
+              </>
+            ) : (
+              <>
+                Lock {formatUsd(certificado.amountUsd)}. El 97,5% (
+                {formatUsd(certificado.payoutAppUsd)}) fue a {certificado.appName}. El 2,5% (
+                {formatUsd(certificado.feeUsd)}) es el riel. Quien usó la app no pagó. La empresa no
+                compró cripto.
+              </>
+            )}
           </p>
           <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
             <div className="border border-[#0D5E6A]/15 rounded-xl p-4 bg-white/70">
@@ -101,9 +111,8 @@ export default function CertificadoDoc({ certificado }: { certificado: Certifica
 
         {certificado.simulation && (
           <p className="text-xs text-[#8A6A1A] bg-[#F7E7C0] border border-[#D4A84B]/40 rounded-lg px-3 py-2">
-            Simulación ABC: el hash es el del hecho (unidad + commitments). Todavía no hay
-            transacción Stellar si el depósito no se acreditó on-chain. El juez Freighter sigue en
-            /invest.
+            Simulación: el hash es del hecho (unidad + cantidad). No hubo release on-chain. El
+            97,5% todavía no se pagó. El juez Freighter sigue en /invest.
           </p>
         )}
 

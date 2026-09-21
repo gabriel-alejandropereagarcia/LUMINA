@@ -326,7 +326,7 @@ export default function AdminPortal() {
 
                 <div className="border-t border-[var(--border)] pt-4 space-y-2">
                   <p className="text-[11px] text-[var(--muted)] leading-relaxed">
-                    Allowlist USDT0 oficial (SAC mainnet {USDT0_OFFICIAL.sac.slice(0, 8)}…). Requiere escrow v2 redeployado.
+                    Allowlist USDT0 oficial (SAC mainnet {USDT0_OFFICIAL.sac.slice(0, 8)}…). Requiere escrow v3 (`allow_asset`).
                     No inventa un USDT0 de testnet.
                   </p>
                   <button
@@ -342,7 +342,7 @@ export default function AdminPortal() {
                         const hash = await submitSorobanTransaction(signed);
                         setAdminStatus(`USDT0 oficial en allowlist. ${hash.slice(0, 12)}…`);
                       } catch (err: unknown) {
-                        setAdminStatus(err instanceof Error ? err.message : "allow_asset falló (¿redeploy v2?)");
+                        setAdminStatus(err instanceof Error ? err.message : "allow_asset falló (¿escrow v3?)");
                       } finally {
                         setAdminLoading(false);
                         setTimeout(() => setAdminStatus(null), 8000);

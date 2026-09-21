@@ -99,7 +99,7 @@ export default function SponsorDashboard() {
       desc: "Sponsor Corporativo acreditó fondos en Lumina Escrow.",
       amount: 1000,
       timestamp: "Hace 2 horas",
-      txHash: "a1b2c3d4f5e6a1b2c3d4f5e6a1b2c3d4f5e6a1b2c3d4f5e6a1b2c3d4f5e6b2a1",
+          txHash: "",
       isSimulated: true,
     },
     {
@@ -109,8 +109,8 @@ export default function SponsorDashboard() {
       desc: "USDC 40 liberados. Reporte PDF notarizado con Hash: a89e...b24c.",
       amount: 40,
       timestamp: "Hace 45 mins",
-      txHash: "f6e5d4c3b2a1f6e5d4c3b2a1f6e5d4c3b2a1f6e5d4c3b2a1f6e5d4c3b2a1a1b2",
-      isSimulated: false,
+          txHash: "",
+          isSimulated: true,
     },
   ]);
 
@@ -257,8 +257,10 @@ export default function SponsorDashboard() {
         {!isRealMode && (
           <div className="p-4 rounded-xl border border-teal-500/20 bg-[var(--teal-light)] text-xs text-teal-500 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
             <div className="space-y-0.5">
-              <span className="font-bold uppercase tracking-wider block text-xs">💡 MODO DEMOSTRACIÓN ACTIVO</span>
-              <p className="text-[var(--muted)]">Estás viendo datos simulados. Conectá una wallet Stellar para gestionar tus garantías reales on-chain.</p>
+              <span className="font-bold uppercase tracking-wider block text-xs">Modo demostración</span>
+              <p className="text-[var(--muted)]">
+                Números ilustrativos. No es un ledger. El riel live está en /invest y /jury.
+              </p>
             </div>
             <button 
               onClick={connect}

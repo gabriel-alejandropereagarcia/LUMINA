@@ -14,7 +14,7 @@ import Link from "next/link";
 import { Coins, ShieldCheck, Wallet, ArrowRight, Loader2, Info, Building, AlertTriangle, Activity } from "lucide-react";
 import KoyweOnramp from "@/components/integrations/KoyweOnramp";
 import SoroswapPanel from "@/components/integrations/SoroswapPanel";
-import CctpHint from "@/components/integrations/CctpHint";
+import CertifyDemoButton from "@/components/CertifyDemoButton";
 
 
 function InvestPortal() {
@@ -43,7 +43,7 @@ function InvestPortal() {
   const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState<number>(1); // 1: Approve, 2: Deposit
   const [loading, setLoading] = useState<boolean>(false);
-  const [simBudget, setSimBudget] = useState<number>(100);
+  const [lastDeposit, setLastDeposit] = useState<{ sponsor: string; amount: number } | null>(null);
 
   useEffect(() => {
     if (!address || !amount) {
@@ -192,6 +192,7 @@ function InvestPortal() {
 
       setAmount("");
       setStep(1);
+      setLastDeposit({ sponsor: address, amount: cleanAmount });
       await refreshBalances();
     } catch (err: any) {
       console.error(err);
@@ -510,6 +511,16 @@ function InvestPortal() {
                 </div>
               )}
 
+              {(lastDeposit || (isConnected && address && escrowBalance > 0)) && (
+                <CertifyDemoButton
+                  sponsor={lastDeposit?.sponsor || address || ""}
+                  amount={selectedApp.priceUsdc}
+                />
+              )}
+
+              <p className="text-[11px] text-[var(--muted)]">
+                CCTP y Soroswap son extras. El demo Scale es deposit → assign → certificar.
+              </p>
               <CctpHint network={selectedNetwork} />
               <SoroswapPanel address={address} />
             </div>
@@ -548,7 +559,7 @@ function InvestPortal() {
         </div>
       </div>
 
-      {/* Simulador de Garantías ReFi */}
+      {/* Presupuesto ilustrativo (no es on-chain) */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 w-full">
         <div className="glass-card p-8 rounded-2xl space-y-6">
           <div className="border-b border-[var(--border)] pb-4">

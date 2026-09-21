@@ -548,7 +548,8 @@ export default function Home() {
           </h2>
           <p className="text-sm text-[var(--muted)] leading-relaxed">
             A los 12 meses sin hito, la empresa retira y Lumina cobra 0%.
-            El fee mantiene el riel, no un gestor:
+            El fee on-chain es 2,5% a la wallet del protocolo. El 1% / 1% / 0,5% es cómo lo
+            asignamos adentro (Connect, empresas, infra), no tres transfers.
           </p>
           <ul className="space-y-2 text-xs text-[var(--muted)] leading-relaxed pl-4 list-disc">
             <li><strong className="text-[var(--foreground)]">1% OSS</strong> — Connect y nuevas apps</li>

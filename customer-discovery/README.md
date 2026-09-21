@@ -1,6 +1,6 @@
 # Customer Discovery — Lumina Impact Protocol
 
-Validación de producto mediante 4 entrevistas (3 completadas y 1 pendiente de respuesta), conforme a los requisitos del **Stellar PULSO Hackathon 2026**.
+Validación de producto mediante 4 entrevistas, conforme al Argentina Builder Challenge 2026 (Scale).
 
 ## Entrevistas
 
