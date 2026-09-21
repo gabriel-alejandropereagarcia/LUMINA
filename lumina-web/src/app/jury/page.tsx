@@ -3,14 +3,14 @@
 import { FormEvent, Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { USDC_TESTNET_CLASSIC, USDC_TESTNET_SAC, USDT0_OFFICIAL } from "@/lib/official-assets";
+import { USDC_TESTNET_CLASSIC, USDC_TESTNET_SAC } from "@/lib/official-assets";
 import { txUrl } from "@/lib/explorer";
 
 const ESCROW = process.env.NEXT_PUBLIC_LUMINA_CONTRACT_ID || "CBZAI24XP2RXDVXLRJNVGVGZ5QRDMNI54GTPBTN4OOLFTSFJRWQ4M3EJ";
 const SPONSOR = process.env.NEXT_PUBLIC_SPONSOR_ADDRESS || "GBRR6QWYT5UIHATCC7SYJITERMDWKLE5HHJCNM5PP6GK2DRB4YPKSP5E";
 const USDT0_TX = process.env.NEXT_PUBLIC_USDT0_PROOF_TX || "";
 
-/** Evidencia E2E 19/9 — no es un default mágico del formulario. */
+/** Evidencia E2E 19/9. */
 const EVIDENCE = {
   deposit: "9fdbc2e8865a0a94339884d6345eb628c2d6ee16792ab5ebfe5f0a946765812f",
   assign: "0f58d322ce32855649d7f8c821987cd822d4181ea7121d0ce3829dfa5f48f9c3",
@@ -202,13 +202,9 @@ function JuryBody() {
       </section>
 
       <section className="space-y-2 text-sm">
-        <h2 className="text-[var(--foreground)] font-bold">USDT0 oficial (mainnet)</h2>
+        <h2 className="text-[var(--foreground)] font-bold">USDT0</h2>
         <p className="text-sm text-[var(--muted)]">
-          No existe USDT0 de testnet. No se fabrica. Transfer:{" "}
-          <a href={USDT0_OFFICIAL.transferUi} className="text-teal-500 underline" target="_blank" rel="noreferrer">
-            usdt0.to/transfer
-          </a>
-          .
+          Hoy el recorrido usa USDC Circle en testnet. USDT0 oficial en mainnet: próximamente.
         </p>
         {usdt0Shown ? (
           <p className="text-xs font-mono break-all">
@@ -221,9 +217,7 @@ function JuryBody() {
               {usdt0Shown}
             </a>
           </p>
-        ) : (
-          <p className="text-sm text-[var(--muted)]">USDT0 mainnet: próximamente. Hoy el recorrido usa USDC testnet.</p>
-        )}
+        ) : null}
       </section>
 
       <section className="space-y-2 text-xs font-mono text-[var(--muted)] break-all">
