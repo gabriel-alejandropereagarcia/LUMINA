@@ -118,6 +118,7 @@ export async function createAporte(input: {
   schemaId: string;
   unitLabel: string;
   lockPriceUsd: number;
+  oracleAddress?: string;
 }): Promise<Aporte> {
   const db = await readDb();
   const id = shortId("apo");
@@ -138,6 +139,7 @@ export async function createAporte(input: {
     schemaId: input.schemaId,
     unitLabel: input.unitLabel,
     lockPriceUsd: input.lockPriceUsd,
+    oracleAddress: input.oracleAddress,
     paymentInstructions: {
       kind: "simulation",
       beneficiary: DEMO_PAYMENT.beneficiary,

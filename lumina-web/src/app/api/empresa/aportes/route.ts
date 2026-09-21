@@ -4,9 +4,10 @@ import { createKoywePayin, isKoywePayinReady } from "@/lib/empresa/koywe-payin";
 import { DEMO_PAYMENT, arsFromUsd } from "@/lib/empresa/payment";
 import { readSession } from "@/lib/empresa/session";
 import { createAporte, listAportes, patchAporte } from "@/lib/empresa/store";
-import { getImpactApp } from "@/lib/impact-apps";
+import { resolveFundable } from "@/lib/empresa/fundable";
 
 export const runtime = "nodejs";
+
 
 function appOrigin(request: Request): string {
   return (
@@ -19,7 +20,7 @@ function appOrigin(request: Request): string {
 export async function GET() {
   const session = await readSession();
   if (!session) {
-    return NextResponse.json({ error: "Iniciá sesión en el portal Empresa." }, { status: 401 });
+    return NextResponse.json({ error: "Iniciá sesión en Empresas en Lumina." }, { status: 401 });
   }
   const aportes = await listAportes(session.id);
   return NextResponse.json({ aportes });
@@ -28,7 +29,7 @@ export async function GET() {
 export async function POST(request: Request) {
   const session = await readSession();
   if (!session) {
-    return NextResponse.json({ error: "Iniciá sesión en el portal Empresa." }, { status: 401 });
+    return NextResponse.json({ error: "Iniciá sesión en Empresas en Lumina." }, { status: 401 });
   }
 
   const body = await request.json().catch(() => ({}));
@@ -39,12 +40,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "El monto tiene que estar entre 1 y 100.000 USD." }, { status: 400 });
   }
 
-  const app = getImpactApp(appId);
+  const app = await resolveFundable(appId);
   if (!app) {
     return NextResponse.json({ error: "Elegí qué financiás." }, { status: 400 });
-  }
-  if (app.paused) {
-    return NextResponse.json({ error: "Esa app está pausada." }, { status: 403 });
   }
 
   let aporte = await createAporte({
@@ -56,6 +54,7 @@ export async function POST(request: Request) {
     schemaId: app.schemaId,
     unitLabel: app.unitLabel,
     lockPriceUsd: app.priceUsdc,
+    oracleAddress: app.oracleAddress,
   });
 
   const origin = appOrigin(request);

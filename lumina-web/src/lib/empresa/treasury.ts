@@ -28,7 +28,7 @@ export async function maybeTreasuryDeposit(aporte: Aporte): Promise<{
   if (!secret) return { attempted: false, error: "Sin TREASURY_SECRET." };
 
   const app = getImpactApp(aporte.appId);
-  const oracle = app?.oracleAddress || "";
+  const oracle = aporte.oracleAddress || app?.oracleAddress || "";
   if (!oracle.startsWith("G")) {
     return { attempted: false, error: "Esa app todavía no tiene cuenta que confirma." };
   }

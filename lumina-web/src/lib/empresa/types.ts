@@ -57,6 +57,8 @@ export type Aporte = {
   schemaId?: string;
   unitLabel?: string;
   lockPriceUsd?: number;
+  /** Cuenta G que confirma el trabajo de la app que la empresa eligió. */
+  oracleAddress?: string;
   /** Cuenta G de tesorería que reservó el pago on-chain. */
   sponsorAddress?: string;
   certifiedUnits?: number;
@@ -94,6 +96,20 @@ export type EmpresaSession = {
   id: string;
   email: string;
   company: string;
+};
+
+export type FundableOption = {
+  id: string;
+  name: string;
+  unitLabel: string;
+  priceUsdc: number;
+  categoryLabel: string;
+  milestone: string;
+  statusLabel: string;
+  oracleAddress: string;
+  payoutAddress: string;
+  schemaId: string;
+  valueMethod: string;
 };
 
 export type EmpresaDb = {

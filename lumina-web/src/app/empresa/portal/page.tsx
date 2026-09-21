@@ -12,8 +12,7 @@ import {
   Printer,
 } from "lucide-react";
 import { DEMO_PAYMENT, formatArs, formatUsd } from "@/lib/empresa/payment";
-import type { Aporte, Certificado } from "@/lib/empresa/types";
-import { IMPACT_APPS, getImpactApp } from "@/lib/impact-apps";
+import type { Aporte, Certificado, FundableOption } from "@/lib/empresa/types";
 import { aggregateBySchema, quantityFromLock } from "@/lib/hito/fact";
 import { useEmpresaSession } from "@/hooks/useEmpresaSession";
 import { useToast } from "@/context/ToastContext";
@@ -33,16 +32,18 @@ export default function EmpresaPortalPage() {
   const paidToast = useRef(false);
   const [aportes, setAportes] = useState<Aporte[]>([]);
   const [certificados, setCertificados] = useState<Certificado[]>([]);
+  const [opciones, setOpciones] = useState<FundableOption[]>([]);
   const [amountUsd, setAmountUsd] = useState("40");
-  const [appId, setAppId] = useState(IMPACT_APPS[0]?.id ?? "mira");
+  const [appId, setAppId] = useState("");
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [activeId, setActiveId] = useState<string | null>(null);
 
   const load = useCallback(async () => {
-    const [aportesRes, certsRes] = await Promise.all([
+    const [aportesRes, certsRes, opcionesRes] = await Promise.all([
       fetch("/api/empresa/aportes"),
       fetch("/api/empresa/certificados"),
+      fetch("/api/empresa/opciones"),
     ]);
     if (aportesRes.status === 401) {
       router.replace("/empresa");
@@ -50,8 +51,12 @@ export default function EmpresaPortalPage() {
     }
     const aportesData = await aportesRes.json();
     const certsData = await certsRes.json();
+    const opcionesData = await opcionesRes.json().catch(() => ({ opciones: [] }));
     setAportes(aportesData.aportes ?? []);
     setCertificados(certsData.certificados ?? []);
+    const nextOpciones = (opcionesData.opciones ?? []) as FundableOption[];
+    setOpciones(nextOpciones);
+    setAppId((current) => current || nextOpciones[0]?.id || "");
   }, [router]);
 
   useEffect(() => {
@@ -160,7 +165,7 @@ export default function EmpresaPortalPage() {
     .reduce((sum, item) => sum + item.amountUsd, 0);
   const certified = certificados.reduce((sum, item) => sum + item.amountUsd, 0);
   const impactTotals = aggregateBySchema(certificados);
-  const selectedApp = getImpactApp(appId);
+  const selectedApp = opciones.find((item) => item.id === appId);
   const previewQty = selectedApp
     ? quantityFromLock(Number(amountUsd) || 0, selectedApp.priceUsdc)
     : 0;
@@ -253,25 +258,51 @@ export default function EmpresaPortalPage() {
                   : ""}
               </span>
             </label>
-            <label className="block space-y-1">
-              <span className="text-xs font-semibold text-[var(--muted)]">Qué cubrís</span>
-              <select
-                id="empresa-app"
-                value={appId}
-                onChange={(event) => setAppId(event.target.value)}
-                required
-                className="w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-sm"
-              >
-                {IMPACT_APPS.map((app) => (
-                  <option key={app.id} value={app.id}>
-                    {app.name} — {app.unitLabel}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <fieldset className="space-y-2">
+              <legend className="text-xs font-semibold text-[var(--muted)]">Qué cubrís</legend>
+              {opciones.length === 0 ? (
+                <p className="text-xs text-[var(--muted)]">Todavía no hay trabajos para financiar.</p>
+              ) : (
+                <div className="grid grid-cols-1 gap-2">
+                  {opciones.map((app) => {
+                    const selected = appId === app.id;
+                    return (
+                      <label
+                        key={app.id}
+                        className={`flex cursor-pointer items-start gap-3 rounded-xl border px-4 py-3 text-sm transition-colors ${
+                          selected
+                            ? "border-teal-500 bg-teal-500/10"
+                            : "border-[var(--border)] hover:border-teal-500/50"
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="empresa-app"
+                          value={app.id}
+                          checked={selected}
+                          onChange={() => setAppId(app.id)}
+                          className="mt-1"
+                        />
+                        <span className="min-w-0">
+                          <span className="block font-semibold text-[var(--foreground)]">
+                            {app.name}
+                          </span>
+                          <span className="block text-xs text-[var(--muted)]">
+                            {app.categoryLabel} · {app.unitLabel} · US$ {app.priceUsdc} c/u
+                          </span>
+                          <span className="block text-[11px] text-[var(--muted)] mt-1">
+                            {app.milestone}
+                          </span>
+                        </span>
+                      </label>
+                    );
+                  })}
+                </div>
+              )}
+            </fieldset>
             <button
               type="submit"
-              disabled={busy === "create"}
+              disabled={busy === "create" || !appId}
               id="btn-empresa-orden"
               className="w-full flex items-center justify-center gap-2 rounded-xl bg-teal-600 hover:bg-teal-500 py-3 text-sm font-bold text-white cursor-pointer disabled:opacity-50"
             >
