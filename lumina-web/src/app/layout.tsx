@@ -30,16 +30,16 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lumina | RSE que se paga cuando el hito es real",
+  title: "Lumina | Hay ganas de ayudar. Hay quien no puede pagar.",
   description:
-    "La empresa lockea RSE con una factura, sin comprar cripto. La app de impacto cobra el 97,5% on-chain. Quien usa el servicio no paga. Escrow Soroban en Stellar.",
+    "Lumina une capital de impacto con quien no puede pagar, cuando el hito es real. La empresa paga una factura, no cripto. La app cobra el 97,5% on-chain. Quien usa el servicio no paga.",
   icons: {
     icon: "/favicon.svg",
   },
   openGraph: {
-    title: "Lumina — el riel RSE en Stellar",
+    title: "Lumina — hay ganas de ayudar. Hay quien no puede pagar.",
     description:
-      "Empresa sin wallet. App cobra 97,5% al certificar. Usuario no paga. Escrow Soroban.",
+      "Las unimos cuando el hito es real. Empresa paga factura, no cripto. App cobra 97,5%. Quien usa el servicio no paga.",
     type: "website",
     locale: "es_ES",
     siteName: "Lumina",

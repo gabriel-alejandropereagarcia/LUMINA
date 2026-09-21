@@ -19,7 +19,7 @@ export default function Footer() {
           <div className="space-y-4">
             <h3 className="font-serif font-bold text-lg text-[var(--foreground)]">Lumina</h3>
             <p className="text-xs text-[var(--muted)] leading-relaxed max-w-sm">
-              El capital RSE llega a la app cuando el hito es real. La empresa no toca cripto. Quien usa el servicio no paga.
+              Hay ganas de ayudar. Hay quien no puede pagar. Lumina las une cuando el hito es real.
             </p>
           </div>
 

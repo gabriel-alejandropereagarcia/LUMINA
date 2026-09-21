@@ -31,8 +31,8 @@ export default function WhitepaperAndRoadmap() {
             Lumina
           </h1>
           <p className="mt-4 text-sm text-[var(--muted)] max-w-2xl mx-auto">
-            El capital RSE llega a la app cuando el hito es real. La empresa no toca cripto.
-            Quien usa el servicio no paga. 2,5% solo si hubo impacto.
+            Hay ganas de ayudar. Hay quien no puede pagar. Lumina las une cuando el hito es real.
+            La empresa no toca cripto. Quien usa el servicio no paga.
           </p>
         </div>
 
@@ -75,10 +75,10 @@ export default function WhitepaperAndRoadmap() {
                   1. El problema
                 </h2>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  Una tesorería RSE argentina no puede abrir una wallet. Igual tiene que mostrar
-                  impacto — y hoy lo hace con planillas, meses tarde. Las apps que sí hacen el
-                  trabajo no cobran el día que el hito ocurrió. Quien usa esa app termina pagando
-                  o no recibe el servicio.
+                  Hay empresas que quieren ayudar y personas que no pueden pagar el servicio.
+                  Hoy el capital se queda en una planilla. Las apps cobran meses tarde. La familia
+                  paga, o el servicio no llega. Eso no es un problema de un país: es el hueco
+                  entre la gana de ayudar y quien la necesita.
                 </p>
                 <div className="rounded-xl border border-teal-500/10 bg-teal-500/5 p-4 space-y-2">
                   <h4 className="text-xs font-bold text-teal-400">Lumina es el riel</h4>
@@ -88,8 +88,10 @@ export default function WhitepaperAndRoadmap() {
                   </p>
                 </div>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  Tres ganadores: compliance ve unidades, la app cobra el 97,5%, la familia no
-                  paga. Validado en Salta con docentes MAE y con una minera que no puede tocar cripto.
+                  Tres partes: compliance ve unidades, la app cobra el 97,5%, quien usa el
+                  servicio no paga. Lo validamos primero en Salta (docentes MAE, una minera que
+                  no puede tocar cripto). El riel sirve en cualquier tesorería que pague impacto
+                  con prueba.
                 </p>
               </div>
             )}

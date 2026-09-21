@@ -1,6 +1,8 @@
 # Lumina — contexto Scale
 
-Protocolo RSE en Stellar: la empresa lockea con factura (sin wallet), la app cobra el **97,5% on-chain** cuando el hito es real, quien usa el servicio **no paga**. Track **Scale**, Argentina Builder Challenge 2026, Hub Salta.
+Hay ganas de ayudar. Hay quien no puede pagar. Lumina las une cuando el hito es real.
+
+La empresa lockea con factura (sin wallet), la app cobra el **97,5% on-chain**, quien usa el servicio **no paga**. Nació en Salta (ABC Scale). El riel es global.
 
 ## Hechos
 

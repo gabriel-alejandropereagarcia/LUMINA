@@ -1,6 +1,6 @@
 # lumina-web
 
-Front del riel Lumina (Argentina Builder Challenge · Scale).
+Front de Lumina. Hay ganas de ayudar. Hay quien no puede pagar. Las unimos cuando el hito es real.
 
 - Demo: https://lumina-dusky-pi.vercel.app
 - Evidencia: https://lumina-dusky-pi.vercel.app/jury
