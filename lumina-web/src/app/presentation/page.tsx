@@ -273,7 +273,7 @@ export default function WhitepaperAndRoadmap() {
                   </li>
                   <li>
                     <strong className="text-[var(--foreground)]">170–180s · cierre.</strong> Connect
-                    es el enchufe. PuenteMAE es ayuda social, no obra social. Lumina cobra 0% si no hubo hito.
+                    es el enchufe. PuenteMAE es ayuda social a docentes. Lumina cobra 0% si no hubo hito.
                   </li>
                 </ol>
                 <p className="text-[11px] text-[var(--muted)]">

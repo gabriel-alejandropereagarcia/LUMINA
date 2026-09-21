@@ -232,23 +232,36 @@ function JuryBody() {
         <p>SAC: {USDC_TESTNET_SAC}</p>
       </section>
 
-      <section className="space-y-2 text-sm text-[var(--muted)]">
-        <h2 className="text-[var(--foreground)] font-bold">Apps de ejemplo</h2>
+      <section className="space-y-3 text-sm text-[var(--muted)]">
+        <h2 className="text-[var(--foreground)] font-bold">Dos apps, el mismo protocolo</h2>
         <p>
-          MIRA y PuenteMAE están listadas en Connect. No viven en este repo. El certify
-          prueba el protocolo, no la UX de cada app.
+          Lumina no es la clínica ni la escuela. Son apps que se enchufan: certifican el
+          hecho y cobran el 97,5%. El usuario final nunca paga.
         </p>
+        <ul className="space-y-2">
+          <li>
+            <strong className="text-[var(--foreground)]">MIRA</strong> — cribado de desarrollo
+            infantil. En trabajo.
+          </li>
+          <li>
+            <strong className="text-[var(--foreground)]">PuenteMAE</strong> — ayuda social a
+            docentes de inclusión. En trabajo.
+          </li>
+        </ul>
       </section>
 
       <div className="flex flex-wrap gap-4 text-sm">
         <Link href="/connect" className="text-teal-500 underline">
-          Connect
+          Registrar una app
         </Link>
-        <Link href="/invest" className="text-teal-500 underline">
-          Depositar
+        <Link href="/developers" className="text-teal-500 underline">
+          API de certify
+        </Link>
+        <Link href="/empresa" className="text-teal-500 underline">
+          Portal empresa
         </Link>
         <Link href="/presentation" className="text-teal-500 underline">
-          Deck
+          Cómo funciona
         </Link>
       </div>
     </div>
