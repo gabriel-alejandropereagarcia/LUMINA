@@ -34,7 +34,7 @@ export default function AdminPortal() {
       address: process.env.NEXT_PUBLIC_ORACLE_ADDRESS || process.env.NEXT_PUBLIC_MIRA_ORACLE_ADDRESS || "GBJJCKJBEF2ILRD5LGWXGH5BQIKZ6EYFDS3RHQZQ5KBCOV4XHSDESM7W",
       name: "MIRA AI · en trabajo",
       price: 40,
-      lastUpdate: "pendiente Connect",
+      lastUpdate: "pendiente en Lumina",
       daysRemaining: 0,
     },
   ]);

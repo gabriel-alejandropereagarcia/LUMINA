@@ -42,6 +42,7 @@ function InvestPortal() {
   const [step, setStep] = useState<number>(1); // 1: Approve, 2: Deposit
   const [loading, setLoading] = useState<boolean>(false);
   const [lastDeposit, setLastDeposit] = useState<{ sponsor: string; amount: number } | null>(null);
+  const [simBudget, setSimBudget] = useState(40);
 
   useEffect(() => {
     if (!address || !amount) {
@@ -216,20 +217,20 @@ function InvestPortal() {
       {/* Encabezado */}
       <div className="text-center space-y-4">
         <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-[var(--teal)] via-[var(--green)] to-[var(--gold)] bg-clip-text text-transparent">
-          Probá un pago
+          Probar Lumina
         </h1>
         <p className="max-w-2xl mx-auto text-sm text-[var(--muted)]">
           Acá se ve el cobro: depositás, elegís la app, ella confirma el trabajo y cobra el 97,5%.
           Una empresa entra por{" "}
           <Link href="/empresa" className="text-teal-600 font-semibold underline">
-            el portal
+            Empresas en Lumina
           </Link>
           {" "}con una factura, sin cuenta cripto.
         </p>
         <p className="max-w-2xl mx-auto text-xs text-[var(--muted)] rounded-xl border border-[var(--border)] bg-[var(--card-bg)] px-4 py-3">
-          Al final, los comprobantes:{" "}
+          Al final, los recibos:{" "}
           <Link href="/jury" className="text-teal-600 font-semibold underline">
-            ver recibos
+            Recibos Lumina
           </Link>
           .
         </p>
@@ -500,7 +501,7 @@ function InvestPortal() {
           {/* Información del Contrato */}
           <div className="border-t border-[var(--border)] pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs text-[var(--muted)]">
             <div className="space-y-1">
-              <span>Comprobante Lumina:</span>
+              <span>Recibo Lumina:</span>
               <a
                 href={urls.contractUrl}
                 target="_blank"

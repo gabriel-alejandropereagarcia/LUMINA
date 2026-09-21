@@ -81,7 +81,7 @@ export default function CertifyDemoButton({ sponsor, amount }: Props) {
       </button>
       <p className="text-[11px] text-[var(--muted)] leading-relaxed">
         Confirma el trabajo de prueba y paga el 97,5% a la app. Si falla, los comprobantes
-        del 19/9 están en Comprobantes.
+        del 19/9 están en Recibos Lumina.
       </p>
       {error ? <p className="text-xs text-red-500">{error}</p> : null}
     </div>

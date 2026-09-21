@@ -3,7 +3,7 @@
 Front de Lumina. Impacto sin fricción.
 
 - Demo: https://lumina-dusky-pi.vercel.app
-- Comprobantes: https://lumina-dusky-pi.vercel.app/jury
+- Recibos Lumina: https://lumina-dusky-pi.vercel.app/jury
 - Reserva testnet: `CBZAI24XP2RXDVXLRJNVGVGZ5QRDMNI54GTPBTN4OOLFTSFJRWQ4M3EJ`
 
 ```bash

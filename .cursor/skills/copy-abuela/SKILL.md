@@ -14,11 +14,12 @@ Leé `.cursor/rules/copy-adopcion.mdc` y aplicá **toda** la superficie tocada, 
 3. Blockchain = recibo. Nunca el titular. Stellar/comprobante solo cuando el usuario **pide ver** el pago (`/invest`, `/jury`).
 4. Incompleto = `en trabajo` / `próximamente`. Nunca “No se finge”, WIP, OS, script interno.
 5. Freighter y “Conectar wallet” solo en `/invest` (y admin). Home/empresa/jury no piden billetera.
-6. `/jury`: título humano (“Comprobantes”). Hashes con etiqueta: pagó / eligió la app / cobró.
+6. `/jury`: título **Recibos Lumina**. Hashes con etiqueta: pagó / eligió la app / cobró.
+7. Nav: Empresas · Apps · Recibos · Probar. Nunca Connect ni Portal como marca.
 
 ## Pitch (no diluir)
 
-Impacto sin fricción → factura → 97,5% a la app → familia no paga → si no ocurrió, se devuelve.
+Impacto sin fricción. Lumina ilumina el camino. Empresas en Lumina / Apps en Lumina. Factura → 97,5% a la app → familia no paga.
 
 ## No tocar
 

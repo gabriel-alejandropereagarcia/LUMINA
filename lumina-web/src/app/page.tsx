@@ -38,18 +38,17 @@ export default function Home() {
       {/* Hero Section */}
       <div className={`max-w-4xl text-center space-y-8 z-10 pt-8 fade-in-up ${isVisible ? 'visible' : ''}`}>
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--teal-light)] bg-[var(--teal-light)] text-[var(--teal)] text-xs font-semibold tracking-wide uppercase">
-          <Sparkles className="h-3.5 w-3.5" /> Lumina · Impacto sin fricción
+          <Sparkles className="h-3.5 w-3.5" /> Impacto sin fricción
         </div>
         
         <h1 className="font-serif text-4xl sm:text-6xl font-bold tracking-tight text-[var(--foreground)] leading-tight">
-          Impacto <span className="text-gradient">sin fricción</span>
+          Ilumina el <span className="text-gradient">camino</span>
         </h1>
 
         
         <p className="max-w-2xl mx-auto text-base sm:text-lg text-[var(--muted)] leading-relaxed">
-          Hoy una empresa quiere financiar salud, educación o asistencia. Una familia lo
-          necesita. El capital se pierde en informes y meses de espera. Lumina lo resuelve:
-          una factura, el 97,5% a la app, el usuario final nunca paga.
+          Lumina conecta a quien quiere ayudar. Una factura. El trabajo se hizo.
+          El 97,5% llega. La familia no paga.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
@@ -58,7 +57,7 @@ export default function Home() {
             id="btn-hero-empresa"
             className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-600 to-green-600 px-8 py-4 text-base font-semibold text-white shadow-lg hover:from-teal-700 hover:to-green-700 transition-all hover:scale-105 active:scale-95 cursor-pointer"
           >
-            Soy empresa
+            Empresa en Lumina
             <ArrowRight className="h-5 w-5" />
           </Link>
           <Link
@@ -66,16 +65,16 @@ export default function Home() {
             id="btn-hero-connect"
             className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--card-bg)] px-8 py-4 text-base font-semibold text-[var(--foreground)] hover:bg-[var(--teal-light)] transition-all hover:scale-105 active:scale-95 cursor-pointer"
           >
-            Tengo una app
+            App en Lumina
           </Link>
         </div>
         <p className="text-xs text-[var(--muted)]">
           <Link href="/connect#registro" className="text-teal-600 underline">
-            Sumá tu app
+            Tu app entra a Lumina
           </Link>
           {" · "}
           <Link href="/jury" className="text-teal-600 underline">
-            Ver comprobantes
+            Recibos Lumina
           </Link>
         </p>
       </div>
@@ -144,7 +143,7 @@ export default function Home() {
             />
           </div>
           <div className="space-y-4 max-w-xl text-center lg:text-left">
-            <span className="text-xs font-bold text-teal-600 uppercase tracking-widest block">Tres partes</span>
+            <span className="text-xs font-bold text-teal-600 uppercase tracking-widest block">En Lumina</span>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[var(--foreground)] tracking-tight">
               Empresa, app y familia. Nadie más en el medio.
             </h2>
@@ -153,7 +152,7 @@ export default function Home() {
             </p>
             <div className="grid grid-cols-3 gap-4 pt-4">
               {[
-                { value: `${IMPACT_APPS.length}`, label: "App en catálogo", ref: familiasRef },
+                { value: `${IMPACT_APPS.length}`, label: "Apps en Lumina", ref: familiasRef },
                 { value: `${mchatCount}`, label: "Trabajos cobrados", ref: mchatRef },
                 { value: `${fondosCount}.5%`, label: "Llega a la app", ref: fondosRef },
               ].map((m, i) => (
@@ -235,17 +234,17 @@ export default function Home() {
       {/* MARKETPLACE DE PROYECTOS DE IMPACTO */}
       <div id="marketplace" className="w-full space-y-8 z-10 pt-12 border-t border-[var(--border)]">
         <div className="text-center space-y-3">
-          <span className="text-xs font-bold text-teal-600 uppercase tracking-widest block">Apps de impacto</span>
-          <h2 className="font-serif text-3xl font-bold text-[var(--foreground)] tracking-tight">Dos apps. El mismo camino.</h2>
+          <span className="text-xs font-bold text-teal-600 uppercase tracking-widest block">Apps en Lumina</span>
+          <h2 className="font-serif text-3xl font-bold text-[var(--foreground)] tracking-tight">Las primeras luces en el camino</h2>
           <p className="text-xs text-[var(--muted)] max-w-lg mx-auto">
-            Lumina no es la clínica ni la escuela. Es el medio de pago. Otras apps entran igual.
+            Lumina no es la clínica ni la escuela. MIRA y PuenteMAE cobran acá cuando el trabajo se hizo.
           </p>
         </div>
 
         <div className="max-w-3xl mx-auto p-6 rounded-2xl border border-[var(--border)] bg-[var(--card-bg)] text-center text-xs text-[var(--muted)] space-y-2">
-          <strong className="text-[var(--foreground)] block text-sm">Sumá tu app</strong>
+          <strong className="text-[var(--foreground)] block text-sm">Tu app entra a Lumina</strong>
           <p className="leading-relaxed">
-            MIRA hace cribados. PuenteMAE ayuda a docentes. Las dos cobran cuando el trabajo se hizo.
+            MIRA hace cribados. PuenteMAE ayuda a docentes. Las dos cobran en Lumina cuando el trabajo se hizo.
           </p>
         </div>
 
@@ -311,13 +310,13 @@ export default function Home() {
                           href={`/invest?app=${app.id}`}
                           className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-600 to-green-600 py-3 text-xs font-bold text-white shadow-md hover:from-teal-700 hover:to-green-700 transition-all"
                         >
-                          Probar un pago
+                          Probar Lumina
                         </Link>
                         <Link
                           href="/connect"
                           className="flex items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--card-bg)] py-3 text-xs font-bold text-[var(--foreground)] hover:bg-[var(--teal-light)] transition-all"
                         >
-                          Ver la app
+                          Apps en Lumina
                         </Link>
                       </div>
                     ) : isLive ? (
@@ -336,7 +335,7 @@ export default function Home() {
                         }}
                         className="w-full flex items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--card-bg)] py-3 text-xs font-bold text-[var(--foreground)] hover:bg-[var(--teal-light)] transition-all hover:scale-105 active:scale-95 cursor-pointer"
                       >
-                        Cómo se suma
+                        Cómo entra
                       </button>
                     )}
                   </div>
@@ -349,8 +348,8 @@ export default function Home() {
                 <span className="p-3 rounded-xl block w-fit bg-[var(--teal-light)] text-teal-600">
                   <Plug className="h-6 w-6" />
                 </span>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-teal-600">Para apps</p>
-                <h3 className="text-lg font-bold text-[var(--foreground)]">Tu app acá</h3>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-teal-600">Apps en Lumina</p>
+                <h3 className="text-lg font-bold text-[var(--foreground)]">Tu app entra a Lumina</h3>
                 <p className="text-xs text-[var(--muted)] leading-relaxed">
                   Completá una ficha. Cuando el trabajo se hizo, cobrás el 97,5%.
                 </p>
@@ -359,7 +358,7 @@ export default function Home() {
                 href="/connect"
                 className="w-full flex items-center justify-center gap-2 rounded-xl bg-teal-600 py-3 text-xs font-bold text-white"
               >
-                Sumarme
+                Entrar a Lumina
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -372,22 +371,22 @@ export default function Home() {
           <span className="text-xs font-bold text-teal-600 uppercase tracking-widest block">Recorrido</span>
           <h2 className="font-serif text-3xl font-bold text-[var(--foreground)] tracking-tight">Tres minutos. Un camino.</h2>
           <p className="text-xs text-[var(--muted)] max-w-lg mx-auto">
-            Empresa paga la factura. App hace el trabajo. Se ve el comprobante. Nació en Salta.
+            Empresa paga la factura. App hace el trabajo. Se ve el recibo Lumina. Nació en Salta.
           </p>
         </div>
         <div className="glass-card p-8 rounded-2xl max-w-2xl mx-auto space-y-4 text-sm text-[var(--muted)]">
           <p>
-            Empezá por el portal si pagás el impacto. Por Probar si querés ver el pago en la red.
+            Empezá por Empresas en Lumina si pagás el impacto. Por Probar Lumina si querés ver el pago.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link href="/empresa" className="rounded-xl bg-teal-600 px-4 py-2 text-xs font-bold text-white">
-              Portal Empresa
+              Empresa en Lumina
             </Link>
             <Link href="/invest" className="rounded-xl border border-[var(--border)] px-4 py-2 text-xs font-bold text-[var(--foreground)]">
-              Probar un pago
+              Probar Lumina
             </Link>
             <Link href="/jury" className="rounded-xl border border-[var(--border)] px-4 py-2 text-xs font-bold text-[var(--foreground)]">
-              Comprobantes
+              Recibos Lumina
             </Link>
           </div>
         </div>
@@ -462,7 +461,7 @@ export default function Home() {
 
           <div className="rounded-xl border border-dashed border-[var(--border)] p-6 text-xs text-[var(--muted)] text-center space-y-2">
             <p>El directorio se llena con el primer cobro. Podés ser ese pago.</p>
-            <Link href="/invest" className="text-teal-500 underline">Probar un pago</Link>
+            <Link href="/invest" className="text-teal-500 underline">Probar Lumina</Link>
           </div>
         </div>
       </div>
@@ -476,10 +475,10 @@ export default function Home() {
       <div className="w-full space-y-12 z-10 pt-12 border-t border-[var(--border)]">
         <div className="text-center space-y-4">
           <h2 className="font-serif text-3xl font-bold text-[var(--foreground)] tracking-tight">
-            Dos puertas
+            Dos roles. Un solo Lumina.
           </h2>
           <p className="max-w-xl mx-auto text-sm text-[var(--muted)]">
-            La empresa entra con una factura. La app cobra cuando el trabajo se hizo.
+            La empresa entra con una factura. La app cobra cuando el trabajo se hizo. Las dos, en Lumina.
           </p>
         </div>
 
@@ -489,7 +488,7 @@ export default function Home() {
               <div className="h-8 w-8 flex items-center justify-center rounded-lg bg-[var(--teal-light)] text-teal-600">
                 <BarChart3 className="h-5 w-5" />
               </div>
-              <h3 className="text-lg font-bold text-[var(--foreground)]">Si sos empresa</h3>
+              <h3 className="text-lg font-bold text-[var(--foreground)]">Empresa en Lumina</h3>
             </div>
             <ul className="space-y-4 text-sm text-[var(--muted)]">
               <li className="flex items-start gap-2">
@@ -512,7 +511,7 @@ export default function Home() {
               <div className="h-8 w-8 flex items-center justify-center rounded-lg bg-[var(--green-light)] text-green-600">
                 <Scale className="h-5 w-5" />
               </div>
-              <h3 className="text-lg font-bold text-[var(--foreground)]">Si tenés una app</h3>
+              <h3 className="text-lg font-bold text-[var(--foreground)]">App en Lumina</h3>
             </div>
             <ul className="space-y-4 text-sm text-[var(--muted)]">
               <li className="flex items-start gap-2">

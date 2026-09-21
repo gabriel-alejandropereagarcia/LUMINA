@@ -32,14 +32,14 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Lumina | Impacto sin fricción",
   description:
-    "Una empresa quiere financiar salud, educación o asistencia. Una familia lo necesita. El capital se pierde en informes. Lumina lo resuelve: factura, 97,5% a la app, el usuario nunca paga.",
+    "Lumina ilumina el camino de la RSE. Conecta a quien quiere ayudar. Una factura, el 97,5% a la app, la familia no paga.",
   icons: {
     icon: "/favicon.svg",
   },
   openGraph: {
-    title: "Lumina — impacto sin fricción",
+    title: "Lumina — ilumina el camino",
     description:
-      "Factura, no cripto. 97,5% a la app si el hecho ocurrió. El usuario final nunca paga.",
+      "Conecta a quien quiere ayudar. Factura, 97,5% a la app, la familia no paga.",
     type: "website",
     locale: "es_ES",
     siteName: "Lumina",
@@ -54,9 +54,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lumina — el impacto se paga cuando el trabajo es real",
+    title: "Lumina — ilumina el camino",
     description:
-      "Empresa sin cuenta cripto. App cobra 97,5%. El usuario no paga.",
+      "Empresas y apps en Lumina. El 97,5% llega cuando el trabajo se hizo. La familia no paga.",
     images: [
       "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=1200&h=630&fit=crop",
     ],

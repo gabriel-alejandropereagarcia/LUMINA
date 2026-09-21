@@ -31,8 +31,8 @@ export default function WhitepaperAndRoadmap() {
             Lumina
           </h1>
           <p className="mt-4 text-sm text-[var(--muted)] max-w-2xl mx-auto">
-            Impacto sin fricción. La empresa paga una factura — sin wallets, sin cripto.
-            Si el hecho ocurrió, el 97,5% se cobra en Stellar. El usuario final nunca paga.
+            Lumina ilumina el camino. Conecta a quien quiere ayudar.
+            Una factura. El trabajo se hizo. El 97,5% llega. La familia no paga.
           </p>
         </div>
 
@@ -80,11 +80,11 @@ export default function WhitepaperAndRoadmap() {
                   de espera y burocracia.
                 </p>
                 <div className="rounded-xl border border-teal-500/10 bg-teal-500/5 p-4 space-y-2">
-                  <h4 className="text-xs font-bold text-teal-400">Lumina lo resuelve</h4>
+                  <h4 className="text-xs font-bold text-teal-400">Lumina ilumina el camino</h4>
                   <p className="text-xs leading-relaxed text-[var(--muted)]">
-                    Factura simple — sin cuenta cripto. La app confirma el trabajo:
-                    una unidad, una cantidad. Si ocurrió, 97,5% a la app. Si no, el
-                    capital vuelve. El usuario final nunca paga.
+                    Conecta a quien quiere ayudar. Factura — sin cuenta cripto.
+                    La app confirma el trabajo. Si ocurrió, 97,5% a la app. Si no, el
+                    capital vuelve. La familia no paga.
                   </p>
                 </div>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
@@ -247,27 +247,27 @@ export default function WhitepaperAndRoadmap() {
                 </p>
                 <ol className="text-sm text-[var(--muted)] space-y-3 list-decimal pl-5">
                   <li>
-                    <strong className="text-[var(--foreground)]">Inicio.</strong> Impacto sin
-                    fricción. La empresa no toca cripto. El usuario final nunca paga.
+                    <strong className="text-[var(--foreground)]">Inicio.</strong> Lumina ilumina el
+                    camino. Conecta a quien quiere ayudar. La familia no paga.
                   </li>
                   <li>
-                    <strong className="text-[var(--foreground)]">Portal empresa.</strong>{" "}
+                    <strong className="text-[var(--foreground)]">Empresas en Lumina.</strong>{" "}
                     Factura. Panel: 10 niño-mes. PDF. Sin cuenta cripto.
                   </li>
                   <li>
-                    <strong className="text-[var(--foreground)]">Probar.</strong> Un pago de
+                    <strong className="text-[var(--foreground)]">Probar Lumina.</strong> Un pago de
                     prueba y se elige la app. Freighter solo acá.
                   </li>
                   <li>
                     <strong className="text-[var(--foreground)]">Confirmar.</strong> La app
-                    dice que el trabajo se hizo. 97,5% a la app. Recibo en Comprobantes.
+                    dice que el trabajo se hizo. 97,5% a la app. Recibo Lumina.
                   </li>
                   <li>
-                    <strong className="text-[var(--foreground)]">Comprobantes.</strong> Se ve
+                    <strong className="text-[var(--foreground)]">Recibos Lumina.</strong> Se ve
                     el pago. USDT0: próximamente.
                   </li>
                   <li>
-                    <strong className="text-[var(--foreground)]">Cierre.</strong> Sumá tu app.
+                    <strong className="text-[var(--foreground)]">Cierre.</strong> Apps en Lumina.
                     PuenteMAE es ayuda a docentes. Lumina cobra 0% si no hubo trabajo.
                   </li>
                 </ol>

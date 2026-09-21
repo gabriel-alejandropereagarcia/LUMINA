@@ -49,7 +49,7 @@ export default function EmpresaImpactoPage() {
     <div className="min-h-[calc(100vh-4rem)] px-4 py-10 sm:px-6 max-w-3xl mx-auto space-y-8">
       <div className="flex items-center justify-between gap-3 print:hidden">
         <Link href="/empresa/portal" className="text-xs text-teal-600 underline">
-          ← Portal
+          ← Empresas en Lumina
         </Link>
         <div className="flex gap-2">
           <a

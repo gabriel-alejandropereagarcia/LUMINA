@@ -19,13 +19,13 @@ export default function Footer() {
           <div className="space-y-4">
             <h3 className="font-serif font-bold text-lg text-[var(--foreground)]">Lumina</h3>
             <p className="text-xs text-[var(--muted)] leading-relaxed max-w-sm">
-              Impacto sin fricción. La empresa paga una factura. El usuario final nunca paga.
+              Impacto sin fricción. Lumina ilumina el camino. Conecta a quien quiere ayudar.
             </p>
           </div>
 
           {/* Col 2: Smart Contracts */}
           <div className="space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--foreground)]">Comprobantes</h4>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--foreground)]">Recibos Lumina</h4>
             <ul className="space-y-2">
               <li>
                 <a
@@ -58,17 +58,17 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link href="/empresa" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
-                  Portal Empresa
+                  Empresas en Lumina
                 </Link>
               </li>
               <li>
                 <Link href="/jury" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
-                  Comprobantes
+                  Recibos Lumina
                 </Link>
               </li>
               <li>
                 <Link href="/connect" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
-                  Sumá tu app
+                  Apps en Lumina
                 </Link>
               </li>
               <li>

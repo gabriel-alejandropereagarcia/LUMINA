@@ -75,10 +75,10 @@ function JuryBody() {
     <div className="min-h-[calc(100vh-4rem)] px-4 py-16 sm:px-6 lg:px-8 max-w-3xl mx-auto space-y-8">
       <div className="space-y-3">
         <span className="text-xs font-bold text-teal-600 uppercase tracking-widest">
-          Argentina Builder Challenge · Scale
+          En Lumina
         </span>
         <h1 className="font-serif text-4xl font-bold text-[var(--foreground)]">
-          Comprobantes
+          Recibos Lumina
         </h1>
         <p className="text-sm text-[var(--muted)] leading-relaxed">
           Impacto sin fricción. Factura, no cripto. Si el trabajo ocurrió, el 97,5% llega a la app.
@@ -124,14 +124,14 @@ function JuryBody() {
         <ol className="list-decimal pl-5 space-y-2">
           <li>
             <Link href="/empresa" className="text-teal-500 underline">
-              Portal empresa
+              Empresas en Lumina
             </Link>{" "}
             — factura, sin cuenta cripto. El cobro en pesos: en trabajo (este recorrido muestra cómo se ve).
             El PDF no dice que se pagó hasta que la app cobra.
           </li>
           <li>
             <Link href="/invest" className="text-teal-500 underline">
-              Probar un pago
+              Probar Lumina
             </Link>{" "}
             — Freighter + USDC de prueba: depositás y elegís la app. Después, confirmá el trabajo
             o usá los recibos de arriba.
@@ -233,9 +233,9 @@ function JuryBody() {
       </section>
 
       <section className="space-y-3 text-sm text-[var(--muted)]">
-        <h2 className="text-[var(--foreground)] font-bold">Dos apps, el mismo camino</h2>
+        <h2 className="text-[var(--foreground)] font-bold">Apps en Lumina</h2>
         <p>
-          Lumina no es la clínica ni la escuela. Son apps que se suman: confirman el
+          Lumina no es la clínica ni la escuela. Las apps confirman el
           trabajo y cobran el 97,5%. El usuario final nunca paga.
         </p>
         <ul className="space-y-2">
@@ -252,13 +252,13 @@ function JuryBody() {
 
       <div className="flex flex-wrap gap-4 text-sm">
         <Link href="/connect" className="text-teal-500 underline">
-          Sumá tu app
+          Apps en Lumina
         </Link>
         <Link href="/developers" className="text-teal-500 underline">
           Cómo se cobra
         </Link>
         <Link href="/empresa" className="text-teal-500 underline">
-          Portal empresa
+          Empresas en Lumina
         </Link>
         <Link href="/presentation" className="text-teal-500 underline">
           Cómo funciona

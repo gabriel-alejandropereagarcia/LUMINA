@@ -169,7 +169,7 @@ export default function EmpresaPortalPage() {
     return (
       <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center text-sm text-[var(--muted)]">
         <Loader2 className="h-5 w-5 animate-spin mr-2" />
-        Cargando portal…
+        Cargando Lumina…
       </div>
     );
   }
@@ -179,7 +179,7 @@ export default function EmpresaPortalPage() {
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
         <div>
           <span className="text-xs font-bold text-teal-600 uppercase tracking-widest">
-            Portal Empresa
+            Empresas en Lumina
           </span>
           <h1 className="font-serif text-3xl font-bold text-[var(--foreground)] mt-1">
             {session.company}

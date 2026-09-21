@@ -1,31 +1,36 @@
 ---
-description: Voz de adopción de Lumina. Toda copy visible debe pasar el test de la abuela. Blockchain es el recibo, nunca el titular.
+description: Voz de adopción de Lumina. Toda copy visible debe pasar el test de la abuela. Lumina es el centro. Blockchain es el recibo, nunca el titular.
 alwaysApply: true
 ---
 
-# Copy: adopción, no protocolo
+# Copy: Lumina al centro
 
 Lumina gana si una empresa, una familia o un juez entiende sin saber blockchain.
 
-**Pitch canónico (no parafrasear la tesis):** Impacto sin fricción. La empresa paga una factura. El 97,5% llega a la app. El usuario final nunca paga. Si el trabajo no ocurrió, el dinero vuelve y Lumina cobra 0%.
+**Pitch canónico:** Impacto sin fricción. Lumina ilumina el camino de la RSE. Conecta a quien quiere ayudar. La empresa paga una factura. El 97,5% llega a la app. El usuario final nunca paga. Si el trabajo no ocurrió, el dinero vuelve y Lumina cobra 0%.
+
+Lumina es el centro. No hay producto Connect ni Portal: hay **Empresas en Lumina** y **Apps en Lumina**.
 
 ## Superficies
 
 | Quién | Rutas | Voz |
 |---|---|---|
-| Empresa / familia | `/`, `/empresa`, `/c/`, PDF | Factura, trabajo hecho, cobro 97,5%, familia no paga. Cero cripto. |
-| App que se suma | `/connect` | Ficha, cobrás cuando el trabajo se hizo. Cero `add_oracle`. |
-| Demo / juez | `/invest`, `/jury` | Humanos primero. Hashes y txs **después**, con etiqueta humana. Freighter **solo** `/invest`. |
-| Devs | `/developers`, código | API ok. Títulos humanos. |
+| Todos | `/` | Lumina ilumina el camino. Empresa en Lumina / App en Lumina. |
+| Empresa | `/empresa`, `/c/`, PDF | Empresas en Lumina. Factura, trabajo hecho, familia no paga. |
+| App | `/connect` | Apps en Lumina. Tu app entra a Lumina. Cero `add_oracle`. |
+| Demo / juez | `/invest`, `/jury` | Probar Lumina / Recibos Lumina. Hashes después, con etiqueta humana. Freighter **solo** `/invest`. |
+| Devs | `/developers` | API ok. Títulos: Apps en Lumina. |
 
-Incompleto = **en trabajo** / **próximamente**. Nunca “No se finge”, WIP, OS, script, conversación interna, “próximos sprints”.
+Nav corto: Empresas · Apps · Recibos · Probar.
+
+Incompleto = **en trabajo** / **próximamente**. Nunca Connect como marca, “No se finge”, WIP, OS, script interno.
 
 ## Prohibido en UI (salvo `/invest` `/admin` y labels de tx en `/jury`)
 
-Freighter, PSAV, SHA-256, hash, on-chain, escrow, webhook, add_oracle, Dry-run, Clawback, Anti-Replay, lockea, riel, RPC, listing, oráculo, certify, explorer, seed, SAC, HitoFact, canonical, wallet (en empresa), Contratos Inteligentes, Trazabilidad On-Chain, Demo Day, protocolo Scale como titular.
+Freighter, PSAV, SHA-256, hash, on-chain, escrow, webhook, add_oracle, Dry-run, Clawback, Anti-Replay, lockea, riel, RPC, listing, oráculo, certify, explorer, seed, SAC, HitoFact, canonical, wallet (en empresa), Contratos Inteligentes, Trazabilidad On-Chain, Demo Day, protocolo Scale como titular, Connect como producto.
 
 ## Diccionario
 
-factura · trabajo hecho · cobro 97,5% · familia no paga · recibo / comprobante · dinero reservado · se elige la app · confirmar que ocurrió · Sumá tu app · en trabajo / próximamente
+Lumina · Empresas en Lumina · Apps en Lumina · Recibos Lumina · Probar Lumina · factura · trabajo hecho · cobro 97,5% · familia no paga · dinero reservado · ilumina el camino · en trabajo / próximamente
 
-Antes de mergear copy: ¿lo entiende alguien que no sabe qué es Stellar? Si no, reescribí. No inventar PII. Scale, no Genesis. Empresa paga factura, no cripto.
+Antes de mergear copy: ¿Lumina es el sujeto de la frase? Si el sujeto es la app, Connect o el portal, reescribí. No inventar PII. Scale, no Genesis. Empresa paga factura, no cripto.

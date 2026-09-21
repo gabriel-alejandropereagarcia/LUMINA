@@ -113,15 +113,15 @@ export default function ConnectPage() {
     <div className="min-h-[calc(100vh-4rem)] px-4 py-16 sm:px-6 lg:px-8 max-w-3xl mx-auto space-y-10">
       <div className="space-y-3">
         <span className="text-xs font-bold text-teal-600 uppercase tracking-widest">
-          Para apps
+          Apps en Lumina
         </span>
         <h1 className="font-serif text-4xl font-bold tracking-tight text-[var(--foreground)]">
-          Sumá tu app
+          Tu app entra a Lumina
         </h1>
         <p className="text-sm text-[var(--muted)] leading-relaxed">
-          Completá una ficha. No hace falta cuenta cripto para pedir el alta. Lumina revisa
-          qué cobrás y a quién. Cuando el trabajo se hizo, cobrás el 97,5%. El panel de la
-          empresa suma esas unidades — no el marketing.
+          Completá una ficha. No hace falta cuenta cripto. Lumina revisa
+          qué cobrás y a quién. Cuando el trabajo se hizo, cobrás el 97,5%.
+          Las empresas en Lumina suman esas unidades — no el marketing.
         </p>
         <a
           href="#registro"
@@ -153,7 +153,7 @@ export default function ConnectPage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="font-serif text-lg font-bold">Apps ya en el camino</h2>
+        <h2 className="font-serif text-lg font-bold">Apps ya en Lumina</h2>
         <ul className="space-y-2 text-sm">
           {IMPACT_APPS.map((app) => (
             <li key={app.id} className="rounded-xl border border-[var(--border)] p-4">
@@ -274,7 +274,7 @@ export default function ConnectPage() {
           <Plug className="h-5 w-5 text-teal-500 shrink-0" />
           <span>
             <strong className="text-[var(--foreground)]">Ficha.</strong> Unidad + valor + prohibidos.
-            Sin eso el panel de la empresa no puede decir “10 niños”.
+            Sin eso las empresas en Lumina no pueden decir “10 niños”.
           </span>
         </li>
         <li className="flex gap-3">

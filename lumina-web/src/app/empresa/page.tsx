@@ -33,7 +33,7 @@ export default function EmpresaLandingPage() {
       });
       const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.error || "No se pudo entrar al portal.");
+          throw new Error(data.error || "No se pudo entrar a Lumina.");
       }
       setSession(data.session);
       router.push("/empresa/portal");
@@ -49,7 +49,7 @@ export default function EmpresaLandingPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         <div className="space-y-6">
           <span className="text-xs font-bold text-teal-600 uppercase tracking-widest">
-            Portal Empresa
+            Empresas en Lumina
           </span>
           <h1 className="font-serif text-4xl sm:text-5xl font-bold tracking-tight text-[var(--foreground)] leading-tight">
             Pagás el impacto como pagás cualquier proveedor
@@ -93,7 +93,7 @@ export default function EmpresaLandingPage() {
             </div>
             <div>
               <h2 className="font-serif text-xl font-bold text-[var(--foreground)]">
-                Entrar al portal
+                Entrar a Lumina
               </h2>
               <p className="text-xs text-[var(--muted)]">
                 Email de la empresa. Sin cuenta cripto.
@@ -113,7 +113,7 @@ export default function EmpresaLandingPage() {
                 href="/empresa/portal"
                 className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-600 to-green-600 px-6 py-3 text-sm font-semibold text-white"
               >
-                Ir al portal
+                Ir a Empresas en Lumina
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -164,9 +164,9 @@ export default function EmpresaLandingPage() {
 
       <p className="text-[11px] text-[var(--muted)] leading-relaxed max-w-3xl">
         Pagás un servicio, no comprás cripto. El cobro en pesos: en trabajo — no transferir
-        dinero real. Si querés ver un pago de prueba, andá a{" "}
+        dinero real.         Si querés ver un pago de prueba, andá a{" "}
         <Link href="/invest" className="underline font-semibold">
-          Probar
+          Probar Lumina
         </Link>
         .
       </p>

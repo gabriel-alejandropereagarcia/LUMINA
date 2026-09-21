@@ -63,7 +63,7 @@ Authorization: Bearer <secret de la app>
       </div>
 
       <Link href="/connect" className="text-sm text-teal-500 underline">
-        ← Volver a Apps
+        ← Volver a Apps en Lumina
       </Link>
     </div>
   );

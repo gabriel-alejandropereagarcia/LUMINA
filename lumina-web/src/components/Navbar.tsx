@@ -37,15 +37,15 @@ export default function Navbar() {
   const navLinks = isEmpresaSurface
     ? [
         { name: "Inicio", path: "/" },
-        { name: "Portal", path: "/empresa" },
+        { name: "Empresas", path: "/empresa" },
         { name: "Apps", path: "/connect" },
       ]
     : [
         { name: "Inicio", path: "/" },
-        { name: "Empresa", path: "/empresa" },
+        { name: "Empresas", path: "/empresa" },
         { name: "Apps", path: "/connect" },
         { name: "Probar", path: "/invest" },
-        { name: "Comprobantes", path: "/jury" },
+        { name: "Recibos", path: "/jury" },
         ...(isConnected && address === ADMIN_ADDRESS ? [{ name: "Gobernanza", path: "/admin" }] : []),
       ];
 
@@ -111,7 +111,7 @@ export default function Navbar() {
                 className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-teal-600 to-green-600 px-4 py-2 text-sm font-semibold text-white"
               >
                 <Building2 className="h-4 w-4" />
-                Entrar
+                Entrar a Lumina
               </Link>
             )
           ) : (
