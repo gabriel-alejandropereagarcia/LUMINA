@@ -11,9 +11,16 @@ export type FiatRailPublic = {
   companySeesWallet?: boolean;
 };
 
+export type LuminaOpsPublic = {
+  treasuryReady: boolean;
+  oracleReady: boolean;
+  koyweReady: boolean;
+};
+
 type EmpresaSessionContextValue = {
   session: EmpresaSession | null;
   rail: FiatRailPublic | null;
+  ops: LuminaOpsPublic | null;
   loading: boolean;
   refresh: () => Promise<EmpresaSession | null>;
   logout: () => Promise<void>;
@@ -25,6 +32,7 @@ const EmpresaSessionContext = createContext<EmpresaSessionContextValue | undefin
 export function EmpresaSessionProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<EmpresaSession | null>(null);
   const [rail, setRail] = useState<FiatRailPublic | null>(null);
+  const [ops, setOps] = useState<LuminaOpsPublic | null>(null);
   const [loading, setLoading] = useState(true);
 
   const refresh = useCallback(async () => {
@@ -34,6 +42,7 @@ export function EmpresaSessionProvider({ children }: { children: ReactNode }) {
       const next = (data.session ?? null) as EmpresaSession | null;
       setSession(next);
       setRail(data.rail ?? null);
+      setOps(data.ops ?? null);
       return next;
     } catch {
       setSession(null);
@@ -55,6 +64,7 @@ export function EmpresaSessionProvider({ children }: { children: ReactNode }) {
   const value: EmpresaSessionContextValue = {
     session,
     rail,
+    ops,
     loading,
     refresh,
     logout,

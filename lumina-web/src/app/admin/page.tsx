@@ -40,6 +40,7 @@ export default function AdminPortal() {
   ]);
 
   const [newOracleAddress, setNewOracleAddress] = useState("");
+  const [newOraclePayout, setNewOraclePayout] = useState("");
   const [newOracleName, setNewOracleName] = useState("");
   const [newOraclePrice, setNewOraclePrice] = useState("");
 
@@ -83,7 +84,12 @@ export default function AdminPortal() {
     try {
       if (isActualAdmin && address) {
         setAdminStatus("Firmá add_oracle en la wallet (on-chain, no simulación)...");
-        const xdr = await buildAddOracleTx(address, newOracleAddress, Number(newOraclePrice), newOracleAddress);
+        const xdr = await buildAddOracleTx(
+          address,
+          newOracleAddress,
+          Number(newOraclePrice),
+          newOraclePayout || newOracleAddress,
+        );
         const signed = await signStellarTransaction(xdr, address);
         if (!signed) throw new Error("Firma rechazada.");
         const hash = await submitSorobanTransaction(signed);
@@ -95,6 +101,7 @@ export default function AdminPortal() {
 
       setOracles((prev) => [...prev, newItem]);
       setNewOracleAddress("");
+      setNewOraclePayout("");
       setNewOracleName("");
       setNewOraclePrice("");
     } catch (err: unknown) {
@@ -301,6 +308,16 @@ export default function AdminPortal() {
                       onChange={(e) => setNewOracleAddress(e.target.value)}
                       className="w-full bg-[var(--card-bg)] border border-[var(--border)] rounded-xl px-4 py-2.5 text-[var(--foreground)] focus:outline-none focus:ring-1 focus:ring-teal-500 text-xs font-mono"
                       required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[var(--muted)] mb-1 font-semibold">Cuenta que cobra el 97,5% (G…)</label>
+                    <input
+                      type="text"
+                      placeholder="Si queda vacío, cobra la misma cuenta que confirma"
+                      value={newOraclePayout}
+                      onChange={(e) => setNewOraclePayout(e.target.value)}
+                      className="w-full bg-[var(--card-bg)] border border-[var(--border)] rounded-xl px-4 py-2.5 text-[var(--foreground)] focus:outline-none focus:ring-1 focus:ring-teal-500 text-xs font-mono"
                     />
                   </div>
                   <div>

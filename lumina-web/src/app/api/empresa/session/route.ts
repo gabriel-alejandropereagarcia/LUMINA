@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { attachSession, clearSession, isValidEmail, readSession } from "@/lib/empresa/session";
 import { upsertEmpresa } from "@/lib/empresa/store";
 import { detectFiatRail } from "@/lib/empresa/rails";
+import { luminaOps } from "@/lib/empresa/ops";
 
 export const runtime = "nodejs";
 
@@ -17,6 +18,7 @@ export async function GET() {
       notes: rail.notes,
       companySeesWallet: rail.companySeesWallet,
     },
+    ops: luminaOps(),
   });
 }
 

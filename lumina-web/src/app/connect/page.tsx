@@ -18,6 +18,16 @@ type ListingRow = {
   status: string;
 };
 
+type TrabajoRow = {
+  id: string;
+  referencia: string;
+  amountUsd: number;
+  unitLabel: string;
+  pending: number;
+  certifiedUnits: number;
+  reserved: boolean;
+};
+
 export default function ConnectPage() {
   const { address, isConnected, connect } = useWallet();
   const isAdmin = Boolean(isConnected && address && ADMIN_ADDRESS && address === ADMIN_ADDRESS);
@@ -36,6 +46,8 @@ export default function ConnectPage() {
   const [status, setStatus] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [altas, setAltas] = useState<ListingRow[]>([]);
+  const [trabajos, setTrabajos] = useState<TrabajoRow[]>([]);
+  const [trabajoBusy, setTrabajoBusy] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("/api/connect/listing")
@@ -43,6 +55,19 @@ export default function ConnectPage() {
       .then((data) => setAltas(data.altas ?? []))
       .catch(() => undefined);
   }, []);
+
+  useEffect(() => {
+    if (!address) {
+      setTrabajos([]);
+      return;
+    }
+    fetch("/api/apps/trabajos", {
+      headers: { "x-app-oracle": address },
+    })
+      .then((response) => response.json())
+      .then((data) => setTrabajos(data.trabajos ?? []))
+      .catch(() => setTrabajos([]));
+  }, [address]);
 
   const handleListing = async (event: FormEvent) => {
     event.preventDefault();
@@ -109,6 +134,42 @@ export default function ConnectPage() {
     }
   };
 
+  const confirmarTrabajo = async (aporteId: string) => {
+    if (!address) return;
+    setTrabajoBusy(aporteId);
+    setStatus(null);
+    try {
+      const response = await fetch("/api/apps/trabajos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-app-oracle": address,
+        },
+        body: JSON.stringify({ aporteId }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "No se pudo confirmar.");
+      setStatus("Trabajo confirmado. El 97,5% sale hacia tu cuenta.");
+      setTrabajos((current) =>
+        current
+          .map((item) =>
+            item.id === aporteId
+              ? {
+                  ...item,
+                  pending: Math.max(0, item.pending - 1),
+                  certifiedUnits: item.certifiedUnits + 1,
+                }
+              : item,
+          )
+          .filter((item) => item.pending > 0),
+      );
+    } catch (err: unknown) {
+      setStatus(err instanceof Error ? err.message : "No se pudo confirmar el trabajo.");
+    } finally {
+      setTrabajoBusy(null);
+    }
+  };
+
   return (
     <div className="min-h-[calc(100vh-4rem)] px-4 py-16 sm:px-6 lg:px-8 max-w-3xl mx-auto space-y-10">
       <div className="space-y-3">
@@ -131,6 +192,57 @@ export default function ConnectPage() {
           <ArrowRight className="h-4 w-4" />
         </a>
       </div>
+
+      <section className="rounded-2xl border border-[var(--border)] p-5 space-y-3">
+        <h2 className="font-serif text-lg font-bold">Trabajos reservados</h2>
+        <p className="text-xs text-[var(--muted)] leading-relaxed">
+          Cuando una empresa pagó y Lumina reservó, acá confirmás que el trabajo se hizo.
+          Recién ahí cobrás el 97,5%.
+        </p>
+        {!isConnected ? (
+          <button
+            type="button"
+            onClick={connect}
+            className="rounded-xl border border-[var(--border)] px-4 py-2 text-xs font-bold"
+          >
+            Entrar con la cuenta que confirma
+          </button>
+        ) : trabajos.length === 0 ? (
+          <p className="text-xs text-[var(--muted)]">
+            No hay trabajos pendientes para esta cuenta.
+          </p>
+        ) : (
+          <ul className="space-y-2">
+            {trabajos.map((item) => (
+              <li
+                key={item.id}
+                className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 rounded-xl border border-[var(--border)] p-4 text-sm"
+              >
+                <span>
+                  <strong className="text-[var(--foreground)]">{item.referencia}</strong>
+                  <span className="text-[var(--muted)]">
+                    {" "}
+                    · {item.pending} {item.unitLabel} · {item.amountUsd} USDC
+                  </span>
+                  {!item.reserved ? (
+                    <span className="block text-[11px] text-[var(--muted)] mt-1">
+                      Lumina todavía no reservó este pago.
+                    </span>
+                  ) : null}
+                </span>
+                <button
+                  type="button"
+                  disabled={!!trabajoBusy || !item.reserved || item.pending <= 0}
+                  onClick={() => void confirmarTrabajo(item.id)}
+                  className="rounded-xl bg-teal-600 px-4 py-2 text-xs font-bold text-white disabled:opacity-50"
+                >
+                  {trabajoBusy === item.id ? "Cobrando…" : "El trabajo se hizo"}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
 
       <section className="rounded-2xl border border-[var(--border)] p-5 space-y-3 text-sm">
         <h2 className="font-serif text-lg font-bold flex items-center gap-2">

@@ -7,16 +7,18 @@ import {
   submitSorobanTransaction,
   USDC_CONTRACT_ID,
 } from "@/lib/stellar";
+import { getImpactApp } from "@/lib/impact-apps";
 import { isTreasuryDepositEnabled } from "./rails";
 import type { Aporte } from "./types";
 
 /**
  * Tesorería Lumina firma el depósito. La empresa no tiene key.
- * Opt-in: TREASURY_DEPOSIT_ENABLED=true + TREASURY_SECRET.
+ * Si hay TREASURY_SECRET, reserva y elige la app de este pago.
  */
 export async function maybeTreasuryDeposit(aporte: Aporte): Promise<{
   attempted: boolean;
   hash?: string;
+  sponsor?: string;
   error?: string;
 }> {
   if (!isTreasuryDepositEnabled()) {
@@ -25,29 +27,29 @@ export async function maybeTreasuryDeposit(aporte: Aporte): Promise<{
   const secret = process.env.TREASURY_SECRET || process.env.SPONSOR_SECRET;
   if (!secret) return { attempted: false, error: "Sin TREASURY_SECRET." };
 
+  const app = getImpactApp(aporte.appId);
+  const oracle = app?.oracleAddress || "";
+  if (!oracle.startsWith("G")) {
+    return { attempted: false, error: "Esa app todavía no tiene cuenta que confirma." };
+  }
+
   try {
     const keypair = StellarSdk.Keypair.fromSecret(secret);
     const sponsor = keypair.publicKey();
-    const oracle =
-      process.env.NEXT_PUBLIC_ORACLE_ADDRESS ||
-      process.env.ORACLE_ADDRESS ||
-      "";
 
     await signAndSubmit(await buildApproveTx(sponsor, aporte.amountUsd), keypair);
     const hash = await signAndSubmit(await buildDepositTx(sponsor, aporte.amountUsd), keypair);
 
-    if (oracle) {
-      try {
-        await signAndSubmit(
-          await buildAssignOracleTx(sponsor, USDC_CONTRACT_ID, oracle),
-          keypair,
-        );
-      } catch (error) {
-        console.error("assign_oracle tesorería (no bloquea el depósito):", error);
-      }
+    try {
+      await signAndSubmit(
+        await buildAssignOracleTx(sponsor, USDC_CONTRACT_ID, oracle),
+        keypair,
+      );
+    } catch (error) {
+      console.error("assign_oracle tesorería (no bloquea el depósito):", error);
     }
 
-    return { attempted: true, hash };
+    return { attempted: true, hash, sponsor };
   } catch (error) {
     const message = error instanceof Error ? error.message : "Fallo tesorería.";
     console.error("maybeTreasuryDeposit:", message);

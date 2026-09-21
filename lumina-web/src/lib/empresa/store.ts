@@ -2,11 +2,8 @@ import { randomUUID } from "crypto";
 import { promises as fs } from "fs";
 import path from "path";
 import type { Aporte, Certificado, Empresa, EmpresaDb } from "./types";
-import { APP_CLAIMS, currentPeriod, LUMINA_CLAIMS, quantityFromLock } from "@/lib/hito/fact";
-import { hashFact, subjectCommitment } from "@/lib/hito/hash";
-import { claimCommitments } from "@/lib/hito/registry";
+import { APP_CLAIMS, LUMINA_CLAIMS, quantityFromLock } from "@/lib/hito/fact";
 import { getImpactApp } from "@/lib/impact-apps";
-import { isSchemaPaused } from "@/lib/hito/listing-store";
 import { DEMO_PAYMENT } from "./payment";
 
 const DATA_DIR = path.join(process.cwd(), ".data");
@@ -206,75 +203,79 @@ export async function getCertificado(id: string): Promise<Certificado | undefine
   return db.certificados.find((item) => item.id === id);
 }
 
-export async function issueCertificado(id: string, empresaId: string): Promise<Certificado> {
+export async function listReservedForApp(appId: string): Promise<Aporte[]> {
   const db = await readDb();
-  const aporte = db.aportes.find((item) => item.id === id && item.empresaId === empresaId);
-  if (!aporte) throw new Error("Aporte no encontrado.");
-  if (aporte.status !== "en_escrow") {
-    throw new Error("El dinero tiene que estar reservado para emitir el certificado.");
-  }
-  if (aporte.certificadoId) {
-    const existing = db.certificados.find((item) => item.id === aporte.certificadoId);
-    if (existing) return existing;
-  }
-  const empresa = db.empresas.find((item) => item.id === empresaId);
-  if (!empresa) throw new Error("Empresa no encontrada.");
+  return db.aportes
+    .filter((item) => item.appId === appId && item.status === "en_escrow")
+    .sort((a, b) => a.createdAt.localeCompare(b.createdAt));
+}
 
+/** La app confirmó un trabajo. Un certificado por unidad cobrada. */
+export async function recordWorkRelease(input: {
+  aporteId: string;
+  reportHash: string;
+  txHash: string;
+  canonical: string;
+  period: string;
+  subjectCommitments: string[];
+}): Promise<Certificado | null> {
+  const db = await readDb();
+  const aporte = db.aportes.find((item) => item.id === input.aporteId);
+  if (!aporte) return null;
+  if (aporte.status !== "en_escrow") {
+    throw new Error("Este pago ya no espera un trabajo.");
+  }
+
+  const existing = db.certificados.find((item) => item.reportHash === input.reportHash);
+  if (existing) {
+    existing.txHash = input.txHash;
+    existing.simulation = false;
+    await writeDb(db);
+    return existing;
+  }
+
+  const empresa = db.empresas.find((item) => item.id === aporte.empresaId);
+  if (!empresa) throw new Error("Empresa no encontrada.");
   const app = getImpactApp(aporte.appId);
   if (!app) throw new Error("La app de este aporte ya no está en el catálogo.");
-  if (app.paused || (await isSchemaPaused(app.schemaId))) {
-    throw new Error("Esa app está pausada. No se emiten trabajos nuevos.");
-  }
 
   const lockPriceUsd = aporte.lockPriceUsd || app.priceUsdc;
-  const quantity = quantityFromLock(aporte.amountUsd, lockPriceUsd);
-  const period = currentPeriod();
-  const subjectCommitments = Array.from({ length: quantity }, (_, index) =>
-    subjectCommitment(["demo", aporte.id, String(index)]),
-  );
-  const fact = {
-    protocol: "lumina" as const,
-    schemaId: app.schemaId,
-    unitLabel: app.unitLabel,
-    quantity,
-    period,
-    subjectCommitments,
-    sponsorRef: aporte.id,
-    amountUsd: aporte.amountUsd,
-    appId: app.id,
-  };
-  const { canonical, reportHash } = hashFact(fact);
-  await claimCommitments(fact, reportHash, aporte.txHash);
+  const total = quantityFromLock(aporte.amountUsd, lockPriceUsd);
+  const nextUnits = (aporte.certifiedUnits ?? 0) + 1;
 
   const certId = shortId("cer");
   const certificado: Certificado = {
     id: certId,
-    empresaId,
+    empresaId: aporte.empresaId,
     aporteId: aporte.id,
     company: empresa.company,
     appName: aporte.appName,
     appId: aporte.appId,
-    amountUsd: aporte.amountUsd,
-    payoutAppUsd: Number((aporte.amountUsd * 0.975).toFixed(2)),
-    feeUsd: Number((aporte.amountUsd * 0.025).toFixed(2)),
-    reportHash,
+    amountUsd: lockPriceUsd,
+    payoutAppUsd: Number((lockPriceUsd * 0.975).toFixed(2)),
+    feeUsd: Number((lockPriceUsd * 0.025).toFixed(2)),
+    reportHash: input.reportHash,
     issuedAt: new Date().toISOString(),
-    txHash: undefined,
-    simulation: true,
+    txHash: input.txHash,
+    simulation: false,
     schemaId: app.schemaId,
     unitLabel: app.unitLabel,
-    quantity,
-    period,
-    subjectCommitments,
-    canonical,
+    quantity: 1,
+    period: input.period,
+    subjectCommitments: input.subjectCommitments,
+    canonical: input.canonical,
     valueMethod: app.valueMethod,
     lockPriceUsd,
     scopeLumina: LUMINA_CLAIMS,
     scopeApp: APP_CLAIMS,
   };
   db.certificados.push(certificado);
-  aporte.status = "certificado";
+  aporte.certifiedUnits = nextUnits;
   aporte.certificadoId = certId;
+  aporte.txHash = input.txHash;
+  if (nextUnits >= total) {
+    aporte.status = "certificado";
+  }
   await writeDb(db);
   return certificado;
 }
@@ -288,4 +289,22 @@ export async function stampCertificadoTx(reportHash: string, txHash: string): Pr
   const aporte = db.aportes.find((item) => item.id === certificado.aporteId);
   if (aporte) aporte.txHash = txHash;
   await writeDb(db);
+}
+
+export async function markRecovered(
+  id: string,
+  empresaId: string,
+  txHash?: string,
+): Promise<Aporte> {
+  const db = await readDb();
+  const aporte = db.aportes.find((item) => item.id === id && item.empresaId === empresaId);
+  if (!aporte) throw new Error("Aporte no encontrado.");
+  if (aporte.status !== "en_escrow") {
+    throw new Error("Solo se recupera dinero que sigue reservado.");
+  }
+  aporte.status = "recuperado";
+  aporte.recoveredAt = new Date().toISOString();
+  if (txHash) aporte.txHash = txHash;
+  await writeDb(db);
+  return aporte;
 }

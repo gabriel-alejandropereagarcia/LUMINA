@@ -23,11 +23,12 @@ const STATUS_LABEL: Record<Aporte["status"], string> = {
   pendiente_psav: "Esperando el cobro",
   en_escrow: "Dinero reservado",
   certificado: "Trabajo confirmado",
+  recuperado: "Dinero devuelto",
 };
 
 export default function EmpresaPortalPage() {
   const router = useRouter();
-  const { session, loading: sessionLoading, rail } = useEmpresaSession();
+  const { session, loading: sessionLoading, rail, ops } = useEmpresaSession();
   const { toast } = useToast();
   const paidToast = useRef(false);
   const [aportes, setAportes] = useState<Aporte[]>([]);
@@ -95,13 +96,12 @@ export default function EmpresaPortalPage() {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "No se pudo actualizar.");
       await load();
-      if (action === "certificar" && data.certificado?.id) {
+      if (action === "recuperar") {
         toast({
           type: "success",
-          title: "Certificado emitido",
-          message: "Ya podés imprimirlo o compartirlo. Sin billetera.",
+          title: "Dinero devuelto",
+          message: "El trabajo no ocurrió. Lumina cobró 0%.",
         });
-        router.push(`/c/${data.certificado.id}`);
         return;
       }
       toast({
@@ -112,8 +112,8 @@ export default function EmpresaPortalPage() {
             : "Pago acreditado",
         message:
           action === "confirmar"
-            ? "En producción el cobrador confirma. Acá lo simulamos."
-            : "El dinero queda reservado. La empresa no firma nada más.",
+            ? "Cuando se acredite, el dinero queda reservado."
+            : "El dinero queda reservado. La app confirma el trabajo. La empresa no firma nada más.",
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error.");
@@ -400,14 +400,25 @@ export default function EmpresaPortalPage() {
                   </button>
                 )}
                 {active.status === "en_escrow" && (
-                  <button
-                    id="btn-empresa-certificar"
-                    onClick={() => void act(active.id, "certificar")}
-                    disabled={!!busy}
-                    className="rounded-xl bg-teal-600 px-4 py-2 text-xs font-bold text-white cursor-pointer disabled:opacity-50"
-                  >
-                    Emitir certificado
-                  </button>
+                  <div className="space-y-2">
+                    <p className="text-xs text-[var(--muted)] leading-relaxed">
+                      {active.sponsorAddress || active.txHash
+                        ? "Dinero reservado. El PDF aparece cuando la app confirma que el trabajo se hizo."
+                        : ops?.treasuryReady
+                          ? "El pago se acreditó. Lumina está reservando el dinero."
+                          : "El pago está anotado. Lumina reserva cuando la tesorería está activa."}
+                    </p>
+                    {new Date(active.lockUntil).getTime() <= Date.now() && (
+                      <button
+                        id="btn-empresa-recuperar"
+                        onClick={() => void act(active.id, "recuperar")}
+                        disabled={!!busy}
+                        className="rounded-xl border border-[var(--border)] px-4 py-2 text-xs font-bold text-[var(--foreground)] cursor-pointer disabled:opacity-50"
+                      >
+                        Recuperar el dinero
+                      </button>
+                    )}
+                  </div>
                 )}
                 {active.status === "certificado" && active.certificadoId && (
                   <Link

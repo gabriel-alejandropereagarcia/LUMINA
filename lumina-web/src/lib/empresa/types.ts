@@ -2,7 +2,8 @@ export type AporteStatus =
   | "orden"
   | "pendiente_psav"
   | "en_escrow"
-  | "certificado";
+  | "certificado"
+  | "recuperado";
 
 export type Empresa = {
   id: string;
@@ -56,6 +57,10 @@ export type Aporte = {
   schemaId?: string;
   unitLabel?: string;
   lockPriceUsd?: number;
+  /** Cuenta G de tesorería que reservó el pago on-chain. */
+  sponsorAddress?: string;
+  certifiedUnits?: number;
+  recoveredAt?: string;
 };
 
 export type Certificado = {

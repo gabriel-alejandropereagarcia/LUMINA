@@ -39,10 +39,9 @@ export function isCircleMintConfigured(): boolean {
 }
 
 export function isTreasuryDepositEnabled(): boolean {
-  return (
-    process.env.TREASURY_DEPOSIT_ENABLED === "true" &&
-    Boolean(process.env.TREASURY_SECRET || process.env.SPONSOR_SECRET)
-  );
+  const hasSecret = Boolean(process.env.TREASURY_SECRET || process.env.SPONSOR_SECRET);
+  if (!hasSecret) return false;
+  return process.env.TREASURY_DEPOSIT_ENABLED !== "false";
 }
 
 export function detectFiatRail(): FiatRail {
