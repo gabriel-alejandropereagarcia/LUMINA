@@ -6,6 +6,7 @@ import { digitsCuit, formatCuit } from "./cuit";
 import { normalizeEmail } from "./mail";
 import { APP_CLAIMS, LUMINA_CLAIMS, quantityFromLock } from "@/lib/hito/fact";
 import { getImpactApp } from "@/lib/impact-apps";
+import { persistReady, readPg, writePg } from "./pg";
 import { DEMO_PAYMENT } from "./payment";
 
 const DATA_DIR = path.join(process.cwd(), ".data");
@@ -16,25 +17,38 @@ const emptyDb = (): EmpresaDb => ({
   aportes: [],
   certificados: [],
   accessTokens: [],
+  accessEvents: [],
 });
 
 let cache: EmpresaDb | null = null;
 let cacheMtime = 0;
 let writeQueue: Promise<void> = Promise.resolve();
 
+function normalizeDb(parsed: EmpresaDb): EmpresaDb {
+  return {
+    empresas: (parsed.empresas ?? []).map(hydrateEmpresa),
+    aportes: parsed.aportes ?? [],
+    certificados: parsed.certificados ?? [],
+    accessTokens: parsed.accessTokens ?? [],
+    accessEvents: parsed.accessEvents ?? [],
+  };
+}
+
 async function readDb(): Promise<EmpresaDb> {
+  if (persistReady()) {
+    const fromPg = await readPg();
+    if (fromPg) {
+      cache = normalizeDb(fromPg);
+      return cache;
+    }
+  }
   try {
     const stat = await fs.stat(FILE);
     if (cache && stat.mtimeMs === cacheMtime) return cache;
     const raw = await fs.readFile(FILE, "utf8");
     const parsed = JSON.parse(raw) as EmpresaDb;
     cacheMtime = stat.mtimeMs;
-    cache = {
-      empresas: (parsed.empresas ?? []).map(hydrateEmpresa),
-      aportes: parsed.aportes ?? [],
-      certificados: parsed.certificados ?? [],
-      accessTokens: parsed.accessTokens ?? [],
-    };
+    cache = normalizeDb(parsed);
     return cache;
   } catch {
     cache = emptyDb();
@@ -46,6 +60,10 @@ async function readDb(): Promise<EmpresaDb> {
 async function writeDb(next: EmpresaDb): Promise<void> {
   cache = next;
   writeQueue = writeQueue.then(async () => {
+    if (persistReady()) {
+      const ok = await writePg(next);
+      if (ok) return;
+    }
     await fs.mkdir(DATA_DIR, { recursive: true });
     await fs.writeFile(FILE, JSON.stringify(next, null, 2), "utf8");
     const stat = await fs.stat(FILE);
@@ -155,6 +173,14 @@ export async function createAccessToken(input: {
     expiresAt: new Date(now + (input.ttlMs ?? 15 * 60 * 1000)).toISOString(),
   };
   db.accessTokens.push(token);
+  db.accessEvents = db.accessEvents ?? [];
+  db.accessEvents.unshift({
+    at: token.createdAt,
+    cuit: token.cuit,
+    email: token.email,
+    purpose: token.purpose,
+  });
+  db.accessEvents = db.accessEvents.slice(0, 200);
   await writeDb(db);
   return token;
 }

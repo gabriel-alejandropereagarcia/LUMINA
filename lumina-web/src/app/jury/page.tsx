@@ -4,6 +4,8 @@ import { FormEvent, Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { USDC_TESTNET_CLASSIC, USDC_TESTNET_SAC } from "@/lib/official-assets";
+import RecibosMovimiento from "@/components/empresa/RecibosMovimiento";
+import type { ReciboPaso } from "@/lib/empresa/recibos";
 import { txUrl } from "@/lib/explorer";
 
 const ESCROW = process.env.NEXT_PUBLIC_LUMINA_CONTRACT_ID || "CBZAI24XP2RXDVXLRJNVGVGZ5QRDMNI54GTPBTN4OOLFTSFJRWQ4M3EJ";
@@ -85,7 +87,7 @@ function JuryBody() {
           Si no, el dinero vuelve. El usuario final nunca paga. Abajo, el pago del 19/9
           y cómo recorrerlo.{" "}
           <Link href="/presentation" className="text-teal-500 underline">
-            Cómo funciona, en 8 slides
+            Cómo funciona
           </Link>
           .
         </p>
@@ -96,27 +98,16 @@ function JuryBody() {
         <p className="text-xs text-[var(--muted)]">
           La empresa pagó → la empresa eligió MIRA → MIRA cobró. Cada enlace abre el recibo.
         </p>
-        <ul className="space-y-2 text-xs font-mono break-all">
-          <li>
-            La empresa pagó:{" "}
-            <a href={txUrl(EVIDENCE.deposit)} className="text-teal-500 underline" target="_blank" rel="noreferrer">
-              {EVIDENCE.deposit}
-            </a>
-          </li>
-          <li>
-            La empresa eligió MIRA:{" "}
-            <a href={txUrl(EVIDENCE.assign)} className="text-teal-500 underline" target="_blank" rel="noreferrer">
-              {EVIDENCE.assign}
-            </a>
-          </li>
-          <li>
-            MIRA cobró el 97,5%:{" "}
-            <a href={txUrl(EVIDENCE.release)} className="text-teal-500 underline" target="_blank" rel="noreferrer">
-              {EVIDENCE.release}
-            </a>
-          </li>
-          <li className="text-[var(--muted)]">Código del trabajo: {EVIDENCE.reportHash}</li>
-        </ul>
+        <RecibosMovimiento
+          pasos={
+            [
+              { key: "paid", label: "La empresa pagó", hash: EVIDENCE.deposit },
+              { key: "chose", label: "La empresa eligió MIRA", hash: EVIDENCE.assign },
+              { key: "charged", label: "MIRA cobró el 97,5%", hash: EVIDENCE.release },
+            ] satisfies ReciboPaso[]
+          }
+        />
+        <p className="text-[11px] text-[var(--muted)]">Código del trabajo: {EVIDENCE.reportHash}</p>
       </section>
 
       <section className="space-y-2 text-sm text-[var(--muted)]">

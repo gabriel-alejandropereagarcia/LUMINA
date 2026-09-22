@@ -36,13 +36,13 @@ Dos días míos. No de org. El jurado recorre Vercel, no este chat.
 
 | Bloque | Ventana | Qué se construye | Hecho-cuando · el jurado hace esto |
 |---|---|---|---|
-| 0 · Existe | 0–2 h | Subir lo ya armado: CUIT, mail, reset, tres recibos, informe | En vercel.app `/empresa` pide CUIT, no un nombre tipeado |
-| 1 · Recibo vivo | Día 1 mañana | Horizon + Soroban: cada paso muestra fecha y monto, no un hash suelto. El 97,5% se lee del cobro si existe. Un componente para panel, PDF y `/jury` | Clic en “la empresa pagó” abre el pago; el título es humano |
-| 2 · Dato | Día 1 | Store con Postgres (`DATABASE_URL`). Sin URL no se finge persistencia. Tokens, CUIT, órdenes, certificados. Tests de alta y reset | Redeploy con URL: la misma CUIT sigue; sin URL: el panel lo dice |
-| 3 · Entrar | Día 1 tarde | Mail Resend de producto. Auditoría de quién pidió link. PuenteMAE sin cuenta que confirma no se ofrece como cobro vivo | Pedís el link; si hay key, llega. Gmail sigue afuera |
-| 4 · Estado on-chain | Día 2 mañana | El tablero pregunta al contrato: ¿reservado, asignado, cobrado? Sin wallet. El JSON deja de ser la única verdad cuando hay recibo | Orden con hash: el estado coincide con testnet |
-| 5 · Una historia | Día 2 | Home, Empresas, Apps, Recibos, Probar: el mismo pitch. Copy audit. Presentación alineada. Footer empresa sin IDs de contrato | El juez no se pierde entre cinco voces |
-| 6 · Cierre | Día 2 tarde | Tests (CUIT, tokens, hash, recibos). Recorrido 19/9 intacto. Lista de lo que está en trabajo, en voz Lumina | `/jury` sigue mostrando el pago del 19/9 |
+| 0 · Existe | 0–2 h | Subir lo ya armado: CUIT, mail, reset, tres recibos, informe | En vercel.app `/empresa` pide CUIT · `04934c3` |
+| 1 · Recibo vivo | Día 1 mañana | Horizon + Soroban: cada paso muestra fecha y monto, no un hash suelto. El 97,5% se lee del cobro si existe. Un componente para panel, PDF y `/jury` | Clic en “la empresa pagó” abre el pago; el título es humano · en código |
+| 2 · Dato | Día 1 | Store con Postgres (`DATABASE_URL`). Sin URL no se finge persistencia. Tokens, CUIT, órdenes, certificados. Tests de alta y reset | Redeploy con URL: la misma CUIT sigue; sin URL: el panel lo dice · en código (falta `DATABASE_URL` en Vercel) |
+| 3 · Entrar | Día 1 tarde | Mail Resend de producto. Auditoría de quién pidió link. PuenteMAE sin cuenta que confirma no se ofrece como cobro vivo | Pedís el link; si hay key, llega. Gmail sigue afuera · en código (falta `RESEND_API_KEY`) |
+| 4 · Estado on-chain | Día 2 mañana | El tablero pregunta al contrato: ¿reservado, asignado, cobrado? Sin wallet. El JSON deja de ser la única verdad cuando hay recibo | Orden con hash: el estado coincide con testnet · en código |
+| 5 · Una historia | Día 2 | Home, Empresas, Apps, Recibos, Probar: el mismo pitch. Copy audit. Presentación alineada. Footer empresa sin IDs de contrato | El juez no se pierde entre cinco voces · en código |
+| 6 · Cierre | Día 2 tarde | Tests (CUIT, tokens, hash, recibos). Recorrido 19/9 intacto. Lista de lo que está en trabajo, en voz Lumina | `/jury` sigue mostrando el pago del 19/9 · en código |
 
 Orden: **0 es bloqueante.** 1 y 4 son la diferencia de un experto en cadena. 2 y 3 son producto. 5 es adopción. 6 es no romper lo que ya ganamos.
 
@@ -65,7 +65,7 @@ El panel se recorre. No se transfiere dinero real. No se finge CUIT ni CAE.
 
 ## Siguiente · capa de software (el panel de una CUIT)
 
-Identidad y recibos están en código local hasta el bloque 0. Persistencia y lectura on-chain son los bloques 2 y 4 de las 48 h, no “3–7 días”.
+Identidad, recibos vivos, Postgres-si-hay-URL y estado de la reserva están en código. Falta prender las claves en Vercel (org).
 
 Sin estas filas, el panel no es de una empresa: es de un browser.
 

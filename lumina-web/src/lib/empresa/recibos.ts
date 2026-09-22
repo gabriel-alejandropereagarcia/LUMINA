@@ -6,6 +6,24 @@ export type ReciboPaso = {
   hash?: string;
 };
 
+export type ReciboVivo = {
+  hash: string;
+  at?: string;
+  amountUsd?: number;
+};
+
+export function etiquetaVivo(vivo?: ReciboVivo): string {
+  if (!vivo?.at && !vivo?.amountUsd) return "";
+  const fecha = vivo.at
+    ? new Intl.DateTimeFormat("es-AR", { dateStyle: "medium" }).format(new Date(vivo.at))
+    : "";
+  const monto =
+    typeof vivo.amountUsd === "number" && Number.isFinite(vivo.amountUsd)
+      ? new Intl.NumberFormat("es-AR", { style: "currency", currency: "USD" }).format(vivo.amountUsd)
+      : "";
+  return [fecha, monto].filter(Boolean).join(" · ");
+}
+
 export function pasosDeAporte(aporte: Aporte, certificado?: Certificado | null): ReciboPaso[] {
   return [
     {

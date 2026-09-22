@@ -138,6 +138,14 @@ export type FundableOption = {
   payoutAddress: string;
   schemaId: string;
   valueMethod: string;
+  liveCobro: boolean;
+};
+
+export type AccessEvent = {
+  at: string;
+  cuit: string;
+  email: string;
+  purpose: AccessPurpose;
 };
 
 export type EmpresaDb = {
@@ -145,4 +153,5 @@ export type EmpresaDb = {
   aportes: Aporte[];
   certificados: Certificado[];
   accessTokens: AccessToken[];
+  accessEvents: AccessEvent[];
 };

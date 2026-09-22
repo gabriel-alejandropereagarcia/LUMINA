@@ -98,11 +98,13 @@ export default function Footer() {
                 </a>
               </li>
 
+              {!isEmpresaSurface ? (
               <li>
                 <span className="text-xs text-[var(--muted)]">
                   Red: {urls.name}
                 </span>
               </li>
+              ) : null}
             </ul>
           </div>
         </div>

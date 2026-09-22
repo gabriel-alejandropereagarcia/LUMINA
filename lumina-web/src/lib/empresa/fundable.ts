@@ -17,6 +17,7 @@ function fromCatalog(app: ImpactApp): FundableOption {
     payoutAddress: app.payoutAddress,
     schemaId: app.schemaId,
     valueMethod: app.valueMethod,
+    liveCobro: app.oracleAddress.startsWith("G") && app.payoutAddress.startsWith("G"),
   };
 }
 
@@ -33,6 +34,7 @@ function fromListing(listing: AppListing): FundableOption {
     payoutAddress: listing.payout || listing.oracle,
     schemaId: listing.schemaId,
     valueMethod: listing.valueMethod,
+    liveCobro: listing.oracle.startsWith("G"),
   };
 }
 

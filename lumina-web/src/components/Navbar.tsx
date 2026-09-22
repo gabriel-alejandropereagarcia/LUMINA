@@ -17,8 +17,7 @@ export default function Navbar() {
   const isEmpresaSurface = pathname.startsWith("/empresa") || pathname.startsWith("/c/");
   const showWallet =
     pathname.startsWith("/invest") ||
-    pathname.startsWith("/admin") ||
-    pathname.startsWith("/connect");
+    pathname.startsWith("/admin");
 
   useEffect(() => {
     const checkFreighter = async () => {
@@ -39,6 +38,7 @@ export default function Navbar() {
         { name: "Inicio", path: "/" },
         { name: "Empresas", path: "/empresa" },
         { name: "Apps", path: "/connect" },
+        { name: "Recibos", path: "/jury" },
       ]
     : [
         { name: "Inicio", path: "/" },

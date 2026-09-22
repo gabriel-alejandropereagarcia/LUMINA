@@ -42,6 +42,7 @@ export default function EmpresaPortalPage() {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviteLink, setInviteLink] = useState<string | null>(null);
+  const [cadena, setCadena] = useState<{ label: string; reservadoUsd?: number } | null>(null);
 
   const load = useCallback(async () => {
     const [aportesRes, certsRes, opcionesRes] = await Promise.all([
@@ -61,6 +62,7 @@ export default function EmpresaPortalPage() {
     const nextOpciones = (opcionesData.opciones ?? []) as FundableOption[];
     setOpciones(nextOpciones);
     setAppId((current) => current || nextOpciones[0]?.id || "");
+    setActiveId((current) => current || aportesData.aportes?.[0]?.id || null);
   }, [router]);
 
   useEffect(() => {
@@ -71,6 +73,25 @@ export default function EmpresaPortalPage() {
     }
     void load();
   }, [session, sessionLoading, router, load]);
+
+  useEffect(() => {
+    if (!activeId) {
+      setCadena(null);
+      return;
+    }
+    let cancelled = false;
+    fetch(`/api/empresa/aportes/${activeId}/cadena`)
+      .then(async (response) => {
+        const data = await response.json();
+        if (!cancelled) setCadena(data.cadena ?? null);
+      })
+      .catch(() => {
+        if (!cancelled) setCadena(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [activeId]);
 
   useEffect(() => {
     if (paidToast.current || typeof window === "undefined") return;
@@ -203,6 +224,7 @@ export default function EmpresaPortalPage() {
           <p className="text-xs text-[var(--muted)] max-w-sm">
             Pagás un servicio a Lumina. {rail?.label ?? "Simulación"}.
             {rail?.live ? " El cobrador está activo." : " No transferir pesos reales."}
+            {ops?.persistReady ? "" : " El dato: en trabajo (un deploy puede borrarlo)."}
           </p>
         </div>
       </div>
@@ -389,6 +411,7 @@ export default function EmpresaPortalPage() {
                           </span>
                           <span className="block text-[11px] text-[var(--muted)] mt-1">
                             {app.milestone}
+                            {app.liveCobro ? "" : " · confirmación: en trabajo"}
                           </span>
                         </span>
                       </label>
@@ -500,6 +523,14 @@ export default function EmpresaPortalPage() {
                     certificados.find((item) => item.id === active.certificadoId),
                   )}
                 />
+                {cadena ? (
+                  <p className="text-[11px] text-[var(--muted)]">
+                    {cadena.label}
+                    {typeof cadena.reservadoUsd === "number"
+                      ? ` · ${formatUsd(cadena.reservadoUsd)} en reserva`
+                      : ""}
+                  </p>
+                ) : null}
               </div>
 
               <div className="flex flex-wrap gap-2">

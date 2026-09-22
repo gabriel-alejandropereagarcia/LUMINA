@@ -16,6 +16,7 @@ export type LuminaOpsPublic = {
   oracleReady: boolean;
   koyweReady: boolean;
   mailReady: boolean;
+  persistReady: boolean;
 };
 
 type EmpresaSessionContextValue = {
