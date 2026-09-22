@@ -169,7 +169,7 @@ function GrafoView({
             key={nodo.id}
             href={hrefCamino(vista, isSel ? null : nodo.id)}
             className="cursor-pointer"
-            opacity={on ? 1 : 0.08}
+            style={{ opacity: on ? 1 : 0.08 }}
             aria-label={nodo.label}
             onClick={(event) => {
               event.preventDefault();
