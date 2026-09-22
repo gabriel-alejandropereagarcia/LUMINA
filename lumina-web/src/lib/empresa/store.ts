@@ -1,7 +1,9 @@
 import { randomUUID } from "crypto";
 import { promises as fs } from "fs";
 import path from "path";
-import type { Aporte, Certificado, Empresa, EmpresaDb } from "./types";
+import type { AccessPurpose, AccessToken, Aporte, Certificado, Empresa, EmpresaDb } from "./types";
+import { digitsCuit, formatCuit } from "./cuit";
+import { normalizeEmail } from "./mail";
 import { APP_CLAIMS, LUMINA_CLAIMS, quantityFromLock } from "@/lib/hito/fact";
 import { getImpactApp } from "@/lib/impact-apps";
 import { DEMO_PAYMENT } from "./payment";
@@ -13,6 +15,7 @@ const emptyDb = (): EmpresaDb => ({
   empresas: [],
   aportes: [],
   certificados: [],
+  accessTokens: [],
 });
 
 let cache: EmpresaDb | null = null;
@@ -27,9 +30,10 @@ async function readDb(): Promise<EmpresaDb> {
     const parsed = JSON.parse(raw) as EmpresaDb;
     cacheMtime = stat.mtimeMs;
     cache = {
-      empresas: parsed.empresas ?? [],
+      empresas: (parsed.empresas ?? []).map(hydrateEmpresa),
       aportes: parsed.aportes ?? [],
       certificados: parsed.certificados ?? [],
+      accessTokens: parsed.accessTokens ?? [],
     };
     return cache;
   } catch {
@@ -58,32 +62,134 @@ function shortId(prefix: string): string {
   return `${prefix}-${randomUUID().replace(/-/g, "").slice(0, 8)}`;
 }
 
-export async function upsertEmpresa(email: string, company: string): Promise<Empresa> {
+function hydrateEmpresa(item: Empresa): Empresa {
+  const emails = Array.from(
+    new Set((item.emails?.length ? item.emails : item.email ? [item.email] : []).map(normalizeEmail)),
+  );
+  return {
+    ...item,
+    cuit: item.cuit ? digitsCuit(item.cuit) : "",
+    email: emails[0] ?? normalizeEmail(item.email ?? ""),
+    emails,
+    sessionEpoch: item.sessionEpoch ?? 0,
+  };
+}
+
+export async function getEmpresa(id: string): Promise<Empresa | undefined> {
   const db = await readDb();
-  const normalized = email.trim().toLowerCase();
-  const name = company.trim();
-  const existing = db.empresas.find((item) => item.email === normalized);
+  return db.empresas.find((item) => item.id === id);
+}
+
+export async function getEmpresaByCuit(cuit: string): Promise<Empresa | undefined> {
+  const db = await readDb();
+  const digits = digitsCuit(cuit);
+  return db.empresas.find((item) => item.cuit === digits);
+}
+
+export async function claimEmpresa(cuit: string, email: string): Promise<Empresa> {
+  const db = await readDb();
+  const digits = digitsCuit(cuit);
+  const normalized = normalizeEmail(email);
+  const existing = db.empresas.find((item) => item.cuit === digits);
   if (existing) {
-    if (name && existing.company !== name) {
-      existing.company = name;
-      await writeDb(db);
+    if (!existing.emails.includes(normalized)) {
+      existing.emails.push(normalized);
     }
+    if (!existing.email) existing.email = normalized;
+    await writeDb(db);
     return existing;
   }
   const created: Empresa = {
     id: shortId("emp"),
+    cuit: digits,
     email: normalized,
-    company: name,
+    emails: [normalized],
+    company: formatCuit(digits),
     createdAt: new Date().toISOString(),
+    sessionEpoch: 0,
   };
   db.empresas.push(created);
   await writeDb(db);
   return created;
 }
 
-export async function getEmpresa(id: string): Promise<Empresa | undefined> {
+export async function addAuthorizedEmail(empresaId: string, email: string): Promise<Empresa> {
   const db = await readDb();
-  return db.empresas.find((item) => item.id === id);
+  const empresa = db.empresas.find((item) => item.id === empresaId);
+  if (!empresa) throw new Error("Empresa no encontrada.");
+  const normalized = normalizeEmail(email);
+  if (!empresa.emails.includes(normalized)) {
+    empresa.emails.push(normalized);
+  }
+  await writeDb(db);
+  return empresa;
+}
+
+export async function bumpSessionEpoch(empresaId: string): Promise<number> {
+  const db = await readDb();
+  const empresa = db.empresas.find((item) => item.id === empresaId);
+  if (!empresa) throw new Error("Empresa no encontrada.");
+  empresa.sessionEpoch = (empresa.sessionEpoch ?? 0) + 1;
+  await writeDb(db);
+  return empresa.sessionEpoch;
+}
+
+export async function createAccessToken(input: {
+  cuit: string;
+  email: string;
+  purpose: AccessPurpose;
+  empresaId?: string;
+  hash: string;
+  ttlMs?: number;
+}): Promise<AccessToken> {
+  const db = await readDb();
+  const now = Date.now();
+  const token: AccessToken = {
+    id: shortId("tok"),
+    hash: input.hash,
+    empresaId: input.empresaId,
+    cuit: digitsCuit(input.cuit),
+    email: normalizeEmail(input.email),
+    purpose: input.purpose,
+    createdAt: new Date(now).toISOString(),
+    expiresAt: new Date(now + (input.ttlMs ?? 15 * 60 * 1000)).toISOString(),
+  };
+  db.accessTokens.push(token);
+  await writeDb(db);
+  return token;
+}
+
+export async function latestAccessRequestAt(cuit: string, email: string): Promise<string | undefined> {
+  const db = await readDb();
+  const digits = digitsCuit(cuit);
+  const normalized = normalizeEmail(email);
+  return db.accessTokens
+    .filter((item) => item.cuit === digits && item.email === normalized && !item.revokedAt)
+    .sort((a, b) => b.createdAt.localeCompare(a.createdAt))[0]?.createdAt;
+}
+
+export async function revokeAccessTokens(cuit: string, email?: string): Promise<void> {
+  const db = await readDb();
+  const digits = digitsCuit(cuit);
+  const normalized = email ? normalizeEmail(email) : null;
+  const now = new Date().toISOString();
+  for (const token of db.accessTokens) {
+    if (token.cuit !== digits) continue;
+    if (normalized && token.email !== normalized) continue;
+    if (token.usedAt || token.revokedAt) continue;
+    token.revokedAt = now;
+  }
+  await writeDb(db);
+}
+
+export async function consumeAccessToken(hash: string): Promise<AccessToken | null> {
+  const db = await readDb();
+  const token = db.accessTokens.find((item) => item.hash === hash);
+  if (!token || token.usedAt || token.revokedAt) return null;
+  if (new Date(token.expiresAt).getTime() <= Date.now()) return null;
+  token.usedAt = new Date().toISOString();
+  await writeDb(db);
+  return token;
 }
 
 export async function listAportes(empresaId: string): Promise<Aporte[]> {
@@ -232,6 +338,8 @@ export async function recordWorkRelease(input: {
   if (existing) {
     existing.txHash = input.txHash;
     existing.simulation = false;
+    aporte.chargedHash = input.txHash;
+    aporte.txHash = input.txHash;
     await writeDb(db);
     return existing;
   }
@@ -274,6 +382,7 @@ export async function recordWorkRelease(input: {
   db.certificados.push(certificado);
   aporte.certifiedUnits = nextUnits;
   aporte.certificadoId = certId;
+  aporte.chargedHash = input.txHash;
   aporte.txHash = input.txHash;
   if (nextUnits >= total) {
     aporte.status = "certificado";
@@ -289,7 +398,10 @@ export async function stampCertificadoTx(reportHash: string, txHash: string): Pr
   certificado.txHash = txHash;
   certificado.simulation = false;
   const aporte = db.aportes.find((item) => item.id === certificado.aporteId);
-  if (aporte) aporte.txHash = txHash;
+  if (aporte) {
+    aporte.txHash = txHash;
+    aporte.chargedHash = txHash;
+  }
   await writeDb(db);
 }
 

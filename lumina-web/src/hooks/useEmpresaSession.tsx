@@ -15,10 +15,12 @@ export type LuminaOpsPublic = {
   treasuryReady: boolean;
   oracleReady: boolean;
   koyweReady: boolean;
+  mailReady: boolean;
 };
 
 type EmpresaSessionContextValue = {
   session: EmpresaSession | null;
+  emails: string[];
   rail: FiatRailPublic | null;
   ops: LuminaOpsPublic | null;
   loading: boolean;
@@ -31,6 +33,7 @@ const EmpresaSessionContext = createContext<EmpresaSessionContextValue | undefin
 
 export function EmpresaSessionProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<EmpresaSession | null>(null);
+  const [emails, setEmails] = useState<string[]>([]);
   const [rail, setRail] = useState<FiatRailPublic | null>(null);
   const [ops, setOps] = useState<LuminaOpsPublic | null>(null);
   const [loading, setLoading] = useState(true);
@@ -41,6 +44,7 @@ export function EmpresaSessionProvider({ children }: { children: ReactNode }) {
       const data = await response.json();
       const next = (data.session ?? null) as EmpresaSession | null;
       setSession(next);
+      setEmails(Array.isArray(data.emails) ? data.emails : []);
       setRail(data.rail ?? null);
       setOps(data.ops ?? null);
       return next;
@@ -59,10 +63,12 @@ export function EmpresaSessionProvider({ children }: { children: ReactNode }) {
   const logout = useCallback(async () => {
     await fetch("/api/empresa/session", { method: "DELETE" });
     setSession(null);
+    setEmails([]);
   }, []);
 
   const value: EmpresaSessionContextValue = {
     session,
+    emails,
     rail,
     ops,
     loading,

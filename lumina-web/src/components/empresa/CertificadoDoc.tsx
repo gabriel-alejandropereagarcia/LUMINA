@@ -2,6 +2,8 @@
 
 import { formatUsd } from "@/lib/empresa/payment";
 import type { Certificado } from "@/lib/empresa/types";
+import RecibosMovimiento from "@/components/empresa/RecibosMovimiento";
+import type { ReciboPaso } from "@/lib/empresa/recibos";
 import { txUrl } from "@/lib/explorer";
 
 function formatDate(iso: string): string {
@@ -11,7 +13,13 @@ function formatDate(iso: string): string {
   }).format(new Date(iso));
 }
 
-export default function CertificadoDoc({ certificado }: { certificado: Certificado }) {
+export default function CertificadoDoc({
+  certificado,
+  pasos,
+}: {
+  certificado: Certificado;
+  pasos?: ReciboPaso[];
+}) {
   const quantity = certificado.quantity ?? 0;
   const unitLabel = certificado.unitLabel || "trabajo";
 
@@ -115,14 +123,18 @@ export default function CertificadoDoc({ certificado }: { certificado: Certifica
           </p>
         )}
 
-        {certificado.txHash && (
-          <p className="text-xs font-mono break-all text-[#5A6B7A]">
-            Tx del cobro:{" "}
+        {pasos && pasos.length > 0 ? (
+          <section className="space-y-2">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-[#0D5E6A]">Recibos</p>
+            <RecibosMovimiento pasos={pasos} />
+          </section>
+        ) : certificado.txHash ? (
+          <p className="text-xs text-[#5A6B7A]">
             <a href={txUrl(certificado.txHash)} className="underline" target="_blank" rel="noreferrer">
-              {certificado.txHash}
+              La app cobró el 97,5%
             </a>
           </p>
-        )}
+        ) : null}
 
         <footer className="border-t border-[#0D5E6A]/15 pt-4 space-y-1">
           <p className="text-[11px] text-[#5A6B7A] leading-relaxed">

@@ -6,10 +6,12 @@ import { useParams } from "next/navigation";
 import { Loader2, Printer } from "lucide-react";
 import CertificadoDoc from "@/components/empresa/CertificadoDoc";
 import type { Certificado } from "@/lib/empresa/types";
+import type { ReciboPaso } from "@/lib/empresa/recibos";
 
 export default function CertificadoPublicPage() {
   const params = useParams<{ id: string }>();
   const [certificado, setCertificado] = useState<Certificado | null>(null);
+  const [pasos, setPasos] = useState<ReciboPaso[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -19,7 +21,10 @@ export default function CertificadoPublicPage() {
       .then(async (response) => {
         const data = await response.json();
         if (!response.ok) throw new Error(data.error || "No encontrado.");
-        if (!cancelled) setCertificado(data.certificado);
+        if (!cancelled) {
+          setCertificado(data.certificado);
+          setPasos(Array.isArray(data.pasos) ? data.pasos : []);
+        }
       })
       .catch((err: unknown) => {
         if (!cancelled) setError(err instanceof Error ? err.message : "Error.");
@@ -65,7 +70,7 @@ export default function CertificadoPublicPage() {
           Imprimir / Guardar PDF
         </button>
       </div>
-      <CertificadoDoc certificado={certificado} />
+      <CertificadoDoc certificado={certificado} pasos={pasos} />
     </div>
   );
 }

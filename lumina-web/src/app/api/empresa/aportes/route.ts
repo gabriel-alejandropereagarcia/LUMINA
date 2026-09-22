@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getCircleWireInstructions, isCircleMintReady } from "@/lib/empresa/circle-mint";
 import { createKoywePayin, isKoywePayinReady } from "@/lib/empresa/koywe-payin";
 import { DEMO_PAYMENT, arsFromUsd } from "@/lib/empresa/payment";
-import { readSession } from "@/lib/empresa/session";
+import { readLiveSession as readSession } from "@/lib/empresa/session";
 import { createAporte, listAportes, patchAporte } from "@/lib/empresa/store";
 import { resolveFundable } from "@/lib/empresa/fundable";
 

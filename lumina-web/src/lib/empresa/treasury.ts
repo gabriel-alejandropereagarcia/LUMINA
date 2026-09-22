@@ -17,6 +17,7 @@ import type { Aporte } from "./types";
 export async function maybeTreasuryDeposit(aporte: Aporte): Promise<{
   attempted: boolean;
   hash?: string;
+  assignHash?: string;
   sponsor?: string;
   error?: string;
 }> {
@@ -39,8 +40,9 @@ export async function maybeTreasuryDeposit(aporte: Aporte): Promise<{
     await signAndSubmit(await buildApproveTx(sponsor, aporte.amountUsd), keypair);
     const hash = await signAndSubmit(await buildDepositTx(sponsor, aporte.amountUsd), keypair);
 
+    let assignHash: string | undefined;
     try {
-      await signAndSubmit(
+      assignHash = await signAndSubmit(
         await buildAssignOracleTx(sponsor, USDC_CONTRACT_ID, oracle),
         keypair,
       );
@@ -48,7 +50,7 @@ export async function maybeTreasuryDeposit(aporte: Aporte): Promise<{
       console.error("assign_oracle tesorería (no bloquea el depósito):", error);
     }
 
-    return { attempted: true, hash, sponsor };
+    return { attempted: true, hash, assignHash, sponsor };
   } catch (error) {
     const message = error instanceof Error ? error.message : "Fallo tesorería.";
     console.error("maybeTreasuryDeposit:", message);

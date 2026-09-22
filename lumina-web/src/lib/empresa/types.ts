@@ -7,9 +7,28 @@ export type AporteStatus =
 
 export type Empresa = {
   id: string;
+  /** 11 dígitos. La cuenta es esta CUIT. */
+  cuit: string;
   email: string;
+  emails: string[];
   company: string;
   createdAt: string;
+  sessionEpoch: number;
+};
+
+export type AccessPurpose = "entrar" | "invitar" | "reset";
+
+export type AccessToken = {
+  id: string;
+  hash: string;
+  empresaId?: string;
+  cuit: string;
+  email: string;
+  purpose: AccessPurpose;
+  createdAt: string;
+  expiresAt: string;
+  usedAt?: string;
+  revokedAt?: string;
 };
 
 export type FiatProvider =
@@ -52,7 +71,14 @@ export type Aporte = {
   checkoutUrl?: string;
   paymentInstructions?: PaymentInstructions;
   providerError?: string;
+  /** Último recibo conocido. Preferí paidHash / choseHash / chargedHash. */
   txHash?: string;
+  /** Recibo: la empresa pagó (depósito). */
+  paidHash?: string;
+  /** Recibo: la empresa eligió esa app. */
+  choseHash?: string;
+  /** Recibo: la app cobró el 97,5%. */
+  chargedHash?: string;
   treasuryError?: string;
   schemaId?: string;
   unitLabel?: string;
@@ -96,6 +122,8 @@ export type EmpresaSession = {
   id: string;
   email: string;
   company: string;
+  cuit: string;
+  epoch: number;
 };
 
 export type FundableOption = {
@@ -116,4 +144,5 @@ export type EmpresaDb = {
   empresas: Empresa[];
   aportes: Aporte[];
   certificados: Certificado[];
+  accessTokens: AccessToken[];
 };

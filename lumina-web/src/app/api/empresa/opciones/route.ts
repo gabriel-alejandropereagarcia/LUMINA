@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { readSession } from "@/lib/empresa/session";
+import { readLiveSession as readSession } from "@/lib/empresa/session";
 import { listFundableOptions } from "@/lib/empresa/fundable";
 
 export const runtime = "nodejs";

@@ -9,9 +9,11 @@ export async function settleFiatAporte(
 ): Promise<{ aporte: Aporte; chain: Awaited<ReturnType<typeof maybeTreasuryDeposit>> }> {
   let aporte = await creditAporte(id, empresaId);
   const chain = await maybeTreasuryDeposit(aporte);
-  if (chain.hash || chain.error || chain.sponsor) {
+  if (chain.hash || chain.assignHash || chain.error || chain.sponsor) {
     aporte = await patchAporte(id, {
       txHash: chain.hash,
+      paidHash: chain.hash,
+      choseHash: chain.assignHash,
       treasuryError: chain.error,
       sponsorAddress: chain.sponsor,
     });

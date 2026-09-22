@@ -1,0 +1,16 @@
+---
+description: Lumina es un producto que opera. La hackathon es un recorte. Nada queda “después” sin fila en ROADMAP.md.
+alwaysApply: true
+---
+
+# Producto real
+
+Este proyecto debe ser real. Está bien trabajar la hackathon ahora, pero el proyecto tiene que ser real.
+
+- Antes de planear o implementar: leé `ROADMAP.md`.
+- Si no se hace ahora: fila en `ROADMAP.md` (dueño, ventana, hecho-cuando). Sin fila, no se difiere.
+- Identidad = CUIT + mail comprobado. No un nombre tipeado.
+- Lumina existe como **riel**: un sujeto cobra a la empresa; el contrato es el recibo; la app es el destino del trabajo. No ONG, no “solo protocolo”, no PSAV. El cobrador de pesos no factura.
+- Honorario 2,5% + IVA solo si hubo trabajo. El capital no es venta. No riel de donaciones.
+- No fingir cobro, CAE, tesorería ni persistencia.
+- Skills: `.cursor/skills/producto-real/SKILL.md` y `.cursor/skills/roadmap/SKILL.md`.

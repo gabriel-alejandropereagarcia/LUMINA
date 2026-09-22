@@ -2,12 +2,15 @@
 
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { getExplorerUrls } from "@/lib/explorer";
 import { useChain } from "@/context/ChainContext";
 import { ExternalLink } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const pathname = usePathname();
+  const isEmpresaSurface = pathname.startsWith("/empresa") || pathname.startsWith("/c/");
   const { selectedNetwork } = useChain();
   const urls = getExplorerUrls(selectedNetwork);
 
@@ -23,9 +26,17 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Col 2: Smart Contracts */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--foreground)]">Recibos Lumina</h4>
+            {isEmpresaSurface ? (
+              <ul className="space-y-2">
+                <li>
+                  <Link href="/jury" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)]">
+                    Ver los recibos públicos
+                  </Link>
+                </li>
+              </ul>
+            ) : (
             <ul className="space-y-2">
               <li>
                 <a
@@ -50,6 +61,7 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
+            )}
           </div>
 
           {/* Col 3: Resources */}

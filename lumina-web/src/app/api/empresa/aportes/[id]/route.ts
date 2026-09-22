@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { readSession } from "@/lib/empresa/session";
+import { readLiveSession as readSession } from "@/lib/empresa/session";
 import { confirmTransfer, getAporte, markRecovered } from "@/lib/empresa/store";
 import { settleFiatAporte } from "@/lib/empresa/settle";
 import { lockExpired, maybeTreasuryWithdraw, remainingUsd } from "@/lib/empresa/withdraw";

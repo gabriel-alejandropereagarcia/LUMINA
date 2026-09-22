@@ -16,6 +16,8 @@ import type { Aporte, Certificado, FundableOption } from "@/lib/empresa/types";
 import { aggregateBySchema, quantityFromLock } from "@/lib/hito/fact";
 import { useEmpresaSession } from "@/hooks/useEmpresaSession";
 import { useToast } from "@/context/ToastContext";
+import RecibosMovimiento from "@/components/empresa/RecibosMovimiento";
+import { pasosDeAporte } from "@/lib/empresa/recibos";
 
 const STATUS_LABEL: Record<Aporte["status"], string> = {
   orden: "Orden de transferencia",
@@ -27,7 +29,7 @@ const STATUS_LABEL: Record<Aporte["status"], string> = {
 
 export default function EmpresaPortalPage() {
   const router = useRouter();
-  const { session, loading: sessionLoading, rail, ops } = useEmpresaSession();
+  const { session, emails, loading: sessionLoading, rail, ops, refresh, logout } = useEmpresaSession();
   const { toast } = useToast();
   const paidToast = useRef(false);
   const [aportes, setAportes] = useState<Aporte[]>([]);
@@ -38,6 +40,8 @@ export default function EmpresaPortalPage() {
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [inviteEmail, setInviteEmail] = useState("");
+  const [inviteLink, setInviteLink] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     const [aportesRes, certsRes, opcionesRes] = await Promise.all([
@@ -189,6 +193,7 @@ export default function EmpresaPortalPage() {
           <h1 className="font-serif text-3xl font-bold text-[var(--foreground)] mt-1">
             {session.company}
           </h1>
+          <p className="text-sm font-mono text-[var(--muted)]">{session.cuit}</p>
           <p className="text-sm text-[var(--muted)]">{session.email}</p>
         </div>
         <div className="flex flex-col items-start sm:items-end gap-2">
@@ -201,6 +206,98 @@ export default function EmpresaPortalPage() {
           </p>
         </div>
       </div>
+
+      <section className="glass-card p-5 rounded-2xl space-y-3">
+        <h2 className="font-serif text-lg font-bold text-[var(--foreground)]">Mails de esta CUIT</h2>
+        <p className="text-xs text-[var(--muted)]">
+          Estos mails abren el mismo tablero. Lumina manda un link. No hay contraseña.
+        </p>
+        <ul className="text-sm space-y-1">
+          {(emails.length ? emails : [session.email]).map((item) => (
+            <li key={item} className="font-mono text-xs">
+              {item}
+              {item === session.email ? " · esta sesión" : ""}
+            </li>
+          ))}
+        </ul>
+        <form
+          className="flex flex-col sm:flex-row gap-2"
+          onSubmit={async (event) => {
+            event.preventDefault();
+            setBusy("invitar");
+            setError(null);
+            setInviteLink(null);
+            try {
+              const response = await fetch("/api/empresa/session/invitar", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: inviteEmail }),
+              });
+              const data = await response.json();
+              if (!response.ok) throw new Error(data.error || "No se pudo sumar el mail.");
+              setInviteEmail("");
+              if (typeof data.entrarUrl === "string") setInviteLink(data.entrarUrl);
+              toast({
+                type: "success",
+                title: data.mailReady ? "Link enviado" : "Envío de mail en trabajo",
+                message: data.mailReady
+                  ? "Ese mail recibe el acceso a esta CUIT."
+                  : "Cuando el correo esté conectado, el link llega solo.",
+              });
+              await refresh();
+            } catch (err) {
+              setError(err instanceof Error ? err.message : "Error.");
+            } finally {
+              setBusy(null);
+            }
+          }}
+        >
+          <input
+            id="empresa-invitar-email"
+            type="email"
+            required
+            value={inviteEmail}
+            onChange={(event) => setInviteEmail(event.target.value)}
+            placeholder="tesoreria@empresa.com"
+            className="flex-1 rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-2 text-sm"
+          />
+          <button
+            type="submit"
+            disabled={busy === "invitar"}
+            id="btn-empresa-invitar"
+            className="rounded-xl bg-teal-600 px-4 py-2 text-xs font-bold text-white disabled:opacity-50 cursor-pointer"
+          >
+            {busy === "invitar" ? "Enviando…" : "Sumar mail"}
+          </button>
+        </form>
+        {inviteLink && (
+          <a id="link-empresa-invitar-dev" href={inviteLink} className="text-xs text-teal-600 underline">
+            Abrir el link de esta máquina
+          </a>
+        )}
+        <button
+          type="button"
+          id="btn-empresa-cerrar-entradas"
+          disabled={busy === "reset"}
+          onClick={() => {
+            setBusy("reset");
+            fetch("/api/empresa/session/reset", { method: "POST" })
+              .then(async (response) => {
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.error || "No se pudo resetear.");
+                await logout();
+                router.replace("/empresa");
+              })
+              .catch((err: unknown) => {
+                setError(err instanceof Error ? err.message : "Error.");
+                setBusy(null);
+              });
+          }}
+          className="text-xs font-semibold text-[var(--muted)] underline cursor-pointer disabled:opacity-50"
+        >
+          Cerrar todas las entradas
+        </button>
+      </section>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {[
@@ -393,11 +490,17 @@ export default function EmpresaPortalPage() {
               {active.providerError && (
                 <p className="text-xs text-[var(--danger)]">{active.providerError}</p>
               )}
-              {active.txHash && (
-                <p className="text-[11px] font-mono text-[var(--muted)]">
-                  Depósito tesorería: {active.txHash}
+              <div className="rounded-xl border border-[var(--border)] px-3 py-3 space-y-2">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--muted)]">
+                  Recibos de este movimiento
                 </p>
-              )}
+                <RecibosMovimiento
+                  pasos={pasosDeAporte(
+                    active,
+                    certificados.find((item) => item.id === active.certificadoId),
+                  )}
+                />
+              </div>
 
               <div className="flex flex-wrap gap-2">
                 {active.checkoutUrl && active.status === "orden" && (
@@ -492,6 +595,7 @@ export default function EmpresaPortalPage() {
                   <th className="px-4 py-3">Monto</th>
                   <th className="px-4 py-3">App</th>
                   <th className="px-4 py-3">Estado</th>
+                  <th className="px-4 py-3">Recibos</th>
                 </tr>
               </thead>
               <tbody>
@@ -505,6 +609,14 @@ export default function EmpresaPortalPage() {
                     <td className="px-4 py-3">{formatUsd(item.amountUsd)}</td>
                     <td className="px-4 py-3">{item.appName}</td>
                     <td className="px-4 py-3">{STATUS_LABEL[item.status]}</td>
+                    <td className="px-4 py-3">
+                      <RecibosMovimiento
+                        pasos={pasosDeAporte(
+                          item,
+                          certificados.find((cert) => cert.id === item.certificadoId),
+                        )}
+                      />
+                    </td>
                   </tr>
                 ))}
               </tbody>

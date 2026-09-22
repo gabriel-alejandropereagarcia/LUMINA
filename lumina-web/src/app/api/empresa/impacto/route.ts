@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { readSession } from "@/lib/empresa/session";
-import { listCertificados } from "@/lib/empresa/store";
+import { readLiveSession as readSession } from "@/lib/empresa/session";
+import { listAportes, listCertificados } from "@/lib/empresa/store";
 import { aggregateBySchema } from "@/lib/hito/fact";
 
 export const runtime = "nodejs";
@@ -11,10 +11,13 @@ export async function GET() {
     return NextResponse.json({ error: "Iniciá sesión en el portal Empresa." }, { status: 401 });
   }
   const certificados = await listCertificados(session.id);
+  const aportes = await listAportes(session.id);
   const totals = aggregateBySchema(certificados);
   return NextResponse.json({
     company: session.company,
+    cuit: session.cuit,
     totals,
+    aportes,
     certificados,
     sentence: totals
       .map(

@@ -10,7 +10,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:hito": "npx tsx src/lib/hito/hash.node-test.ts"
+    "test:hito": "npx tsx src/lib/hito/hash.node-test.ts",
+    "test:empresa": "npx tsx src/lib/empresa/cuit.node-test.ts"
   },
   "dependencies": {
     "@creit.tech/stellar-wallets-kit": "^2.4.0",

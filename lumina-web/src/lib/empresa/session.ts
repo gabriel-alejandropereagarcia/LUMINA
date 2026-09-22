@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import type { NextResponse } from "next/server";
+import { liveSession } from "./access";
 import type { EmpresaSession } from "./types";
 
 export const EMPRESA_COOKIE = "lumina_empresa";
@@ -26,13 +27,13 @@ export async function readSession(): Promise<EmpresaSession | null> {
   if (!raw) return null;
   try {
     const parsed = JSON.parse(raw) as EmpresaSession;
-    if (!parsed.id || !parsed.email || !parsed.company) return null;
+    if (!parsed.id || !parsed.email || !parsed.cuit) return null;
     return parsed;
   } catch {
     return null;
   }
 }
 
-export function isValidEmail(value: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+export async function readLiveSession(): Promise<EmpresaSession | null> {
+  return liveSession(await readSession());
 }

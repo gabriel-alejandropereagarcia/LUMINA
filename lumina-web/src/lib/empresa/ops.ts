@@ -2,6 +2,7 @@ export type LuminaOps = {
   treasuryReady: boolean;
   oracleReady: boolean;
   koyweReady: boolean;
+  mailReady: boolean;
 };
 
 export function luminaOps(): LuminaOps {
@@ -14,5 +15,6 @@ export function luminaOps(): LuminaOps {
         process.env.KOYWE_ORG_ID &&
         process.env.KOYWE_MERCHANT_ID,
     ),
+    mailReady: Boolean(process.env.RESEND_API_KEY),
   };
 }

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { readSession } from "@/lib/empresa/session";
+import { readLiveSession as readSession } from "@/lib/empresa/session";
 import { listCertificados } from "@/lib/empresa/store";
 
 export const runtime = "nodejs";

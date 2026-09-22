@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { getCertificado } from "@/lib/empresa/store";
+import { getAporte, getCertificado } from "@/lib/empresa/store";
+import { pasosDeCertificado } from "@/lib/empresa/recibos";
 
 export const runtime = "nodejs";
 
@@ -13,5 +14,9 @@ export async function GET(
   if (!certificado) {
     return NextResponse.json({ error: "Certificado no encontrado." }, { status: 404 });
   }
-  return NextResponse.json({ certificado });
+  const aporte = await getAporte(certificado.aporteId);
+  return NextResponse.json({
+    certificado,
+    pasos: pasosDeCertificado(certificado, aporte),
+  });
 }
