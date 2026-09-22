@@ -84,8 +84,12 @@ function JuryBody() {
         </h1>
         <p className="text-sm text-[var(--muted)] leading-relaxed">
           Impacto sin fricción. Una factura. Si el trabajo ocurrió, el 97,5% llega a la app.
-          Si no, el dinero vuelve. El usuario final nunca paga. Abajo, el pago del 19/9
-          y cómo recorrerlo.{" "}
+          Si no, el dinero vuelve. El usuario final nunca paga. El recibo es el camino del 19/9:
+          pagó, eligió, cobró.{" "}
+          <Link href="/?vista=hoy&nodo=e2e-19-9#camino" className="text-teal-500 underline">
+            Seguí esa luz
+          </Link>
+          {" · "}
           <Link href="/presentation" className="text-teal-500 underline">
             Cómo funciona
           </Link>
@@ -97,6 +101,11 @@ function JuryBody() {
         <h2 className="text-[var(--foreground)] font-bold">Pago del 19/9 · 40 USDC de prueba</h2>
         <p className="text-xs text-[var(--muted)]">
           La empresa pagó → la empresa eligió MIRA → MIRA cobró. Cada enlace abre el recibo.
+          En el camino es una luz.{" "}
+          <Link href="/?vista=hoy&nodo=e2e-19-9#camino" className="text-teal-500 underline">
+            Verla encendida
+          </Link>
+          .
         </p>
         <RecibosMovimiento
           pasos={
@@ -114,6 +123,12 @@ function JuryBody() {
         <h2 className="text-[var(--foreground)] font-bold">Cómo recorrerlo</h2>
         <ol className="list-decimal pl-5 space-y-2">
           <li>
+            <Link href="/?vista=hoy&nodo=e2e-19-9#camino" className="text-teal-500 underline">
+              El camino
+            </Link>{" "}
+            — elegí el nodo del 19/9. Se ilumina empresa, Lumina, MIRA, la luz.
+          </li>
+          <li>
             <Link href="/empresa" className="text-teal-500 underline">
               Empresas en Lumina
             </Link>{" "}
@@ -126,17 +141,6 @@ function JuryBody() {
             </Link>{" "}
             — Freighter + USDC de prueba: depositás y elegís qué financiar. Después, confirmá el trabajo
             o usá los recibos de arriba.
-          </li>
-          <li>
-            Recibo:{" "}
-            <a
-              href={`https://stellar.expert/explorer/testnet/contract/${ESCROW}`}
-              className="text-teal-500 underline font-mono break-all"
-              target="_blank"
-              rel="noreferrer"
-            >
-              {ESCROW}
-            </a>
           </li>
         </ol>
       </section>

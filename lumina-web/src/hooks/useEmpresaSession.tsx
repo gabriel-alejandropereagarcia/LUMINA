@@ -24,6 +24,7 @@ type EmpresaSessionContextValue = {
   emails: string[];
   rail: FiatRailPublic | null;
   ops: LuminaOpsPublic | null;
+  caminoPublico: boolean;
   loading: boolean;
   refresh: () => Promise<EmpresaSession | null>;
   logout: () => Promise<void>;
@@ -37,6 +38,7 @@ export function EmpresaSessionProvider({ children }: { children: ReactNode }) {
   const [emails, setEmails] = useState<string[]>([]);
   const [rail, setRail] = useState<FiatRailPublic | null>(null);
   const [ops, setOps] = useState<LuminaOpsPublic | null>(null);
+  const [caminoPublico, setCaminoPublico] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const refresh = useCallback(async () => {
@@ -48,6 +50,7 @@ export function EmpresaSessionProvider({ children }: { children: ReactNode }) {
       setEmails(Array.isArray(data.emails) ? data.emails : []);
       setRail(data.rail ?? null);
       setOps(data.ops ?? null);
+      setCaminoPublico(Boolean(data.caminoPublico));
       return next;
     } catch {
       setSession(null);
@@ -65,6 +68,7 @@ export function EmpresaSessionProvider({ children }: { children: ReactNode }) {
     await fetch("/api/empresa/session", { method: "DELETE" });
     setSession(null);
     setEmails([]);
+    setCaminoPublico(false);
   }, []);
 
   const value: EmpresaSessionContextValue = {
@@ -72,6 +76,7 @@ export function EmpresaSessionProvider({ children }: { children: ReactNode }) {
     emails,
     rail,
     ops,
+    caminoPublico,
     loading,
     refresh,
     logout,

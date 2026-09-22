@@ -180,9 +180,8 @@ export default function ConnectPage() {
           Tu app entra a Lumina
         </h1>
         <p className="text-sm text-[var(--muted)] leading-relaxed">
-          Completá una ficha. Lumina revisa qué cobrás y a quién.
-          Cuando el trabajo se hizo, cobrás el 97,5%.
-          Las empresas en Lumina suman esas unidades.
+          Tu app es un nodo en el camino. Las empresas pagan a Lumina. Vos confirmás el trabajo
+          y se enciende una luz. Cobrás el 97,5% cuando esa luz existe.
         </p>
         <a
           href="#registro"
@@ -191,6 +190,11 @@ export default function ConnectPage() {
           Completar la ficha
           <ArrowRight className="h-4 w-4" />
         </a>
+        <p className="text-xs">
+          <Link href="/?vista=horizonte#camino" className="text-teal-600 underline">
+            Ver el camino completo
+          </Link>
+        </p>
       </div>
 
       <section className="rounded-2xl border border-[var(--border)] p-5 space-y-3">

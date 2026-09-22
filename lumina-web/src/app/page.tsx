@@ -5,13 +5,13 @@ import Link from "next/link";
 import { useCountUp } from "@/hooks/useCountUp";
 import { 
   ShieldCheck, Heart, Users, Coins, ArrowRight, Cpu, Sparkles, 
-  Scale, Landmark, BarChart3, Lock, Globe, Trophy, MapPin,
+  Scale, Landmark, BarChart3, Lock, Globe, Trophy,
   Activity, AlertTriangle, GraduationCap, Plug
 } from "lucide-react";
 import { IMPACT_APPS } from "@/lib/impact-apps";
+import CaminoLumina from "@/components/CaminoLumina";
 
 export default function Home() {
-  const [mapHoverDot, setMapHoverDot] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
 
@@ -24,10 +24,6 @@ export default function Home() {
   const [lockCount, lockRef] = useCountUp(12);
   const [appsCount, appsRef] = useCountUp(IMPACT_APPS.length);
   const [payoutCount, payoutRef] = useCountUp(975);
-
-  const [familiasCount, familiasRef] = useCountUp(IMPACT_APPS.length);
-  const [mchatCount, mchatRef] = useCountUp(0);
-  const [fondosCount, fondosRef] = useCountUp(97);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] px-4 py-16 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-24">
@@ -69,6 +65,10 @@ export default function Home() {
           </Link>
         </div>
         <p className="text-xs text-[var(--muted)]">
+          <Link href="#camino" className="text-teal-600 underline">
+            Seguir el camino
+          </Link>
+          {" · "}
           <Link href="/connect#registro" className="text-teal-600 underline">
             Tu app entra a Lumina
           </Link>
@@ -87,7 +87,7 @@ export default function Home() {
             <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
           </svg>
           <span className="font-mono text-xs font-bold uppercase tracking-wider text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors">
-            Recibo público
+            Recibos Lumina
           </span>
         </div>
 
@@ -98,7 +98,7 @@ export default function Home() {
             <polyline points="2 12 12 17 22 12" />
           </svg>
           <span className="font-mono text-xs font-bold uppercase tracking-wider text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors">
-            Pago automático
+            Una luz por trabajo
           </span>
         </div>
 
@@ -110,6 +110,10 @@ export default function Home() {
             Familia no paga
           </span>
         </div>
+      </div>
+
+      <div id="camino" className="w-full scroll-mt-24">
+        <CaminoLumina />
       </div>
 
       {/* Protocol Stats Board */}
@@ -131,48 +135,14 @@ export default function Home() {
       </div>
 
 
-      {/* IMPACTO HUMANO — imagery section */}
-      <div className="w-full z-10">
-        <div className="glass-card p-8 sm:p-12 rounded-3xl border border-[var(--card-border)] bg-gradient-to-br from-[var(--teal-light)] via-transparent to-[var(--green-light)] flex flex-col lg:flex-row items-center gap-8 lg:gap-16 relative overflow-hidden">
-          <div className="flex-shrink-0 w-40 h-40 sm:w-48 sm:h-48 rounded-full overflow-hidden ring-4 ring-[var(--teal-light)] shadow-xl">
-            <img
-              src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&h=400&fit=crop&crop=face"
-              alt="Familia con niño - detección temprana"
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
-          </div>
-          <div className="space-y-4 max-w-xl text-center lg:text-left">
-            <span className="text-xs font-bold text-teal-600 uppercase tracking-widest block">En Lumina</span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[var(--foreground)] tracking-tight">
-              Empresa, app y familia. Nadie más en el medio.
-            </h2>
-            <p className="text-sm text-[var(--muted)] leading-relaxed">
-              La empresa cubre. Quien necesita no paga. La app cobra cuando el trabajo se hizo.
-            </p>
-            <div className="grid grid-cols-3 gap-4 pt-4">
-              {[
-                { value: `${IMPACT_APPS.length}`, label: "Apps en Lumina", ref: familiasRef },
-                { value: `${mchatCount}`, label: "Trabajos cobrados", ref: mchatRef },
-                { value: `${fondosCount}.5%`, label: "Llega a la app", ref: fondosRef },
-              ].map((m, i) => (
-                <div key={i} ref={m.ref} className="text-center">
-                  <div className="font-serif text-2xl font-bold text-teal-600 font-mono">{m.value}</div>
-                  <div className="text-xs text-[var(--muted)]">{m.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* CÓMO FUNCIONA */}
       <div className="w-full space-y-12 z-10 pt-12 border-t border-[var(--border)]">
         <div className="text-center space-y-3">
           <span className="text-xs font-bold text-teal-600 uppercase tracking-widest block">Un ciclo</span>
           <h2 className="font-serif text-3xl font-bold text-[var(--foreground)] tracking-tight">Cómo funciona</h2>
           <p className="text-xs text-[var(--muted)] max-w-md mx-auto">
-            Paga → trabaja → confirma → cobra. Si no ocurrió, la empresa recupera y Lumina cobra 0%.
+            El mismo dibujo: empresa, Lumina, app, luz. Si no ocurrió, la empresa recupera y Lumina
+            cobra 0%.
           </p>
         </div>
 
@@ -208,7 +178,7 @@ export default function Home() {
             {
               step: "04",
               title: "Cobra el 97,5%",
-              desc: "El mismo día. Lumina se queda 2,5% solo si hubo impacto. La empresa recibe un PDF.",
+              desc: "Se enciende una luz. El recibo se puede abrir. Lumina se queda 2,5% solo si hubo impacto.",
               icon: Trophy,
               color: "text-indigo-400",
               bgColor: "bg-indigo-500/10",
@@ -237,7 +207,11 @@ export default function Home() {
           <span className="text-xs font-bold text-teal-600 uppercase tracking-widest block">Apps en Lumina</span>
           <h2 className="font-serif text-3xl font-bold text-[var(--foreground)] tracking-tight">Las primeras luces en el camino</h2>
           <p className="text-xs text-[var(--muted)] max-w-lg mx-auto">
-            MIRA y PuenteMAE cobran acá cuando el trabajo se hizo.
+            MIRA y PuenteMAE cobran acá cuando el trabajo se hizo. En el horizonte hay más.{" "}
+            <Link href="/?vista=horizonte#camino" className="text-teal-600 underline">
+              Ver el horizonte
+            </Link>
+            .
           </p>
         </div>
 
@@ -301,8 +275,10 @@ export default function Home() {
                   </div>
                   <div className="space-y-4">
                     <div className="flex justify-between items-center border-t border-[var(--border)] pt-4">
-                      <span className="text-xs text-[var(--muted)]">USDC por trabajo</span>
-                      <strong className="text-[var(--foreground)] font-mono text-base">{app.priceUsdc.toFixed(2)} USDC</strong>
+                      <span className="text-xs text-[var(--muted)]">Por unidad</span>
+                      <strong className="text-[var(--foreground)] font-mono text-base">
+                        US$ {app.priceUsdc.toFixed(0)} · {app.unitLabel}
+                      </strong>
                     </div>
                     {app.status === "wip" ? (
                       <div className="grid grid-cols-2 gap-2">
@@ -371,7 +347,7 @@ export default function Home() {
           <span className="text-xs font-bold text-teal-600 uppercase tracking-widest block">Recorrido</span>
           <h2 className="font-serif text-3xl font-bold text-[var(--foreground)] tracking-tight">Tres minutos. Un camino.</h2>
           <p className="text-xs text-[var(--muted)] max-w-lg mx-auto">
-            Empresa paga la factura. App hace el trabajo. Se ve el recibo Lumina. Nació en Salta.
+            Empresa paga la factura. Se enciende una luz. Se abre el recibo Lumina. Nació en Salta.
           </p>
         </div>
         <div className="glass-card p-8 rounded-2xl max-w-2xl mx-auto space-y-4 text-sm text-[var(--muted)]">
@@ -379,7 +355,10 @@ export default function Home() {
             Empezá por Empresas en Lumina si pagás el impacto. Por Probar Lumina si querés ver el pago.
           </p>
           <div className="flex flex-wrap gap-3">
-            <Link href="/empresa" className="rounded-xl bg-teal-600 px-4 py-2 text-xs font-bold text-white">
+            <Link href="#camino" className="rounded-xl bg-teal-600 px-4 py-2 text-xs font-bold text-white">
+              Seguir el camino
+            </Link>
+            <Link href="/empresa" className="rounded-xl border border-[var(--border)] px-4 py-2 text-xs font-bold text-[var(--foreground)]">
               Empresa en Lumina
             </Link>
             <Link href="/invest" className="rounded-xl border border-[var(--border)] px-4 py-2 text-xs font-bold text-[var(--foreground)]">
@@ -388,80 +367,6 @@ export default function Home() {
             <Link href="/jury" className="rounded-xl border border-[var(--border)] px-4 py-2 text-xs font-bold text-[var(--foreground)]">
               Recibos Lumina
             </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* MAPA DE IMPACTO Y LEADERBOARD */}
-      <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-8 z-10 pt-12 border-t border-[var(--border)]">
-        
-        {/* Mapa de Argentina */}
-        <div className="lg:col-span-2 glass-card p-6 rounded-2xl space-y-4 flex flex-col justify-between">
-          <div>
-            <h3 className="text-base font-bold text-[var(--foreground)] flex items-center gap-2">
-              <MapPin className="h-5 w-5 text-teal-600" /> Dónde nació
-            </h3>
-            <p className="text-xs text-[var(--muted)] mt-1">
-              Nació en Salta. Los puntos se llenan cuando hay un trabajo cobrado.
-            </p>
-          </div>
-
-          <div className="relative w-full h-[300px] bg-[var(--muted-bg)] rounded-xl border border-[var(--border)] flex items-center justify-center overflow-hidden">
-            <svg className="w-full h-full" viewBox="0 0 400 350" fill="none" xmlns="http://www.w3.org/2000/svg">
-              {/* Argentina simplified outline */}
-              <path
-                d="M135,45 L200,42 L222,55 L228,70 L218,85 L213,95 L225,105 
-                   L230,125 L218,140 L208,155 L198,175 L193,195 L188,215 
-                   L183,235 L178,252 L172,265 L168,275 L158,280 L148,275 
-                   L150,262 L155,250 L162,238 L168,220 L163,198 L155,178 
-                   L145,160 L135,142 L128,120 L125,100 L125,80 L128,60 Z"
-                fill="currentColor"
-                className="text-teal-600/10"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeOpacity="0.3"
-              />
-
-              {/* Buenos Aires */}
-              <circle cx="215" cy="115" r="6" fill="#0D5E6A" className="cursor-pointer hover:fill-teal-500 transition-colors" stroke="white" strokeWidth="2"
-                onMouseEnter={() => setMapHoverDot("ba")} onMouseLeave={() => setMapHoverDot(null)} />
-              {/* Córdoba */}
-              <circle cx="180" cy="100" r="5" fill="#0D5E6A" className="cursor-pointer hover:fill-teal-500 transition-colors" stroke="white" strokeWidth="2"
-                onMouseEnter={() => setMapHoverDot("cba")} onMouseLeave={() => setMapHoverDot(null)} />
-              {/* Salta */}
-              <circle cx="155" cy="58" r="6" fill="#2B9C76" className="cursor-pointer hover:fill-green-400 transition-colors" stroke="white" strokeWidth="2"
-                onMouseEnter={() => setMapHoverDot("salta")} onMouseLeave={() => setMapHoverDot(null)} />
-
-              {/* Floating labels */}
-              <text x="215" y="108" className="text-[10px] fill-teal-700 dark:fill-teal-400 font-medium" textAnchor="middle">CABA</text>
-              <text x="180" y="93" className="text-[10px] fill-teal-700 dark:fill-teal-400 font-medium" textAnchor="middle">CBA</text>
-              <text x="155" y="50" className="text-[10px] fill-green-700 dark:fill-green-400 font-medium" textAnchor="middle">SALTA</text>
-            </svg>
-
-            {mapHoverDot && (
-              <div className="absolute bottom-3 left-3 right-3 bg-[var(--card-bg)] backdrop-blur-xl border border-[var(--border)] rounded-lg p-2.5 text-xs shadow-2xl">
-                {mapHoverDot === "ba" && <p className="text-[var(--foreground)]"><strong>CABA:</strong> acá se prueba el pago.</p>}
-                {mapHoverDot === "cba" && <p className="text-[var(--foreground)]"><strong>Córdoba:</strong> próximamente. El mapa no inventa trabajo.</p>}
-                {mapHoverDot === "salta" && <p className="text-[var(--foreground)]"><strong>Salta:</strong> acá nació Lumina. Hub del equipo.</p>}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Leaderboard */}
-        <div className="lg:col-span-1 glass-card p-6 rounded-2xl space-y-4">
-          <div>
-            <h3 className="text-sm font-bold text-[var(--foreground)] flex items-center gap-2">
-              <Trophy className="h-4 w-4 text-teal-600" /> Trabajos cobrados
-            </h3>
-            <p className="text-xs text-[var(--muted)]">
-              Acá aparecen cuando hay un pago o un cobro.
-            </p>
-          </div>
-
-          <div className="rounded-xl border border-dashed border-[var(--border)] p-6 text-xs text-[var(--muted)] text-center space-y-2">
-            <p>El directorio se llena con el primer cobro. Podés ser ese pago.</p>
-            <Link href="/invest" className="text-teal-500 underline">Probar Lumina</Link>
           </div>
         </div>
       </div>

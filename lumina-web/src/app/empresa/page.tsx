@@ -63,11 +63,11 @@ export default function EmpresaLandingPage() {
             Empresas en Lumina
           </span>
           <h1 className="font-serif text-4xl sm:text-5xl font-bold tracking-tight text-[var(--foreground)] leading-tight">
-            Pagás el impacto como pagás cualquier proveedor
+            Una factura. Una luz en el camino.
           </h1>
           <p className="text-base text-[var(--muted)] leading-relaxed max-w-xl">
             El tablero es de la CUIT. Lumina manda un link al mail de la empresa.
-            Transferís pesos. El panel cuenta el trabajo. Quien usa la app no paga.
+            Transferís pesos. Cada unidad confirmada enciende una luz. Quien usa la app no paga.
           </p>
 
           <ul className="space-y-3 text-sm text-[var(--muted)]">
@@ -82,7 +82,7 @@ export default function EmpresaLandingPage() {
               },
               {
                 icon: FileCheck,
-                text: "Un PDF: qué se hizo, cuánto se pagó.",
+                text: "Un PDF y un recibo: pagó, eligió, cobró. Se ve en el camino.",
               },
               {
                 icon: ShieldCheck,
@@ -95,6 +95,11 @@ export default function EmpresaLandingPage() {
               </li>
             ))}
           </ul>
+          <p className="text-sm">
+            <Link href="/?vista=hoy#camino" className="text-teal-600 underline font-semibold">
+              Ver cómo se ve en el camino
+            </Link>
+          </p>
         </div>
 
         <div className="glass-card p-8 rounded-2xl space-y-6">
@@ -196,7 +201,7 @@ export default function EmpresaLandingPage() {
 
       <p className="text-[11px] text-[var(--muted)] leading-relaxed max-w-3xl">
         Pagás un servicio a Lumina. El cobro en pesos: en trabajo — no transferir
-        dinero real. Si querés ver un pago de prueba, andá a{" "}
+        dinero real. El camino de hoy muestra la luz del 19/9. Si querés ver un pago de prueba, andá a{" "}
         <Link href="/invest" className="underline font-semibold">
           Probar Lumina
         </Link>

@@ -225,7 +225,11 @@ function InvestPortal() {
           <Link href="/empresa" className="text-teal-600 font-semibold underline">
             Empresas en Lumina
           </Link>
-          {" "}con una factura.
+          {" "}con una factura. El mismo camino que en{" "}
+          <Link href="/#camino" className="text-teal-600 font-semibold underline">
+            Inicio
+          </Link>
+          .
         </p>
         <p className="max-w-2xl mx-auto text-xs text-[var(--muted)] rounded-xl border border-[var(--border)] bg-[var(--card-bg)] px-4 py-3">
           Al final, los recibos:{" "}

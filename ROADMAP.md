@@ -21,6 +21,7 @@ Estas no son “visión”. Si no se cierran, el panel, la factura y el informe 
 | De qué cobra el cobrador | Si Koywe cobra 0,8% del capital, el 2,5% no alcanza. | Quote escrito: ¿% del capital o del honorario? Si es del capital, no se esconde en el 2,5%. | org | a decidir |
 | Moneda de la orden | FX ~278 bps se come el honorario si Lumina lo absorbe. | Precio en USD. La empresa paga pesos del día. Cotización visible en la orden. | org + código | a decidir |
 | Fundación / association | Un segundo sujeto que cobre rompe “un solo intermediario”. | No ahora. Si un día existe, cero pesos RSE (solo IP/grants). | org | a decidir |
+| Qué se ve en público | Si todo es privado, Lumina no se entiende. Si se publican niños, es ilegal. Si se publican donantes, Lumina pasa a ser ONG. | Tres capas: el riel es de la CUIT; el recibo es siempre público; el camino muestra unidades de trabajo sin identidad. Default: **Empresa anónima**. Opt-in: aparecer como luz pública (nombre de la CUIT). Nunca DNI, nombre, escuela, clínica. | org + código | en código · org firmó anónima / luz pública |
 
 Hasta que org firme la fila, el código asume la **propuesta**. No se implementa la otra vía en paralelo.
 
@@ -56,10 +57,11 @@ El panel se recorre. No se transfiere dinero real. No se finge CUIT ni CAE.
 |---|---|---|---|
 | Empresas eligen qué financiar (tarjetas MIRA / PuenteMAE) | código | Visible en `/empresa/portal` | hecho |
 | Loop reserva → app confirma → 97,5% (testnet / simulación) | código | Recibos 19/9 en `/jury` | hecho |
-| Copy: Lumina al centro, sin rastro de correcciones | código | UI sin “Lumina no elige” | hecho |
+| Copy: Lumina al centro, sin rastro de correcciones | código | UI sin “Lumina no elige”. Camino (Hoy/Horizonte) es la misma historia en Empresa, Apps, Recibos, Probar | ahora |
 | Cobro ARS etiquetado en trabajo | código | Rail `simulation`, aviso de no transferir | ahora |
 | Tesorería y Koywe no se venden como vivos | código | `ops.treasuryReady` / `koyweReady` en false en Vercel | ahora |
 | Alta por CUIT + link al mail + reset | código | `/empresa` pide CUIT y mail, no el nombre | ahora |
+| Tablero público del camino (nodos de trabajo hecho) | código | Home: Hoy = 1 luz real 19/9 (MIRA). Horizonte = mapa denso: muchas empresas y muchas apps. Elegir un nodo ilumina el camino. Sin nombres de niños. Sin hashes inventados. | ahora |
 
 ---
 
@@ -85,6 +87,8 @@ Sin estas filas, el panel no es de una empresa: es de un browser.
 | Webhook Koywe firmado + idempotencia + conciliación | código | junto al merchant | Orden pasa a reservado sin botón “simular” | siguiente |
 | Tesorería: reserva al acreditar; secreto en KMS no en chat | código + org | junto a Koywe | `treasuryReady` true con evidencia de depósito | siguiente |
 | Claves oracle de cada app (MIRA viva; PuenteMAE o no se ofrece vivo) | app | 7–14 días | Confirmación de trabajo de esa app | siguiente |
+| Opt-in: publicar el nombre de la CUIT en el camino | código | ahora | Toggle en el panel; default Empresa anónima | ahora |
+| Luces nuevas desde certificados cobrados (sin PII) | código | con `DATABASE_URL` | Cada cobro enciende un nodo en home | siguiente |
 
 ---
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { 
   BookOpen, ShieldCheck, Cpu, Milestone, Lock, Coins, 
   ArrowRight, Users, Activity, HelpCircle, FileText, CheckCircle
@@ -33,6 +34,11 @@ export default function WhitepaperAndRoadmap() {
           <p className="mt-4 text-sm text-[var(--muted)] max-w-2xl mx-auto">
             Lumina ilumina el camino. Conecta a quien quiere ayudar.
             Una factura. El trabajo se hizo. El 97,5% llega. La familia no paga.
+          </p>
+          <p className="mt-3 text-sm">
+            <Link href="/?vista=horizonte#camino" className="text-teal-500 underline font-semibold">
+              Abrí el camino
+            </Link>
           </p>
         </div>
 
@@ -243,12 +249,17 @@ export default function WhitepaperAndRoadmap() {
                   6. Recorrido
                 </h2>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  Impacto sin fricción. Una factura. Un trabajo hecho. El 97,5% a la app.
+                  Impacto sin fricción. Una factura. Un trabajo hecho. El 97,5% a la app.{" "}
+                  <Link href="/?vista=horizonte#camino" className="text-teal-400 underline font-semibold">
+                    Abrí el camino interactivo
+                  </Link>
+                  : elegí un nodo y se ilumina lo que se conecta.
                 </p>
                 <ol className="text-sm text-[var(--muted)] space-y-3 list-decimal pl-5">
                   <li>
                     <strong className="text-[var(--foreground)]">Inicio.</strong> Lumina ilumina el
-                    camino. Conecta a quien quiere ayudar. La familia no paga.
+                    camino. Conecta a quien quiere ayudar. La familia no paga. Hoy hay una luz;
+                    el horizonte muestra el riel lleno.
                   </li>
                   <li>
                     <strong className="text-[var(--foreground)]">Empresas en Lumina.</strong>{" "}

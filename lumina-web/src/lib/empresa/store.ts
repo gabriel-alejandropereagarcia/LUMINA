@@ -90,6 +90,7 @@ function hydrateEmpresa(item: Empresa): Empresa {
     email: emails[0] ?? normalizeEmail(item.email ?? ""),
     emails,
     sessionEpoch: item.sessionEpoch ?? 0,
+    caminoPublico: Boolean(item.caminoPublico),
   };
 }
 
@@ -125,6 +126,7 @@ export async function claimEmpresa(cuit: string, email: string): Promise<Empresa
     company: formatCuit(digits),
     createdAt: new Date().toISOString(),
     sessionEpoch: 0,
+    caminoPublico: false,
   };
   db.empresas.push(created);
   await writeDb(db);
@@ -150,6 +152,15 @@ export async function bumpSessionEpoch(empresaId: string): Promise<number> {
   empresa.sessionEpoch = (empresa.sessionEpoch ?? 0) + 1;
   await writeDb(db);
   return empresa.sessionEpoch;
+}
+
+export async function setCaminoPublico(empresaId: string, publico: boolean): Promise<Empresa> {
+  const db = await readDb();
+  const empresa = db.empresas.find((item) => item.id === empresaId);
+  if (!empresa) throw new Error("Empresa no encontrada.");
+  empresa.caminoPublico = publico;
+  await writeDb(db);
+  return empresa;
 }
 
 export async function createAccessToken(input: {

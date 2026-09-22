@@ -28,46 +28,29 @@ export default function Footer() {
 
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--foreground)]">Recibos Lumina</h4>
-            {isEmpresaSurface ? (
-              <ul className="space-y-2">
-                <li>
-                  <Link href="/jury" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)]">
-                    Ver los recibos públicos
-                  </Link>
-                </li>
-              </ul>
-            ) : (
             <ul className="space-y-2">
               <li>
-                <a
-                  href={urls.contractUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs text-[var(--teal)] hover:text-[var(--green)] hover:underline flex items-center gap-1 font-mono break-all"
-                >
-                  {urls.contractLabel}
-                  <ExternalLink className="h-3 w-3 shrink-0" />
-                </a>
+                <Link href="/?vista=horizonte#camino" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)]">
+                  Ver el camino
+                </Link>
               </li>
               <li>
-                <a
-                  href={urls.usdcUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs text-[var(--teal)] hover:text-[var(--green)] hover:underline flex items-center gap-1 font-mono break-all"
-                >
-                  {urls.usdcLabel}
-                  <ExternalLink className="h-3 w-3 shrink-0" />
-                </a>
+                <Link href="/jury" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)]">
+                  Recibos del 19/9
+                </Link>
               </li>
             </ul>
-            )}
           </div>
 
           {/* Col 3: Resources */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--foreground)]">Recursos</h4>
             <ul className="space-y-2">
+              <li>
+                <Link href="/?vista=horizonte#camino" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
+                  El camino
+                </Link>
+              </li>
               <li>
                 <Link href="/empresa" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
                   Empresas en Lumina
@@ -114,7 +97,7 @@ export default function Footer() {
             Lumina © {currentYear} — 2,5% solo si hubo impacto.
           </p>
           <div className="flex gap-4 text-xs text-[var(--muted)]">
-            <span>Recibo público</span>
+            <span>Una luz por trabajo</span>
             <span>•</span>
             <span>Familia no paga</span>
           </div>

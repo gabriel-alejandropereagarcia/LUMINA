@@ -5,7 +5,13 @@ import { txUrl } from "@/lib/explorer";
 import type { ReciboPaso, ReciboVivo } from "@/lib/empresa/recibos";
 import { etiquetaVivo } from "@/lib/empresa/recibos";
 
-export default function RecibosMovimiento({ pasos }: { pasos: ReciboPaso[] }) {
+export default function RecibosMovimiento({
+  pasos,
+  tone = "light",
+}: {
+  pasos: ReciboPaso[];
+  tone?: "light" | "dark";
+}) {
   const hashes = useMemo(
     () => pasos.map((paso) => paso.hash).filter((item): item is string => Boolean(item)),
     [pasos],
@@ -44,16 +50,23 @@ export default function RecibosMovimiento({ pasos }: { pasos: ReciboPaso[] }) {
                 href={txUrl(paso.hash)}
                 target="_blank"
                 rel="noreferrer"
-                className="text-teal-600 underline"
+                className={tone === "dark" ? "text-teal-300 underline" : "text-teal-600 underline"}
               >
                 {paso.label}
               </a>
-              {extra ? <span className="block text-[var(--muted)]">{extra}</span> : null}
+              {extra ? (
+                <span className={`block ${tone === "dark" ? "text-teal-100/60" : "text-[var(--muted)]"}`}>
+                  {extra}
+                </span>
+              ) : null}
             </li>
           );
         }
         return (
-          <li key={paso.key} className="leading-relaxed text-[var(--muted)]">
+          <li
+            key={paso.key}
+            className={`leading-relaxed ${tone === "dark" ? "text-teal-100/60" : "text-[var(--muted)]"}`}
+          >
             {paso.label} · en trabajo
           </li>
         );

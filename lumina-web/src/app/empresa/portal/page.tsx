@@ -29,7 +29,7 @@ const STATUS_LABEL: Record<Aporte["status"], string> = {
 
 export default function EmpresaPortalPage() {
   const router = useRouter();
-  const { session, emails, loading: sessionLoading, rail, ops, refresh, logout } = useEmpresaSession();
+  const { session, emails, loading: sessionLoading, rail, ops, caminoPublico, refresh, logout } = useEmpresaSession();
   const { toast } = useToast();
   const paidToast = useRef(false);
   const [aportes, setAportes] = useState<Aporte[]>([]);
@@ -319,6 +319,82 @@ export default function EmpresaPortalPage() {
         >
           Cerrar todas las entradas
         </button>
+      </section>
+
+      <section className="glass-card p-5 rounded-2xl space-y-3">
+        <h2 className="font-serif text-lg font-bold text-[var(--foreground)]">El camino público</h2>
+        <p className="text-xs text-[var(--muted)] leading-relaxed">
+          El recibo siempre se puede abrir. Lo que elegís es si se ve el nombre de esta CUIT o
+          queda como empresa anónima. Nunca aparecen niños, DNI ni escuelas.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-2">
+          <button
+            type="button"
+            id="btn-camino-anonima"
+            disabled={busy === "camino"}
+            onClick={() => {
+              setBusy("camino");
+              fetch("/api/empresa/camino", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ publico: false }),
+              })
+                .then(async (response) => {
+                  const data = await response.json();
+                  if (!response.ok) throw new Error(data.error || "No se pudo guardar.");
+                  await refresh();
+                })
+                .catch((err: unknown) => {
+                  setError(err instanceof Error ? err.message : "Error.");
+                })
+                .finally(() => setBusy(null));
+            }}
+            className={`rounded-xl px-4 py-2 text-xs font-bold cursor-pointer disabled:opacity-50 ${
+              !caminoPublico
+                ? "bg-teal-600 text-white"
+                : "border border-[var(--border)] text-[var(--foreground)]"
+            }`}
+          >
+            Empresa anónima
+          </button>
+          <button
+            type="button"
+            id="btn-camino-publica"
+            disabled={busy === "camino"}
+            onClick={() => {
+              setBusy("camino");
+              fetch("/api/empresa/camino", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ publico: true }),
+              })
+                .then(async (response) => {
+                  const data = await response.json();
+                  if (!response.ok) throw new Error(data.error || "No se pudo guardar.");
+                  await refresh();
+                })
+                .catch((err: unknown) => {
+                  setError(err instanceof Error ? err.message : "Error.");
+                })
+                .finally(() => setBusy(null));
+            }}
+            className={`rounded-xl px-4 py-2 text-xs font-bold cursor-pointer disabled:opacity-50 ${
+              caminoPublico
+                ? "bg-teal-600 text-white"
+                : "border border-[var(--border)] text-[var(--foreground)]"
+            }`}
+          >
+            Aparecer como luz pública
+          </button>
+        </div>
+        <p className="text-[11px] text-[var(--muted)]">
+          {caminoPublico
+            ? "Esta CUIT eligió verse en el camino cuando haya un trabajo cobrado."
+            : "Hoy: empresa anónima. El trabajo se ve; el nombre no."}{" "}
+          <Link href="/?vista=hoy#camino" className="text-teal-600 underline">
+            Ver el camino
+          </Link>
+        </p>
       </section>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

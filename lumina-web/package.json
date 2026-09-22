@@ -11,7 +11,7 @@
     "start": "next start",
     "lint": "eslint",
     "test:hito": "npx tsx src/lib/hito/hash.node-test.ts",
-    "test:empresa": "npx tsx src/lib/empresa/cuit.node-test.ts && npx tsx src/lib/empresa/recibos.node-test.ts && npx tsx src/lib/empresa/access.node-test.ts && npx tsx src/lib/empresa/cadena.node-test.ts && npx tsx src/lib/empresa/horizon.node-test.ts"
+    "test:empresa": "npx tsx src/lib/empresa/cuit.node-test.ts && npx tsx src/lib/empresa/recibos.node-test.ts && npx tsx src/lib/empresa/access.node-test.ts && npx tsx src/lib/empresa/cadena.node-test.ts && npx tsx src/lib/empresa/camino.node-test.ts && npx tsx src/lib/empresa/horizon.node-test.ts"
   },
   "dependencies": {
     "@creit.tech/stellar-wallets-kit": "^2.4.0",

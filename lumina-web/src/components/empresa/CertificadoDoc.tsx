@@ -35,7 +35,7 @@ export default function CertificadoDoc({
               Certificado de impacto
             </h1>
             <p className="text-sm text-[#5A6B7A] mt-2">
-              Qué se hizo, cuánto se pagó, recibo
+              Una luz en el camino: qué se hizo, cuánto se pagó, recibo
             </p>
           </div>
           <div className="h-16 w-16 rounded-full border-2 border-[#0D5E6A] flex items-center justify-center shrink-0">
@@ -142,6 +142,7 @@ export default function CertificadoDoc({
           </p>
           <p className="text-[11px] text-[#5A6B7A]">
             Si no hay trabajo en 12 meses, la empresa recupera el aporte por el mismo camino.
+            El recibo se abre en Recibos Lumina.
           </p>
         </footer>
       </div>

@@ -30,6 +30,7 @@ export async function GET() {
       companySeesWallet: rail.companySeesWallet,
     },
     ops: luminaOps(),
+    caminoPublico: Boolean(empresa?.caminoPublico),
   });
   if (!session) clearSession(response);
   return response;

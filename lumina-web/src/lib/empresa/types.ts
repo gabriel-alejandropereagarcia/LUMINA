@@ -14,6 +14,8 @@ export type Empresa = {
   company: string;
   createdAt: string;
   sessionEpoch: number;
+  /** Si true, el camino público muestra el nombre de esta CUIT. Default: Empresa anónima. */
+  caminoPublico?: boolean;
 };
 
 export type AccessPurpose = "entrar" | "invitar" | "reset";
