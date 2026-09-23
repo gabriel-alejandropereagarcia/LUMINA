@@ -36,10 +36,8 @@ export default function ConnectPage() {
   const [oracle, setOracle] = useState("");
   const [payout, setPayout] = useState("");
   const [price, setPrice] = useState("40");
-  const [schemaId, setSchemaId] = useState("");
   const [unitLabel, setUnitLabel] = useState("");
-  const [valueMethod, setValueMethod] = useState("");
-  const [milestone, setMilestone] = useState("");
+  const [hitoDocumento, setHitoDocumento] = useState("");
   const [hashExcludes, setHashExcludes] = useState("DNI, CUD, diagnóstico, escuela");
   const [postRelease, setPostRelease] = useState("Pago en pesos al beneficiario.");
   const [acceptedToS, setAcceptedToS] = useState(false);
@@ -86,10 +84,8 @@ export default function ConnectPage() {
           oracle,
           payout,
           lockPriceUsd: Number(price),
-          schemaId,
           unitLabel,
-          valueMethod,
-          milestone,
+          hitoDocumento,
           hashExcludes,
           postReleasePromise: postRelease,
           acceptedToS,
@@ -180,8 +176,8 @@ export default function ConnectPage() {
           Tu app entra a Lumina
         </h1>
         <p className="text-sm text-[var(--muted)] leading-relaxed">
-          Tu app es un nodo en el camino. Las empresas pagan a Lumina. Vos confirmás el trabajo
-          y se enciende una luz. Cobrás el 97,5% cuando esa luz existe.
+          Contás qué documento emitís cuando el trabajo está hecho. Lumina toma el código
+          de ese documento y libera el dinero. Cobrás el 97,5%. Quien usa la app no paga.
         </p>
         <a
           href="#registro"
@@ -205,8 +201,8 @@ export default function ConnectPage() {
         <ol className="list-decimal pl-5 space-y-1 text-[var(--muted)]">
           <li>Personería o titular nombrado.</li>
           <li>La cuenta que cobra el 97,5% es tuya.</li>
-          <li>Unidad clara: niño-mes, cribado, horas. Eso es lo que suma el panel.</li>
-          <li>Cómo se calcula el valor. El precio, aparte.</li>
+          <li>El documento del hito: el informe que emitís cuando el trabajo está hecho.</li>
+          <li>La unidad que ve la empresa: un cribado, un mes de ayuda. El precio, aparte.</li>
           <li>Qué datos nunca viajan (DNI, clínica, menores). Quien usa la app no paga.</li>
           <li>Una prueba de cobro en el entorno de prueba.</li>
         </ol>
@@ -225,7 +221,7 @@ export default function ConnectPage() {
               <p className="text-[var(--muted)]">
                 {app.unitLabel} · US$ {app.priceUsdc} c/u
               </p>
-              <p className="text-xs text-[var(--muted)] mt-1">{app.valueMethod}</p>
+              <p className="text-xs text-[var(--muted)] mt-1">{app.hitoDocumento}</p>
             </li>
           ))}
         </ul>
@@ -246,21 +242,26 @@ export default function ConnectPage() {
         </label>
         <label className="block space-y-1">
           <span className="text-xs font-semibold text-[var(--muted)]">
-            Identificador del trabajo (no se cambia después)
+            Qué documento emitís cuando el trabajo está hecho
           </span>
-          <input required value={schemaId} onChange={(e) => setSchemaId(e.target.value)} placeholder="miapp.nino-mes.v1" className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 font-mono text-xs" />
+          <textarea
+            required
+            minLength={12}
+            value={hitoDocumento}
+            onChange={(e) => setHitoDocumento(e.target.value)}
+            rows={3}
+            placeholder="El informe que mi app entrega cuando el trabajo se hizo."
+            className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2"
+          />
+          <span className="block text-[11px] text-[var(--muted)] leading-relaxed">
+            MIRA: el informe del cribado para la familia. Ayuda a docentes: el informe
+            del mes. Las horas quedan dentro de ese informe. Lumina toma el código del
+            documento y libera el dinero. El archivo queda en tu app.
+          </span>
         </label>
         <label className="block space-y-1">
-          <span className="text-xs font-semibold text-[var(--muted)]">Unidad que suma el panel de la empresa</span>
-          <input required value={unitLabel} onChange={(e) => setUnitLabel(e.target.value)} placeholder="niño-mes de apoyo a la inclusión" className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2" />
-        </label>
-        <label className="block space-y-1">
-          <span className="text-xs font-semibold text-[var(--muted)]">Método de valor</span>
-          <textarea required value={valueMethod} onChange={(e) => setValueMethod(e.target.value)} rows={2} className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2" />
-        </label>
-        <label className="block space-y-1">
-          <span className="text-xs font-semibold text-[var(--muted)]">Frase corta del trabajo</span>
-          <input value={milestone} onChange={(e) => setMilestone(e.target.value)} className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2" />
+          <span className="text-xs font-semibold text-[var(--muted)]">Unidad que ve la empresa</span>
+          <input required value={unitLabel} onChange={(e) => setUnitLabel(e.target.value)} placeholder="un cribado, un mes de ayuda" className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2" />
         </label>
         <label className="block space-y-1">
           <span className="text-xs font-semibold text-[var(--muted)]">Datos que nunca viajan</span>
@@ -291,8 +292,9 @@ export default function ConnectPage() {
             className="mt-0.5"
           />
           <span>
-            Acepto: Lumina revisa la ficha. El 97,5% es mío. Quien usa la app no paga.
-            El recibo público no lleva datos de menores. Si rompo el esquema, el alta se pausa.
+            Acepto: el hito es el documento que mi app emite. Lumina toma su código y
+            libera el dinero. El 97,5% es mío. Quien usa la app no paga. El recibo no
+            lleva datos de menores. Si rompo el esquema, el alta se pausa.
           </span>
         </label>
         <button type="submit" disabled={loading || !acceptedToS} className="w-full rounded-xl border border-teal-600 py-3 text-xs font-bold text-teal-700 disabled:opacity-50">
@@ -389,15 +391,15 @@ export default function ConnectPage() {
         <li className="flex gap-3">
           <Plug className="h-5 w-5 text-teal-500 shrink-0" />
           <span>
-            <strong className="text-[var(--foreground)]">Ficha.</strong> Unidad + valor + prohibidos.
-            Con eso las empresas en Lumina pueden decir “10 niños”.
+            <strong className="text-[var(--foreground)]">Ficha.</strong> Decís qué documento
+            es tu hito. Con eso una empresa puede hacer llegar la ayuda.
           </span>
         </li>
         <li className="flex gap-3">
           <FileCode className="h-5 w-5 text-teal-500 shrink-0" />
           <span>
-            <strong className="text-[var(--foreground)]">Confirmá.</strong> Un aviso cuando el
-            trabajo se hizo (unidad y cantidad). El mismo hecho no se cobra dos veces.
+            <strong className="text-[var(--foreground)]">El informe.</strong> Cuando lo
+            emitís, Lumina toma su código. El mismo informe no libera el dinero dos veces.
           </span>
         </li>
         <li className="flex gap-3">

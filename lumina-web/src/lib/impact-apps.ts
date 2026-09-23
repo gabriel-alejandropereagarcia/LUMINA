@@ -8,6 +8,8 @@ export type ImpactApp = {
   categoryLabel: string;
   tagline: string;
   milestone: string;
+  /** Documento que la app emite cuando el trabajo está hecho. Su código libera el dinero. */
+  hitoDocumento: string;
   description: string;
   priceUsdc: number;
   status: AppStatus;
@@ -38,9 +40,11 @@ export const IMPACT_APPS: ImpactApp[] = [
     category: "salud",
     categoryLabel: "Salud",
     tagline: "App de impacto · en trabajo",
-    milestone: "1 cribado M-CHAT-R/F completado",
+    milestone: "El informe del cribado",
+    hitoDocumento:
+      "El informe del cribado que MIRA emite para la familia. Lumina toma el código de ese informe y libera el dinero. El archivo queda en MIRA.",
     description:
-      "Cribado temprano (M-CHAT-R/F + informe). MIRA hace el trabajo y cobra cuando se hizo. El informe queda en MIRA.",
+      "Cribado temprano (M-CHAT-R/F). Cuando MIRA emite el informe, ese informe queda en el recibo y libera el dinero. El archivo queda en MIRA.",
     priceUsdc: 40,
     status: "wip",
     statusLabel: "En trabajo",
@@ -66,9 +70,11 @@ export const IMPACT_APPS: ImpactApp[] = [
     category: "educacion",
     categoryLabel: "Educación",
     tagline: "Ayuda social a docentes de inclusión",
-    milestone: "1 niño-mes de apoyo a la inclusión",
+    milestone: "El informe del mes de ayuda",
+    hitoDocumento:
+      "El informe del docente cuando cierra el mes de ayuda. El registro de horas queda dentro de ese informe. Lumina toma el código del informe, no de cada hora. El archivo queda en la app.",
     description:
-      "Ayuda social con plata de la empresa. El docente cobra en pesos a su cuenta. La familia no paga.",
+      "Cuando la app cierra el mes de ayuda, emite el informe del docente. Ese informe queda en el recibo y libera el dinero. La familia no paga.",
     priceUsdc: 40,
     status: "wip",
     statusLabel: "En trabajo",
@@ -79,7 +85,7 @@ export const IMPACT_APPS: ImpactApp[] = [
     schemaId: "puentemae.nino-mes.v1",
     unitLabel: "niño-mes de apoyo a la inclusión",
     valueMethod:
-      "1 trabajo = 1 niño-mes. Referencia nomenclador Res. 2775/2026 hora MAE $16.068,31 (ilustrativo, no liquidación de obra social).",
+      "1 trabajo = 1 mes de ayuda. El hito es el informe del docente al cerrar ese mes. Las horas quedan dentro del informe.",
     hashIncludes: "schema, período, quantity, subject_commitment ciego, sponsor, monto",
     hashExcludes: "DNI, CUD, diagnóstico, escuela, CBU",
     postReleasePromise: "La app paga en pesos a la cuenta del docente.",

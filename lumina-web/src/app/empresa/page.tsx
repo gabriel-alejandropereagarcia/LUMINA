@@ -63,18 +63,18 @@ export default function EmpresaLandingPage() {
             Empresas en Lumina
           </span>
           <h1 className="font-serif text-4xl sm:text-5xl font-bold tracking-tight text-[var(--foreground)] leading-tight">
-            Una factura. Una luz en el camino.
+            La ayuda llega. Una luz en el camino.
           </h1>
           <p className="text-base text-[var(--muted)] leading-relaxed max-w-xl">
-            El tablero es de la CUIT. Lumina manda un link al mail de la empresa.
-            Transferís pesos. Cada unidad confirmada enciende una luz. Quien usa la app no paga.
+            El tablero es de la CUIT. Hacés llegar la ayuda y elegís la app.
+            Cuando esa app emite el informe, se enciende una luz. Quien usa la app no paga.
           </p>
 
           <ul className="space-y-3 text-sm text-[var(--muted)]">
             {[
               {
                 icon: Landmark,
-                text: "Una factura. Lumina cobra el servicio.",
+                text: "La ayuda llega a la app. Lumina cobra el 2,5% solo si hubo trabajo.",
               },
               {
                 icon: Lock,
@@ -82,7 +82,7 @@ export default function EmpresaLandingPage() {
               },
               {
                 icon: FileCheck,
-                text: "Un PDF y un recibo: pagó, eligió, cobró. Se ve en el camino.",
+                text: "Cuando la app emite el informe, ese informe queda en el recibo y libera el dinero.",
               },
               {
                 icon: ShieldCheck,
@@ -201,7 +201,7 @@ export default function EmpresaLandingPage() {
       </div>
 
       <p className="text-[11px] text-[var(--muted)] leading-relaxed max-w-3xl">
-        Pagás un servicio a Lumina. El cobro en pesos: en trabajo — no transferir
+        Hacés llegar la ayuda. El cobro en pesos: en trabajo — no transferir
         dinero real. El camino de hoy muestra la luz del 19/9. Si querés ver un pago de prueba, andá a{" "}
         <Link href="/invest" className="underline font-semibold">
           Probar Lumina

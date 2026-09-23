@@ -32,8 +32,8 @@ export default function WhitepaperAndRoadmap() {
             Lumina
           </h1>
           <p className="mt-4 text-sm text-[var(--muted)] max-w-2xl mx-auto">
-            Lumina ilumina el camino. Conecta a quien quiere ayudar.
-            Una factura. El trabajo se hizo. El 97,5% llega. La familia no paga.
+            Lumina ilumina el camino. Conecta las ganas de ayudar con la necesidad.
+            La app emite el informe. Ese informe libera el dinero. El 97,5% llega. La familia no paga.
           </p>
           <p className="mt-3 text-sm">
             <Link href="/?vista=horizonte#camino" className="text-teal-500 underline font-semibold">
@@ -81,16 +81,16 @@ export default function WhitepaperAndRoadmap() {
                   1. El problema
                 </h2>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  Hoy, una empresa quiere financiar salud, educación o asistencia.
-                  Una familia lo necesita, pero el capital se pierde en informes, meses
-                  de espera y burocracia.
+                  Hoy, una empresa quiere ayudar en salud, educación o asistencia.
+                  Una familia lo necesita, pero la ayuda se pierde en meses de espera
+                  y en quien decide en el medio.
                 </p>
                 <div className="rounded-xl border border-teal-500/10 bg-teal-500/5 p-4 space-y-2">
                   <h4 className="text-xs font-bold text-teal-400">Lumina ilumina el camino</h4>
                   <p className="text-xs leading-relaxed text-[var(--muted)]">
-                    Conecta a quien quiere ayudar. Una factura.
-                    La app confirma el trabajo. Si ocurrió, 97,5% a la app. Si no, el
-                    capital vuelve. La familia no paga.
+                    Conecta las ganas de ayudar con la necesidad. La app emite el informe.
+                    Ese informe libera el dinero. Si ocurrió, 97,5% a la app. Si no, el
+                    dinero vuelve. La familia no paga.
                   </p>
                 </div>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
@@ -177,7 +177,7 @@ export default function WhitepaperAndRoadmap() {
                   <div className="p-4 rounded-xl border border-[var(--border)] bg-[var(--background)]">
                     <span className="text-lg font-bold text-green-400 font-mono block">1.0%</span>
                     <span className="text-xs font-bold text-[var(--foreground)] block mt-1">Más empresas</span>
-                    <p className="text-[10px] text-[var(--muted)] mt-1">Para que más tesorerías paguen impacto con una factura.</p>
+                    <p className="text-[10px] text-[var(--muted)] mt-1">Para que más empresas hagan llegar la ayuda, sin intermediarios.</p>
                   </div>
                   <div className="p-4 rounded-xl border border-[var(--border)] bg-[var(--background)]">
                     <span className="text-lg font-bold text-emerald-400 font-mono block">0.5%</span>
@@ -215,8 +215,8 @@ export default function WhitepaperAndRoadmap() {
                     },
                     {
                       fase: "En trabajo",
-                      title: "Factura en pesos, de verdad",
-                      desc: "Las tesorerías pagan con una factura. El cobro no cambia. En trabajo."
+                      title: "La ayuda en pesos, de verdad",
+                      desc: "La empresa hace llegar pesos. El cobro no cambia. En trabajo."
                     },
                     {
                       fase: "Próximamente",
@@ -249,7 +249,7 @@ export default function WhitepaperAndRoadmap() {
                   6. Recorrido
                 </h2>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  Impacto sin fricción. Una factura. Un trabajo hecho. El 97,5% a la app.{" "}
+                  Impacto sin fricción. La ayuda llega. Un trabajo hecho. El 97,5% a la app.{" "}
                   <Link href="/?vista=horizonte#camino" className="text-teal-400 underline font-semibold">
                     Abrí el camino interactivo
                   </Link>
@@ -258,12 +258,12 @@ export default function WhitepaperAndRoadmap() {
                 <ol className="text-sm text-[var(--muted)] space-y-3 list-decimal pl-5">
                   <li>
                     <strong className="text-[var(--foreground)]">Inicio.</strong> Lumina ilumina el
-                    camino. Conecta a quien quiere ayudar. La familia no paga. Hoy hay una luz;
+                    camino. Conecta las ganas de ayudar con la necesidad. La familia no paga. Hoy hay una luz;
                     el horizonte muestra el camino lleno.
                   </li>
                   <li>
                     <strong className="text-[var(--foreground)]">Empresas en Lumina.</strong>{" "}
-                    Factura. Panel: 10 niño-mes. PDF.
+                    La ayuda llega. Panel: las unidades. El recibo.
                   </li>
                   <li>
                     <strong className="text-[var(--foreground)]">Probar Lumina.</strong> Un pago de

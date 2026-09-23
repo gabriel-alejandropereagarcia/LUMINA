@@ -220,12 +220,12 @@ function InvestPortal() {
           Probar Lumina
         </h1>
         <p className="max-w-2xl mx-auto text-sm text-[var(--muted)]">
-          Acá se ve el cobro: depositás, elegís qué financiar, esa app confirma el trabajo y cobra el 97,5%.
+          Acá se ve el cobro: depositás, elegís la app, esa app emite el informe y cobra el 97,5%.
           Una empresa entra por{" "}
           <Link href="/empresa" className="text-teal-600 font-semibold underline">
             Empresas en Lumina
           </Link>
-          {" "}con una factura. El mismo camino que en{" "}
+          {" "}y hace llegar la ayuda. El mismo camino que en{" "}
           <Link href="/#camino" className="text-teal-600 font-semibold underline">
             Inicio
           </Link>

@@ -180,7 +180,7 @@ export default function EmpresaPortalPage() {
         title: "Orden de pago lista",
         message: data.aporte?.providerError
           ? `Cobrador no live: ${data.aporte.providerError}`
-          : "Pagás un servicio a Lumina. Cobro ARS: en trabajo.",
+          : "La ayuda queda reservada. Cobro en pesos: en trabajo.",
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error.");
@@ -227,10 +227,10 @@ export default function EmpresaPortalPage() {
         </div>
         <div className="flex flex-col items-start sm:items-end gap-2">
           <Link href="/empresa/impacto" className="text-xs font-bold text-teal-600 uppercase tracking-wider">
-            Resumen de impacto →
+            Para comunicaciones e inversores →
           </Link>
           <p className="text-xs text-[var(--muted)] max-w-sm">
-            Pagás un servicio a Lumina. {rail?.label ?? "Simulación"}.
+            El informe de la app libera el dinero. {rail?.label ?? "Simulación"}.
             {rail?.live ? " El cobrador está activo." : " No transferir pesos reales."}
             {ops?.persistReady ? "" : " El dato: en trabajo (un deploy puede borrarlo)."}
           </p>
@@ -749,7 +749,7 @@ export default function EmpresaPortalPage() {
         <h2 className="font-serif text-lg font-bold text-[var(--foreground)]">Certificados</h2>
         {certificados.length === 0 ? (
           <p className="text-sm text-[var(--muted)]">
-            Cuando la app confirma el trabajo, acá aparece el documento. Quien usó
+            Cuando la app emite el informe, acá aparece el recibo. Quien usó
             la app ve el mismo PDF.
           </p>
         ) : (

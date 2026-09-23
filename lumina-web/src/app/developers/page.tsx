@@ -14,8 +14,8 @@ export default function DevelopersPage() {
           Un POST. El 97,5% llega a la app.
         </h1>
         <p className="text-sm text-[var(--muted)] leading-relaxed">
-          La app avisa que el trabajo se hizo (unidad, cantidad).
-          El panel de la empresa suma esas unidades.
+          La app emite el informe y manda su código (64 caracteres) en subjectCommitments.
+          Lumina no recibe el archivo. El mismo código no cobra dos veces. El 97,5% se libera.
         </p>
       </div>
 

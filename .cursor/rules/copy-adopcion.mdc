@@ -7,7 +7,7 @@ alwaysApply: true
 
 Lumina gana si una empresa, una familia o un juez entiende sin saber blockchain.
 
-**Pitch canónico:** Impacto sin fricción. Lumina ilumina el camino de la RSE. Conecta a quien quiere ayudar. La empresa paga una factura. El 97,5% llega a la app. El usuario final nunca paga. Si el trabajo no ocurrió, el dinero vuelve y Lumina cobra 0%.
+**Pitch canónico:** Impacto sin fricción. Lumina ilumina el camino. Conecta las ganas de ayudar con la necesidad. La ayuda llega. El 97,5% llega a la app. La familia no paga. Si el trabajo no ocurrió, el dinero vuelve y Lumina cobra 0%. El recibo muestra que llegó. No es una factura. No se promete deducible.
 
 Lumina es el centro. No hay producto Connect ni Portal: hay **Empresas en Lumina** y **Apps en Lumina**.
 
@@ -16,7 +16,7 @@ Lumina es el centro. No hay producto Connect ni Portal: hay **Empresas en Lumina
 | Quién | Rutas | Voz |
 |---|---|---|
 | Todos | `/` | Lumina ilumina el camino. Empresa en Lumina / App en Lumina. |
-| Empresa | `/empresa`, `/c/`, PDF | Empresas en Lumina. Factura, trabajo hecho, familia no paga. |
+| Empresa | `/empresa`, `/c/`, PDF | Empresas en Lumina. La ayuda llega, trabajo hecho, familia no paga. |
 | App | `/connect` | Apps en Lumina. Tu app entra a Lumina. Cero `add_oracle`. |
 | Demo / juez | `/invest`, `/jury` | Probar Lumina / Recibos Lumina. Hashes después, con etiqueta humana. Freighter **solo** `/invest`. |
 | Devs | `/developers` | API ok. Títulos: Apps en Lumina. |
@@ -31,6 +31,6 @@ Freighter, PSAV, SHA-256, hash, on-chain, escrow, webhook, add_oracle, Dry-run, 
 
 ## Diccionario
 
-Lumina · Empresas en Lumina · Apps en Lumina · Recibos Lumina · Probar Lumina · factura · trabajo hecho · cobro 97,5% · familia no paga · dinero reservado · ilumina el camino · en trabajo / próximamente
+Lumina · Empresas en Lumina · Apps en Lumina · Recibos Lumina · Probar Lumina · la ayuda llega · el informe libera el dinero · cobro 97,5% · familia no paga · dinero reservado · ilumina el camino · en trabajo / próximamente
 
-Antes de mergear copy: ¿Lumina es el sujeto de la frase? Si el sujeto es la app, Connect o el portal, reescribí. No inventar PII. Scale, no Genesis. Empresa paga factura, no cripto.
+Antes de mergear copy: ¿Lumina es el sujeto de la frase? Si el sujeto es la app, Connect o el portal, reescribí. No inventar PII. Scale, no Genesis. La empresa hace llegar la ayuda, no cripto. No titular “factura”. No decir “donación deducible”.

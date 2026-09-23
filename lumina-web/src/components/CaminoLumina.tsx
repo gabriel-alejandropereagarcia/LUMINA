@@ -109,8 +109,8 @@ function GrafoView({
   const viewBox = vista === "hoy" ? `0 0 ${maxX} ${maxY}` : "0 0 1280 820";
   const aria =
     vista === "hoy"
-      ? "Hoy: una empresa anónima paga a Lumina. MIRA cobra. Una luz: un cribado el 19 de septiembre. Elegí un nodo para seguir el camino."
-      : "Horizonte: muchas empresas y muchas apps pagan y cobran en Lumina. Elegí un nodo: se ilumina lo que se conecta.";
+      ? "Hoy: una luz real. El informe del cribado del 19 de septiembre. Elegí un nodo para seguir el camino."
+      : "Horizonte: el camino lleno de luz. Muchas empresas y muchas apps. Elegí un nodo: se ilumina lo que se conecta.";
 
   return (
     <svg
@@ -269,8 +269,8 @@ function PanelCamino({
           </>
         ) : (
           <>
-            Elegí un nodo. Se ilumina lo que se conecta: empresa, Lumina, app, trabajo. Horizonte:
-            ilustración. Muchas apps, el mismo camino. No son cobros ocurridos.{" "}
+            Elegí un nodo. Se ilumina lo que se conecta: empresa, Lumina, app, informe. El horizonte
+            es la visión del camino lleno. Hoy la luz real es la del 19/9.{" "}
             <button type="button" className="underline text-teal-300 cursor-pointer" onClick={onHoy}>
               Volver a la luz de hoy
             </button>
@@ -370,14 +370,14 @@ function CaminoBody() {
           El camino
         </span>
         <h2 className="font-serif text-3xl font-bold text-[var(--foreground)] tracking-tight">
-          {vista === "hoy" ? "Una factura entra. Una luz se enciende." : "El mismo camino, lleno."}
+          {vista === "hoy" ? "Hoy. Una luz real." : "Horizonte. El camino lleno de luz."}
         </h2>
         <p className="text-xs text-[var(--muted)] max-w-xl mx-auto leading-relaxed">
           {vista === "hoy"
             ? lucesHoy > 1
               ? `Hoy hay ${lucesHoy} luces reales. La del 19/9 y cada cobro confirmado. Empresa anónima, salvo que la CUIT elija verse. Elegí un nodo.`
-              : "Hoy hay una luz real: un cribado el 19/9. Empresa anónima. Sin nombres de niños. Elegí un nodo: se ilumina el camino."
-            : "A dónde apunta Lumina. Muchas empresas. Muchas apps. Un campo de luces. Elegí un nodo: se ilumina lo que se conecta. Las luces no son personas."}
+              : "Hoy hay una luz real: el informe del cribado, el 19/9. Empresa anónima. Elegí un nodo: se ilumina el camino."
+            : "La visión. Muchas empresas, muchas apps, un campo de luces. Elegí un nodo: se ilumina lo que se conecta. Hoy la luz real es la del 19/9."}
         </p>
         <div className="inline-flex rounded-full border border-[var(--border)] p-1">
           <button

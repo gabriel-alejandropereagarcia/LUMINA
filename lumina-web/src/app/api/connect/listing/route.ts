@@ -19,6 +19,7 @@ export async function GET() {
       postReleasePromise: app.postReleasePromise,
       status: app.paused ? "paused" : app.status,
       milestone: app.milestone,
+      hitoDocumento: app.hitoDocumento,
     })),
     altas: listings,
   });
@@ -33,23 +34,36 @@ export async function POST(request: Request) {
   const lockPriceUsd = Number(body.lockPriceUsd ?? body.price);
   const oracle = typeof body.oracle === "string" ? body.oracle.trim() : "";
   const payout = typeof body.payout === "string" ? body.payout.trim() : oracle;
-  const milestone = typeof body.milestone === "string" ? body.milestone.trim() : unitLabel;
+  const hitoDocumento =
+    typeof body.hitoDocumento === "string" ? body.hitoDocumento.trim() : "";
+  const milestone =
+    (typeof body.milestone === "string" ? body.milestone.trim() : "") || hitoDocumento || unitLabel;
   const hashIncludes = typeof body.hashIncludes === "string" ? body.hashIncludes.trim() : "";
   const hashExcludes = typeof body.hashExcludes === "string" ? body.hashExcludes.trim() : "";
   const postReleasePromise =
     typeof body.postReleasePromise === "string" ? body.postReleasePromise.trim() : "";
 
-  if (!name || !schemaId || !unitLabel || !valueMethod || !oracle) {
+  if (hitoDocumento.length < 12) {
     return NextResponse.json(
-      { error: "Obligatorios: name, schemaId, unitLabel, valueMethod, oracle." },
+      { error: "Contá qué documento emitís cuando el trabajo está hecho." },
+      { status: 400 },
+    );
+  }
+  const schema = schemaId || schemaFromName(name);
+  const method =
+    valueMethod ||
+    `1 trabajo = 1 ${unitLabel}. El hito es: ${hitoDocumento}`;
+  if (!name || !schema || !unitLabel || !oracle) {
+    return NextResponse.json(
+      { error: "Obligatorios: nombre, unidad, el documento del hito y la cuenta que confirma." },
       { status: 400 },
     );
   }
   if (!oracle.startsWith("G") || oracle.length < 56) {
-    return NextResponse.json({ error: "oracle tiene que ser una G… válida." }, { status: 400 });
+    return NextResponse.json({ error: "La cuenta que confirma tiene que empezar con G." }, { status: 400 });
   }
   if (!Number.isFinite(lockPriceUsd) || lockPriceUsd <= 0) {
-    return NextResponse.json({ error: "lockPriceUsd inválido." }, { status: 400 });
+    return NextResponse.json({ error: "El precio por trabajo no es válido." }, { status: 400 });
   }
   if (body.acceptedToS !== true) {
     return NextResponse.json(
@@ -60,9 +74,10 @@ export async function POST(request: Request) {
 
   const listing = await createListing({
     name,
-    schemaId,
+    schemaId: schema,
+    hitoDocumento,
     unitLabel,
-    valueMethod,
+    valueMethod: method,
     lockPriceUsd,
     hashIncludes: hashIncludes || "schema, período, quantity, subject_commitment, sponsor, monto",
     hashExcludes: hashExcludes || "DNI, CUD, diagnóstico, escuela",
@@ -79,6 +94,17 @@ export async function POST(request: Request) {
     },
     { status: 201 },
   );
+}
+
+function schemaFromName(name: string): string {
+  const slug = name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 40);
+  return `${slug || "app"}.v1`;
 }
 
 export async function PATCH(request: Request) {

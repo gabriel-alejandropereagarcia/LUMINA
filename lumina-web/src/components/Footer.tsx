@@ -22,7 +22,7 @@ export default function Footer() {
           <div className="space-y-4">
             <h3 className="font-serif font-bold text-lg text-[var(--foreground)]">Lumina</h3>
             <p className="text-xs text-[var(--muted)] leading-relaxed max-w-sm">
-              Impacto sin fricción. Lumina ilumina el camino. Conecta a quien quiere ayudar.
+              Lumina ilumina el camino. Conecta las ganas de ayudar con la necesidad. El informe libera el dinero.
             </p>
           </div>
 

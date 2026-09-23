@@ -10,7 +10,7 @@ Este proyecto debe ser real. Está bien trabajar la hackathon ahora, pero el pro
 - Antes de planear o implementar: leé `ROADMAP.md`.
 - Si no se hace ahora: fila en `ROADMAP.md` (dueño, ventana, hecho-cuando). Sin fila, no se difiere.
 - Identidad = CUIT + mail comprobado. No un nombre tipeado.
-- Lumina existe como **riel**: un sujeto cobra a la empresa; el contrato es el recibo; la app es el destino del trabajo. No ONG, no “solo protocolo”, no PSAV. El cobrador de pesos no factura.
-- Honorario 2,5% + IVA solo si hubo trabajo. El capital no es venta. No riel de donaciones.
+- Lumina ilumina el camino: conecta las ganas de ayudar con la necesidad. La ayuda llega a la app. La familia no paga. El recibo público es la prueba de que llegó. Lumina no es ONG, no es la donataria y no es PSAV.
+- Honorario 2,5% + IVA solo si hubo trabajo. El capital no es venta. No se promete donación deducible: hoy eso exige una entidad con certificado RG 2681 (art. 81 inc. c). Esa puerta está en `ROADMAP.md`.
 - No fingir cobro, CAE, tesorería ni persistencia.
 - Skills: `.cursor/skills/producto-real/SKILL.md` y `.cursor/skills/roadmap/SKILL.md`.

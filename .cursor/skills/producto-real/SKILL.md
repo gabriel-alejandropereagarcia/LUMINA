@@ -14,13 +14,14 @@ Leé `ROADMAP.md` en la raíz del repo antes de planear o implementar. Si tocás
 - Decir “después”, “en trabajo”, “próximamente” o “no es de este sprint” **sin una fila en `ROADMAP.md`**: dueño, fecha, hecho-cuando.
 - Fingir cobro, CUIT, CAE, USDT0, tesorería o persistencia.
 - Dejar que cualquiera entre a nombre de otra empresa.
-- Facturar el capital entero como venta de Lumina.
-- Tratar Alerce/Koywe como quien factura. Cobran. Factura la persona jurídica Lumina.
+- Facturar el capital como venta de Lumina.
+- Prometer donación deducible. Lumina no es la donataria (art. 81 inc. c, RG 2681).
+- Tratar Alerce/Koywe como quien elige la causa. Cobran el caño. Lumina opera el camino.
 - Inventar PII. Tocar `ABC-SCALE-NOTES.md`.
 
 ## Qué es real
 
-Una empresa entra a **su** panel (CUIT + mail comprobado). Paga pesos al riel Lumina. Lumina reserva. La app confirma. 97,5% a la app. Lumina cobra **2,5% + IVA** si hubo trabajo. Si no, 0% y la plata vuelve. La familia no paga. Lumina no es ONG ni protocolo-sin-CUIT.
+Una empresa entra a **su** panel (CUIT + mail comprobado). Hace llegar la ayuda. Lumina reserva. La app confirma el trabajo. 97,5% a la app. Lumina cobra **2,5% + IVA** si hubo trabajo. Si no, 0% y la plata vuelve. La familia no paga. El recibo público es la prueba. Lumina no es ONG, no es la donataria y no es protocolo-sin-CUIT.
 
 Hackathon = recorte visible de ese mismo camino. No es otro producto.
 

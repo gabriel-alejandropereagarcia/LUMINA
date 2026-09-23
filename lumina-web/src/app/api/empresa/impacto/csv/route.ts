@@ -27,6 +27,7 @@ export async function GET() {
     "chargedHash",
     "txHash",
     "issuedAt",
+    "estado",
   ];
   const lines = [
     header.join(","),
@@ -45,6 +46,7 @@ export async function GET() {
         byAporte.get(item.aporteId)?.chargedHash ?? item.txHash ?? "",
         item.txHash ?? "",
         item.issuedAt,
+        item.simulation ? "en trabajo" : "la ayuda llegó",
       ].join(","),
     ),
   ];

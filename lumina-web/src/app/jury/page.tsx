@@ -83,9 +83,8 @@ function JuryBody() {
           Recibos Lumina
         </h1>
         <p className="text-sm text-[var(--muted)] leading-relaxed">
-          Impacto sin fricción. Una factura. Si el trabajo ocurrió, el 97,5% llega a la app.
-          Si no, el dinero vuelve. El usuario final nunca paga. El recibo es el camino del 19/9:
-          pagó, eligió, cobró.{" "}
+          El informe libera el dinero. El 19/9, MIRA emitió el cribado: la empresa pagó, eligió
+          MIRA, MIRA cobró el 97,5%. Si no hay informe, el dinero vuelve. La familia no paga.{" "}
           <Link href="/?vista=hoy&nodo=e2e-19-9#camino" className="text-teal-500 underline">
             Seguí esa luz
           </Link>
@@ -132,7 +131,7 @@ function JuryBody() {
             <Link href="/empresa" className="text-teal-500 underline">
               Empresas en Lumina
             </Link>{" "}
-            — factura. El cobro en pesos: en trabajo (este recorrido muestra cómo se ve).
+            — la ayuda llega. El cobro en pesos: en trabajo (este recorrido muestra cómo se ve).
             El PDF sale cuando la app cobra.
           </li>
           <li>

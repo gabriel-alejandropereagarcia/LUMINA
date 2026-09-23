@@ -32,14 +32,14 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Lumina | Impacto sin fricción",
   description:
-    "Lumina ilumina el camino de la RSE. Conecta a quien quiere ayudar. Una factura, el 97,5% a la app, la familia no paga.",
+    "Lumina ilumina el camino. Conecta las ganas de ayudar con la necesidad. La ayuda llega, el 97,5% a la app, la familia no paga.",
   icons: {
     icon: "/favicon.svg",
   },
   openGraph: {
     title: "Lumina — ilumina el camino",
     description:
-      "Conecta a quien quiere ayudar. Factura, 97,5% a la app, la familia no paga.",
+      "Conecta las ganas de ayudar con la necesidad. La ayuda llega. 97,5% a la app. La familia no paga.",
     type: "website",
     locale: "es_ES",
     siteName: "Lumina",
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Lumina — ilumina el camino",
     description:
-      "Empresas y apps en Lumina. El 97,5% llega cuando el trabajo se hizo. La familia no paga.",
+      "La app emite el informe. Ese informe libera el dinero. El 97,5% llega a la app. La familia no paga.",
     images: [
       "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=1200&h=630&fit=crop",
     ],

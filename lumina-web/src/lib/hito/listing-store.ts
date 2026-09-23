@@ -17,6 +17,7 @@ export type AppListing = {
   oracle: string;
   payout: string;
   milestone: string;
+  hitoDocumento: string;
   status: ListingStatus;
   createdAt: string;
   acceptedToSAt?: string;

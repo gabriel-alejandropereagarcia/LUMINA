@@ -43,8 +43,8 @@ export default function Home() {
 
         
         <p className="max-w-2xl mx-auto text-base sm:text-lg text-[var(--muted)] leading-relaxed">
-          Lumina conecta a quien quiere ayudar. Una factura. El trabajo se hizo.
-          El 97,5% llega. La familia no paga.
+          Lumina conecta las ganas de ayudar con la necesidad. La app emite el informe.
+          Ese informe libera el dinero. El 97,5% llega. La familia no paga.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
@@ -141,8 +141,7 @@ export default function Home() {
           <span className="text-xs font-bold text-teal-600 uppercase tracking-widest block">Un ciclo</span>
           <h2 className="font-serif text-3xl font-bold text-[var(--foreground)] tracking-tight">Cómo funciona</h2>
           <p className="text-xs text-[var(--muted)] max-w-md mx-auto">
-            El mismo dibujo: empresa, Lumina, app, luz. Si no ocurrió, la empresa recupera y Lumina
-            cobra 0%.
+            Empresa, informe, luz. Si no hay informe, el dinero vuelve y Lumina cobra 0%.
           </p>
         </div>
 
@@ -153,24 +152,24 @@ export default function Home() {
           {[
             {
               step: "01",
-              title: "La empresa paga",
-              desc: "Una factura, como cualquier proveedor.",
+              title: "La ayuda llega",
+              desc: "La empresa hace llegar la ayuda. Sin intermediarios.",
               icon: Coins,
               color: "text-teal-500",
               bgColor: "bg-teal-500/10",
             },
             {
               step: "02",
-              title: "La app trabaja",
-              desc: "Hace el cribado, el mes de apoyo, lo que sea. Quien lo recibe no paga.",
+              title: "La app emite el informe",
+              desc: "El cribado, el mes de ayuda. Quien lo recibe no paga.",
               icon: Activity,
               color: "text-emerald-500",
               bgColor: "bg-emerald-500/10",
             },
             {
               step: "03",
-              title: "Confirma que ocurrió",
-              desc: "Unidad y cantidad.",
+              title: "El informe libera",
+              desc: "Lumina toma el código de ese informe. El mismo informe no cobra dos veces.",
               icon: ShieldCheck,
               color: "text-[var(--gold)]",
               bgColor: "bg-[var(--gold-light)]",
@@ -218,7 +217,7 @@ export default function Home() {
         <div className="max-w-3xl mx-auto p-6 rounded-2xl border border-[var(--border)] bg-[var(--card-bg)] text-center text-xs text-[var(--muted)] space-y-2">
           <strong className="text-[var(--foreground)] block text-sm">Tu app entra a Lumina</strong>
           <p className="leading-relaxed">
-            MIRA hace cribados. PuenteMAE ayuda a docentes. Las dos cobran en Lumina cuando el trabajo se hizo.
+            MIRA emite el informe del cribado. PuenteMAE, el informe del mes de ayuda. Las dos cobran en Lumina cuando ese informe existe.
           </p>
         </div>
 
@@ -327,7 +326,7 @@ export default function Home() {
                 <p className="text-[10px] font-bold uppercase tracking-widest text-teal-600">Apps en Lumina</p>
                 <h3 className="text-lg font-bold text-[var(--foreground)]">Tu app entra a Lumina</h3>
                 <p className="text-xs text-[var(--muted)] leading-relaxed">
-                  Completá una ficha. Cuando el trabajo se hizo, cobrás el 97,5%.
+                  Decís qué informe emitís. Cuando existe, cobrás el 97,5%.
                 </p>
               </div>
               <Link
@@ -347,7 +346,7 @@ export default function Home() {
           <span className="text-xs font-bold text-teal-600 uppercase tracking-widest block">Recorrido</span>
           <h2 className="font-serif text-3xl font-bold text-[var(--foreground)] tracking-tight">Tres minutos. Un camino.</h2>
           <p className="text-xs text-[var(--muted)] max-w-lg mx-auto">
-            Empresa paga la factura. Se enciende una luz. Se abre el recibo Lumina. Nació en Salta.
+            La ayuda llega. Se enciende una luz. Se abre el recibo Lumina. Nació en Salta.
           </p>
         </div>
         <div className="glass-card p-8 rounded-2xl max-w-2xl mx-auto space-y-4 text-sm text-[var(--muted)]">
@@ -383,7 +382,7 @@ export default function Home() {
             Dos roles. Un solo Lumina.
           </h2>
           <p className="max-w-xl mx-auto text-sm text-[var(--muted)]">
-            La empresa entra con una factura. La app cobra cuando el trabajo se hizo. Las dos, en Lumina.
+            La empresa hace llegar la ayuda. La app cobra cuando emite el informe. Las dos, en Lumina.
           </p>
         </div>
 
@@ -406,7 +405,7 @@ export default function Home() {
               </li>
               <li className="flex items-start gap-2">
                 <Coins className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                <span><strong className="text-[var(--foreground)]">Una factura:</strong> pagás como a cualquier proveedor. Fee solo si hubo impacto.</span>
+                <span><strong className="text-[var(--foreground)]">La ayuda llega:</strong> sin intermediarios. El 2,5% solo si hubo trabajo.</span>
               </li>
             </ul>
           </div>
@@ -429,7 +428,7 @@ export default function Home() {
               </li>
               <li className="flex items-start gap-2">
                 <Coins className="h-5 w-5 text-teal-500 flex-shrink-0 mt-0.5" />
-                <span><strong className="text-[var(--foreground)]">Sin doble cobro:</strong> el mismo hecho no se paga dos veces.</span>
+                <span><strong className="text-[var(--foreground)]">Sin doble cobro:</strong> el mismo informe no libera el dinero dos veces.</span>
               </li>
             </ul>
           </div>
@@ -446,7 +445,7 @@ export default function Home() {
             2,5% solo si hubo impacto
           </h2>
           <p className="text-sm text-[var(--muted)] leading-relaxed">
-            A los 12 meses sin trabajo hecho, la empresa retira y Lumina cobra 0%.
+            A los 12 meses sin informe, la empresa retira y Lumina cobra 0%.
             El 2,5% es de Lumina, una sola vez, solo si se pagó el impacto.
           </p>
           <ul className="space-y-2 text-xs text-[var(--muted)] leading-relaxed pl-4 list-disc">
@@ -483,7 +482,7 @@ export default function Home() {
                 {modalTitle}
               </h3>
               <p className="text-xs text-[var(--muted)] leading-relaxed">
-                Se suma con una ficha. Define el precio del trabajo. Cobra el 97,5% cuando ese trabajo se hizo.
+                Se suma con una ficha: qué informe emite. Cobra el 97,5% cuando ese informe existe.
               </p>
             </div>
             <button

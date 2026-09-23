@@ -19,7 +19,7 @@ Leé `.cursor/rules/copy-adopcion.mdc` y aplicá **toda** la superficie tocada, 
 
 ## Pitch (no diluir)
 
-Impacto sin fricción. Lumina ilumina el camino. Empresas en Lumina / Apps en Lumina. Factura → 97,5% a la app → familia no paga.
+Impacto sin fricción. Lumina ilumina el camino. Empresas en Lumina / Apps en Lumina. La ayuda llega → 97,5% a la app → familia no paga. No titular “factura”. No decir “donación deducible”.
 
 ## No tocar
 

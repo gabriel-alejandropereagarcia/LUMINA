@@ -46,7 +46,7 @@ export default function CertificadoDoc({
         <section className="space-y-2">
           <p className="text-[10px] font-bold uppercase tracking-wider text-[#0D5E6A]">1. Impacto</p>
           <p className="text-lg leading-relaxed">
-            <strong>{certificado.company}</strong> financió{" "}
+            <strong>{certificado.company}</strong> hizo llegar{" "}
             <strong>
               {quantity} {unitLabel}
               {quantity === 1 ? "" : ""}
@@ -91,7 +91,7 @@ export default function CertificadoDoc({
             </div>
             <div className="sm:col-span-2 border border-[#0D5E6A]/15 rounded-xl p-4 bg-white/70">
               <dt className="text-[10px] uppercase tracking-wider text-[#5A6B7A] font-bold">
-                Código del trabajo (único, para que no se cobre dos veces)
+                Código del informe. El mismo informe no libera el dinero dos veces.
               </dt>
               <dd className="font-mono text-[11px] mt-1 break-all leading-relaxed">
                 {certificado.reportHash}
@@ -139,6 +139,7 @@ export default function CertificadoDoc({
         <footer className="border-t border-[#0D5E6A]/15 pt-4 space-y-1">
           <p className="text-[11px] text-[#5A6B7A] leading-relaxed">
             El recibo público cubre el trabajo y el pago. Datos personales quedan fuera (Ley 25.326).
+            Este documento no descuenta en Ganancias. Sirve para la memoria, las comunicaciones y los inversores.
           </p>
           <p className="text-[11px] text-[#5A6B7A]">
             Si no hay trabajo en 12 meses, la empresa recupera el aporte por el mismo camino.

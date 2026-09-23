@@ -18,6 +18,7 @@ export default function EmpresaImpactoPage() {
   const [aportes, setAportes] = useState<Aporte[]>([]);
   const [certificados, setCertificados] = useState<Certificado[]>([]);
   const [sentence, setSentence] = useState("");
+  const [enTrabajo, setEnTrabajo] = useState(0);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -34,6 +35,7 @@ export default function EmpresaImpactoPage() {
         setAportes(data.aportes ?? []);
         setCertificados(data.certificados ?? []);
         setSentence(data.sentence ?? "");
+        setEnTrabajo(typeof data.enTrabajo === "number" ? data.enTrabajo : 0);
       })
       .catch((err: unknown) => {
         setError(err instanceof Error ? err.message : "Error.");
@@ -74,13 +76,16 @@ export default function EmpresaImpactoPage() {
       </div>
 
       <header className="space-y-2">
-        <p className="text-xs font-bold text-teal-600 uppercase tracking-widest">Resumen de impacto</p>
+        <p className="text-xs font-bold text-teal-600 uppercase tracking-widest">
+          Para comunicaciones e inversores
+        </p>
         <h1 className="font-serif text-3xl font-bold">{session.company}</h1>
         {session.cuit ? (
           <p className="font-mono text-xs text-[var(--muted)]">{session.cuit}</p>
         ) : null}
         <p className="text-sm text-[var(--muted)] leading-relaxed">
-          Unidades financiadas. Cada una sale de la ficha de la app.
+          La empresa reservó la ayuda y eligió la app. La app marcó el trabajo.
+          Eso liberó el dinero. Este informe se agrega a la memoria y a lo que se muestra a inversores.
         </p>
       </header>
 
@@ -88,12 +93,31 @@ export default function EmpresaImpactoPage() {
 
       {sentence ? (
         <blockquote className="rounded-2xl border border-[var(--border)] bg-[var(--card-bg)] p-5 text-sm leading-relaxed">
-            En este período financiamos {sentence}. Cada trabajo tiene un certificado
-            (qué se hizo y cuánto se pagó). El 97,5% fue a esa app.
+          En este período, {session.company} hizo llegar la ayuda: {sentence}. La app
+          marcó cada trabajo y eso liberó el 97,5%. La familia no pagó. Cada recibo se
+          abre en Lumina. Este informe no descuenta en Ganancias.
         </blockquote>
       ) : (
-        <p className="text-sm text-[var(--muted)]">Todavía no hay trabajos confirmados.</p>
+        <p className="text-sm text-[var(--muted)]">
+          Todavía no hay un trabajo confirmado para esta CUIT. Un recorrido de prueba
+          no es ayuda que llegó.
+        </p>
       )}
+
+      {enTrabajo > 0 ? (
+        <p className="text-sm text-[var(--muted)]">
+          {enTrabajo === 1
+            ? "Hay 1 recorrido en trabajo. Todavía no liberó dinero."
+            : `Hay ${enTrabajo} recorridos en trabajo. Todavía no liberaron dinero.`}
+        </p>
+      ) : null}
+
+      <section className="rounded-2xl border border-[var(--border)] p-5 space-y-2 text-sm text-[var(--muted)]">
+        <h2 className="font-serif text-lg font-bold text-[var(--foreground)]">Cómo se libera</h2>
+        <p>La empresa reserva el dinero y elige la app.</p>
+        <p>La app emite el informe. Ese informe queda en el recibo y libera el 97,5%.</p>
+        <p>Si en 12 meses no hay informe, el dinero vuelve y Lumina cobra 0%.</p>
+      </section>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {totals.map((row) => (
@@ -112,6 +136,7 @@ export default function EmpresaImpactoPage() {
             <th className="px-3 py-2">Período</th>
             <th className="px-3 py-2">Unidad</th>
             <th className="px-3 py-2">Qty</th>
+            <th className="px-3 py-2">Estado</th>
             <th className="px-3 py-2">Recibos</th>
           </tr>
         </thead>
@@ -125,6 +150,7 @@ export default function EmpresaImpactoPage() {
                 </Link>
               </td>
               <td className="px-3 py-2">{item.quantity}</td>
+              <td className="px-3 py-2">{item.simulation ? "En trabajo" : "La ayuda llegó"}</td>
               <td className="px-3 py-2">
                 <RecibosMovimiento
                   pasos={pasosDeCertificado(

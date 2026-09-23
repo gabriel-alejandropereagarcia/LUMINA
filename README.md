@@ -1,16 +1,19 @@
 # Lumina
 
-**Impacto sin fricción.** Lumina ilumina el camino de la RSE. Conecta a quien quiere ayudar.
+**Impacto sin fricción.** Lumina ilumina el camino. Conecta las ganas de ayudar con la necesidad.
 
-Hoy, una empresa quiere financiar salud, educación o asistencia. Una familia lo necesita, pero el capital se pierde en informes, meses de espera y burocracia.
+La app emite el informe. Ese informe queda en el recibo y libera el dinero. El **97,5%** llega a la app. La familia no paga. Si no hay informe, el dinero vuelve y Lumina cobra **0%**.
 
-Lumina lo resuelve.
+Hoy hay una luz real: el 19/9, MIRA emitió un cribado. El horizonte es el mismo camino, lleno de empresas y de apps.
 
-La empresa paga una factura. La app confirma que el trabajo se hizo: una unidad, una cantidad. Si ocurrió, se cobra el **97,5%**. Si no ocurrió, el capital vuelve. El usuario final nunca paga.
+**Recorrido para el jurado, en este orden**
+
+1. [La luz de hoy](https://lumina-dusky-pi.vercel.app/?vista=hoy&nodo=e2e-19-9#camino) — una luz real. Elegí el nodo: se ilumina el camino.
+2. [El horizonte](https://lumina-dusky-pi.vercel.app/?vista=horizonte#camino) — la visión. Muchas empresas, muchas apps, un campo de luces.
+3. [Recibos del 19/9](https://lumina-dusky-pi.vercel.app/jury) — la empresa pagó, eligió MIRA, MIRA cobró el 97,5%.
+4. [Empresas en Lumina](https://lumina-dusky-pi.vercel.app/empresa) · [Apps en Lumina](https://lumina-dusky-pi.vercel.app/connect#registro)
 
 Nacimos en Salta. Sirve donde haya alguien que quiere ayudar y alguien que no puede pagar.
-
-[Live](https://lumina-dusky-pi.vercel.app) · [Recibos Lumina](https://lumina-dusky-pi.vercel.app/jury) · [Empresas en Lumina](https://lumina-dusky-pi.vercel.app/empresa) · [Apps en Lumina](https://lumina-dusky-pi.vercel.app/connect#registro)
 
 ![Stellar Testnet](https://img.shields.io/badge/Stellar-Testnet-7D5BA6?logo=stellar&logoColor=white)
 ![Soroban](https://img.shields.io/badge/Soroban-Lumina-blue)
@@ -20,23 +23,21 @@ Nacimos en Salta. Sirve donde haya alguien que quiere ayudar y alguien que no pu
 
 ## El problema
 
-Una empresa quiere financiar salud, educación o asistencia. Una familia lo necesita. El capital se pierde en informes, meses de espera y burocracia.
+Una empresa quiere ayudar en salud, educación o asistencia. Una familia lo necesita. La ayuda se pierde en meses de espera y en quien decide en el medio.
 
-Eso no es un problema de un país. Es lo que pasa cada vez que el impacto se rinde en una planilla y el servicio se cobra en la puerta. En Salta lo vimos de cerca.
+Eso no es un problema de un país. En Salta lo vimos de cerca.
 
 ## Qué es Lumina
 
 Lumina ilumina el camino:
 
-1. **Empresas en Lumina** pagan una **factura**.
-2. **Apps en Lumina** confirman el trabajo (unidad + cantidad).
-3. Esa app cobra **97,5%**. Lumina cobra **2,5%**, solo si hubo impacto. Sin trabajo a los 12 meses, el dinero vuelve y Lumina cobra **0%**.
+1. **Empresas en Lumina** hacen llegar la ayuda y eligen la app.
+2. **Apps en Lumina** emiten el informe. MIRA: el informe del cribado. PuenteMAE: el informe del mes de ayuda. Las horas quedan dentro de ese informe.
+3. Lumina toma el código de ese informe y libera el dinero. La app cobra **97,5%**. Lumina cobra **2,5%**, solo si el informe existió. A los 12 meses sin informe, el dinero vuelve y Lumina cobra **0%**. El archivo no entra a Lumina.
 
-**Por qué ahora.** El impacto necesita velocidad y un recibo que se pueda mostrar. Lumina convierte burocracia en cobro el mismo día.
+**Hoy y horizonte.** Hoy se recorre una luz real. El horizonte muestra el camino lleno: es la visión, y se distingue de la luz del 19/9.
 
-**Visión.** Escalar desde Argentina al mundo.
-
-MIRA (cribado) y PuenteMAE (ayuda a docentes) son las **primeras apps en Lumina**.
+**Por qué ahora.** La ayuda tiene que verse el mismo día. El recibo es la prueba.
 
 ---
 
@@ -48,7 +49,7 @@ MIRA (cribado) y PuenteMAE (ayuda a docentes) son las **primeras apps en Lumina*
 | USDC de prueba | [`CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA`](https://stellar.expert/explorer/testnet/contract/CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA) |
 | La empresa pagó 40 USDC | [`9fdbc2e8…`](https://stellar.expert/explorer/testnet/tx/9fdbc2e8865a0a94339884d6345eb628c2d6ee16792ab5ebfe5f0a946765812f) |
 | MIRA cobró el 97,5% | [`a26a3626…`](https://stellar.expert/explorer/testnet/tx/a26a36263013a9d38370c4ef55bb9a7f96fa860213e11f4805873b8a2995a522) |
-| Código del trabajo | `4c39fcc97b18fddae23671ccebf5bb182db64a9e9e27f5f4e01cb365b21664ca` |
+| Código del informe | `4c39fcc97b18fddae23671ccebf5bb182db64a9e9e27f5f4e01cb365b21664ca` |
 | App (firma) | `GBJJCKJBEF2ILRD5LGWXGH5BQIKZ6EYFDS3RHQZQ5KBCOV4XHSDESM7W` |
 | Empresa de prueba | `GBRR6QWYT5UIHATCC7SYJITERMDWKLE5HHJCNM5PP6GK2DRB4YPKSP5E` |
 
@@ -60,8 +61,8 @@ USDT0 oficial: **próximamente**. Hoy el recorrido usa USDC Circle de prueba.
 
 | Paso | Ruta | Qué es |
 |---|---|---|
-| 1 | [`/empresa`](https://lumina-dusky-pi.vercel.app/empresa) | Empresas en Lumina. Factura. Cobro en pesos: **en trabajo**. |
-| 2 | [`/invest`](https://lumina-dusky-pi.vercel.app/invest) | Probar Lumina. Freighter + USDC de prueba. Live. |
+| 1 | [`/empresa`](https://lumina-dusky-pi.vercel.app/empresa) | Empresas en Lumina. La ayuda llega. Cobro en pesos: **en trabajo**. |
+| 2 | [`/invest`](https://lumina-dusky-pi.vercel.app/invest) | Probar Lumina. Un pago de prueba. Live. |
 | 3 | Confirmar el trabajo en `/invest`, o [`/jury`](https://lumina-dusky-pi.vercel.app/jury) | Recibos Lumina. 97,5% a la app. |
 
 El PDF de Empresas en Lumina sale cuando la app cobra.

@@ -20,6 +20,7 @@ export function factForAporteUnit(aporte: Aporte, unitIndex: number): HitoFact {
     unitLabel: app.unitLabel,
     quantity: 1,
     period: currentPeriod(),
+    // Código de reserva, no el del informe. La app viva reemplaza esto por el código del PDF que emitió.
     subjectCommitments: [subjectCommitment([aporte.id, String(unitIndex)])],
     sponsorRef: aporte.id,
     amountUsd: lockPrice,
