@@ -1,6 +1,7 @@
 import { randomUUID } from "crypto";
 import { promises as fs } from "fs";
 import path from "path";
+import type { CobroCamino } from "./camino";
 import type { AccessPurpose, AccessToken, Aporte, Certificado, Empresa, EmpresaDb } from "./types";
 import { digitsCuit, formatCuit } from "./cuit";
 import { normalizeEmail } from "./mail";
@@ -440,6 +441,31 @@ export async function stampCertificadoTx(reportHash: string, txHash: string): Pr
     aporte.chargedHash = txHash;
   }
   await writeDb(db);
+}
+
+/** Cobros que pueden encender una luz. Sin mail. El nombre solo si la CUIT lo eligió. */
+export async function cobrosParaCamino(): Promise<CobroCamino[]> {
+  const db = await readDb();
+  return db.certificados.map((cert) => {
+    const empresa = db.empresas.find((item) => item.id === cert.empresaId);
+    const aporte = db.aportes.find((item) => item.id === cert.aporteId);
+    const publico = Boolean(empresa?.caminoPublico);
+    return {
+      id: cert.id,
+      empresaId: cert.empresaId,
+      appId: cert.appId,
+      appName: cert.appName,
+      unitLabel: cert.unitLabel,
+      quantity: cert.quantity || 1,
+      at: cert.issuedAt,
+      caminoPublico: publico,
+      companyLabel: publico && empresa?.cuit ? formatCuit(empresa.cuit) : undefined,
+      paidHash: aporte?.paidHash,
+      choseHash: aporte?.choseHash,
+      chargedHash: cert.txHash || aporte?.chargedHash,
+      simulation: cert.simulation,
+    };
+  });
 }
 
 export async function markRecovered(

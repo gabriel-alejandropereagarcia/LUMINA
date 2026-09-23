@@ -193,6 +193,7 @@ export default function EmpresaLandingPage() {
               <p className="text-[11px] text-[var(--muted)] leading-relaxed">
                 No se tipea el nombre. El tablero es de esa CUIT.
                 {ops?.mailReady ? "" : " El envío de mail: en trabajo."}
+                {ops?.persistReady ? "" : " El dato: en trabajo (un deploy puede borrarlo)."}
               </p>
             </form>
           )}

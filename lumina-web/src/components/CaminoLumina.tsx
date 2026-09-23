@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, Suspense } from "react";
+import { useEffect, useMemo, useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import RecibosMovimiento from "@/components/empresa/RecibosMovimiento";
@@ -16,6 +16,7 @@ import {
   type GrafoArista,
   type GrafoCamino,
   type GrafoNodo,
+  type LuzCamino,
 } from "@/lib/empresa/camino";
 import type { ReciboPaso } from "@/lib/empresa/recibos";
 
@@ -103,7 +104,9 @@ function GrafoView({
     return true;
   });
 
-  const viewBox = vista === "hoy" ? "0 0 880 420" : "0 0 1280 820";
+  const maxX = Math.max(880, ...grafo.nodos.map((item) => item.x + item.r + 36));
+  const maxY = Math.max(420, ...grafo.nodos.map((item) => item.y + item.r + 36));
+  const viewBox = vista === "hoy" ? `0 0 ${maxX} ${maxY}` : "0 0 1280 820";
   const aria =
     vista === "hoy"
       ? "Hoy: una empresa anónima paga a Lumina. MIRA cobra. Una luz: un cribado el 19 de septiembre. Elegí un nodo para seguir el camino."
@@ -252,18 +255,22 @@ function PanelCamino({
       ).length
     : 0;
 
+  const reales = grafo.nodos.filter((item) => item.kind === "trabajo" && item.real).length;
+
   if (!nodo) {
     return (
       <p className="px-5 pb-5 text-xs text-teal-100/80 leading-relaxed min-h-[2.5rem]">
         {vista === "hoy" ? (
           <>
-            Elegí un nodo. Se ilumina el camino. El recibo es lo que se puede abrir. Una luz real: un
-            cribado el 19/9.
+            Elegí un nodo. Se ilumina el camino. El recibo es lo que se puede abrir.{" "}
+            {reales > 1
+              ? `${reales} luces reales, incluida la del 19/9.`
+              : "Una luz real: un cribado el 19/9."}
           </>
         ) : (
           <>
             Elegí un nodo. Se ilumina lo que se conecta: empresa, Lumina, app, trabajo. Horizonte:
-            ilustración. Muchas apps, el mismo riel. No son cobros ocurridos.{" "}
+            ilustración. Muchas apps, el mismo camino. No son cobros ocurridos.{" "}
             <button type="button" className="underline text-teal-300 cursor-pointer" onClick={onHoy}>
               Volver a la luz de hoy
             </button>
@@ -284,7 +291,10 @@ function PanelCamino({
             : `${nodo.label}. El recibo del camino.`}
         </p>
         <RecibosMovimiento pasos={pasos} tone="dark" />
-        <Link href="/jury" className="text-xs text-teal-300 underline">
+        <Link
+          href={recibo?.id.startsWith("cer-") ? `/c/${recibo.id}` : "/jury"}
+          className="text-xs text-teal-300 underline"
+        >
           Ver el recibo
         </Link>
       </div>
@@ -324,7 +334,28 @@ function CaminoBody() {
   const router = useRouter();
   const params = useSearchParams();
   const vista = params.get("vista") === "horizonte" ? "horizonte" : "hoy";
-  const grafo = useMemo(() => (vista === "horizonte" ? grafoHorizonte() : grafoHoy()), [vista]);
+  const [luces, setLuces] = useState<LuzCamino[] | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/camino")
+      .then(async (response) => {
+        const data = await response.json();
+        if (!cancelled && Array.isArray(data.luces)) setLuces(data.luces);
+      })
+      .catch(() => {
+        if (!cancelled) setLuces(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const grafo = useMemo(
+    () => (vista === "horizonte" ? grafoHorizonte() : grafoHoy(luces ?? undefined)),
+    [vista, luces],
+  );
+  const lucesHoy = grafo.nodos.filter((item) => item.kind === "trabajo" && item.real).length;
   const nodoParam = params.get("nodo");
   const seleccionado = grafo.nodos.some((item) => item.id === nodoParam) ? nodoParam : null;
 
@@ -343,7 +374,9 @@ function CaminoBody() {
         </h2>
         <p className="text-xs text-[var(--muted)] max-w-xl mx-auto leading-relaxed">
           {vista === "hoy"
-            ? "Hoy hay una luz real: un cribado el 19/9. Empresa anónima. Sin nombres de niños. Elegí un nodo: se ilumina el camino."
+            ? lucesHoy > 1
+              ? `Hoy hay ${lucesHoy} luces reales. La del 19/9 y cada cobro confirmado. Empresa anónima, salvo que la CUIT elija verse. Elegí un nodo.`
+              : "Hoy hay una luz real: un cribado el 19/9. Empresa anónima. Sin nombres de niños. Elegí un nodo: se ilumina el camino."
             : "A dónde apunta Lumina. Muchas empresas. Muchas apps. Un campo de luces. Elegí un nodo: se ilumina lo que se conecta. Las luces no son personas."}
         </p>
         <div className="inline-flex rounded-full border border-[var(--border)] p-1">

@@ -31,23 +31,12 @@ export default function Navbar() {
     checkFreighter();
   }, []);
 
-  const ADMIN_ADDRESS = process.env.NEXT_PUBLIC_ADMIN_ADDRESS || "";
-
-  const navLinks = isEmpresaSurface
-    ? [
-        { name: "Inicio", path: "/" },
-        { name: "Empresas", path: "/empresa" },
-        { name: "Apps", path: "/connect" },
-        { name: "Recibos", path: "/jury" },
-      ]
-    : [
-        { name: "Inicio", path: "/" },
-        { name: "Empresas", path: "/empresa" },
-        { name: "Apps", path: "/connect" },
-        { name: "Probar", path: "/invest" },
-        { name: "Recibos", path: "/jury" },
-        ...(isConnected && address === ADMIN_ADDRESS ? [{ name: "Gobernanza", path: "/admin" }] : []),
-      ];
+  const navLinks = [
+    { name: "Empresas", path: "/empresa" },
+    { name: "Apps", path: "/connect" },
+    { name: "Recibos", path: "/jury" },
+    { name: "Probar", path: "/invest" },
+  ];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-[var(--background)]/80 backdrop-blur-md print:hidden">

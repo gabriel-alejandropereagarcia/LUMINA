@@ -8,7 +8,7 @@ export default function DevelopersPage() {
     <div className="min-h-[calc(100vh-4rem)] px-4 py-16 sm:px-6 lg:px-8 max-w-3xl mx-auto space-y-8">
       <div className="space-y-3">
         <span className="text-xs font-bold text-teal-600 uppercase tracking-widest">
-          Developers
+          Apps en Lumina
         </span>
         <h1 className="font-serif text-4xl font-bold text-[var(--foreground)]">
           Un POST. El 97,5% llega a la app.

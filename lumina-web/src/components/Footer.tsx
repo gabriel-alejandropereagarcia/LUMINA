@@ -30,7 +30,7 @@ export default function Footer() {
             <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--foreground)]">Recibos Lumina</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/?vista=horizonte#camino" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)]">
+                <Link href="/?vista=hoy&nodo=e2e-19-9#camino" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)]">
                   Ver el camino
                 </Link>
               </li>
@@ -47,7 +47,7 @@ export default function Footer() {
             <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--foreground)]">Recursos</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/?vista=horizonte#camino" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
+                <Link href="/?vista=hoy&nodo=e2e-19-9#camino" className="text-xs text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
                   El camino
                 </Link>
               </li>

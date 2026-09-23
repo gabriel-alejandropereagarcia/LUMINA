@@ -57,7 +57,7 @@ El panel se recorre. No se transfiere dinero real. No se finge CUIT ni CAE.
 |---|---|---|---|
 | Empresas eligen qué financiar (tarjetas MIRA / PuenteMAE) | código | Visible en `/empresa/portal` | hecho |
 | Loop reserva → app confirma → 97,5% (testnet / simulación) | código | Recibos 19/9 en `/jury` | hecho |
-| Copy: Lumina al centro, sin rastro de correcciones | código | UI sin “Lumina no elige”. Camino (Hoy/Horizonte) es la misma historia en Empresa, Apps, Recibos, Probar | ahora |
+| Copy: Lumina al centro, sin rastro de correcciones | código | Nav: Empresas · Apps · Recibos · Probar. El pie abre la luz del 19/9, no el horizonte. El panel no dice que se movió plata si no hay tesorería | ahora |
 | Cobro ARS etiquetado en trabajo | código | Rail `simulation`, aviso de no transferir | ahora |
 | Tesorería y Koywe no se venden como vivos | código | `ops.treasuryReady` / `koyweReady` en false en Vercel | ahora |
 | Alta por CUIT + link al mail + reset | código | `/empresa` pide CUIT y mail, no el nombre | ahora |
@@ -88,7 +88,7 @@ Sin estas filas, el panel no es de una empresa: es de un browser.
 | Tesorería: reserva al acreditar; secreto en KMS no en chat | código + org | junto a Koywe | `treasuryReady` true con evidencia de depósito | siguiente |
 | Claves oracle de cada app (MIRA viva; PuenteMAE o no se ofrece vivo) | app | 7–14 días | Confirmación de trabajo de esa app | siguiente |
 | Opt-in: publicar el nombre de la CUIT en el camino | código | ahora | Toggle en el panel; default Empresa anónima | ahora |
-| Luces nuevas desde certificados cobrados (sin PII) | código | con `DATABASE_URL` | Cada cobro enciende un nodo en home | siguiente |
+| Luces nuevas desde certificados cobrados (sin PII) | código | ahora | Home suma un nodo solo si el certificado tiene recibo de cobro y no es simulación. Nombre = CUIT, y solo con opt-in | ahora |
 
 ---
 

@@ -139,7 +139,7 @@ function JuryBody() {
             <Link href="/invest" className="text-teal-500 underline">
               Probar Lumina
             </Link>{" "}
-            — Freighter + USDC de prueba: depositás y elegís qué financiar. Después, confirmá el trabajo
+            — un pago de prueba: depositás y elegís qué financiar. Después, confirmá el trabajo
             o usá los recibos de arriba.
           </li>
         </ol>
@@ -215,17 +215,21 @@ function JuryBody() {
         ) : null}
       </section>
 
-      <section className="space-y-2 text-xs font-mono text-[var(--muted)] break-all">
-        <h2 className="font-sans text-sm font-bold text-[var(--foreground)]">Cuentas</h2>
-        <p>Reserva: {ESCROW}</p>
-        <p>Admin: {process.env.NEXT_PUBLIC_ADMIN_ADDRESS || "GBKDKKKCMCB5CQG25R37F7VIHGO62557HZQUU4CZWTOTUK6HKLMNUDMK"}</p>
-        <p>App (firma): {process.env.NEXT_PUBLIC_ORACLE_ADDRESS || "GBJJCKJBEF2ILRD5LGWXGH5BQIKZ6EYFDS3RHQZQ5KBCOV4XHSDESM7W"}</p>
-        <p>Sponsor: {SPONSOR}</p>
-        <p>
-          USDC: {USDC_TESTNET_CLASSIC.code}:{USDC_TESTNET_CLASSIC.issuer}
-        </p>
-        <p>USDC: {USDC_TESTNET_SAC}</p>
-      </section>
+      <details className="text-xs text-[var(--muted)]">
+        <summary className="cursor-pointer font-semibold text-[var(--foreground)]">
+          Cuentas de la prueba
+        </summary>
+        <div className="mt-2 space-y-1 font-mono break-all">
+          <p>Reserva: {ESCROW}</p>
+          <p>Admin: {process.env.NEXT_PUBLIC_ADMIN_ADDRESS || "GBKDKKKCMCB5CQG25R37F7VIHGO62557HZQUU4CZWTOTUK6HKLMNUDMK"}</p>
+          <p>App (firma): {process.env.NEXT_PUBLIC_ORACLE_ADDRESS || "GBJJCKJBEF2ILRD5LGWXGH5BQIKZ6EYFDS3RHQZQ5KBCOV4XHSDESM7W"}</p>
+          <p>Sponsor: {SPONSOR}</p>
+          <p>
+            USDC: {USDC_TESTNET_CLASSIC.code}:{USDC_TESTNET_CLASSIC.issuer}
+          </p>
+          <p>USDC: {USDC_TESTNET_SAC}</p>
+        </div>
+      </details>
 
       <section className="space-y-3 text-sm text-[var(--muted)]">
         <h2 className="text-[var(--foreground)] font-bold">Apps en Lumina</h2>

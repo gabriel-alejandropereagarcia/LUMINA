@@ -259,7 +259,7 @@ export default function WhitepaperAndRoadmap() {
                   <li>
                     <strong className="text-[var(--foreground)]">Inicio.</strong> Lumina ilumina el
                     camino. Conecta a quien quiere ayudar. La familia no paga. Hoy hay una luz;
-                    el horizonte muestra el riel lleno.
+                    el horizonte muestra el camino lleno.
                   </li>
                   <li>
                     <strong className="text-[var(--foreground)]">Empresas en Lumina.</strong>{" "}

@@ -27,6 +27,32 @@ export type LuzCamino = {
   paidHash?: string;
   choseHash?: string;
   chargedHash?: string;
+  /** Agrupa luces de la misma CUIT. No se muestra. */
+  empresaKey?: string;
+};
+
+const HASH64 = /^[0-9a-f]{64}$/i;
+
+export function esRecibo(value?: string): value is string {
+  return Boolean(value && HASH64.test(value));
+}
+
+/** Un cobro guardado, sin mail ni datos de quien recibió el trabajo. */
+export type CobroCamino = {
+  id: string;
+  empresaId: string;
+  appId: string;
+  appName: string;
+  unitLabel: string;
+  quantity: number;
+  at?: string;
+  caminoPublico: boolean;
+  /** Solo el CUIT, y solo si la empresa eligió verse. */
+  companyLabel?: string;
+  paidHash?: string;
+  choseHash?: string;
+  chargedHash?: string;
+  simulation?: boolean;
 };
 
 export function lucesPublicas(): LuzCamino[] {
@@ -49,6 +75,35 @@ export function lucesPublicas(): LuzCamino[] {
 export function etiquetaEmpresa(luz: LuzCamino): string {
   if (luz.companyPublic && luz.companyLabel) return luz.companyLabel;
   return EMPRESA_ANONIMA;
+}
+
+/** La semilla del 19/9 más cada cobro real. Simulación y recibo vacío no encienden luz. */
+export function lucesDesdeCobros(cobros: CobroCamino[]): LuzCamino[] {
+  const semilla = lucesPublicas();
+  const vistos = new Set(semilla.map((item) => item.chargedHash?.toLowerCase()));
+  const extras: LuzCamino[] = [];
+  for (const cobro of cobros) {
+    if (cobro.simulation) continue;
+    if (!esRecibo(cobro.chargedHash)) continue;
+    const charged = cobro.chargedHash.toLowerCase();
+    if (vistos.has(charged)) continue;
+    vistos.add(charged);
+    extras.push({
+      id: cobro.id,
+      appId: cobro.appId,
+      appName: cobro.appName,
+      unitLabel: cobro.unitLabel,
+      quantity: cobro.quantity || 1,
+      at: cobro.at,
+      companyPublic: Boolean(cobro.caminoPublico && cobro.companyLabel),
+      companyLabel: cobro.caminoPublico ? cobro.companyLabel : undefined,
+      empresaKey: cobro.empresaId,
+      paidHash: esRecibo(cobro.paidHash) ? cobro.paidHash.toLowerCase() : undefined,
+      choseHash: esRecibo(cobro.choseHash) ? cobro.choseHash.toLowerCase() : undefined,
+      chargedHash: charged,
+    });
+  }
+  return [...semilla, ...extras];
 }
 
 export type GrafoKind = "empresa" | "lumina" | "app" | "trabajo";
@@ -106,8 +161,10 @@ function hashJitter(i: number, salt: number) {
   return n - Math.floor(n);
 }
 
-export function grafoHoy(): GrafoCamino {
-  const semilla = lucesPublicas()[0];
+export function grafoHoy(luces: LuzCamino[] = lucesPublicas()): GrafoCamino {
+  const reales = luces.filter((item) => esRecibo(item.chargedHash));
+  const semilla = reales.find((item) => item.id === CAMINO_SEMILLA.id) ?? lucesPublicas()[0];
+  const extras = reales.filter((item) => item.id !== semilla.id);
   const nodos: GrafoNodo[] = [
     {
       id: "emp-hoy",
@@ -156,6 +213,64 @@ export function grafoHoy(): GrafoCamino {
     { from: "mira", to: semilla.id },
     { from: "emp-hoy", to: semilla.id },
   ];
+
+  const empresaNodo = new Map<string, string>([["hoy", "emp-hoy"]]);
+  let empresasExtra = 0;
+  let appsExtra = 0;
+  extras.forEach((luz, index) => {
+    const clave = luz.empresaKey || luz.id;
+    let empId = empresaNodo.get(clave);
+    if (!empId) {
+      empId = `emp-${clave}`;
+      empresaNodo.set(clave, empId);
+      nodos.push({
+        id: empId,
+        kind: "empresa",
+        x: 150,
+        y: 340 + empresasExtra * 72,
+        r: 22,
+        label: etiquetaEmpresa(luz),
+        publico: luz.companyPublic,
+        empresaId: empId,
+        real: true,
+      });
+      aristas.push({ from: empId, to: "lumina" });
+      empresasExtra += 1;
+    }
+    const appConocida = luz.appId === "mira" || luz.appId === "puente" || luz.appId === "puentemae";
+    const appId = luz.appId === "puentemae" ? "puente" : appConocida ? luz.appId : `app-${luz.appId}`;
+    if (!appConocida && !nodos.some((item) => item.id === appId)) {
+      nodos.push({
+        id: appId,
+        kind: "app",
+        x: 620,
+        y: 430 + appsExtra * 64,
+        r: 18,
+        label: luz.appName,
+        appId,
+        real: true,
+      });
+      aristas.push({ from: "lumina", to: appId });
+      appsExtra += 1;
+    }
+    nodos.push({
+      id: luz.id,
+      kind: "trabajo",
+      x: 860,
+      y: 48 + index * 42,
+      r: 14,
+      label: `${luz.quantity} ${luz.unitLabel}`,
+      appId,
+      empresaId: empId,
+      unitLabel: luz.unitLabel,
+      real: true,
+      paidHash: luz.paidHash,
+      choseHash: luz.choseHash,
+      chargedHash: luz.chargedHash,
+    });
+    aristas.push({ from: appId, to: luz.id }, { from: empId, to: luz.id });
+  });
+
   return { nodos, aristas };
 }
 

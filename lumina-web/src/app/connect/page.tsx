@@ -197,57 +197,6 @@ export default function ConnectPage() {
         </p>
       </div>
 
-      <section className="rounded-2xl border border-[var(--border)] p-5 space-y-3">
-        <h2 className="font-serif text-lg font-bold">Trabajos reservados</h2>
-        <p className="text-xs text-[var(--muted)] leading-relaxed">
-          Cuando una empresa pagó y Lumina reservó, acá confirmás que el trabajo se hizo.
-          Recién ahí cobrás el 97,5%.
-        </p>
-        {!isConnected ? (
-          <button
-            type="button"
-            onClick={connect}
-            className="rounded-xl border border-[var(--border)] px-4 py-2 text-xs font-bold"
-          >
-            Entrar con la cuenta que confirma
-          </button>
-        ) : trabajos.length === 0 ? (
-          <p className="text-xs text-[var(--muted)]">
-            No hay trabajos pendientes para esta cuenta.
-          </p>
-        ) : (
-          <ul className="space-y-2">
-            {trabajos.map((item) => (
-              <li
-                key={item.id}
-                className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 rounded-xl border border-[var(--border)] p-4 text-sm"
-              >
-                <span>
-                  <strong className="text-[var(--foreground)]">{item.referencia}</strong>
-                  <span className="text-[var(--muted)]">
-                    {" "}
-                    · {item.pending} {item.unitLabel} · {item.amountUsd} USDC
-                  </span>
-                  {!item.reserved ? (
-                    <span className="block text-[11px] text-[var(--muted)] mt-1">
-                      Lumina todavía no reservó este pago.
-                    </span>
-                  ) : null}
-                </span>
-                <button
-                  type="button"
-                  disabled={!!trabajoBusy || !item.reserved || item.pending <= 0}
-                  onClick={() => void confirmarTrabajo(item.id)}
-                  className="rounded-xl bg-teal-600 px-4 py-2 text-xs font-bold text-white disabled:opacity-50"
-                >
-                  {trabajoBusy === item.id ? "Cobrando…" : "El trabajo se hizo"}
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
-
       <section className="rounded-2xl border border-[var(--border)] p-5 space-y-3 text-sm">
         <h2 className="font-serif text-lg font-bold flex items-center gap-2">
           <ClipboardCheck className="h-4 w-4 text-teal-600" />
@@ -330,7 +279,7 @@ export default function ConnectPage() {
           <input value={payout} onChange={(e) => setPayout(e.target.value.trim())} className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 font-mono text-xs" />
         </label>
         <label className="block space-y-1">
-          <span className="text-xs font-semibold text-[var(--muted)]">Precio por trabajo (USDC)</span>
+          <span className="text-xs font-semibold text-[var(--muted)]">Precio por trabajo (US$)</span>
           <input required type="number" min="0.0000001" step="any" value={price} onChange={(e) => setPrice(e.target.value)} className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 font-mono" />
         </label>
         <label className="flex items-start gap-3 text-xs text-[var(--muted)] leading-relaxed">
@@ -350,6 +299,59 @@ export default function ConnectPage() {
           {loading ? "Enviando…" : "Enviar ficha"}
         </button>
       </form>
+
+      {IMPACT_APPS.some((app) => app.oracleAddress.startsWith("G")) ? (
+        <section className="rounded-2xl border border-[var(--border)] p-5 space-y-3">
+          <h2 className="font-serif text-lg font-bold">Trabajos reservados</h2>
+          <p className="text-xs text-[var(--muted)] leading-relaxed">
+            Cuando una empresa pagó y Lumina reservó, la app que ya confirma dice que el trabajo se hizo.
+            Recién ahí cobra el 97,5%.
+          </p>
+          {!isConnected ? (
+            <button
+              type="button"
+              onClick={connect}
+              className="rounded-xl border border-[var(--border)] px-4 py-2 text-xs font-bold"
+            >
+              Entrar para confirmar un trabajo
+            </button>
+          ) : trabajos.length === 0 ? (
+            <p className="text-xs text-[var(--muted)]">
+              No hay trabajos pendientes para esta cuenta.
+            </p>
+          ) : (
+            <ul className="space-y-2">
+              {trabajos.map((item) => (
+                <li
+                  key={item.id}
+                  className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 rounded-xl border border-[var(--border)] p-4 text-sm"
+                >
+                  <span>
+                    <strong className="text-[var(--foreground)]">{item.referencia}</strong>
+                    <span className="text-[var(--muted)]">
+                      {" "}
+                      · {item.pending} {item.unitLabel} · US$ {item.amountUsd}
+                    </span>
+                    {!item.reserved ? (
+                      <span className="block text-[11px] text-[var(--muted)] mt-1">
+                        Lumina todavía no reservó este pago.
+                      </span>
+                    ) : null}
+                  </span>
+                  <button
+                    type="button"
+                    disabled={!!trabajoBusy || !item.reserved || item.pending <= 0}
+                    onClick={() => void confirmarTrabajo(item.id)}
+                    className="rounded-xl bg-teal-600 px-4 py-2 text-xs font-bold text-white disabled:opacity-50"
+                  >
+                    {trabajoBusy === item.id ? "Confirmando…" : "El trabajo se hizo"}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      ) : null}
 
       <form onSubmit={handleRegister} className="rounded-2xl border border-[var(--border)] p-6 space-y-3 text-sm">
         <div className="space-y-1">

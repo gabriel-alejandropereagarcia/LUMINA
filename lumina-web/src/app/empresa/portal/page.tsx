@@ -99,9 +99,9 @@ export default function EmpresaPortalPage() {
     if (paid === "1") {
       paidToast.current = true;
       toast({
-        type: "success",
-        title: "Pago recibido por el cobrador",
-        message: "Cuando se acredite, el dinero queda reservado.",
+        type: "info",
+        title: "Volviste del cobrador",
+        message: "Cuando se acredite, el dinero queda reservado. Hasta entonces no se movió plata.",
       });
     }
     if (paid === "0") {
@@ -134,16 +134,21 @@ export default function EmpresaPortalPage() {
         });
         return;
       }
+      const reserved = action === "acreditar" && Boolean(data.chain?.hash);
       toast({
-        type: "success",
+        type: reserved ? "success" : "info",
         title:
           action === "confirmar"
             ? "Transferencia indicada"
-            : "Pago acreditado",
+            : reserved
+              ? "Dinero reservado"
+              : "Anotado en el tablero",
         message:
           action === "confirmar"
             ? "Cuando se acredite, el dinero queda reservado."
-            : "El dinero queda reservado para lo que elegiste. Esa app confirma el trabajo.",
+            : reserved
+              ? "El dinero queda reservado para lo que elegiste. Esa app confirma el trabajo."
+              : "Cobro y reserva: en trabajo. No se movió plata.",
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error.");
@@ -186,7 +191,10 @@ export default function EmpresaPortalPage() {
 
   const active = aportes.find((item) => item.id === activeId) ?? aportes[0];
   const locked = aportes
-    .filter((item) => item.status === "en_escrow" || item.status === "pendiente_psav")
+    .filter((item) => item.status === "en_escrow")
+    .reduce((sum, item) => sum + item.amountUsd, 0);
+  const waiting = aportes
+    .filter((item) => item.status === "pendiente_psav")
     .reduce((sum, item) => sum + item.amountUsd, 0);
   const certified = certificados.reduce((sum, item) => sum + item.amountUsd, 0);
   const impactTotals = aggregateBySchema(certificados);
@@ -399,9 +407,9 @@ export default function EmpresaPortalPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {[
-          { label: "En proceso", value: formatUsd(locked), icon: Lock },
+          { label: "Dinero reservado", value: formatUsd(locked), icon: Lock },
           { label: "Confirmado", value: formatUsd(certified), icon: FileCheck },
-          { label: "Fee de Lumina", value: "2.5%", icon: Landmark },
+          { label: "Honorario Lumina", value: "2,5%", icon: Landmark },
         ].map((stat) => (
           <div key={stat.label} className="glass-card p-5 rounded-2xl space-y-2">
             <div className="flex items-center justify-between text-xs text-[var(--muted)] uppercase tracking-wider">
@@ -412,6 +420,11 @@ export default function EmpresaPortalPage() {
           </div>
         ))}
       </div>
+      {waiting > 0 ? (
+        <p className="text-xs text-[var(--muted)]">
+          Esperando acreditación: {formatUsd(waiting)}. Todavía no es dinero reservado.
+        </p>
+      ) : null}
 
       {impactTotals.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -753,8 +766,8 @@ export default function EmpresaPortalPage() {
                       {" "}
                       · {item.quantity ?? 0} {item.unitLabel ?? "trabajo"} · {formatUsd(item.amountUsd)}
                     </span>
-                    <span className="block font-mono text-[11px] text-[var(--muted)] mt-1">
-                      {item.reportHash.slice(0, 16)}…
+                    <span className="block text-[11px] text-[var(--muted)] mt-1">
+                      {item.simulation ? "Cobro: en trabajo" : "Se abre el recibo"}
                     </span>
                   </span>
                   <span className="text-teal-600 text-xs font-bold uppercase tracking-wider">

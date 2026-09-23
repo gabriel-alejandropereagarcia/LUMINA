@@ -61,8 +61,14 @@ export async function POST(
         return NextResponse.json({ error: "No queda saldo para devolver." }, { status: 409 });
       }
       const chain = await maybeTreasuryWithdraw(current);
-      if (chain.error && chain.attempted) {
-        return NextResponse.json({ error: chain.error }, { status: 409 });
+      if (!chain.attempted || !chain.hash) {
+        return NextResponse.json(
+          {
+            error: chain.error || "Devolución: en trabajo. Sin tesorería no se mueve plata.",
+            chain,
+          },
+          { status: 409 },
+        );
       }
       const aporte = await markRecovered(id, session.id, chain.hash);
       return NextResponse.json({ aporte, chain });

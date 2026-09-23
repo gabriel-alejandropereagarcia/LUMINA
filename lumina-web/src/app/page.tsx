@@ -207,7 +207,7 @@ export default function Home() {
           <span className="text-xs font-bold text-teal-600 uppercase tracking-widest block">Apps en Lumina</span>
           <h2 className="font-serif text-3xl font-bold text-[var(--foreground)] tracking-tight">Las primeras luces en el camino</h2>
           <p className="text-xs text-[var(--muted)] max-w-lg mx-auto">
-            MIRA y PuenteMAE cobran acá cuando el trabajo se hizo. En el horizonte hay más.{" "}
+            MIRA tiene una luz real, el 19/9. PuenteMAE: en trabajo. En el horizonte hay más.{" "}
             <Link href="/?vista=horizonte#camino" className="text-teal-600 underline">
               Ver el horizonte
             </Link>

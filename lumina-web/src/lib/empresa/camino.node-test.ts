@@ -5,8 +5,10 @@ import {
   grafoHoy,
   grafoHorizonte,
   iluminadosDe,
+  lucesDesdeCobros,
   lucesPublicas,
   reciboDeSeleccion,
+  type CobroCamino,
 } from "./camino";
 
 const luces = lucesPublicas();
@@ -29,6 +31,45 @@ assert.equal(cribadoHoy.has("puente"), false);
 assert.ok(reciboDeSeleccion("e2e-19-9", hoy)?.paidHash);
 assert.ok(reciboDeSeleccion("emp-hoy", hoy)?.chargedHash);
 assert.equal(reciboDeSeleccion("puente", hoy), null);
+
+const hashNuevo = "a".repeat(64);
+const cobroVacio: CobroCamino = {
+  id: "cer-vacio",
+  empresaId: "emp-1",
+  appId: "mira",
+  appName: "MIRA AI",
+  unitLabel: "cribado M-CHAT-R/F",
+  quantity: 1,
+  caminoPublico: true,
+  companyLabel: "30-70967853-8",
+  simulation: false,
+};
+const cobroSimulado: CobroCamino = {
+  ...cobroVacio,
+  id: "cer-sim",
+  chargedHash: "b".repeat(64),
+  simulation: true,
+};
+const cobroReal: CobroCamino = {
+  ...cobroVacio,
+  id: "cer-real",
+  chargedHash: hashNuevo,
+  paidHash: "c".repeat(64),
+  choseHash: "d".repeat(64),
+  caminoPublico: false,
+  companyLabel: "30-70967853-8",
+};
+assert.equal(lucesDesdeCobros([cobroVacio, cobroSimulado]).length, 1);
+assert.equal(lucesDesdeCobros([cobroReal]).some((item) => item.id === "cer-real"), true);
+assert.equal(lucesDesdeCobros([cobroReal])[1].companyPublic, false);
+assert.equal(etiquetaEmpresa(lucesDesdeCobros([cobroReal])[1]), EMPRESA_ANONIMA);
+const publica = lucesDesdeCobros([{ ...cobroReal, caminoPublico: true }]);
+assert.equal(publica[1].companyLabel, "30-70967853-8");
+assert.equal("email" in publica[1], false);
+const hoyConLuz = grafoHoy(publica);
+assert.ok(hoyConLuz.nodos.some((item) => item.id === "cer-real" && item.real && item.chargedHash === hashNuevo));
+assert.equal(reciboDeSeleccion("cer-real", hoyConLuz)?.paidHash?.length, 64);
+assert.equal(grafoHoy().nodos.length, 5);
 
 const horizonte = grafoHorizonte();
 const empresas = horizonte.nodos.filter((item) => item.kind === "empresa");
