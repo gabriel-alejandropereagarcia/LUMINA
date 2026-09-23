@@ -5,7 +5,7 @@ alwaysApply: true
 
 # Copy: Lumina al centro
 
-Lumina gana si una empresa, una familia o un juez entiende sin saber blockchain.
+Lumina gana si una empresa adopta sin saber blockchain, y si el jurado ve cómo Stellar guarda y suelta el dinero.
 
 **Pitch canónico:** Impacto sin fricción. Lumina ilumina el camino. Conecta las ganas de ayudar con la necesidad. La ayuda llega. El 97,5% llega a la app. La familia no paga. Si el trabajo no ocurrió, el dinero vuelve y Lumina cobra 0%. El recibo muestra que llegó. No es una factura. No se promete deducible.
 
@@ -18,14 +18,16 @@ Lumina es el centro. No hay producto Connect ni Portal: hay **Empresas en Lumina
 | Todos | `/` | Lumina ilumina el camino. Empresa en Lumina / App en Lumina. |
 | Empresa | `/empresa`, `/c/`, PDF | Empresas en Lumina. La ayuda llega, trabajo hecho, familia no paga. |
 | App | `/connect` | Apps en Lumina. Tu app entra a Lumina. Cero `add_oracle`. |
-| Demo / juez | `/invest`, `/jury` | Probar Lumina / Recibos Lumina. Hashes después, con etiqueta humana. Freighter **solo** `/invest`. |
-| Devs | `/developers` | API ok. Títulos: Apps en Lumina. |
+| Demo / juez | `/invest`, `/jury`, `/presentation` | Probar Lumina / Recibos Lumina. El jurado tiene que ver cómo entra Stellar: contrato Soroban, `deposit`, `assign_oracle`, `release_impact`, código del informe, 97,5%. Freighter **solo** `/invest`. |
+| Devs | `/developers`, README | API y el mismo mecanismo. El README abre con qué significa Lumina y, enseguida, cómo está integrado Stellar. |
 
 Nav corto: Empresas · Apps · Recibos · Probar.
 
 Incompleto = **en trabajo** / **próximamente**. Nunca Connect como marca, “No se finge”, WIP, OS, script interno.
 
-## Prohibido en UI (salvo `/invest` `/admin` y labels de tx en `/jury`)
+## Prohibido en home y en Empresas (salvo `/invest` `/admin` `/jury` `/presentation` `/developers`)
+
+En `/jury`, `/presentation` y el README, Stellar se explica. No se esconde.
 
 Freighter, PSAV, SHA-256, hash, on-chain, escrow, webhook, add_oracle, Dry-run, Clawback, Anti-Replay, lockea, riel, RPC, listing, oráculo, certify, explorer, seed, SAC, HitoFact, canonical, wallet (en empresa), Contratos Inteligentes, Trazabilidad On-Chain, Demo Day, protocolo Scale como titular, Connect como producto.
 

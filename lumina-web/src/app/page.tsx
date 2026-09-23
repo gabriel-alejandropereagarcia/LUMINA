@@ -372,7 +372,9 @@ export default function Home() {
 
       {/* NOTA DE DESARROLLO / TRANSPARENCIA */}
       <p className="w-full text-center text-[10px] text-[var(--muted)]/60 font-mono tracking-wide z-10 -mt-4">
-        Testnet: USDC Circle. USDT0 oficial: próximamente (solo mainnet).
+        El dinero del recorrido está en un contrato de Stellar.{" "}
+        <Link href="/jury" className="underline">El detalle, en Recibos Lumina.</Link>
+        {" "}USDT0 oficial: próximamente.
       </p>
 
       {/* Dual Audience Value Propositions */}

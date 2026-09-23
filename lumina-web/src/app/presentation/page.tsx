@@ -108,8 +108,9 @@ export default function WhitepaperAndRoadmap() {
                   2. El dinero queda reservado 12 meses
                 </h2>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  La empresa hace llegar la ayuda. El dinero queda reservado.
-                  Solo la app elegida cobra. Si en 12 meses no hay informe, la empresa recupera todo.
+                  La empresa hace llegar la ayuda. El dinero queda en un contrato Soroban, en Stellar.
+                  Quien paga deposita. Elige la app. La app firma el código del informe y el contrato
+                  parte 97,5% y 2,5%. Si en 12 meses no hay informe, la empresa recupera todo. Lumina cobra 0%.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 rounded-xl border border-[var(--border)] bg-[var(--background)]">
@@ -147,9 +148,9 @@ export default function WhitepaperAndRoadmap() {
                   La app emite el informe. Ese informe libera el dinero. Nadie más cobra ese pago.
                 </p>
                 <div className="p-4 rounded-xl bg-slate-950 font-mono text-[11px] text-teal-400 space-y-2 border border-slate-800">
-                  <p className="text-slate-500">// Cómo se parte el pago</p>
-                  <p>fee de Lumina = 2,5%</p>
-                  <p>a la app       = 97,5%</p>
+                  <p className="text-slate-500">// release_impact, en el contrato</p>
+                  <p>fee de Lumina = (monto × 25) / 1000</p>
+                  <p>a la app       = el resto, 97,5%</p>
                 </div>
                 <ul className="list-disc pl-5 space-y-2 text-xs text-[var(--muted)]">
                   <li><strong>App elegida:</strong> otra app no puede vaciar ese pago.</li>

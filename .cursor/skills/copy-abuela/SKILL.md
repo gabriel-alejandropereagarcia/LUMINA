@@ -11,7 +11,7 @@ Leé `.cursor/rules/copy-adopcion.mdc` y aplicá **toda** la superficie tocada, 
 
 1. Inventariá strings visibles (tsx de `app/` y `components/`, `impact-apps.ts`, README raíz, metadata).
 2. Cada string: ¿lo entiende alguien sin saber blockchain? Si no, reescribí.
-3. Blockchain = recibo. Nunca el titular. Stellar/comprobante solo cuando el usuario **pide ver** el pago (`/invest`, `/jury`).
+3. En Empresas y en la home, blockchain es el recibo: nunca el titular. En `/jury`, `/presentation` y el README, el jurado tiene que entender la integración: Soroban, las tres llamadas, el código del informe y el 97,5%. No esconder Stellar ahí.
 4. Incompleto = `en trabajo` / `próximamente`. Nunca “No se finge”, WIP, OS, script interno.
 5. Freighter y “Conectar wallet” solo en `/invest` (y admin). Home/empresa/jury no piden billetera.
 6. `/jury`: título **Recibos Lumina**. Hashes con etiqueta: pagó / eligió la app / cobró.

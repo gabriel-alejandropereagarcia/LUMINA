@@ -118,6 +118,61 @@ function JuryBody() {
         <p className="text-[11px] text-[var(--muted)]">Código del informe: {EVIDENCE.reportHash}</p>
       </section>
 
+      <section className="space-y-3 text-sm text-[var(--muted)]">
+        <h2 className="text-[var(--foreground)] font-bold">Cómo entra Stellar</h2>
+        <p className="leading-relaxed">
+          El dinero del 19/9 no está en una planilla de Lumina. Está en un contrato Soroban,
+          en Stellar testnet. Lumina no lo custodia. El contrato lo recibe, lo guarda a nombre
+          de quien pagó, y solo lo suelta con la firma de la app elegida.
+        </p>
+        <ol className="list-decimal pl-5 space-y-3 leading-relaxed">
+          <li>
+            <strong className="text-[var(--foreground)]">deposit.</strong> Quien paga transfiere
+            40 USDC al contrato. El saldo queda a su nombre. Antes de 12 meses, el retiro se rechaza.{" "}
+            <a href={txUrl(EVIDENCE.deposit)} className="text-teal-500 underline" target="_blank" rel="noreferrer">
+              La empresa pagó
+            </a>
+            .
+          </li>
+          <li>
+            <strong className="text-[var(--foreground)]">assign_oracle.</strong> Elige la app que
+            puede liberar ese saldo. El contrato solo acepta una app ya autorizada. Si firma otra, no cobra.{" "}
+            <a href={txUrl(EVIDENCE.assign)} className="text-teal-500 underline" target="_blank" rel="noreferrer">
+              Eligió MIRA
+            </a>
+            .
+          </li>
+          <li>
+            <strong className="text-[var(--foreground)]">release_impact.</strong> MIRA firma con su
+            cuenta de Stellar y envía el código del informe, 32 bytes. El contrato parte el monto:
+            (monto × 25) / 1000 para Lumina, el 97,5% a la cuenta de cobro de la app. Si ese código
+            ya está guardado, el pago se rechaza. El PDF no entra al contrato.{" "}
+            <a href={txUrl(EVIDENCE.release)} className="text-teal-500 underline" target="_blank" rel="noreferrer">
+              MIRA cobró
+            </a>
+            .
+          </li>
+        </ol>
+        <p className="text-xs leading-relaxed break-all">
+          Contrato:{" "}
+          <a
+            href={`https://stellar.expert/explorer/testnet/contract/${ESCROW}`}
+            className="text-teal-500 underline font-mono"
+            target="_blank"
+            rel="noreferrer"
+          >
+            {ESCROW}
+          </a>
+          . Activo de la prueba: USDC Circle. El mismo contrato acepta otro activo si se habilita.
+          USDT0 oficial de mainnet: próximamente.
+        </p>
+        <p className="text-xs leading-relaxed">
+          En Empresas en Lumina no hace falta billetera. En{" "}
+          <Link href="/invest" className="text-teal-500 underline">Probar Lumina</Link> el depósito
+          se firma con Freighter.
+        </p>
+      </section>
+
       <section className="space-y-2 text-sm text-[var(--muted)]">
         <h2 className="text-[var(--foreground)] font-bold">Cómo recorrerlo</h2>
         <ol className="list-decimal pl-5 space-y-2">
