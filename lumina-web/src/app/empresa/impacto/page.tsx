@@ -84,8 +84,8 @@ export default function EmpresaImpactoPage() {
           <p className="font-mono text-xs text-[var(--muted)]">{session.cuit}</p>
         ) : null}
         <p className="text-sm text-[var(--muted)] leading-relaxed">
-          La empresa reservó la ayuda y eligió la app. La app marcó el trabajo.
-          Eso liberó el dinero. Este informe se agrega a la memoria y a lo que se muestra a inversores.
+          La empresa reservó la ayuda y eligió la app. La app emitió el informe.
+          Eso liberó el dinero. Este texto se agrega a la memoria y a lo que se muestra a inversores.
         </p>
       </header>
 
@@ -94,12 +94,12 @@ export default function EmpresaImpactoPage() {
       {sentence ? (
         <blockquote className="rounded-2xl border border-[var(--border)] bg-[var(--card-bg)] p-5 text-sm leading-relaxed">
           En este período, {session.company} hizo llegar la ayuda: {sentence}. La app
-          marcó cada trabajo y eso liberó el 97,5%. La familia no pagó. Cada recibo se
+          emitió cada informe y eso liberó el 97,5%. La familia no pagó. Cada recibo se
           abre en Lumina. Este informe no descuenta en Ganancias.
         </blockquote>
       ) : (
         <p className="text-sm text-[var(--muted)]">
-          Todavía no hay un trabajo confirmado para esta CUIT. Un recorrido de prueba
+          Todavía no hay un informe que haya liberado dinero para esta CUIT. Un recorrido de prueba
           no es ayuda que llegó.
         </p>
       )}

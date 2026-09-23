@@ -115,7 +115,7 @@ function JuryBody() {
             ] satisfies ReciboPaso[]
           }
         />
-        <p className="text-[11px] text-[var(--muted)]">Código del trabajo: {EVIDENCE.reportHash}</p>
+        <p className="text-[11px] text-[var(--muted)]">Código del informe: {EVIDENCE.reportHash}</p>
       </section>
 
       <section className="space-y-2 text-sm text-[var(--muted)]">
@@ -138,7 +138,7 @@ function JuryBody() {
             <Link href="/invest" className="text-teal-500 underline">
               Probar Lumina
             </Link>{" "}
-            — un pago de prueba: depositás y elegís qué financiar. Después, confirmá el trabajo
+            — un pago de prueba: depositás y elegís qué financiar. Después, la app emite el informe
             o usá los recibos de arriba.
           </li>
         </ol>
@@ -160,7 +160,7 @@ function JuryBody() {
             />
           </label>
           <label className="block space-y-1">
-            <span className="text-xs font-semibold text-[var(--muted)]">Código del trabajo</span>
+            <span className="text-xs font-semibold text-[var(--muted)]">Código del informe</span>
             <input
               value={reportHash}
               onChange={(e) => setReportHash(e.target.value)}
@@ -169,7 +169,7 @@ function JuryBody() {
             />
           </label>
           <label className="block space-y-1">
-            <span className="text-xs font-semibold text-[var(--muted)]">USDT0 tx mainnet</span>
+            <span className="text-xs font-semibold text-[var(--muted)]">Comprobante USDT0</span>
             <input
               value={usdt0}
               onChange={(e) => setUsdt0(e.target.value)}
@@ -233,17 +233,17 @@ function JuryBody() {
       <section className="space-y-3 text-sm text-[var(--muted)]">
         <h2 className="text-[var(--foreground)] font-bold">Apps en Lumina</h2>
         <p>
-          MIRA y PuenteMAE cobran cuando el trabajo se hizo. El 97,5% llega a la app.
-          El usuario final nunca paga.
+          MIRA emite el informe del cribado. PuenteMAE, el informe del mes. El 97,5% llega a la app.
+          La familia no paga.
         </p>
         <ul className="space-y-2">
           <li>
-            <strong className="text-[var(--foreground)]">MIRA</strong> — cribado de desarrollo
-            infantil. En trabajo.
+            <strong className="text-[var(--foreground)]">MIRA</strong> — informe del cribado.
+            La luz real es la del 19/9.
           </li>
           <li>
-            <strong className="text-[var(--foreground)]">PuenteMAE</strong> — ayuda social a
-            docentes de inclusión. En trabajo.
+            <strong className="text-[var(--foreground)]">PuenteMAE</strong> — informe del mes
+            de ayuda a docentes. En trabajo.
           </li>
         </ul>
       </section>

@@ -41,7 +41,7 @@ Authorization: Bearer <secret de la app>
       </pre>
 
       <p className="text-xs text-[var(--muted)]">
-        El mismo trabajo (misma persona, mismo período) no se cobra dos veces. Ejemplo:{" "}
+        El mismo informe (misma persona, mismo período) no libera el dinero dos veces. Ejemplo:{" "}
         <code className="font-mono">npx tsx examples/certify.ts</code>.
       </p>
 

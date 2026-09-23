@@ -98,7 +98,7 @@ export default function Home() {
             <polyline points="2 12 12 17 22 12" />
           </svg>
           <span className="font-mono text-xs font-bold uppercase tracking-wider text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors">
-            Una luz por trabajo
+            Una luz por informe
           </span>
         </div>
 
@@ -299,7 +299,7 @@ export default function Home() {
                         href={`/invest?app=${app.id}`}
                         className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-600 to-green-600 py-3 text-xs font-bold text-white shadow-md hover:from-teal-700 hover:to-green-700 transition-all hover:scale-105 active:scale-95 cursor-pointer"
                       >
-                        Pagar este trabajo
+                        Hacer llegar esta ayuda
                         <ArrowRight className="h-4 w-4" />
                       </Link>
                     ) : (
@@ -401,11 +401,11 @@ export default function Home() {
               </li>
               <li className="flex items-start gap-2">
                 <Lock className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                <span><strong className="text-[var(--foreground)]">Privacidad:</strong> el recibo cubre el trabajo.</span>
+                <span><strong className="text-[var(--foreground)]">Privacidad:</strong> el recibo cubre el informe y el pago.</span>
               </li>
               <li className="flex items-start gap-2">
                 <Coins className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                <span><strong className="text-[var(--foreground)]">La ayuda llega:</strong> sin intermediarios. El 2,5% solo si hubo trabajo.</span>
+                <span><strong className="text-[var(--foreground)]">La ayuda llega:</strong> sin intermediarios. El 2,5% solo si hubo informe.</span>
               </li>
             </ul>
           </div>
@@ -424,7 +424,7 @@ export default function Home() {
               </li>
               <li className="flex items-start gap-2">
                 <ShieldCheck className="h-5 w-5 text-teal-500 flex-shrink-0 mt-0.5" />
-                <span><strong className="text-[var(--foreground)]">Solo tu app:</strong> nadie más cobra ese trabajo.</span>
+                <span><strong className="text-[var(--foreground)]">Solo tu app:</strong> nadie más cobra ese pago.</span>
               </li>
               <li className="flex items-start gap-2">
                 <Coins className="h-5 w-5 text-teal-500 flex-shrink-0 mt-0.5" />
@@ -450,7 +450,7 @@ export default function Home() {
           </p>
           <ul className="space-y-2 text-xs text-[var(--muted)] leading-relaxed pl-4 list-disc">
             <li><strong className="text-[var(--foreground)]">1% apps</strong> — para sumar más equipos</li>
-            <li><strong className="text-[var(--foreground)]">1% empresas</strong> — para que más tesorerías paguen impacto</li>
+            <li><strong className="text-[var(--foreground)]">1% empresas</strong> — para que más empresas hagan llegar la ayuda</li>
             <li><strong className="text-[var(--foreground)]">0,5% sistema</strong> — para que el cobro llegue</li>
           </ul>
         </div>

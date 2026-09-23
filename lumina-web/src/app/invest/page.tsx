@@ -156,7 +156,7 @@ function InvestPortal() {
       toast({
         type: "success",
         title: "Depósito Acreditado",
-        message: `Reservamos ${cleanAmount} USDC. La app cobra cuando el trabajo se hizo.`,
+        message: `Reservamos ${cleanAmount} USDC. Cuando la app emite el informe, cobra el 97,5%.`,
         txHash: res.hash
       });
 
@@ -173,7 +173,7 @@ function InvestPortal() {
           toast({
             type: "success",
             title: "Elegiste qué financiar",
-            message: `${selectedApp.name} cobra este pago cuando el trabajo se hizo.`,
+            message: `${selectedApp.name} cobra este pago cuando emite el informe.`,
             txHash: assignHash,
           });
         }
@@ -262,7 +262,7 @@ function InvestPortal() {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-xs text-[var(--muted)] font-semibold uppercase">Impacto Acumulado</span>
-                  <span className="text-lg font-bold text-teal-500" id="refi-impact-score">{impactScore} trabajos</span>
+                  <span className="text-lg font-bold text-teal-500" id="refi-impact-score">{impactScore} informes</span>
                 </div>
               </div>
             </div>
@@ -289,10 +289,10 @@ function InvestPortal() {
                 <Info className="h-4 w-4 text-teal-500 flex-shrink-0 mt-0.5" />
                 <div className="space-y-1.5">
                   <p>
-                    Conectá Freighter y tené USDC de prueba. Depositás, elegís qué financiar, esa app confirma y cobra.
+                    Conectá Freighter y tené USDC de prueba. Depositás, elegís qué financiar, esa app emite el informe y cobra.
                   </p>
                   <p className="text-[var(--warn)]/90 font-bold">
-                    El dinero queda reservado 12 meses. Si el trabajo no ocurre, lo recuperás. Lumina cobra 0% en ese caso.
+                    El dinero queda reservado 12 meses. Si no hay informe, lo recuperás. Lumina cobra 0% en ese caso.
                   </p>
                 </div>
               </div>
@@ -358,7 +358,7 @@ function InvestPortal() {
                 <p className="text-xs text-[var(--muted)] leading-relaxed">{selectedApp.milestone}</p>
                 {selectedApp.oracleAddress.startsWith("G") ? (
                   <p className="text-[10px] font-mono text-[var(--muted)] break-all leading-relaxed">
-                    Confirma el trabajo: {selectedApp.oracleAddress}
+                    Emite el informe: {selectedApp.oracleAddress}
                     {selectedApp.payoutAddress.startsWith("G") ? (
                       <>
                         <br />
@@ -376,7 +376,7 @@ function InvestPortal() {
                     <div className="space-y-1">
                       <h4 className="text-xs font-bold text-[var(--warn)] uppercase tracking-wider">Aporte parcial</h4>
                       <p className="text-xs text-[var(--warn)] leading-relaxed">
-                        Este trabajo de {selectedApp.name} cuesta {selectedApp.priceUsdc} USDC. El dinero queda reservado igual; podés completar o elegir otra app.
+                        Esta ayuda de {selectedApp.name} cuesta {selectedApp.priceUsdc} USDC. El dinero queda reservado igual; podés completar o elegir otra app.
                       </p>
                     </div>
                   </div>
@@ -394,7 +394,7 @@ function InvestPortal() {
                       }}
                       className="flex-1 rounded-lg bg-[var(--card-bg)] hover:bg-[var(--teal-light)] py-2 px-3 text-xs font-bold text-[var(--muted)] border border-[var(--border)] transition-all cursor-pointer text-center"
                     >
-                      Elegir un trabajo más chico
+                      Elegir una ayuda más chica
                     </button>
                     <button 
                       onClick={() => {
@@ -537,10 +537,10 @@ function InvestPortal() {
             <span className="text-xs font-bold text-teal-500 uppercase tracking-widest">Planificación</span>
             <h2 className="text-xl font-bold text-[var(--foreground)] font-serif flex items-center gap-2 mt-1">
               <Activity className="h-5 w-5 text-teal-500" />
-              Cuántos trabajos con este presupuesto
+              Cuántas ayudas con este presupuesto
             </h2>
             <p className="text-xs text-[var(--muted)] mt-1">
-              Una cuenta simple: precio de cada trabajo vs el total.
+              Una cuenta simple: precio de cada ayuda vs el total.
             </p>
           </div>
 

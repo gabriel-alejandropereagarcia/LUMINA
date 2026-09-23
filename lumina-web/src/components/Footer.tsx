@@ -97,7 +97,7 @@ export default function Footer() {
             Lumina © {currentYear} — 2,5% solo si hubo impacto.
           </p>
           <div className="flex gap-4 text-xs text-[var(--muted)]">
-            <span>Una luz por trabajo</span>
+            <span>Una luz por informe</span>
             <span>•</span>
             <span>Familia no paga</span>
           </div>

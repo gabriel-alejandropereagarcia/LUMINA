@@ -39,12 +39,12 @@ export async function releaseImpactAsset(input: {
   }
   const oracleAddress = keypair.publicKey();
   if (input.oracleHint && input.oracleHint !== oracleAddress) {
-    throw new Error("La cuenta que confirma no es la de esta app.");
+    throw new Error("La cuenta que emite el informe no es la de esta app.");
   }
 
   const reportHash = input.reportHash.toLowerCase();
   if (!/^[0-9a-f]{64}$/.test(reportHash)) {
-    throw new Error("Código del trabajo inválido.");
+    throw new Error("Código del informe inválido.");
   }
 
   const asset = input.asset || USDC_TESTNET_SAC;

@@ -160,7 +160,7 @@ export default function ConnectPage() {
           .filter((item) => item.pending > 0),
       );
     } catch (err: unknown) {
-      setStatus(err instanceof Error ? err.message : "No se pudo confirmar el trabajo.");
+      setStatus(err instanceof Error ? err.message : "No se pudo emitir el informe.");
     } finally {
       setTrabajoBusy(null);
     }
@@ -176,7 +176,7 @@ export default function ConnectPage() {
           Tu app entra a Lumina
         </h1>
         <p className="text-sm text-[var(--muted)] leading-relaxed">
-          Contás qué documento emitís cuando el trabajo está hecho. Lumina toma el código
+          Contás qué informe emitís. Lumina toma el código
           de ese documento y libera el dinero. Cobrás el 97,5%. Quien usa la app no paga.
         </p>
         <a
@@ -201,13 +201,13 @@ export default function ConnectPage() {
         <ol className="list-decimal pl-5 space-y-1 text-[var(--muted)]">
           <li>Personería o titular nombrado.</li>
           <li>La cuenta que cobra el 97,5% es tuya.</li>
-          <li>El documento del hito: el informe que emitís cuando el trabajo está hecho.</li>
+          <li>El documento del hito: el informe que emitís. MIRA, el cribado. Docentes, el mes.</li>
           <li>La unidad que ve la empresa: un cribado, un mes de ayuda. El precio, aparte.</li>
           <li>Qué datos nunca viajan (DNI, clínica, menores). Quien usa la app no paga.</li>
           <li>Una prueba de cobro en el entorno de prueba.</li>
         </ol>
         <p className="text-xs text-[var(--muted)]">
-          Revisamos la ficha. El trabajo lo confirmás vos. Si rompés el esquema, se
+          Revisamos la ficha. El informe lo emitís vos. Si rompés el esquema, se
           pausa el alta.
         </p>
       </section>
@@ -242,7 +242,7 @@ export default function ConnectPage() {
         </label>
         <label className="block space-y-1">
           <span className="text-xs font-semibold text-[var(--muted)]">
-            Qué documento emitís cuando el trabajo está hecho
+            Qué informe emitís
           </span>
           <textarea
             required
@@ -250,7 +250,7 @@ export default function ConnectPage() {
             value={hitoDocumento}
             onChange={(e) => setHitoDocumento(e.target.value)}
             rows={3}
-            placeholder="El informe que mi app entrega cuando el trabajo se hizo."
+            placeholder="El informe del cribado que recibe la familia."
             className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2"
           />
           <span className="block text-[11px] text-[var(--muted)] leading-relaxed">
@@ -272,7 +272,7 @@ export default function ConnectPage() {
           <input value={postRelease} onChange={(e) => setPostRelease(e.target.value)} className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2" />
         </label>
         <label className="block space-y-1">
-          <span className="text-xs font-semibold text-[var(--muted)]">Cuenta que confirma el trabajo (G…)</span>
+          <span className="text-xs font-semibold text-[var(--muted)]">Cuenta que emite el informe (G…)</span>
           <input required value={oracle} onChange={(e) => setOracle(e.target.value.trim())} className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 font-mono text-xs" />
         </label>
         <label className="block space-y-1">
@@ -280,7 +280,7 @@ export default function ConnectPage() {
           <input value={payout} onChange={(e) => setPayout(e.target.value.trim())} className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 font-mono text-xs" />
         </label>
         <label className="block space-y-1">
-          <span className="text-xs font-semibold text-[var(--muted)]">Precio por trabajo (US$)</span>
+          <span className="text-xs font-semibold text-[var(--muted)]">Precio por unidad (US$)</span>
           <input required type="number" min="0.0000001" step="any" value={price} onChange={(e) => setPrice(e.target.value)} className="w-full rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 font-mono" />
         </label>
         <label className="flex items-start gap-3 text-xs text-[var(--muted)] leading-relaxed">
@@ -304,9 +304,9 @@ export default function ConnectPage() {
 
       {IMPACT_APPS.some((app) => app.oracleAddress.startsWith("G")) ? (
         <section className="rounded-2xl border border-[var(--border)] p-5 space-y-3">
-          <h2 className="font-serif text-lg font-bold">Trabajos reservados</h2>
+          <h2 className="font-serif text-lg font-bold">Ayuda reservada</h2>
           <p className="text-xs text-[var(--muted)] leading-relaxed">
-            Cuando una empresa pagó y Lumina reservó, la app que ya confirma dice que el trabajo se hizo.
+            Cuando una empresa pagó y Lumina reservó, la app emite el informe.
             Recién ahí cobra el 97,5%.
           </p>
           {!isConnected ? (
@@ -315,11 +315,11 @@ export default function ConnectPage() {
               onClick={connect}
               className="rounded-xl border border-[var(--border)] px-4 py-2 text-xs font-bold"
             >
-              Entrar para confirmar un trabajo
+              Entrar para emitir el informe
             </button>
           ) : trabajos.length === 0 ? (
             <p className="text-xs text-[var(--muted)]">
-              No hay trabajos pendientes para esta cuenta.
+              No hay informes pendientes para esta cuenta.
             </p>
           ) : (
             <ul className="space-y-2">
@@ -346,7 +346,7 @@ export default function ConnectPage() {
                     onClick={() => void confirmarTrabajo(item.id)}
                     className="rounded-xl bg-teal-600 px-4 py-2 text-xs font-bold text-white disabled:opacity-50"
                   >
-                    {trabajoBusy === item.id ? "Confirmando…" : "El trabajo se hizo"}
+                    {trabajoBusy === item.id ? "Confirmando…" : "El informe está listo"}
                   </button>
                 </li>
               ))}
@@ -367,7 +367,7 @@ export default function ConnectPage() {
         </div>
         {!isConnected ? (
           <button type="button" onClick={connect} className="w-full rounded-xl border border-[var(--border)] py-3 text-xs font-bold">
-            Conectar
+            Entrar como Lumina
           </button>
         ) : null}
         <button type="submit" disabled={loading} className="w-full rounded-xl bg-teal-600 py-3 text-xs font-bold text-white disabled:opacity-50">

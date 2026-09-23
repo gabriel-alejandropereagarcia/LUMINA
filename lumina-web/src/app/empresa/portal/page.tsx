@@ -130,7 +130,7 @@ export default function EmpresaPortalPage() {
         toast({
           type: "success",
           title: "Dinero devuelto",
-          message: "El trabajo no ocurrió. Lumina cobró 0%.",
+          message: "No hubo informe. Lumina cobró 0%.",
         });
         return;
       }
@@ -147,7 +147,7 @@ export default function EmpresaPortalPage() {
           action === "confirmar"
             ? "Cuando se acredite, el dinero queda reservado."
             : reserved
-              ? "El dinero queda reservado para lo que elegiste. Esa app confirma el trabajo."
+              ? "El dinero queda reservado para lo que elegiste. Esa app emite el informe y libera el dinero."
               : "Cobro y reserva: en trabajo. No se movió plata.",
       });
     } catch (err) {
@@ -397,8 +397,8 @@ export default function EmpresaPortalPage() {
         </div>
         <p className="text-[11px] text-[var(--muted)]">
           {caminoPublico
-            ? "Esta CUIT eligió verse en el camino cuando haya un trabajo cobrado."
-            : "Hoy: empresa anónima. El trabajo se ve; el nombre no."}{" "}
+            ? "Esta CUIT eligió verse en el camino cuando el informe libere el dinero."
+            : "Hoy: empresa anónima. La luz se ve; el nombre no."}{" "}
           <Link href="/?vista=hoy#camino" className="text-teal-600 underline">
             Ver el camino
           </Link>
@@ -443,7 +443,7 @@ export default function EmpresaPortalPage() {
         <section className="lg:col-span-2 glass-card p-6 rounded-2xl space-y-4">
           <h2 className="font-serif text-lg font-bold text-[var(--foreground)]">Qué financiás</h2>
           <p className="text-xs text-[var(--muted)] leading-relaxed">
-            Elegí el trabajo y el monto.
+            Elegí la app y el monto.
           </p>
           <form onSubmit={onCreate} className="space-y-4" id="form-empresa-aporte">
             <label className="block space-y-1">
@@ -469,7 +469,7 @@ export default function EmpresaPortalPage() {
             <fieldset className="space-y-2">
               <legend className="text-xs font-semibold text-[var(--muted)]">Qué cubrís</legend>
               {opciones.length === 0 ? (
-                <p className="text-xs text-[var(--muted)]">Todavía no hay trabajos para financiar.</p>
+                <p className="text-xs text-[var(--muted)]">Todavía no hay apps para hacer llegar la ayuda.</p>
               ) : (
                 <div className="grid grid-cols-1 gap-2">
                   {opciones.map((app) => {
@@ -661,7 +661,7 @@ export default function EmpresaPortalPage() {
                   <div className="space-y-2">
                     <p className="text-xs text-[var(--muted)] leading-relaxed">
                       {active.sponsorAddress || active.txHash
-                        ? `Dinero reservado para lo que elegiste: ${active.appName}. El PDF aparece cuando esa app confirma el trabajo.`
+                        ? `Dinero reservado para lo que elegiste: ${active.appName}. El PDF aparece cuando esa app emite el informe.`
                         : ops?.treasuryReady
                           ? `El pago se acreditó. Lumina está reservando lo que elegiste: ${active.appName}.`
                           : `El pago está anotado para ${active.appName}. Lumina reserva cuando la tesorería está activa.`}
@@ -764,7 +764,7 @@ export default function EmpresaPortalPage() {
                     <strong className="text-[var(--foreground)]">{item.appName}</strong>
                     <span className="text-[var(--muted)]">
                       {" "}
-                      · {item.quantity ?? 0} {item.unitLabel ?? "trabajo"} · {formatUsd(item.amountUsd)}
+                      · {item.quantity ?? 0} {item.unitLabel ?? "unidad"} · {formatUsd(item.amountUsd)}
                     </span>
                     <span className="block text-[11px] text-[var(--muted)] mt-1">
                       {item.simulation ? "Cobro: en trabajo" : "Se abre el recibo"}

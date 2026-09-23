@@ -246,7 +246,7 @@ export default function AdminPortal() {
                 </div>
                 <div>
                   <span className="text-3xl font-bold tracking-tight text-[var(--foreground)] font-mono">en reserva</span>
-                  <p className="text-xs text-[var(--muted)] mt-1">El saldo está reservado hasta que el trabajo se haga.</p>
+                  <p className="text-xs text-[var(--muted)] mt-1">El saldo está reservado hasta que la app emite el informe.</p>
                 </div>
               </div>
 
@@ -257,7 +257,7 @@ export default function AdminPortal() {
                 </div>
                 <div>
                   <span className="text-3xl font-bold tracking-tight text-[var(--foreground)] font-mono">{oracles.length} Apps</span>
-                  <p className="text-xs text-[var(--muted)] mt-1">Apps autorizadas a confirmar trabajo.</p>
+                  <p className="text-xs text-[var(--muted)] mt-1">Apps autorizadas a emitir el informe.</p>
                 </div>
               </div>
 
@@ -321,7 +321,7 @@ export default function AdminPortal() {
                     />
                   </div>
                   <div>
-                    <label className="block text-[var(--muted)] mb-1 font-semibold">Costo por trabajo (USDC)</label>
+                    <label className="block text-[var(--muted)] mb-1 font-semibold">Costo por unidad (USDC)</label>
                     <input
                       type="number"
                       placeholder="Monto en USDC (ej. 40)"

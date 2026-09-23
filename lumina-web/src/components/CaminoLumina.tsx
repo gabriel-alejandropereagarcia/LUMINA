@@ -309,7 +309,7 @@ function PanelCamino({
         : nodo.kind === "lumina"
           ? "Lumina ilumina el camino. Recibo público. La familia no está en el dibujo."
           : nodo.kind === "app"
-            ? `${humano.appName} cobra cuando el trabajo se hizo. El 97,5% llega a la app.`
+            ? `${humano.appName} cobra cuando emite el informe. El 97,5% llega a la app.`
             : `1 ${humano.unitLabel} · ${humano.empresa}. En el horizonte. Cuando el cobro ocurre, acá se abre el recibo.`;
     return (
       <div className="px-5 pb-5 space-y-2">

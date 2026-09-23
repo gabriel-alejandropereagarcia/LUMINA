@@ -74,11 +74,11 @@ export default function EmpresaLandingPage() {
             {[
               {
                 icon: Landmark,
-                text: "La ayuda llega a la app. Lumina cobra el 2,5% solo si hubo trabajo.",
+                text: "La ayuda llega a la app. Lumina cobra el 2,5% solo si hubo informe.",
               },
               {
                 icon: Lock,
-                text: "El dinero queda reservado 12 meses. Si el trabajo no ocurre, recuperás todo. El 2,5% solo si hubo impacto.",
+                text: "El dinero queda reservado 12 meses. Si no hay informe, recuperás todo. El 2,5% solo si hubo impacto.",
               },
               {
                 icon: FileCheck,

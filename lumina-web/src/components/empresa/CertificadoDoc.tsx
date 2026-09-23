@@ -21,7 +21,7 @@ export default function CertificadoDoc({
   pasos?: ReciboPaso[];
 }) {
   const quantity = certificado.quantity ?? 0;
-  const unitLabel = certificado.unitLabel || "trabajo";
+  const unitLabel = certificado.unitLabel || "unidad";
 
   return (
     <article className="cert-sheet mx-auto w-full max-w-[800px] bg-[#FBF9F4] text-[#1A232E] shadow-2xl print:shadow-none">
@@ -66,7 +66,7 @@ export default function CertificadoDoc({
               <>
                 Reserva {formatUsd(certificado.amountUsd)}. El 97,5% (
                 {formatUsd(certificado.payoutAppUsd)}) se paga a {certificado.appName}{" "}
-                cuando confirma el trabajo. Este documento todavía no es un cobro.
+                cuando emite el informe. Este documento todavía no es un cobro.
               </>
             ) : (
               <>
@@ -100,7 +100,7 @@ export default function CertificadoDoc({
             {certificado.canonical ? (
               <div className="sm:col-span-2 border border-[#0D5E6A]/15 rounded-xl p-4 bg-white/70">
                 <dt className="text-[10px] uppercase tracking-wider text-[#5A6B7A] font-bold">
-                  Detalle del trabajo
+                  Detalle del informe
                 </dt>
                 <dd className="font-mono text-[10px] mt-1 break-all leading-relaxed text-[#5A6B7A]">
                   {certificado.canonical}
@@ -112,13 +112,13 @@ export default function CertificadoDoc({
 
         <section className="space-y-2">
           <p className="text-[10px] font-bold uppercase tracking-wider text-[#0D5E6A]">3. Alcance</p>
-          <p className="text-sm text-[#1A232E]">{certificado.scopeLumina || "Lumina registra el pago. El mismo trabajo no se cobra dos veces."}</p>
+          <p className="text-sm text-[#1A232E]">{certificado.scopeLumina || "Lumina registra el pago. El mismo informe no libera el dinero dos veces."}</p>
           <p className="text-sm text-[#5A6B7A]">{certificado.scopeApp}</p>
         </section>
 
         {certificado.simulation && (
           <p className="text-xs text-[#8A6A1A] bg-[#F7E7C0] border border-[#D4A84B]/40 rounded-lg px-3 py-2">
-            Recorrido de prueba: el código identifica el trabajo (unidad + cantidad). El 97,5%
+            Recorrido de prueba: el código identifica el informe (unidad + cantidad). El 97,5%
             todavía no se pagó. El pago de prueba está en Probar.
           </p>
         )}
@@ -138,11 +138,11 @@ export default function CertificadoDoc({
 
         <footer className="border-t border-[#0D5E6A]/15 pt-4 space-y-1">
           <p className="text-[11px] text-[#5A6B7A] leading-relaxed">
-            El recibo público cubre el trabajo y el pago. Datos personales quedan fuera (Ley 25.326).
+            El recibo público cubre el informe y el pago. Datos personales quedan fuera (Ley 25.326).
             Este documento no descuenta en Ganancias. Sirve para la memoria, las comunicaciones y los inversores.
           </p>
           <p className="text-[11px] text-[#5A6B7A]">
-            Si no hay trabajo en 12 meses, la empresa recupera el aporte por el mismo camino.
+            Si no hay informe en 12 meses, la empresa recupera el aporte por el mismo camino.
             El recibo se abre en Recibos Lumina.
           </p>
         </footer>

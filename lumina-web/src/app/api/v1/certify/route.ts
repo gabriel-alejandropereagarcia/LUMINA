@@ -7,7 +7,7 @@ import { recordWorkRelease, stampCertificadoTx } from "@/lib/empresa/store";
 import { authorizeCertify, releaseImpactAsset } from "@/lib/hito/release";
 
 /**
- * La app confirma que el trabajo se hizo. Lumina cobra el 97,5% a la app.
+ * La app emite el informe. Lumina cobra el 97,5% a la app.
  */
 export async function POST(request: Request) {
   try {
@@ -47,7 +47,7 @@ export async function POST(request: Request) {
       const hashed = hashFact(fact);
       if (reportHash && reportHash.toLowerCase() !== hashed.reportHash) {
         return NextResponse.json(
-          { error: "El código del trabajo no coincide con el hecho." },
+          { error: "El código del informe no coincide." },
           { status: 400 },
         );
       }

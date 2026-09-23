@@ -108,8 +108,8 @@ export default function WhitepaperAndRoadmap() {
                   2. El dinero queda reservado 12 meses
                 </h2>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  La empresa paga un servicio. El dinero queda reservado.
-                  Solo la app elegida cobra. Si en 12 meses el trabajo no ocurrió, la empresa recupera todo.
+                  La empresa hace llegar la ayuda. El dinero queda reservado.
+                  Solo la app elegida cobra. Si en 12 meses no hay informe, la empresa recupera todo.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 rounded-xl border border-[var(--border)] bg-[var(--background)]">
@@ -118,16 +118,16 @@ export default function WhitepaperAndRoadmap() {
                       12 meses, o vuelve
                     </h4>
                     <p className="text-[11px] leading-relaxed text-[var(--muted)]">
-                      Si la app no confirma el trabajo en 12 meses, la empresa recupera el dinero. Lumina cobra 0%.
+                      Si la app no emite el informe en 12 meses, la empresa recupera el dinero. Lumina cobra 0%.
                     </p>
                   </div>
                   <div className="p-4 rounded-xl border border-[var(--border)] bg-[var(--background)]">
                     <h4 className="text-xs font-bold text-[var(--foreground)] flex items-center gap-2 mb-2">
                       <ShieldCheck className="h-4 w-4 text-emerald-500" />
-                      El mismo trabajo no se cobra dos veces
+                      El mismo informe no libera el dinero dos veces
                     </h4>
                     <p className="text-[11px] leading-relaxed text-[var(--muted)]">
-                      Cada trabajo deja un código único. Si se intenta cobrar el mismo hecho otra vez, el pago se rechaza.
+                      Cada informe deja un código único. Si se intenta liberar el mismo informe otra vez, el pago se rechaza.
                     </p>
                   </div>
                 </div>
@@ -144,7 +144,7 @@ export default function WhitepaperAndRoadmap() {
                   3. Solo esa app cobra
                 </h2>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  La app confirma el trabajo. Nadie más puede cobrar ese pago.
+                  La app emite el informe. Ese informe libera el dinero. Nadie más cobra ese pago.
                 </p>
                 <div className="p-4 rounded-xl bg-slate-950 font-mono text-[11px] text-teal-400 space-y-2 border border-slate-800">
                   <p className="text-slate-500">// Cómo se parte el pago</p>
@@ -153,7 +153,7 @@ export default function WhitepaperAndRoadmap() {
                 </div>
                 <ul className="list-disc pl-5 space-y-2 text-xs text-[var(--muted)]">
                   <li><strong>App elegida:</strong> otra app no puede vaciar ese pago.</li>
-                  <li><strong>Código único:</strong> el mismo trabajo no se cobra dos veces.</li>
+                  <li><strong>Código único:</strong> el mismo informe no libera el dinero dos veces.</li>
                 </ul>
               </div>
             )}
@@ -165,14 +165,14 @@ export default function WhitepaperAndRoadmap() {
                   4. 2,5% — solo si hubo impacto
                 </h2>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  Si no hay trabajo, Lumina cobra 0%. El 2,5% es de Lumina, una sola vez.
+                  Si no hay informe, Lumina cobra 0%. El 2,5% es de Lumina, una sola vez.
                   Adentro lo usamos así: 1% apps, 1% empresas, 0,5% sistema.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="p-4 rounded-xl border border-[var(--border)] bg-[var(--background)]">
                     <span className="text-lg font-bold text-teal-400 font-mono block">1.0%</span>
                     <span className="text-xs font-bold text-[var(--foreground)] block mt-1">Más apps</span>
-                    <p className="text-[10px] text-[var(--muted)] mt-1">Para que más equipos se sumen y cobren cuando el trabajo se hizo.</p>
+                    <p className="text-[10px] text-[var(--muted)] mt-1">Para que más equipos se sumen y cobren cuando emiten el informe.</p>
                   </div>
                   <div className="p-4 rounded-xl border border-[var(--border)] bg-[var(--background)]">
                     <span className="text-lg font-bold text-green-400 font-mono block">1.0%</span>
@@ -206,12 +206,12 @@ export default function WhitepaperAndRoadmap() {
                     {
                       fase: "En curso",
                       title: "El cobro ya corre",
-                      desc: "La empresa paga. La app cobra el 97,5% cuando el trabajo se hizo. USDC de prueba hoy. USDT0 oficial: próximamente."
+                      desc: "La empresa hace llegar la ayuda. La app cobra el 97,5% cuando emite el informe. USDC de prueba hoy. USDT0 oficial: próximamente."
                     },
                     {
                       fase: "En trabajo",
                       title: "Más de una voz si hay disputa",
-                      desc: "Si hay duda sobre un trabajo, instituciones del tercer sector pueden resolverlo. En trabajo."
+                      desc: "Si hay duda sobre un informe, una tercera voz puede resolverlo. En trabajo."
                     },
                     {
                       fase: "En trabajo",
@@ -221,7 +221,7 @@ export default function WhitepaperAndRoadmap() {
                     {
                       fase: "Próximamente",
                       title: "Más apps en el mismo camino",
-                      desc: "MIRA u otras confirman el trabajo igual. Sumarse es una ficha, no otro producto."
+                      desc: "Cada app marca qué informe emite. Sumarse es una ficha."
                     }
                   ].map((item, i) => (
                     <div key={i} className="flex gap-4 p-4 rounded-xl border border-[var(--border)] bg-[var(--background)]">
@@ -249,7 +249,7 @@ export default function WhitepaperAndRoadmap() {
                   6. Recorrido
                 </h2>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  Impacto sin fricción. La ayuda llega. Un trabajo hecho. El 97,5% a la app.{" "}
+                  Impacto sin fricción. La ayuda llega. El informe libera el dinero. El 97,5% a la app.{" "}
                   <Link href="/?vista=horizonte#camino" className="text-teal-400 underline font-semibold">
                     Abrí el camino interactivo
                   </Link>
@@ -271,7 +271,7 @@ export default function WhitepaperAndRoadmap() {
                   </li>
                   <li>
                     <strong className="text-[var(--foreground)]">Confirmar.</strong> La app
-                    dice que el trabajo se hizo. 97,5% a la app. Recibo Lumina.
+                    emite el informe. 97,5% a la app. Recibo Lumina.
                   </li>
                   <li>
                     <strong className="text-[var(--foreground)]">Recibos Lumina.</strong> Se ve
@@ -279,7 +279,7 @@ export default function WhitepaperAndRoadmap() {
                   </li>
                   <li>
                     <strong className="text-[var(--foreground)]">Cierre.</strong> Apps en Lumina.
-                    PuenteMAE es ayuda a docentes. Lumina cobra 0% si no hubo trabajo.
+                    PuenteMAE es ayuda a docentes. Lumina cobra 0% si no hubo informe.
                   </li>
                 </ol>
                 <p className="text-[11px] text-[var(--muted)]">

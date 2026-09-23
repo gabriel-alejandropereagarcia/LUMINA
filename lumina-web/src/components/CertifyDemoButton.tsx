@@ -77,10 +77,10 @@ export default function CertifyDemoButton({ sponsor, amount }: Props) {
         disabled={busy || !sponsor.startsWith("G")}
         className="w-full rounded-xl border border-teal-500/40 px-4 py-3 text-sm font-semibold text-teal-600 hover:bg-[var(--teal-light)] disabled:opacity-50"
       >
-        {busy ? "Confirmando el trabajo…" : "Confirmar que el trabajo se hizo"}
+        {busy ? "Confirmando el informe…" : "El informe está listo"}
       </button>
       <p className="text-[11px] text-[var(--muted)] leading-relaxed">
-        Confirma el trabajo de prueba y paga el 97,5% a la app. Si falla, los comprobantes
+        Emite el informe de prueba y paga el 97,5% a la app. Si falla, los comprobantes
         del 19/9 están en Recibos Lumina.
       </p>
       {error ? <p className="text-xs text-red-500">{error}</p> : null}

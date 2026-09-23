@@ -63,7 +63,7 @@ USDT0 oficial: **próximamente**. Hoy el recorrido usa USDC Circle de prueba.
 |---|---|---|
 | 1 | [`/empresa`](https://lumina-dusky-pi.vercel.app/empresa) | Empresas en Lumina. La ayuda llega. Cobro en pesos: **en trabajo**. |
 | 2 | [`/invest`](https://lumina-dusky-pi.vercel.app/invest) | Probar Lumina. Un pago de prueba. Live. |
-| 3 | Confirmar el trabajo en `/invest`, o [`/jury`](https://lumina-dusky-pi.vercel.app/jury) | Recibos Lumina. 97,5% a la app. |
+| 3 | El informe libera el dinero en `/invest`, o [`/jury`](https://lumina-dusky-pi.vercel.app/jury) | Recibos Lumina. 97,5% a la app. |
 
 El PDF de Empresas en Lumina sale cuando la app cobra.
 
